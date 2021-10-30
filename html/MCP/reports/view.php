@@ -1,20 +1,28 @@
 <?php
 
-if(!$user->isStaff())
-{
+/*
+    Alphaland 2021
+    Report viewer
+*/
+
+if(!$user->isStaff()) {
     redirect("/");
 }
 
-if (!$_GET['id'])
-{
-    redirect("/MCP/reports/");
+//chek
+$report = $GLOBALS['pdo']->prepare("SELECT * FROM user_reports WHERE `id` = :id AND `closed` = 0");
+$report->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
+$report->execute();
+if ($report->rowCount() == 0) {
+	redirect("/MCP/reports/");
 }
 
 $body = <<<EOT
-<h5 class="text-center">Report Data</h5>
+<h5 class="text-center">Report Information</h5>
 <hr>
 <div class="container-fluid">
 	<div class="container">
+        <div id = "error_alert" class="alert alert-danger" role="alert" style="display:none";></div>
 		<div class="col-sm marg-bot-15">
 			<div class="card marg-auto" style="min-height:16rem;">
 				<div class="card-body">
@@ -41,8 +49,7 @@ $body = <<<EOT
 */
 var getparam = new URLSearchParams(window.location.search).get("id");
 
-function populateReport()
-{
+function populateReport() {
     getJSONCDS("https://www.alphaland.cc/MCP/reports/data/?id="+getparam)
 	.done(function(jsonData) {
         $("#reporter-id").html("Reporter ID: "+jsonData.ReporterUid);
@@ -68,13 +75,25 @@ function populateReport()
         </div>
         </div>`;
 
-        $("#message-container").html(parseHtml(html, 1000, jsonData, "No logged chats"));
+         $("#message-container").html(parseHtml(html, 1000, jsonData, "No logged chats"));
     });
 }
 
-function closeReport()
-{
-    alert("will close");
+function closeReport() {
+    getJSONCDS("https://www.alphaland.cc/MCP/reports/data/close?id="+getparam)
+	.done(function(jsonData) {
+        var alert = jsonData.alert;
+        if(jsonData.alert == "Closed Report") {
+            window.location.href = "/MCP/reports/";
+        } else {
+            $("#error_alert").text(alert);
+			$("#error_alert").show();
+			window.scrollTo({top: 0, behavior: "smooth"});
+			setTimeout(function() {
+				$("#error_alert").hide();
+			}, 2000);
+        }
+    });
 }
 
 populateReport();

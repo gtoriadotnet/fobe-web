@@ -1,15 +1,30 @@
 <?php
 
+/*
+	Alphaland 2021
+	Report Data
+*/
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
-if(!$user->isStaff())
-{
-    redirect("/");
+$id = (int)$_GET['id'];
+
+if(!$user->isStaff() || !$id) {
+    redirect("/MCP");
 }
 
-$xml = file_get_contents('compress.zlib://PlayerReport.txt');
+$xml = "";
+
+$report = $GLOBALS['pdo']->prepare("SELECT * FROM user_reports WHERE id = :id");
+$report->bindParam(":id", $id, PDO::PARAM_INT);
+$report->execute();
+if ($report->rowCount() > 0) {
+	$xml = $report->fetch(PDO::FETCH_OBJ)->report;
+} else {
+	die(json_encode(["alert"=>"Report not found"]));
+}
 
 $validXML = true;
 try {
