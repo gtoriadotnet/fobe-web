@@ -4,6 +4,7 @@
 	Alphaland 2021
 	A bunch of global functions used sitewide
 	TODO: clean up a lot of legacy code
+	ass
 */
 
 //img tools (potentially high resource usage) (probably blocking)
