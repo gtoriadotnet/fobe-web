@@ -35,13 +35,13 @@ if ($validXML) {
 		"Description" => $reportdescription
 	);
 
-	//die(json_encode($jsonData));
-
     foreach($chats as $chat) {
         $userid = (int)$chat['userID'];
+		$username = (string)getUsername($userid);
         $userchat = (string)$chat;
 
         $chatData = array(
+			"username" => $username,
             "userid" => $userid,
             "chat" => $userchat
         );
