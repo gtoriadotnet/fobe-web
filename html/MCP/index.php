@@ -40,6 +40,16 @@ $body = <<<EOT
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-sm">
+			<div class="card marg-bot-30">
+				<div class="card-body text-center">
+					<a class="red-a-nounder" href="reports"><p style="font-size:10rem;"><i class="fas fa-user-shield"></i></p></a>
+					<a class="red-a-nounder" href="reports"><h5>Reports</h5></a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 EOT;
 pageHandler();

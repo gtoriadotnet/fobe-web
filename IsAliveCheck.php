@@ -2,13 +2,11 @@
 
 /*
 Alphaland 2021
-This check seems to show Thumbnail or Gameserver offline every 1 in 2000 checks, probably due to curl or some sort of flood check on the arbiter. TODO: look more into that
 */
 
 //vars
 $thumbalive = false;
 $gamealive = false;
-// ...
 
 //UTIL FUNCTIONS
 function checkThumb($override)
@@ -32,7 +30,6 @@ function checkThumb($override)
 			$set->execute();
 		}
 	}
-	// ...
 }
 
 function checkGame($override)
@@ -56,21 +53,17 @@ function checkGame($override)
 			$set->execute();
 		}
 	}
-	// ...
 }
-// ...
 
 //first time running, pass true to force a check without SQL query limit restriction
 checkGame(true);
 checkThumb(true);
-// ...
 
 while (true) //EZ
 {
 	//we are in the loop now, run without override
 	checkGame(false);
 	checkThumb(false);
-	// ...
 		
 	usleep(10000); //if both requests timeout after 5 seconds, the max this script will halt is 20 seconds
 }
