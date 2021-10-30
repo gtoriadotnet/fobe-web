@@ -12,15 +12,15 @@ if (!$text || !$userid)
 }
 
 if (isFiltered($text)) {
-	//logChatMessage($userid, $text, true);
+	logChatMessage($userid, $text, true);
 
 	if (chatFilterInfractionLimit($userid, 3, 120)) //3 infraction within 2 minutes
 	{
-		//die(kickUserIfInGame($userid, "'".$text."' is not appropriate on Alphaland, continued infractions will lead to a ban."));
+		die(kickUserIfInGame($userid, "'".$text."' is not appropriate on Alphaland, continued infractions will lead to a ban."));
 	}
 
-	//$text = filterText($text);
-	$text = "[ Content Deleted ]";
+	$text = filterText($text);
+	//$text = "[ Content Deleted ]";
 }
 
 $return = json_encode(array(
