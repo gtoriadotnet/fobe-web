@@ -4,6 +4,11 @@ header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
+if(!$user->isStaff())
+{
+    redirect("/");
+}
+
 $xml = file_get_contents('compress.zlib://PlayerReport.txt');
 
 $validXML = true;

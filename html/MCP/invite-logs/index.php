@@ -1,8 +1,8 @@
 <?php
 
-if(!($user->isStaff()))
+if(!$user->isStaff())
 {
-	die();
+    redirect("/");
 }
 
 $alert = '';

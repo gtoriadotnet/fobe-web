@@ -1,5 +1,10 @@
 <?php
 
+if(!$user->isStaff())
+{
+    redirect("/");
+}
+
 if (!$_GET['id'])
 {
     redirect("/MCP/reports/");

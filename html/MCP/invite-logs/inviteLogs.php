@@ -1,7 +1,8 @@
 <?php
 
-if(!($user->isStaff())) {
-	die();
+if(!$user->isStaff())
+{
+    redirect("/");
 }
 
 //headers

@@ -1,5 +1,10 @@
 <?php
 
+if(!$user->isStaff())
+{
+    redirect("/");
+}
+
 $body = <<<EOT
 <h5 class="text-center">Chat Logs</h5>
 <h5 class="text-center">You can sort by Censored, by username and search for words</h5>
