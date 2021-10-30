@@ -3,8 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 #
-html_assets_cdn/
-html_renders_cdn/
+html_assets_cdn/*
+html_renders_cdn/*
 html_setup/
-html_thumbs_cdn/
+html_thumbs_cdn/*
 html_data/Error/uploads/
