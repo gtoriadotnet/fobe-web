@@ -40,11 +40,6 @@ function constructJson($jobid, $status, $joinscripturl, $authenticationurl, $aut
 	), JSON_UNESCAPED_SLASHES);
 }
 
-if ($local)
-{
-	die(constructJson("1", 2, "https://alphaland.cc/Game/Join.ashx?ticket=111&local=true", "", "", ""));
-}
-
 if(!$requesttype || !$placeid || ($_SERVER['HTTP_USER_AGENT'] != $GLOBALS['clientUserAgent']))
 {
 	die(http_response_code(400));
@@ -91,7 +86,7 @@ function StartServer($gid)
 	$gameSpawnResult = soapOpenJobEx($GLOBALS['gamesArbiter'], $jobuuid, 60, "Start Server ".$gid, $script, array(
 			$gid, //placeid
 			$port, //gameserver port
-			"alphaland.cc", //domain
+			$GLOBALS['domain'], //domain
 			$gameInfo->CreatorId, //place creatorid
 			(bool)$gameInfo->isPersonalServer //ispersonalserver
 		)
