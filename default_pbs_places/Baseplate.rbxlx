@@ -1,0 +1,425 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Workspace" referent="RBXD3721CB697734B5E88C9AE1946AC0DDD">
+		<Properties>
+			<bool name="AllowThirdPartySales">false</bool>
+			<Ref name="CurrentCamera">RBX7BA3BBD8CCFC4FBF8646AD9D3BEACFFB</Ref>
+			<double name="DistributedGameTime">0</double>
+			<bool name="ExpSolverEnabled_Replicate">true</bool>
+			<float name="FallenPartsDestroyHeight">-500</float>
+			<bool name="FilteringEnabled">false</bool>
+			<float name="Gravity">196.199997</float>
+			<CoordinateFrame name="ModelInPrimary">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+				<R00>1</R00>
+				<R01>0</R01>
+				<R02>0</R02>
+				<R10>0</R10>
+				<R11>1</R11>
+				<R12>0</R12>
+				<R20>0</R20>
+				<R21>0</R21>
+				<R22>1</R22>
+			</CoordinateFrame>
+			<string name="Name">Workspace</string>
+			<bool name="PGSPhysicsSolverEnabled">true</bool>
+			<Ref name="PrimaryPart">null</Ref>
+			<bool name="StreamingEnabled">false</bool>
+		</Properties>
+		<Item class="Camera" referent="RBX7BA3BBD8CCFC4FBF8646AD9D3BEACFFB">
+			<Properties>
+				<CoordinateFrame name="CFrame">
+					<X>-169.13916</X>
+					<Y>21.2607193</Y>
+					<Z>164.078796</Z>
+					<R00>0.714415789</R00>
+					<R01>0.141907141</R01>
+					<R02>-0.685180724</R02>
+					<R10>7.4505806e-009</R10>
+					<R11>0.979219198</R11>
+					<R12>0.202805176</R12>
+					<R20>0.699721515</R20>
+					<R21>-0.144887224</R21>
+					<R22>0.699569583</R22>
+				</CoordinateFrame>
+				<Ref name="CameraSubject">null</Ref>
+				<token name="CameraType">0</token>
+				<float name="FieldOfView">70</float>
+				<CoordinateFrame name="Focus">
+					<X>-167.768784</X>
+					<Y>20.8551044</Y>
+					<Z>162.679642</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="HeadLocked">true</bool>
+				<float name="HeadScale">1</float>
+				<string name="Name">Camera</string>
+			</Properties>
+		</Item>
+		<Item class="Terrain" referent="RBX471E57F39BFC42EBACC00C16CD370F9C">
+			<Properties>
+				<bool name="Anchored">true</bool>
+				<float name="BackParamA">-0.5</float>
+				<float name="BackParamB">0.5</float>
+				<token name="BackSurface">0</token>
+				<token name="BackSurfaceInput">0</token>
+				<float name="BottomParamA">-0.5</float>
+				<float name="BottomParamB">0.5</float>
+				<token name="BottomSurface">4</token>
+				<token name="BottomSurfaceInput">0</token>
+				<int name="BrickColor">194</int>
+				<CoordinateFrame name="CFrame">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="CanCollide">true</bool>
+				<BinaryString name="ClusterGridV3"></BinaryString>
+				<Color3uint8 name="Color3uint8">4288914085</Color3uint8>
+				<PhysicalProperties name="CustomPhysicalProperties">
+					<CustomPhysics>false</CustomPhysics>
+				</PhysicalProperties>
+				<float name="Elasticity">0.300000012</float>
+				<float name="Friction">0.5</float>
+				<float name="FrontParamA">-0.5</float>
+				<float name="FrontParamB">0.5</float>
+				<token name="FrontSurface">0</token>
+				<token name="FrontSurfaceInput">0</token>
+				<float name="LeftParamA">-0.5</float>
+				<float name="LeftParamB">0.5</float>
+				<token name="LeftSurface">0</token>
+				<token name="LeftSurfaceInput">0</token>
+				<bool name="Locked">true</bool>
+				<token name="Material">256</token>
+				<string name="Name">Terrain</string>
+				<float name="Reflectance">0</float>
+				<float name="RightParamA">-0.5</float>
+				<float name="RightParamB">0.5</float>
+				<token name="RightSurface">0</token>
+				<token name="RightSurfaceInput">0</token>
+				<Vector3 name="RotVelocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<BinaryString name="SmoothGrid"></BinaryString>
+				<float name="TopParamA">-0.5</float>
+				<float name="TopParamB">0.5</float>
+				<token name="TopSurface">3</token>
+				<token name="TopSurfaceInput">0</token>
+				<float name="Transparency">0</float>
+				<Vector3 name="Velocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<Color3 name="WaterColor">4278998108</Color3>
+				<float name="WaterTransparency">0.300000012</float>
+				<float name="WaterWaveSize">0.150000006</float>
+				<float name="WaterWaveSpeed">10</float>
+				<Vector3 name="size">
+					<X>2044</X>
+					<Y>252</Y>
+					<Z>2044</Z>
+				</Vector3>
+			</Properties>
+		</Item>
+		<Item class="Part" referent="RBX9F47F782C640466FB095B8788CB980D7">
+			<Properties>
+				<bool name="Anchored">true</bool>
+				<float name="BackParamA">-0.5</float>
+				<float name="BackParamB">0.5</float>
+				<token name="BackSurface">0</token>
+				<token name="BackSurfaceInput">0</token>
+				<float name="BottomParamA">-0.5</float>
+				<float name="BottomParamB">0.5</float>
+				<token name="BottomSurface">4</token>
+				<token name="BottomSurfaceInput">0</token>
+				<int name="BrickColor">199</int>
+				<CoordinateFrame name="CFrame">
+					<X>0</X>
+					<Y>-10</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="CanCollide">true</bool>
+				<Color3uint8 name="Color3uint8">4284702562</Color3uint8>
+				<PhysicalProperties name="CustomPhysicalProperties">
+					<CustomPhysics>false</CustomPhysics>
+				</PhysicalProperties>
+				<float name="Elasticity">0.5</float>
+				<float name="Friction">0.300000012</float>
+				<float name="FrontParamA">-0.5</float>
+				<float name="FrontParamB">0.5</float>
+				<token name="FrontSurface">0</token>
+				<token name="FrontSurfaceInput">0</token>
+				<float name="LeftParamA">-0.5</float>
+				<float name="LeftParamB">0.5</float>
+				<token name="LeftSurface">0</token>
+				<token name="LeftSurfaceInput">0</token>
+				<bool name="Locked">true</bool>
+				<token name="Material">256</token>
+				<string name="Name">BasePlate</string>
+				<float name="Reflectance">0</float>
+				<float name="RightParamA">-0.5</float>
+				<float name="RightParamB">0.5</float>
+				<token name="RightSurface">0</token>
+				<token name="RightSurfaceInput">0</token>
+				<Vector3 name="RotVelocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<float name="TopParamA">-0.5</float>
+				<float name="TopParamB">0.5</float>
+				<token name="TopSurface">3</token>
+				<token name="TopSurfaceInput">0</token>
+				<float name="Transparency">0</float>
+				<Vector3 name="Velocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<token name="formFactorRaw">1</token>
+				<token name="shape">1</token>
+				<Vector3 name="size">
+					<X>512</X>
+					<Y>20</Y>
+					<Z>512</Z>
+				</Vector3>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="NonReplicatedCSGDictionaryService" referent="RBX5AD369D845894D048FEC1AF2CB5DFC62">
+		<Properties>
+			<string name="Name">NonReplicatedCSGDictionaryService</string>
+		</Properties>
+	</Item>
+	<Item class="CSGDictionaryService" referent="RBX4E5A676A5DB24683A112CDA6BB22EEA1">
+		<Properties>
+			<string name="Name">CSGDictionaryService</string>
+		</Properties>
+	</Item>
+	<Item class="Players" referent="RBXA2D705D1E0494EEFBD2DFED708B24209">
+		<Properties>
+			<bool name="CharacterAutoLoads">true</bool>
+			<int name="MaxPlayersInternal">12</int>
+			<string name="Name">Players</string>
+			<int name="PreferredPlayersInternal">0</int>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedFirst" referent="RBX0E0B79A2A05D42FC81ABF4828AC7AE5B">
+		<Properties>
+			<string name="Name">ReplicatedFirst</string>
+		</Properties>
+	</Item>
+	<Item class="StarterPlayer" referent="RBXDABFB40962B74FD9AFEB507717596A1E">
+		<Properties>
+			<bool name="AutoJumpEnabled">true</bool>
+			<float name="CameraMaxZoomDistance">400</float>
+			<float name="CameraMinZoomDistance">0.5</float>
+			<token name="CameraMode">0</token>
+			<token name="DevCameraOcclusionMode">0</token>
+			<token name="DevComputerCameraMovementMode">0</token>
+			<token name="DevComputerMovementMode">0</token>
+			<token name="DevTouchCameraMovementMode">0</token>
+			<token name="DevTouchMovementMode">0</token>
+			<bool name="EnableMouseLockOption">true</bool>
+			<float name="HealthDisplayDistance">100</float>
+			<bool name="LoadCharacterAppearance">true</bool>
+			<string name="Name">StarterPlayer</string>
+			<float name="NameDisplayDistance">100</float>
+		</Properties>
+		<Item class="StarterPlayerScripts" referent="RBX951EA0B8A0964461982297D43902A186">
+			<Properties>
+				<string name="Name">StarterPlayerScripts</string>
+			</Properties>
+		</Item>
+		<Item class="StarterCharacterScripts" referent="RBX7C82E926764B4F12A26A271D0BAE6D1A">
+			<Properties>
+				<string name="Name">StarterCharacterScripts</string>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="StarterPack" referent="RBX191BF37018554EC78A06778C4BADB862">
+		<Properties>
+			<string name="Name">StarterPack</string>
+		</Properties>
+	</Item>
+	<Item class="StarterGui" referent="RBXBBBB121141A84D4AAA89E2B3B8E48CFA">
+		<Properties>
+			<string name="Name">StarterGui</string>
+			<bool name="ResetPlayerGuiOnSpawn">true</bool>
+			<bool name="ShowDevelopmentGui">true</bool>
+		</Properties>
+	</Item>
+	<Item class="TeleportService" referent="RBX7EEE491CA5CB41C59E67FEFA9F651841">
+		<Properties>
+			<string name="Name">Teleport Service</string>
+		</Properties>
+	</Item>
+	<Item class="SoundService" referent="RBXA43490ED055245C79C1BF3BDCE436E0A">
+		<Properties>
+			<token name="AmbientReverb">0</token>
+			<float name="DistanceFactor">10</float>
+			<float name="DopplerScale">1</float>
+			<string name="Name">SoundService</string>
+			<float name="RolloffScale">1</float>
+		</Properties>
+	</Item>
+	<Item class="CollectionService" referent="RBX0EADFA9D6E584AA89337B2C5DA77487D">
+		<Properties>
+			<string name="Name">CollectionService</string>
+		</Properties>
+	</Item>
+	<Item class="PhysicsService" referent="RBX3C6535C805F34DDEB34169CE6BC5AB3A">
+		<Properties>
+			<string name="Name">PhysicsService</string>
+		</Properties>
+	</Item>
+	<Item class="Geometry" referent="RBX98278CDACCCF4348A34EEFAB40513DB5">
+		<Properties>
+			<string name="Name">Geometry</string>
+		</Properties>
+	</Item>
+	<Item class="RenderHooksService" referent="RBXE8BBEC6ECC5B4E199697441EC61AC180">
+		<Properties>
+			<string name="Name">RenderHooksService</string>
+		</Properties>
+	</Item>
+	<Item class="InsertService" referent="RBXFCB8437763C74465BAF10E63C9BF325E">
+		<Properties>
+			<bool name="AllowInsertFreeModels">false</bool>
+			<string name="Name">InsertService</string>
+		</Properties>
+	</Item>
+	<Item class="SocialService" referent="RBXB749344473A84DB48FD2510DEBE289D7">
+		<Properties>
+			<string name="Name">SocialService</string>
+		</Properties>
+	</Item>
+	<Item class="GamePassService" referent="RBX1BF2A991F09F42B590CD4BFDECAF9FA1">
+		<Properties>
+			<string name="Name">GamePassService</string>
+		</Properties>
+	</Item>
+	<Item class="Debris" referent="RBX9929BCA0AF3A4D0CA2E70F469F20B395">
+		<Properties>
+			<int name="MaxItems">1000</int>
+			<string name="Name">Debris</string>
+		</Properties>
+	</Item>
+	<Item class="TimerService" referent="RBX369ABCD6ED234F13AE19C8F3C5F4BD8C">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="ScriptInformationProvider" referent="RBX60B66ACBBDB2414EA75D9B10D59197FA">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="CookiesService" referent="RBX9AA683D9E98A404BA0DF69AB165CA341">
+		<Properties>
+			<string name="Name">CookiesService</string>
+		</Properties>
+	</Item>
+	<Item class="ContextActionService" referent="RBX41CB20B345674B50B9DC229F3BD0C366">
+		<Properties>
+			<string name="Name">ContextActionService</string>
+		</Properties>
+	</Item>
+	<Item class="ScriptService" referent="RBX6A227B787D51497EB95D6A1F483F90F2">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="AssetService" referent="RBXC84467C421EB429981E8BC576A34E354">
+		<Properties>
+			<string name="Name">AssetService</string>
+		</Properties>
+	</Item>
+	<Item class="Selection" referent="RBX1C7BB0C96D004A88A0A9276EFF281E0E">
+		<Properties>
+			<string name="Name">Selection</string>
+		</Properties>
+	</Item>
+	<Item class="ServerScriptService" referent="RBXBF44C7A8B1CB497DB75D843615CA3AC7">
+		<Properties>
+			<bool name="LoadStringEnabled">false</bool>
+			<string name="Name">ServerScriptService</string>
+		</Properties>
+	</Item>
+	<Item class="ServerStorage" referent="RBX089FD06171F242E7AB401AE414B2145E">
+		<Properties>
+			<string name="Name">ServerStorage</string>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedStorage" referent="RBX2C6A2259028E43C28B29BE6541F5F7BE">
+		<Properties>
+			<string name="Name">ReplicatedStorage</string>
+		</Properties>
+	</Item>
+	<Item class="LuaWebService" referent="RBXF738C1B655274800A3A1A66EB77C2296">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="Lighting" referent="RBXF3974B9A3813452E8913045F39D98E1E">
+		<Properties>
+			<Color3 name="Ambient">4278190080</Color3>
+			<float name="Brightness">1</float>
+			<Color3 name="ColorShift_Bottom">4278190080</Color3>
+			<Color3 name="ColorShift_Top">4278190080</Color3>
+			<Color3 name="FogColor">4290822336</Color3>
+			<float name="FogEnd">100000</float>
+			<float name="FogStart">0</float>
+			<float name="GeographicLatitude">41.7332993</float>
+			<bool name="GlobalShadows">true</bool>
+			<string name="Name">Lighting</string>
+			<Color3 name="OutdoorAmbient">4286611584</Color3>
+			<bool name="Outlines">true</bool>
+			<Color3 name="ShadowColor">4289967032</Color3>
+			<string name="TimeOfDay">14:00:00</string>
+		</Properties>
+	</Item>
+	<Item class="HttpService" referent="RBXFB66F43FFB9941E494C2EBF3644EE47F">
+		<Properties>
+			<bool name="HttpEnabled">false</bool>
+			<string name="Name">HttpService</string>
+		</Properties>
+	</Item>
+	<Item class="GamepadService" referent="RBXBE19746EB7694EDC9F8F0E6EB291A43A">
+		<Properties>
+			<string name="Name">GamepadService</string>
+		</Properties>
+	</Item>
+</roblox>

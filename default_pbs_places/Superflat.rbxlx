@@ -1,0 +1,456 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Workspace" referent="RBX1411602D53AF4555B144FC2F2F7513D5">
+		<Properties>
+			<bool name="AllowThirdPartySales">false</bool>
+			<Ref name="CurrentCamera">RBX99C6A55784D844429E7450BE32E9D85A</Ref>
+			<double name="DistributedGameTime">0</double>
+			<bool name="ExpSolverEnabled_Replicate">true</bool>
+			<float name="FallenPartsDestroyHeight">-500</float>
+			<bool name="FilteringEnabled">false</bool>
+			<float name="Gravity">196.199997</float>
+			<CoordinateFrame name="ModelInPrimary">
+				<X>0</X>
+				<Y>0</Y>
+				<Z>0</Z>
+				<R00>1</R00>
+				<R01>0</R01>
+				<R02>0</R02>
+				<R10>0</R10>
+				<R11>1</R11>
+				<R12>0</R12>
+				<R20>0</R20>
+				<R21>0</R21>
+				<R22>1</R22>
+			</CoordinateFrame>
+			<string name="Name">Workspace</string>
+			<bool name="PGSPhysicsSolverEnabled">true</bool>
+			<Ref name="PrimaryPart">null</Ref>
+			<bool name="StreamingEnabled">false</bool>
+		</Properties>
+		<Item class="Camera" referent="RBX99C6A55784D844429E7450BE32E9D85A">
+			<Properties>
+				<CoordinateFrame name="CFrame">
+					<X>-612.292725</X>
+					<Y>140.803696</Y>
+					<Z>643.374451</Z>
+					<R00>0.746464849</R00>
+					<R01>0.202167332</R01>
+					<R02>-0.633970499</R02>
+					<R10>-0</R10>
+					<R11>0.952730417</R11>
+					<R12>0.303816944</R12>
+					<R20>0.665424824</R20>
+					<R21>-0.22678867</R21>
+					<R22>0.711179793</R22>
+				</CoordinateFrame>
+				<Ref name="CameraSubject">null</Ref>
+				<token name="CameraType">0</token>
+				<float name="FieldOfView">70</float>
+				<CoordinateFrame name="Focus">
+					<X>-611.02478</X>
+					<Y>140.19606</Y>
+					<Z>641.952087</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="HeadLocked">true</bool>
+				<float name="HeadScale">1</float>
+				<string name="Name">Camera</string>
+			</Properties>
+		</Item>
+		<Item class="Terrain" referent="RBX01690DE7F0FC489F963ABFCCE9BE20F9">
+			<Properties>
+				<bool name="Anchored">true</bool>
+				<float name="BackParamA">-0.5</float>
+				<float name="BackParamB">0.5</float>
+				<token name="BackSurface">0</token>
+				<token name="BackSurfaceInput">0</token>
+				<float name="BottomParamA">-0.5</float>
+				<float name="BottomParamB">0.5</float>
+				<token name="BottomSurface">4</token>
+				<token name="BottomSurfaceInput">0</token>
+				<int name="BrickColor">194</int>
+				<CoordinateFrame name="CFrame">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<bool name="CanCollide">true</bool>
+				<BinaryString name="ClusterGridV3"><![CDATA[+P8AAPn/AP8IACj/OAAB/wgAEf84APj/AAD7/wD/CAAo/zgAAf8IABH/OAABAAAA+f8A/wgA
+KP84AAH/CAAR/zgA+P8AAPz/AP8IACj/OAAB/wgAEf84AP7/AAABAAD/CAAo/zgAAf8IABH/
+OAD8/wAA+v8A/wgAKP84AAH/CAAR/zgAAQAAAPr/AP8IACj/OAAB/wgAEf84APz/AAD7/wD/
+CAAo/zgAAf8IABH/OAACAAAAAAAA/wgAKP84AAH/CAAR/zgA+P8AAP3/AP8IACj/OAAB/wgA
+Ef84AP7/AAACAAD/CAAo/zgAAf8IABH/OAD4/wAA/v8A/wgAKP84AAH/CAAR/zgABwAAAPv/
+AP8IACj/OAAB/wgAEf84AP3/AAADAAD/CAAo/zgAAf8IABH/OAD4/wAA//8A/wgAKP84AAH/
+CAAR/zgABgAAAAcAAP8IACj/OAAB/wgAEf84APr/AAD6/wD/CAAo/zgAAf8IABH/OAABAAAA
++/8A/wgAKP84AAH/CAAR/zgABwAAAPz/AP8IACj/OAAB/wgAEf84AP3/AAAEAAD/CAAo/zgA
+Af8IABH/OAAHAAAAAQAA/wgAKP84AAH/CAAR/zgAAQAAAPz/AP8IACj/OAAB/wgAEf84AAcA
+AAD9/wD/CAAo/zgAAf8IABH/OAD9/wAABQAA/wgAKP84AAH/CAAR/zgABwAAAAIAAP8IACj/
+OAAB/wgAEf84AAEAAAD9/wD/CAAo/zgAAf8IABH/OAAHAAAA/v8A/wgAKP84AAH/CAAR/zgA
+/f8AAAYAAP8IACj/OAAB/wgAEf84APj/AAD6/wD/CAAo/zgAAf8IABH/OAAEAAAABwAA/wgA
+KP84AAH/CAAR/zgABwAAAAMAAP8IACj/OAAB/wgAEf84AAEAAAD+/wD/CAAo/zgAAf8IABH/
+OAD5/wAA+P8A/wgAKP84AAH/CAAR/zgABwAAAAQAAP8IACj/OAAB/wgAEf84AAEAAAD//wD/
+CAAo/zgAAf8IABH/OAAHAAAABQAA/wgAKP84AAH/CAAR/zgA+/8AAPj/AP8IACj/OAAB/wgA
+Ef84AAcAAAAGAAD/CAAo/zgAAf8IABH/OAD7/wAA+f8A/wgAKP84AAH/CAAR/zgA+P8AAPj/
+AP8IACj/OAAB/wgAEf84APr/AAD4/wD/CAAo/zgAAf8IABH/OAD8/wAA+P8A/wgAKP84AAH/
+CAAR/zgA//8AAPj/AP8IACj/OAAB/wgAEf84AAAAAAAHAAD/CAAo/zgAAf8IABH/OAAFAAAA
++P8A/wgAKP84AAH/CAAR/zgA/v8AAAcAAP8IACj/OAAB/wgAEf84AAMAAAD4/wD/CAAo/zgA
+Af8IABH/OAD9/wAAAQAA/wgAKP84AAH/CAAR/zgABwAAAPn/AP8IACj/OAAB/wgAEf84AP3/
+AAD4/wD/CAAo/zgAAf8IABH/OAD4/wAABwAA/wgAKP84AAH/CAAR/zgAAgAAAP//AP8IACj/
+OAAB/wgAEf84AAAAAAD4/wD/CAAo/zgAAf8IABH/OAD+/wAA+P8A/wgAKP84AAH/CAAR/zgA
+AQAAAPj/AP8IACj/OAAB/wgAEf84AAIAAAAHAAD/CAAo/zgAAf8IABH/OAAHAAAA+P8A/wgA
+KP84AAH/CAAR/zgAAgAAAPj/AP8IACj/OAAB/wgAEf84AP3/AAAHAAD/CAAo/zgAAf8IABH/
+OAAHAAAA//8A/wgAKP84AAH/CAAR/zgAAwAAAAcAAP8IACj/OAAB/wgAEf84AAQAAAD4/wD/
+CAAo/zgAAf8IABH/OAD//wAABwAA/wgAKP84AAH/CAAR/zgABQAAAAcAAP8IACj/OAAB/wgA
+Ef84APn/AAD6/wD/CAAo/zgAAf8IABH/OAAGAAAA+P8A/wgAKP84AAH/CAAR/zgAAQAAAAcA
+AP8IACj/OAAB/wgAEf84AAcAAAAHAAD/CAAo/zgAAf8IABH/OAD7/wAA+v8A/wgAKP84AAH/
+CAAR/zgA+f8AAPn/AP8IACj/OAAB/wgAEf84APr/AAD5/wD/CAAo/zgAAf8IABH/OAD8/wAA
++f8A/wgAKP84AAH/CAAR/zgA/f8AAPn/AP8IACj/OAAB/wgAEf84AP7/AAD5/wD/CAAo/zgA
+Af8IABH/OAD//wAA+f8A/wgAKP84AAH/CAAR/zgAAAAAAPn/AP8IACj/OAAB/wgAEf84APj/
+AAABAAD/CAAo/zgAAf8IABH/OAACAAAA+f8A/wgAKP84AAH/CAAR/zgA+f8AAPv/AP8IACj/
+OAAB/wgAEf84APr/AAD7/wD/CAAo/zgAAf8IABH/OAAAAAAAAAAA/wgAKP84AAH/CAAR/zgA
++/8AAPv/AP8IACj/OAAB/wgAEf84AAEAAAAAAAD/CAAo/zgAAf8IABH/OAD9/wAA+v8A/wgA
+KP84AAH/CAAR/zgA/v8AAPr/AP8IACj/OAAB/wgAEf84AP//AAD6/wD/CAAo/zgAAf8IABH/
+OAAAAAAA+v8A/wgAKP84AAH/CAAR/zgA+P8AAAIAAP8IACj/OAAB/wgAEf84AAIAAAD6/wD/
+CAAo/zgAAf8IABH/OAD9/wAA+/8A/wgAKP84AAH/CAAR/zgAAwAAAAAAAP8IACj/OAAB/wgA
+Ef84AP7/AAD7/wD/CAAo/zgAAf8IABH/OAAEAAAAAAAA/wgAKP84AAH/CAAR/zgA//8AAPv/
+AP8IACj/OAAB/wgAEf84APj/AAAAAAD/CAAo/zgAAf8IABH/OAAFAAAAAAAA/wgAKP84AAH/
+CAAR/zgA+P8AAAMAAP8IACj/OAAB/wgAEf84AAIAAAD7/wD/CAAo/zgAAf8IABH/OAD5/wAA
+AwAA/wgAKP84AAH/CAAR/zgAAwAAAPv/AP8IACj/OAAB/wgAEf84APr/AAADAAD/CAAo/zgA
+Af8IABH/OAAEAAAA+/8A/wgAKP84AAH/CAAR/zgA+/8AAAMAAP8IACj/OAAB/wgAEf84AAUA
+AAD7/wD/CAAo/zgAAf8IABH/OAD8/wAAAwAA/wgAKP84AAH/CAAR/zgABgAAAPv/AP8IACj/
+OAAB/wgAEf84APn/AAD8/wD/CAAo/zgAAf8IABH/OAD//wAAAQAA/wgAKP84AAH/CAAR/zgA
++v8AAPz/AP8IACj/OAAB/wgAEf84AAAAAAABAAD/CAAo/zgAAf8IABH/OAD7/wAA/P8A/wgA
+KP84AAH/CAAR/zgAAQAAAAEAAP8IACj/OAAB/wgAEf84APz/AAD8/wD/CAAo/zgAAf8IABH/
+OAACAAAAAQAA/wgAKP84AAH/CAAR/zgA/f8AAPz/AP8IACj/OAAB/wgAEf84AAMAAAABAAD/
+CAAo/zgAAf8IABH/OAD+/wAA/P8A/wgAKP84AAH/CAAR/zgABAAAAAEAAP8IACj/OAAB/wgA
+Ef84AP//AAD8/wD/CAAo/zgAAf8IABH/OAAFAAAAAQAA/wgAKP84AAH/CAAR/zgAAAAAAPz/
+AP8IACj/OAAB/wgAEf84AAYAAAABAAD/CAAo/zgAAf8IABH/OAD4/wAABAAA/wgAKP84AAH/
+CAAR/zgAAgAAAPz/AP8IACj/OAAB/wgAEf84APn/AAAEAAD/CAAo/zgAAf8IABH/OAADAAAA
+/P8A/wgAKP84AAH/CAAR/zgA+v8AAAQAAP8IACj/OAAB/wgAEf84AAQAAAD8/wD/CAAo/zgA
+Af8IABH/OAD7/wAABAAA/wgAKP84AAH/CAAR/zgABQAAAPz/AP8IACj/OAAB/wgAEf84APz/
+AAAEAAD/CAAo/zgAAf8IABH/OAAGAAAA/P8A/wgAKP84AAH/CAAR/zgA+f8AAP3/AP8IACj/
+OAAB/wgAEf84AP//AAACAAD/CAAo/zgAAf8IABH/OAD4/wAABQAA/wgAKP84AAH/CAAR/zgA
+AgAAAP3/AP8IACj/OAAB/wgAEf84APn/AAAFAAD/CAAo/zgAAf8IABH/OAADAAAA/f8A/wgA
+KP84AAH/CAAR/zgA+v8AAAUAAP8IACj/OAAB/wgAEf84AAQAAAD9/wD/CAAo/zgAAf8IABH/
+OAD7/wAABQAA/wgAKP84AAH/CAAR/zgABQAAAP3/AP8IACj/OAAB/wgAEf84APz/AAAFAAD/
+CAAo/zgAAf8IABH/OAAGAAAA/f8A/wgAKP84AAH/CAAR/zgAAAAAAAQAAP8IACj/OAAB/wgA
+Ef84APr/AAD//wD/CAAo/zgAAf8IABH/OAABAAAABAAA/wgAKP84AAH/CAAR/zgA+/8AAP//
+AP8IACj/OAAB/wgAEf84APn/AAAHAAD/CAAo/zgAAf8IABH/OAADAAAA//8A/wgAKP84AAH/
+CAAR/zgAAwAAAPn/AP8IACj/OAAB/wgAEf84APn/AAABAAD/CAAo/zgAAf8IABH/OAD6/wAA
+BwAA/wgAKP84AAH/CAAR/zgABAAAAP//AP8IACj/OAAB/wgAEf84AAQAAAD5/wD/CAAo/zgA
+Af8IABH/OAD6/wAAAQAA/wgAKP84AAH/CAAR/zgA+/8AAAcAAP8IACj/OAAB/wgAEf84AAUA
+AAD//wD/CAAo/zgAAf8IABH/OAAFAAAA+f8A/wgAKP84AAH/CAAR/zgA+/8AAAEAAP8IACj/
+OAAB/wgAEf84AAYAAAD5/wD/CAAo/zgAAf8IABH/OAD8/wAAAQAA/wgAKP84AAH/CAAR/zgA
+/P8AAAcAAP8IACj/OAAB/wgAEf84AAYAAAD//wD/CAAo/zgAAf8IABH/OAD7/wAABgAA/wgA
+KP84AAH/CAAR/zgABQAAAP7/AP8IACj/OAAB/wgAEf84AAYAAAD+/wD/CAAo/zgAAf8IABH/
+OAD8/wAABgAA/wgAKP84AAH/CAAR/zgAAAAAAAUAAP8IACj/OAAB/wgAEf84AAcAAAAAAAD/
+CAAo/zgAAf8IABH/OAD6/wAAAAAA/wgAKP84AAH/CAAR/zgAAQAAAAUAAP8IACj/OAAB/wgA
+Ef84APv/AAAAAAD/CAAo/zgAAf8IABH/OAADAAAA+v8A/wgAKP84AAH/CAAR/zgA+f8AAAIA
+AP8IACj/OAAB/wgAEf84AAQAAAD6/wD/CAAo/zgAAf8IABH/OAD6/wAAAgAA/wgAKP84AAH/
+CAAR/zgAAAAAAPv/AP8IACj/OAAB/wgAEf84APn/AAAAAAD/CAAo/zgAAf8IABH/OAAGAAAA
+AAAA/wgAKP84AAH/CAAR/zgABQAAAPr/AP8IACj/OAAB/wgAEf84APv/AAACAAD/CAAo/zgA
+Af8IABH/OAD//wAA/f8A/wgAKP84AAH/CAAR/zgABQAAAAIAAP8IACj/OAAB/wgAEf84AAAA
+AAD9/wD/CAAo/zgAAf8IABH/OAAGAAAAAgAA/wgAKP84AAH/CAAR/zgA//8AAP7/AP8IACj/
+OAAB/wgAEf84AAUAAAADAAD/CAAo/zgAAf8IABH/OAD//wAABAAA/wgAKP84AAH/CAAR/zgA
++f8AAP//AP8IACj/OAAB/wgAEf84AAAAAAD+/wD/CAAo/zgAAf8IABH/OAAGAAAAAwAA/wgA
+KP84AAH/CAAR/zgA/v8AAAQAAP8IACj/OAAB/wgAEf84APz/AAD//wD/CAAo/zgAAf8IABH/
+OAACAAAABAAA/wgAKP84AAH/CAAR/zgAAgAAAP7/AP8IACj/OAAB/wgAEf84APj/AAAGAAD/
+CAAo/zgAAf8IABH/OAD9/wAA//8A/wgAKP84AAH/CAAR/zgAAwAAAAQAAP8IACj/OAAB/wgA
+Ef84AAMAAAD+/wD/CAAo/zgAAf8IABH/OAD5/wAABgAA/wgAKP84AAH/CAAR/zgA/v8AAP//
+AP8IACj/OAAB/wgAEf84AAQAAAAEAAD/CAAo/zgAAf8IABH/OAAEAAAA/v8A/wgAKP84AAH/
+CAAR/zgA+v8AAAYAAP8IACj/OAAB/wgAEf84AP//AAD//wD/CAAo/zgAAf8IABH/OAAFAAAA
+BAAA/wgAKP84AAH/CAAR/zgA//8AAAUAAP8IACj/OAAB/wgAEf84AAAAAAD//wD/CAAo/zgA
+Af8IABH/OAAGAAAABAAA/wgAKP84AAH/CAAR/zgABgAAAPr/AP8IACj/OAAB/wgAEf84APz/
+AAACAAD/CAAo/zgAAf8IABH/OAD+/wAABQAA/wgAKP84AAH/CAAR/zgABwAAAPr/AP8IACj/
+OAAB/wgAEf84AP3/AAACAAD/CAAo/zgAAf8IABH/OAD6/wAA/f8A/wgAKP84AAH/CAAR/zgA
+AAAAAAIAAP8IACj/OAAB/wgAEf84APz/AAAAAAD/CAAo/zgAAf8IABH/OAACAAAABQAA/wgA
+KP84AAH/CAAR/zgA/v8AAAYAAP8IACj/OAAB/wgAEf84APv/AAD9/wD/CAAo/zgAAf8IABH/
+OAABAAAAAgAA/wgAKP84AAH/CAAR/zgA/f8AAAAAAP8IACj/OAAB/wgAEf84AAMAAAAFAAD/
+CAAo/zgAAf8IABH/OAD//wAABgAA/wgAKP84AAH/CAAR/zgA/P8AAP3/AP8IACj/OAAB/wgA
+Ef84AAIAAAACAAD/CAAo/zgAAf8IABH/OAD+/wAAAAAA/wgAKP84AAH/CAAR/zgABAAAAAUA
+AP8IACj/OAAB/wgAEf84AP7/AAADAAD/CAAo/zgAAf8IABH/OAAAAAAABgAA/wgAKP84AAH/
+CAAR/zgA/f8AAP3/AP8IACj/OAAB/wgAEf84AAMAAAACAAD/CAAo/zgAAf8IABH/OAD//wAA
+AAAA/wgAKP84AAH/CAAR/zgABQAAAAUAAP8IACj/OAAB/wgAEf84APn/AAD+/wD/CAAo/zgA
+Af8IABH/OAD//wAAAwAA/wgAKP84AAH/CAAR/zgAAQAAAAYAAP8IACj/OAAB/wgAEf84AP7/
+AAD9/wD/CAAo/zgAAf8IABH/OAAEAAAAAgAA/wgAKP84AAH/CAAR/zgABgAAAAUAAP8IACj/
+OAAB/wgAEf84APr/AAD+/wD/CAAo/zgAAf8IABH/OAAAAAAAAwAA/wgAKP84AAH/CAAR/zgA
+AgAAAAYAAP8IACj/OAAB/wgAEf84APv/AAD+/wD/CAAo/zgAAf8IABH/OAABAAAAAwAA/wgA
+KP84AAH/CAAR/zgAAwAAAAYAAP8IACj/OAAB/wgAEf84APz/AAD+/wD/CAAo/zgAAf8IABH/
+OAACAAAAAwAA/wgAKP84AAH/CAAR/zgABAAAAAYAAP8IACj/OAAB/wgAEf84AP3/AAD+/wD/
+CAAo/zgAAf8IABH/OAADAAAAAwAA/wgAKP84AAH/CAAR/zgABQAAAAYAAP8IACj/OAAB/wgA
+Ef84AP7/AAD+/wD/CAAo/zgAAf8IABH/OAAEAAAAAwAA/wgAKP84AAH/CAAR/zgABgAAAAYA
+AP8IACj/OAAB/wgAEf84AA==]]></BinaryString>
+				<Color3uint8 name="Color3uint8">4288914085</Color3uint8>
+				<PhysicalProperties name="CustomPhysicalProperties">
+					<CustomPhysics>false</CustomPhysics>
+				</PhysicalProperties>
+				<float name="Elasticity">0.300000012</float>
+				<float name="Friction">0.5</float>
+				<float name="FrontParamA">-0.5</float>
+				<float name="FrontParamB">0.5</float>
+				<token name="FrontSurface">0</token>
+				<token name="FrontSurfaceInput">0</token>
+				<float name="LeftParamA">-0.5</float>
+				<float name="LeftParamB">0.5</float>
+				<token name="LeftSurface">0</token>
+				<token name="LeftSurfaceInput">0</token>
+				<bool name="Locked">true</bool>
+				<token name="Material">256</token>
+				<string name="Name">Terrain</string>
+				<float name="Reflectance">0</float>
+				<float name="RightParamA">-0.5</float>
+				<float name="RightParamB">0.5</float>
+				<token name="RightSurface">0</token>
+				<token name="RightSurfaceInput">0</token>
+				<Vector3 name="RotVelocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<BinaryString name="SmoothGrid"></BinaryString>
+				<float name="TopParamA">-0.5</float>
+				<float name="TopParamB">0.5</float>
+				<token name="TopSurface">3</token>
+				<token name="TopSurfaceInput">0</token>
+				<float name="Transparency">0</float>
+				<Vector3 name="Velocity">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<Color3 name="WaterColor">4278998108</Color3>
+				<float name="WaterTransparency">0.300000012</float>
+				<float name="WaterWaveSize">0.150000006</float>
+				<float name="WaterWaveSpeed">10</float>
+				<Vector3 name="size">
+					<X>2044</X>
+					<Y>252</Y>
+					<Z>2044</Z>
+				</Vector3>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="NonReplicatedCSGDictionaryService" referent="RBXDBE71218311245ACA7DEB4FA983947A1">
+		<Properties>
+			<string name="Name">NonReplicatedCSGDictionaryService</string>
+		</Properties>
+	</Item>
+	<Item class="CSGDictionaryService" referent="RBX7D3552EB43134AD2960D4E18677FF60E">
+		<Properties>
+			<string name="Name">CSGDictionaryService</string>
+		</Properties>
+	</Item>
+	<Item class="Players" referent="RBXC31EB9B193724390AECF2CCB6FD6BA06">
+		<Properties>
+			<bool name="CharacterAutoLoads">true</bool>
+			<int name="MaxPlayersInternal">12</int>
+			<string name="Name">Players</string>
+			<int name="PreferredPlayersInternal">0</int>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedFirst" referent="RBX595E275F12F24649A278B92D637CA10F">
+		<Properties>
+			<string name="Name">ReplicatedFirst</string>
+		</Properties>
+	</Item>
+	<Item class="StarterPlayer" referent="RBXA0424C0BA4764CA89830ADAC0CB8B879">
+		<Properties>
+			<bool name="AutoJumpEnabled">true</bool>
+			<float name="CameraMaxZoomDistance">400</float>
+			<float name="CameraMinZoomDistance">0.5</float>
+			<token name="CameraMode">0</token>
+			<token name="DevCameraOcclusionMode">0</token>
+			<token name="DevComputerCameraMovementMode">0</token>
+			<token name="DevComputerMovementMode">0</token>
+			<token name="DevTouchCameraMovementMode">0</token>
+			<token name="DevTouchMovementMode">0</token>
+			<bool name="EnableMouseLockOption">true</bool>
+			<float name="HealthDisplayDistance">100</float>
+			<bool name="LoadCharacterAppearance">true</bool>
+			<string name="Name">StarterPlayer</string>
+			<float name="NameDisplayDistance">100</float>
+		</Properties>
+		<Item class="StarterPlayerScripts" referent="RBXA001D14ADD0A4560ABCB6971A0C6A7B8">
+			<Properties>
+				<string name="Name">StarterPlayerScripts</string>
+			</Properties>
+		</Item>
+		<Item class="StarterCharacterScripts" referent="RBX33D570A027E94FDE8FEF82EDD6D2E82F">
+			<Properties>
+				<string name="Name">StarterCharacterScripts</string>
+			</Properties>
+		</Item>
+	</Item>
+	<Item class="StarterPack" referent="RBX2E081228ADA24EA98F9C2EDB1CE5FDFC">
+		<Properties>
+			<string name="Name">StarterPack</string>
+		</Properties>
+	</Item>
+	<Item class="StarterGui" referent="RBXBF55CC33FFA0424182FF0E63319EA534">
+		<Properties>
+			<string name="Name">StarterGui</string>
+			<bool name="ResetPlayerGuiOnSpawn">true</bool>
+			<bool name="ShowDevelopmentGui">true</bool>
+		</Properties>
+	</Item>
+	<Item class="TeleportService" referent="RBX4381F5F0C02F4F0DA2283A85F735EEF5">
+		<Properties>
+			<string name="Name">Teleport Service</string>
+		</Properties>
+	</Item>
+	<Item class="SoundService" referent="RBX4810C409AE434596847E36DB4C250F34">
+		<Properties>
+			<token name="AmbientReverb">0</token>
+			<float name="DistanceFactor">10</float>
+			<float name="DopplerScale">1</float>
+			<string name="Name">SoundService</string>
+			<float name="RolloffScale">1</float>
+		</Properties>
+	</Item>
+	<Item class="CollectionService" referent="RBX162AA671B72645E388056E317B2DF081">
+		<Properties>
+			<string name="Name">CollectionService</string>
+		</Properties>
+	</Item>
+	<Item class="PhysicsService" referent="RBX89C446504B2044F49A3EB48EA42FA34E">
+		<Properties>
+			<string name="Name">PhysicsService</string>
+		</Properties>
+	</Item>
+	<Item class="Geometry" referent="RBX25000D7ED1554431AB1179DF24E04720">
+		<Properties>
+			<string name="Name">Geometry</string>
+		</Properties>
+	</Item>
+	<Item class="RenderHooksService" referent="RBX825517D9C142407BBF9ED72E82EF1DEC">
+		<Properties>
+			<string name="Name">RenderHooksService</string>
+		</Properties>
+	</Item>
+	<Item class="InsertService" referent="RBX35D4BFB8183E40AD8448878ECC06412B">
+		<Properties>
+			<bool name="AllowInsertFreeModels">false</bool>
+			<string name="Name">InsertService</string>
+		</Properties>
+	</Item>
+	<Item class="SocialService" referent="RBXE070386E52A747FF851539A56F98B2B0">
+		<Properties>
+			<string name="Name">SocialService</string>
+		</Properties>
+	</Item>
+	<Item class="GamePassService" referent="RBX90A117E698F1465D8A5E987EF2F6E638">
+		<Properties>
+			<string name="Name">GamePassService</string>
+		</Properties>
+	</Item>
+	<Item class="Debris" referent="RBX067D4B05C9FD431F94C9290BA6797FE9">
+		<Properties>
+			<int name="MaxItems">1000</int>
+			<string name="Name">Debris</string>
+		</Properties>
+	</Item>
+	<Item class="TimerService" referent="RBX4DEE91C72869492FA22CDCF6182D2517">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="ScriptInformationProvider" referent="RBX8B53C928EE85402D86FE0E151628175F">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="CookiesService" referent="RBX89B215AE3FC042D98807A824E2732DDD">
+		<Properties>
+			<string name="Name">CookiesService</string>
+		</Properties>
+	</Item>
+	<Item class="ContextActionService" referent="RBXAD2905268D964986A7EAEA4F155A829F">
+		<Properties>
+			<string name="Name">ContextActionService</string>
+		</Properties>
+	</Item>
+	<Item class="ScriptService" referent="RBX7824889C58F9463EBFA52F64AB5C4E2E">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="AssetService" referent="RBX11CA345BA6854EF09DF5DDF49C277738">
+		<Properties>
+			<string name="Name">AssetService</string>
+		</Properties>
+	</Item>
+	<Item class="Selection" referent="RBX49F5159341DA429F81DB24927C20154D">
+		<Properties>
+			<string name="Name">Selection</string>
+		</Properties>
+	</Item>
+	<Item class="ServerScriptService" referent="RBX98F90543564940ED91488D3396A80374">
+		<Properties>
+			<bool name="LoadStringEnabled">false</bool>
+			<string name="Name">ServerScriptService</string>
+		</Properties>
+	</Item>
+	<Item class="ServerStorage" referent="RBX05881E5226144542911954137F2043FB">
+		<Properties>
+			<string name="Name">ServerStorage</string>
+		</Properties>
+	</Item>
+	<Item class="ReplicatedStorage" referent="RBX353D7C1D7ED74C8BA5EED4F0E4A0B915">
+		<Properties>
+			<string name="Name">ReplicatedStorage</string>
+		</Properties>
+	</Item>
+	<Item class="LuaWebService" referent="RBX0DBEAD4669F349D8AE4A3E8B96849767">
+		<Properties>
+			<string name="Name">Instance</string>
+		</Properties>
+	</Item>
+	<Item class="Lighting" referent="RBX5280A77C5C874B6E9B01CB0C3699B0FA">
+		<Properties>
+			<Color3 name="Ambient">4278190080</Color3>
+			<float name="Brightness">1</float>
+			<Color3 name="ColorShift_Bottom">4278190080</Color3>
+			<Color3 name="ColorShift_Top">4278190080</Color3>
+			<Color3 name="FogColor">4290822336</Color3>
+			<float name="FogEnd">100000</float>
+			<float name="FogStart">0</float>
+			<float name="GeographicLatitude">41.7332993</float>
+			<bool name="GlobalShadows">true</bool>
+			<string name="Name">Lighting</string>
+			<Color3 name="OutdoorAmbient">4286611584</Color3>
+			<bool name="Outlines">true</bool>
+			<Color3 name="ShadowColor">4289967032</Color3>
+			<string name="TimeOfDay">14:00:00</string>
+		</Properties>
+	</Item>
+	<Item class="HttpService" referent="RBXE1C8AF1816014C998094F03167472943">
+		<Properties>
+			<bool name="HttpEnabled">false</bool>
+			<string name="Name">HttpService</string>
+		</Properties>
+	</Item>
+	<Item class="GamepadService" referent="RBX3D11B627644A4B6280A4BD9C39F9A2A5">
+		<Properties>
+			<string name="Name">GamepadService</string>
+		</Properties>
+	</Item>
+</roblox>
