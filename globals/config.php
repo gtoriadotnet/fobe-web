@@ -3,6 +3,8 @@
 /*
 	Alphaland 2021 site configuration
 	This is extremely sensitive.
+
+	Fuck u nsg
 */
 
 try 
