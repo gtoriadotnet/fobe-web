@@ -12,9 +12,6 @@ if(!($user->isOwner())) {
 adminPanelStats();
 
 $alert = '';
-$setup_html = $GLOBALS['setupHtmlPath']; //path to the setup "cdn"
-$newgameversion = "version-" . bin2hex(openssl_random_pseudo_bytes(8));
-$newstudioversion = "version-" . bin2hex(openssl_random_pseudo_bytes(8));
 	
 	$body = <<<EOT
 	<div class="container">
