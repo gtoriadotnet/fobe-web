@@ -5,7 +5,7 @@
 */
 
 namespace Alphaland\Assets {
-    class AssetType
+    class AssetTypeHelper
     {
         public function IsPurchasable($id)
         {
