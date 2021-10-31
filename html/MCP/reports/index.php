@@ -5,5 +5,8 @@
     Active Reports
 */
 
-if (!$GLOBALS['user']->isAdmin())
-    die();
+if(!$user->isStaff()) {
+    redirect("/");
+}
+
+echo "soon";

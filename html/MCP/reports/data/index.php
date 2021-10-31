@@ -42,7 +42,7 @@ if ($validXML) {
 
     $abuserid = (int)filter_var($commentdata[0], FILTER_SANITIZE_NUMBER_INT);
     $reportreason = (string)trim($commentdata[1]);
-    $reportdescription = (string)trim($commentdata[2]);
+    $reportdescription = (string)$commentdata[2];
 
     $chats = $ParsedXML->xpath('//message');
 
@@ -50,7 +50,7 @@ if ($validXML) {
 		"ReporterUid" => $reporteruserid,
 		"PlaceId" => $placeid, 
 		"JobId" => $jobid,
-		"AbuserId" => $abuserid,
+		"AbuserUid" => $abuserid,
 		"Reason" => $reportreason,
 		"Description" => $reportdescription
 	);
@@ -71,3 +71,4 @@ if ($validXML) {
 
     die(json_encode($jsonData));
 }
+die(json_encode(["alert"=>"Error Occurred"]));

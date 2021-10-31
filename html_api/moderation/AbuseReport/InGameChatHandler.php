@@ -2,7 +2,7 @@
 
 /*
     Alphaland 2021
-    Absue reports
+    Abuse reports
 */
 
 RCCHeaderEnvironment();

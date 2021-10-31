@@ -1,4 +1,0 @@
-<report userID="2" placeID="186" gameJobID="4991173a-9c88-48fe-b8c7-76cccd4b0b8c">
-	<comment>AbuserID:0;Bad Model or Script;test</comment>
-	<messages></messages>
-</report>

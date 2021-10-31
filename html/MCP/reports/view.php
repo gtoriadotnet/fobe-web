@@ -52,10 +52,10 @@ var getparam = new URLSearchParams(window.location.search).get("id");
 function populateReport() {
     getJSONCDS("https://www.alphaland.cc/MCP/reports/data/?id="+getparam)
 	.done(function(jsonData) {
-        $("#reporter-id").html("Reporter ID: "+jsonData.ReporterUid);
+        $("#reporter-id").html("Reporter UID: "+jsonData.ReporterUid);
         $("#place-id").html("Place ID: "+jsonData.PlaceId);
         $("#job-id").html('Job ID: "'+jsonData.JobId+'"');
-        $("#abuser-id").html("Abuser ID: "+jsonData.AbuserId);
+        $("#abuser-id").html("Abuser UID: "+jsonData.AbuserUid);
         $("#report-reason").html('Report Reason: "'+jsonData.Reason+'"');
         $("#report-description").html('Report Description: "'+jsonData.Description+'"');
 
