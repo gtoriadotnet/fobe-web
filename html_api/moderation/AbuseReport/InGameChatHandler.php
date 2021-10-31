@@ -5,7 +5,7 @@
     Abuse reports
 */
 
-RCCHeaderEnvironment();
+RCCHeaderEnvironment(); //secure access RCC only
 
 $xml = file_get_contents('php://input');
 
