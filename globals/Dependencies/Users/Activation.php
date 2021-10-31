@@ -6,54 +6,57 @@
 
 namespace Alphaland\Users {
 
+    use Alphaland\Common\HashingUtiltity;
     use PDO;
 
     class Activation
     {
-        private function generateActivationCode()
+
+        private static PDO $pdo = $GLOBALS['pdo'];
+
+        private static function GenerateActivationCode(): string
         {
             $hash = "";
-            while (true) {
-                $hash = genHash(32);
+            do {
+                $hash = HashingUtiltity::GenerateByteHash(32);
                 
-                $keycheck = $GLOBALS['pdo']->prepare("SELECT * FROM `alphaland_verification` WHERE `activationcode` = :ac");
-                $keycheck->bindParam(":ac", $hash, PDO::PARAM_STR);
-                $keycheck->execute();
-                if ($keycheck->rowCount() == 0) {
-                    break;
-                }
-            }
+                $query = Activation::$pdo->prepare("SELECT COUNT(*) FROM `alphaland_verification` WHERE `activationcode` = :ac");
+                $query->bindParam(":ac", $hash, PDO::PARAM_STR);
+                $query->execute();
+            } while ($query->fetchColumn(0) != 0);
+
             return $hash;
         }
 
-        public function getUserActivationCode(int $userid)
+        public static function GetUserActivationCode(int $userid): string
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `alphaland_verification` WHERE `uid` = :uid");
+            $query = Activation::$pdo->prepare("SELECT `activationcode` FROM `alphaland_verification` WHERE `uid` = :uid");
             $query->bindParam(":uid", $userid, PDO::PARAM_INT);
             $query->execute();
+
             if ($query->rowCount() == 1) {
-                return $query->fetch(PDO::FETCH_OBJ)->activationcode;
+                return (string)$query->fetch(PDO::FETCH_OBJ)->activationcode;
             }
-            return false;
+            return null;
         }
         
-        public function isUserActivated(int $userid)
+        public static function IsUserActivated(int $userid): bool
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `alphaland_verification` WHERE `isactivated` = 1 AND `uid` = :uid");
+            $query = Activation::$pdo->prepare("SELECT COUNT(*) FROM `alphaland_verification` WHERE `isactivated` = 1 AND `uid` = :uid");
             $query->bindParam(":uid", $userid, PDO::PARAM_INT);
             $query->execute();
-            if ($query->rowCount() > 0) {
+            if ($query->fetchColumn(0) > 0) {
                 return true;
             }
             return false;
         }  
 
-        public function setupUserActivation(int $userid) //this should be ran when the user first signs up
+        public static function SetupUserActivation(int $userid): bool //this should be ran when the user first signs up
         {
-            if (!$this->isUserActivated($userid)) {
-                $activationcode = $this->generateActivationCode();
+            if (!Activation::IsUserActivated($userid)) {
+                $activationcode = Activation::GenerateActivationCode();
 
-                $n = $GLOBALS['pdo']->prepare("INSERT INTO `alphaland_verification`(`activationcode`,`uid`) VALUES(:ac, :userid)");
+                $n = Activation::$pdo->prepare("INSERT INTO `alphaland_verification`(`activationcode`,`uid`) VALUES(:ac, :userid)");
                 $n->bindParam(":ac", $activationcode, PDO::PARAM_STR);
                 $n->bindParam(":userid", $userid, PDO::PARAM_INT);
                 $n->execute();
