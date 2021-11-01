@@ -149,6 +149,7 @@ if placeId~=nil and baseurl~=nil then
 	game:Load(baseurl .. "/asset/?id=" .. placeId)
 end
 
+--[[Old Animations]]--
 --[[
 if game:GetService("StarterPlayer"):FindFirstChild("StarterCharacterScripts") ~= nil and game:GetService("StarterPlayer").StarterCharacterScripts:FindFirstChild("Animate") == nil then
 	pcall(function()game:GetObjects("rbxasset://fonts/humanoidAnimateLocal.rbxm")[1].Parent = game:GetService("StarterPlayer").StarterCharacterScripts end)
