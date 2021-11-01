@@ -5,6 +5,55 @@ if(!($user->isOwner())) {
 }
 
 /*
+$validXML = true;
+	try {
+		$ParsedXML = new SimpleXMLElement($xml);
+	} catch (Exception $e) {
+		$validXML = false;
+	}
+						
+	if ($validXML) {
+		//find mesh urls
+		$meshes = $ParsedXML->xpath('//Content[@name="MeshId"]/url');
+
+		$meshuploadsuccess = true;
+		foreach ($meshes as $mesh) {
+			$assetid = convertAssetUrlToId($mesh);
+			if (!$assetid) {
+				return "Unsupported Asset";
+			}
+			$assetid = uploadRobloxMesh($assetname, $assetid, 1);
+			if ($assetid !== FALSE) {
+				$xml=str_replace($mesh, $GLOBALS['url'] . "/asset/?id=" . $assetid, $xml);
+				RenderMesh($assetid);
+			} else {
+				$meshuploadsuccess = false;
+				break;
+			}
+		}
+
+	}
+*/
+
+/*
+$html = file_get_contents("shit.txt");
+$needle = "http://www.roblox.com/asset/?id=";
+$lastPos = 0;
+
+while (($lastPos = strpos($html, $needle, $lastPos))!== false) {
+	$asseturl = substr($html, $lastPos, strlen($needle)+9);
+    $lastPos = $lastPos + strlen($needle);
+
+	$robloxasset = convertAssetUrlToId($asseturl);
+	$newasset = uploadRobloxAnimation(getRobloxProductInfo($robloxasset)->Name, $robloxasset, 1);
+
+	$html=str_replace($asseturl, $GLOBALS['url'] . "/asset/?id=" . $newasset, $html);
+}
+
+file_put_contents("finished.txt", $html);
+*/
+
+/*
 include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 
 $test = new Alphaland\Users\Activation();
