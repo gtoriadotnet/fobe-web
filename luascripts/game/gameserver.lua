@@ -149,9 +149,11 @@ if placeId~=nil and baseurl~=nil then
 	game:Load(baseurl .. "/asset/?id=" .. placeId)
 end
 
+--[[
 if game:GetService("StarterPlayer"):FindFirstChild("StarterCharacterScripts") ~= nil and game:GetService("StarterPlayer").StarterCharacterScripts:FindFirstChild("Animate") == nil then
 	pcall(function()game:GetObjects("rbxasset://fonts/humanoidAnimateLocal.rbxm")[1].Parent = game:GetService("StarterPlayer").StarterCharacterScripts end)
 end
+]]--
 
 -- Now start the connection
 ns:Start(port) 
