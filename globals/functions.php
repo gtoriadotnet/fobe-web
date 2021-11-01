@@ -3348,6 +3348,22 @@ function uploadRobloxTexture($name, $assetid, $creatorid) {
 	return false;
 }
 
+function uploadRobloxAnimation($name, $assetid, $creatorid) {
+	if (getRobloxProductInfo($assetid)->AssetTypeId == 24) {
+		$animationstr = file_get_contents('compress.zlib://'.$GLOBALS['ROBLOXAssetAPI'].$assetid);
+	
+		$hash = genAssetHash(16);
+		$assetid = availableAssetId();
+		$name = cleanInput($name);
+
+		if (file_put_contents($GLOBALS['assetCDNPath'] . $hash, $animationstr)) {
+			createGenericAsset($assetid, 24, $assetid, "", $name, "", $creatorid, 0, 0, 1, 1, $hash);
+			return $assetid;
+		}
+	}
+	return false;
+}
+
 function submitRobloxAssetWorker($requestedassetid, $assettypeid, $assetname, $assetdescription, $price, $onsale) {
 	//multiple occasions of the same item being uploaded, double check the name now
 	$isduplicate = false;
