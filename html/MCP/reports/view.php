@@ -19,6 +19,8 @@ if ($report->rowCount() == 0) {
 
 $body = <<<EOT
 <h5 class="text-center">Report Information</h5>
+<h6 class="text-center">If you are unsure about something please contact an Administrator</h6>
+<h6 class="text-center">If you determine misuse of this system please warn ban the user</h6>
 <hr>
 <div class="container-fluid">
 	<div class="container">
