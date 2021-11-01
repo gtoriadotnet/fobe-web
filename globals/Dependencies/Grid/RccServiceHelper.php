@@ -2,6 +2,8 @@
 
 /*
     Alphaland 2021
+    Nikita TODO: ALPHA-22 (Response Models for things that definitely have a known response (like specific SOAP actions))
+                 https://jira.mfdlabs.local/browse/ALPHA-22
 */
 
 namespace Alphaland\Grid {
@@ -14,16 +16,15 @@ namespace Alphaland\Grid {
             $this->ServiceIp = $ServiceIp;
         }
 
-        private function soapCallService(string $name, array $arguments = []) 
+        private function SoapCallService(string $name, array $arguments = []): mixed
         {
-            $soapcl = new \SoapClient($GLOBALS['RCCwsdl'], ["location" => "http://".$this->ServiceIp, "uri" => "http://roblox.com/", "exceptions" => false]);
+            $soapcl = new \SoapClient($GLOBALS['RCCwsdl'], ["location" => "http://" . $this->ServiceIp, "uri" => "http://roblox.com/", "exceptions" => false]);
             return $soapcl->{$name}($arguments); //thanks BrentDaMage didnt know u can do this
         }
 
-        private function verifyLuaValue($value) //mostly due to booleans, but maybe something will come up in the future
+        private function VerifyLuaValue(mixed $value): string //mostly due to booleans, but maybe something will come up in the future
         {
-            switch ($value)
-            {
+            switch ($value) {
                 case is_bool(json_encode($value)) || $value == 1:
                     return json_encode($value);
                 default:
@@ -31,10 +32,9 @@ namespace Alphaland\Grid {
             }
         }
 
-        private function getLuaType($value): string //currently only supports booleans, integers and strings
+        private function GetLuaType(string $value): string //currently only supports booleans, integers and strings
         {
-            switch ($value)
-            {
+            switch ($value) {
                 case $value == "true" || $value == "false": //this is so gay but php hates me
                     return "LUA_TBOOLEAN";
                 case !is_string($value) && !is_bool($value) && filter_var($value, FILTER_VALIDATE_INT):
@@ -44,23 +44,23 @@ namespace Alphaland\Grid {
             }
         }
 
-        private function luaArguments(array $arguments=[]) //arguments for a script being executed
+        private function ConstructLuaArguments(array $arguments = []): array //arguments for a script being executed
         {
             if (!empty($arguments)) {
-                $luavalue = array("LuaValue"=>array());
-                foreach ($arguments as $argument) { 
+                $luavalue = array("LuaValue" => array());
+                foreach ($arguments as $argument) {
                     array_push($luavalue['LuaValue'], array(
-                        "type" => $this->getLuaType($argument),
-                        "value" => $this->verifyLuaValue($argument)
+                        "type" => $this->GetLuaType($argument),
+                        "value" => $this->VerifyLuaValue($argument)
                     ));
                 }
                 return $luavalue;
             }
         }
 
-        private function soapJobTemplate(string $servicename, string $jobid, int $expiration, int $category, int $cores, string $scriptname, string $script, array $arguments=[])
+        private function ConstructJobTemplate(string $servicename, string $jobid, int $expiration, int $category, int $cores, string $scriptname, string $script, array $arguments = []): mixed
         {
-            return $this->soapCallService(
+            return $this->SoapCallService(
                 $servicename,
                 array(
                     "job" => array(
@@ -72,83 +72,87 @@ namespace Alphaland\Grid {
                     "script" => array(
                         "name" => $scriptname,
                         "script" => $script,
-                        "arguments" => $this->luaArguments($arguments)
+                        "arguments" => $this->ConstructLuaArguments($arguments)
                     )
                 )
             );
         }
 
-        public function soapGetVersion()
+        public function GetVersion(): mixed
         {
-            return $this->soapCallService("GetVersion");
+            return $this->SoapCallService("GetVersion");
         }
 
-        public function soapHelloWorld()
+        public function HelloWorld(): mixed
         {
-            return $this->soapCallService("HelloWorld");
+            return $this->SoapCallService("HelloWorld");
         }
 
-        public function soapCloseAllJobs()
+        public function CloseAllJobs(): mixed
         {
-            return $this->soapCallService("CloseAllJobs");
+            return $this->SoapCallService("CloseAllJobs");
         }
 
-        public function soapCloseExpiredJobs()
+        public function CloseExpiredJobs(): mixed
         {
-            return $this->soapCallService("CloseExpiredJobs");
+            return $this->SoapCallService("CloseExpiredJobs");
         }
 
-        public function soapGetAllJobsEx()
+        public function GetAllJobsEx(): mixed
         {
-            return $this->soapCallService("GetAllJobsEx");
+            return $this->SoapCallService("GetAllJobsEx");
         }
 
-        public function soapGetStatus()
+        public function GetStatus(): mixed
         {
-            return $this->soapCallService("GetStatus");
+            return $this->SoapCallService("GetStatus");
         }
 
-        public function soapDiagEx(string $type, string $jobid)
+        public function DiagEx(string $type, string $jobid): mixed
         {
-            return $this->soapCallService("DiagEx", array("type" => $type, "jobID" => $jobid));
+            return $this->SoapCallService("DiagEx", array("type" => $type, "jobID" => $jobid));
         }
 
-        public function soapCloseJob(string $jobid)
+        // this doesn't return anything
+        // https://pastebin.com/raw/pr5NDBwC
+        public function CloseJob(string $jobid): mixed
         {
-            return $this->soapCallService("CloseJob", array("jobID" => $jobid));
+            return $this->SoapCallService("CloseJob", array("jobID" => $jobid));
         }
 
-        public function soapGetExpiration(string $jobid)
+        public function GetExpiration(string $jobid): mixed
         {
-            return $this->soapCallService("GetExpiration", array("jobID" => $jobid));
+            return $this->SoapCallService("GetExpiration", array("jobID" => $jobid));
         }
 
-        public function soapExecuteEx(string $jobid, string $scriptname, string $script, array $arguments=[])
+        public function ExecuteEx(string $jobid, string $scriptname, string $script, array $arguments = []): mixed
         {
-            return $this->soapCallService("ExecuteEx", array(
-                    "jobID" => $jobid, 
+            return $this->SoapCallService(
+                "ExecuteEx",
+                array(
+                    "jobID" => $jobid,
                     "script" => array(
                         "name" => $scriptname,
                         "script" => $script,
-                        "arguments" => $this->luaArguments($arguments)
+                        "arguments" => $this->ConstructLuaArguments($arguments)
                     )
                 )
             );
         }
 
-        public function soapRenewLease(string $jobid, int $expiration)
+        public function RenewLease(string $jobid, int $expiration): mixed
         {
-            return $this->soapCallService("RenewLease", array("jobID" => $jobid, "expirationInSeconds" => $expiration));
+            return $this->SoapCallService("RenewLease", array("jobID" => $jobid, "expirationInSeconds" => $expiration));
         }
 
-        public function soapOpenJobEx(string $jobid, int $expiration, string $scriptname, string $script, array $arguments=[])
+        public function OpenJobEx(string $jobid, int $expiration, string $scriptname, string $script, array $arguments = []): mixed
         {
-            return $this->soapJobTemplate("OpenJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
+            return $this->ConstructJobTemplate("OpenJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
         }
 
-        public function soapBatchJobEx(string $jobid, int $expiration, string $scriptname, string $script, array $arguments=[])
+        public function BatchJobEx(string $jobid, int $expiration, string $scriptname, string $script, array $arguments = []): mixed
         {
-            return $this->soapJobTemplate("BatchJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
+            return $this->ConstructJobTemplate("BatchJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
         }
     }
 }

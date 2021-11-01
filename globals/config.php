@@ -5,7 +5,10 @@
 	This is extremely sensitive.
 
 	Fuck u nsg
+	Fuck you too Austin :)
 */
+
+use Alphaland\Users\Activation;
 
 try 
 {
@@ -125,8 +128,8 @@ try
 			forceHttpsCloudflare();
 		}
 
-		$activated = new Alphaland\Users\Activation();
-		$activated = $activated->isUserActivated($GLOBALS['user']->id);
+		// TODO: WebContextManager::CurrentUser instead of $GLOBALS['user']!!
+		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);
 
