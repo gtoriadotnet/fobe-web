@@ -6490,6 +6490,8 @@ function getCurrentTheme() //returns the theme set (integer)
 function getCurrentThemeLogo() //grabs the alphaland logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
+
+	return $GLOBALS['url'] . "/alphaland/cdn/imgs/alpha-spooky/alphalandzombie.png"; //spooky
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
