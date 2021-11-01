@@ -5,8 +5,6 @@
 	User class
 */
 
-use Alphaland\Users\Activation;
-
 class user {
 	public $id = -1;
 	public $name = "";
@@ -67,7 +65,8 @@ class user {
 					// ..
 
 					//activation stuff
-					$activated = Activation::IsUserActivated($this->id);
+					$activated = new Alphaland\Users\Activation();
+					$activated = $activated->isUserActivated($this->id);
 					
 					if (!banned($this->id))
 					{

@@ -8,8 +8,6 @@
 	Fuck you too Austin :)
 */
 
-use Alphaland\Users\Activation;
-
 try 
 {
 	//php config
@@ -128,8 +126,8 @@ try
 			forceHttpsCloudflare();
 		}
 
-		// TODO: WebContextManager::CurrentUser instead of $GLOBALS['user']!!
-		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
+		$activated = new Alphaland\Users\Activation();
+		$activated = $activated->isUserActivated($GLOBALS['user']->id);
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);
 
