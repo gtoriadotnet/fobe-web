@@ -415,7 +415,7 @@ function getWhitelistedUsersPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("whitelistedUsersPage", "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#whitelisted_users_html", "#whitelisted_users_button", html, page, limit, "", "No whitelisted users", "&id="+gameid+"&whitelist=true"); //show all ranks besides banned
+	multiPageHelper("whitelistedUsersPage", [], "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#whitelisted_users_html", "#whitelisted_users_button", html, page, limit, "", "No whitelisted users", "&id="+gameid+"&whitelist=true"); //show all ranks besides banned
 }
 
 function userRolesPage(page)
@@ -444,7 +444,7 @@ function getUserRolesPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("userRolesPage", "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#user_roles_html", "#user_roles_buttons", html, page, limit, "", "No users", "&id="+gameid+"&nobanned=true"); //show all ranks besides banned
+	multiPageHelper("userRolesPage", [], "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#user_roles_html", "#user_roles_buttons", html, page, limit, "", "No users", "&id="+gameid+"&nobanned=true"); //show all ranks besides banned
 }
 
 function bannedMembersPage(page)
@@ -465,7 +465,7 @@ function getBannedMembersPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("bannedMembersPage", "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#banned_users_html", "#banned_users_buttons", html, page, limit, "", "No banned users", "&id="+gameid+"&excluderank=10"); //will show only ranks below 10
+	multiPageHelper("bannedMembersPage", [], "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#banned_users_html", "#banned_users_buttons", html, page, limit, "", "No banned users", "&id="+gameid+"&excluderank=10"); //will show only ranks below 10
 }
 
 //initialize

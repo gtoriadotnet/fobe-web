@@ -102,6 +102,8 @@ $body = <<<EOT
 </div>
 <script>
 var assetTypeId = 8;
+var currentKeyword = "";
+
 function catalogPage(page, assettype, keyword="") {
 	if (assettype) {
 		$("#type" + assetTypeId).removeClass("focuscatalog")
@@ -109,7 +111,8 @@ function catalogPage(page, assettype, keyword="") {
 		$("#type" + assetTypeId).addClass("focuscatalog");
 	}
 	getCatalogPage(assetTypeId, page, 12, keyword);
-}    
+}
+
 function getCatalogPage(assettype, page, limit, keyword) {
 	var html = '<li>';
 	html += '<div class="catalog-card text-center">';
@@ -124,7 +127,7 @@ function getCatalogPage(assettype, page, limit, keyword) {
 	html += '</div>';
 	html += '</li>';
             
-	multiPageHelper("catalogPage", "https://api.alphaland.cc/catalog/items", "https://api.alphaland.cc/logo", "#catalogitems", "#catalogpages", html, page, limit, keyword, "No results", "&assetTypeId="+assettype);
+	multiPageHelper("catalogPage", [assetTypeId,keyword], "https://api.alphaland.cc/catalog/items", "https://api.alphaland.cc/logo", "#catalogitems", "#catalogpages", html, page, limit, keyword, "No results", "&assetTypeId="+assettype);
 }
 
 $('#keyword_input').keypress(function(event) {

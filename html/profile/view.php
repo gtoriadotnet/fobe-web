@@ -286,7 +286,7 @@ if(isset($_GET['id']))
 			html += '</a>';
 			html += '</li>';
 
-			multiPageHelper("userBadgesPage", "https://api.alphaland.cc/users/profile/badges", "https://api.alphaland.cc/logo", "#usermade_badges_container", "#usermade_badges_page_buttons", html, page, limit, "", "User has no Badges", "&userId="+userid);
+			multiPageHelper("userBadgesPage", [], "https://api.alphaland.cc/users/profile/badges", "https://api.alphaland.cc/logo", "#usermade_badges_container", "#usermade_badges_page_buttons", html, page, limit, "", "User has no Badges", "&userId="+userid);
 		}
 
 		function getUserFriends(userid)
@@ -386,7 +386,7 @@ if(isset($_GET['id']))
 			html += '<p class="inventory-item-name">By: <a class="red-a" href="view?id={creatorId}">{creator}</a></p>';
 			html += '</li>';
 			
-			multiPageHelper("inventoryPage", "https://api.alphaland.cc/users/profile/inventory", "https://api.alphaland.cc/logo", "#invitems", "#invpages", html, page, limit, "", "User has no items of this type", "&userId="+userid+"&assetTypeId="+assettype);
+			multiPageHelper("inventoryPage", [], "https://api.alphaland.cc/users/profile/inventory", "https://api.alphaland.cc/logo", "#invitems", "#invpages", html, page, limit, "", "User has no items of this type", "&userId="+userid+"&assetTypeId="+assettype);
 		}
 
 		function currentlyWearing() {
@@ -415,7 +415,7 @@ if(isset($_GET['id']))
 			html +=	'</a>';
 			html +=	'</li>';
 			
-			multiPageHelper("groupsPage", "https://api.alphaland.cc/users/groups", "https://api.alphaland.cc/logo", "#groups_container", "#groups_page-buttons", html, page, limit, "", "User has no Groups", "&userId="+userid);
+			multiPageHelper("groupsPage", [], "https://api.alphaland.cc/users/groups", "https://api.alphaland.cc/logo", "#groups_container", "#groups_page-buttons", html, page, limit, "", "User has no Groups", "&userId="+userid);
 		}
 		
 		//slides stuff

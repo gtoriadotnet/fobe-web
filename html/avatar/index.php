@@ -385,11 +385,7 @@ $body = '
 		avatarChange("https://api.alphaland.cc/user/avatar/assets/remove?assetId=" + assetId)
 	}
 
-	function inventoryPageSearch(query)
-	{
-		getInventoryPage(assetTypeId, 1, 8, query)
-	}
-	function inventoryPage(page, assettype)
+	function inventoryPage(page, assettype, keyword)
 	{
 		if (assettype)
 		{
@@ -400,7 +396,7 @@ $body = '
 		$("#search_bar").show();
 		$("#create-outfit-button").hide();
 		$("#outfitsbutton").removeClass("active");
-		getInventoryPage(assetTypeId, page, 8);
+		getInventoryPage(assetTypeId, page, 8, keyword);
 	}
 	function getInventoryPage(assettype, page, limit, keyword="")
 	{
@@ -411,7 +407,7 @@ $body = '
 		html += "</a>";
 		html += "</li>";
 				
-		multiPageHelper("inventoryPage", "https://api.alphaland.cc/users/profile/inventory", "https://api.alphaland.cc/logo", "#itemsDiv", "#page-buttons", html, page, limit, keyword, "You don\'t own any items of this type", "&assetTypeId="+assettype);
+		multiPageHelper("inventoryPage", [assettype,keyword], "https://api.alphaland.cc/users/profile/inventory", "https://api.alphaland.cc/logo", "#itemsDiv", "#page-buttons", html, page, limit, keyword, "You don\'t own any items of this type", "&assetTypeId="+assettype);
 	}
 
 	$(".headshot_checkbox_check").click(function() {
@@ -582,7 +578,7 @@ $body = '
 		html += "</div>";
 		html += "</li>";
 				
-		multiPageHelper("outfitPage", "https://api.alphaland.cc/users/profile/outfits", "https://api.alphaland.cc/logo", "#itemsDiv", "#page-buttons", html, page, limit, "", "You don\'t have any outfits", "&assetTypeId=");
+		multiPageHelper("outfitPage", [], "https://api.alphaland.cc/users/profile/outfits", "https://api.alphaland.cc/logo", "#itemsDiv", "#page-buttons", html, page, limit, "", "You don\'t have any outfits", "&assetTypeId=");
 	}
 
 
@@ -601,7 +597,7 @@ $body = '
 
 	$("#keyword_input").keypress(function(event) {
 		if (event.keyCode == 13 || event.which == 13) {
-			inventoryPageSearch($("#keyword_input").val())
+			inventoryPage(1, assetTypeId, $("#keyword_input").val())
 		}
 	});
 	getWearingItems()

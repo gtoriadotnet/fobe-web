@@ -95,7 +95,7 @@ function logsPage(num)
 	html+= '</div>';
 	html+= '</div>';
 		
-	multiPageHelper("logsPage", "https://www.alphaland.cc/MCP/chat-logs/loggedChats", "https://api.alphaland.cc/logo", "#message-container", "#page-buttons", html, num, 40, searchquery, "No Results", "&username="+usernamequery);
+	multiPageHelper("logsPage", [], "https://www.alphaland.cc/MCP/chat-logs/loggedChats", "https://api.alphaland.cc/logo", "#message-container", "#page-buttons", html, num, 40, searchquery, "No Results", "&username="+usernamequery);
 }
 
 logsPage(1);

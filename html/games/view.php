@@ -199,7 +199,7 @@ function serversList(page) {
 	</div>
 	`;
 	
-	multiPageHelper("serversList", "https://api.alphaland.cc/game/jobList", "https://api.alphaland.cc/logo", "#active-server-list", "#page-buttons-here", html, page, 10, "", "No servers available.", "&placeid="+getparam);
+	multiPageHelper("serversList", [], "https://api.alphaland.cc/game/jobList", "https://api.alphaland.cc/logo", "#active-server-list", "#page-buttons-here", html, page, 10, "", "No servers available.", "&placeid="+getparam);
 }
 
 function setupPage() {

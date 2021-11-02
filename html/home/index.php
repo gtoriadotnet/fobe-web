@@ -152,7 +152,7 @@ function shoutPage(num)
     </div>
     `;
 
-	multiPageHelper("shoutPage", "https://api.alphaland.cc/user/feed/", "https://api.alphaland.cc/logo", "#shouts-container", "#page-buttons", html, num, 10, "", "No shouts");
+	multiPageHelper("shoutPage", [], "https://api.alphaland.cc/user/feed/", "https://api.alphaland.cc/logo", "#shouts-container", "#page-buttons", html, num, 10, "", "No shouts");
 }
 
 function getRecents()

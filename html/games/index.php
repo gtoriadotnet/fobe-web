@@ -57,7 +57,7 @@ function gamePage(num, keyword = "")
 	html+= '</div>';
 	html+= '</li>';
 
-	multiPageHelper("gamePage", "https://api.alphaland.cc/games/sitegames", "https://api.alphaland.cc/logo", "#games-container", "#page-buttons", html, num, 21, keyword, "No results");
+	multiPageHelper("gamePage", [keyword], "https://api.alphaland.cc/games/sitegames", "https://api.alphaland.cc/logo", "#games-container", "#page-buttons", html, num, 21, keyword, "No results");
 }
 
 $('#keyword_input').keypress(function(event) {

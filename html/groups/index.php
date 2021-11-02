@@ -173,7 +173,7 @@ function getPosts(groupid, page, limit)
 	html += '</div>';
 	html += '</div>';	
 	
-	multiPageHelper("postsPage", "https://api.alphaland.cc/group/posts", "https://api.alphaland.cc/logo", "#group_posts", "#posts_buttons", html, page, limit, "", "No posts", "&id="+groupid);
+	multiPageHelper("postsPage", [], "https://api.alphaland.cc/group/posts", "https://api.alphaland.cc/logo", "#group_posts", "#posts_buttons", html, page, limit, "", "No posts", "&id="+groupid);
 }
 	
 //users based on role
@@ -195,7 +195,7 @@ function getRoleUsers(groupid, page, limit, rank)
 	html += '</div>';
 	html += '</div>';
 				
-	multiPageHelper("roleUsers", "https://api.alphaland.cc/group/members", "https://api.alphaland.cc/logo", "#members", "#member_buttons", html, page, limit, "", "No users", "&id="+groupid+"&rank="+rank);
+	multiPageHelper("roleUsers", [], "https://api.alphaland.cc/group/members", "https://api.alphaland.cc/logo", "#members", "#member_buttons", html, page, limit, "", "No users", "&id="+groupid+"&rank="+rank);
 }
 function groupRoles(groupid)
 {

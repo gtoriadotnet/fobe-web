@@ -94,7 +94,7 @@ function assetPage(num, keyword = "")
 	html +='</ul>';
 	html +='</div>';
 
-	multiPageHelper("assetPage", "https://www.alphaland.cc/MCP/pendingassets", "https://api.alphaland.cc/logo", "#assets-container", "#page-buttons", html, num, 10, "", "No pending assets");
+	multiPageHelper("assetPage", [], "https://www.alphaland.cc/MCP/pendingassets", "https://api.alphaland.cc/logo", "#assets-container", "#page-buttons", html, num, 10, "", "No pending assets");
 }
 assetPage(currentPage);
 </script>

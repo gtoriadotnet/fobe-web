@@ -521,7 +521,7 @@ function getRequestsPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("requestsPage", "https://api.alphaland.cc/group/joinrequests", "https://api.alphaland.cc/logo", "#join_requests", "#join_requests_buttons", html, page, limit, "", "No join requests", "&id="+groupid);
+	multiPageHelper("requestsPage", [], "https://api.alphaland.cc/group/joinrequests", "https://api.alphaland.cc/logo", "#join_requests", "#join_requests_buttons", html, page, limit, "", "No join requests", "&id="+groupid);
 }
 
 //members page
@@ -550,7 +550,7 @@ function getMembersPage(page, limit)
 	html += '<button class="btn btn-sm btn-danger" onclick="exileUser({userid})">Exile</button>';
 	html += '</div>';
 	
-	multiPageHelper("membersPage", "https://api.alphaland.cc/group/members", "https://api.alphaland.cc/logo", "#members_manage_list", "#members_manage_buttons", html, page, limit, "", "No members", "&id="+groupid+"&excluderank=255");
+	multiPageHelper("membersPage", [], "https://api.alphaland.cc/group/members", "https://api.alphaland.cc/logo", "#members_manage_list", "#members_manage_buttons", html, page, limit, "", "No members", "&id="+groupid+"&excluderank=255");
 }
 
 //initialize
