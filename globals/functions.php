@@ -6400,6 +6400,15 @@ function createSession($userID) {
 	}
 }
 
+function updateLastSeen($userID) {
+	$updateLastSeen = $GLOBALS['pdo']->prepare("UPDATE users SET lastseen = UNIX_TIMESTAMP() WHERE id = :id");
+	$updateLastSeen->bindParam(":id", $userID, PDO::PARAM_INT);
+	if ($updateLastSeen->execute()) {
+		return true;
+	}
+	return false;
+}
+
 function logoutAllSessions($userID) {
 	$sessions = $GLOBALS['pdo']->prepare("UPDATE sessions SET valid = 0 WHERE uid = :uid");
 	$sessions->bindParam(":uid", $userID, PDO::PARAM_INT);
@@ -6769,7 +6778,11 @@ function getNav()
 				'.$announcement.'
 				'.$thumbnailerstatus.'
 				'.$gameserverstatus.'
-			</header><br />';
+			</header>
+			<script>
+			setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 90000); //ping every 1.5 minutes
+			</script>
+			<br/>';
 	}
 	return '
 		<header>
