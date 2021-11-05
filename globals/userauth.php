@@ -12,6 +12,7 @@ class user {
 	public $currency = -1;
 	public $sessionCookieID = 0;
 	public $logged_in = false;
+	public $twoFactorUnlocked = false;
 	
 	function __construct() {
 		if(isset($_COOKIE['token'])) { $this->checkIfTokenValid($_COOKIE['token']); }
@@ -56,6 +57,7 @@ class user {
 					$this->logged_in = true;
 					$this->id = $info->uid;
 					$this->sessionCookieID = $info->id;
+					$this->twoFactorUnlocked = $info->twoFactorUnlocked;
 					// ...
 							
 					//user info
@@ -102,7 +104,7 @@ class user {
 	}
 	function logout() {
 		if($this->logged_in) {
-			$logout = $GLOBALS['pdo']->prepare("UPDATE sessions SET valid = 0 WHERE id = :id");
+			$logout = $GLOBALS['pdo']->prepare("UPDATE sessions SET valid = 0 AND twoFactorUnlocked = 0 WHERE id = :id");
 			$logout->bindParam(":id", $this->sessionCookieID, PDO::PARAM_INT);
 			$logout->execute();
 		}
