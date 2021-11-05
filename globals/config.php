@@ -85,12 +85,7 @@ try
 	
 	//autoloader include
 	require 'C:\Users\Administrator\vendor\autoload.php';
-
-	//mail includes
-	require 'C:\Users\Administrator\vendor\phpmailer\phpmailer\src\Exception.php';
-	require 'C:\Users\Administrator\vendor\phpmailer\phpmailer\src\PHPMailer.php';
-	require 'C:\Users\Administrator\vendor\phpmailer\phpmailer\src\SMTP.php';
-
+	
 	//alphaland specfic dependencies
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 

@@ -6780,7 +6780,7 @@ function getNav()
 				'.$gameserverstatus.'
 			</header>
 			<script>
-			setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 90000); //ping every 1.5 minutes
+				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute
 			</script>
 			<br/>';
 	}
