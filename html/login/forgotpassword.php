@@ -1,5 +1,10 @@
 <?php
 
+if (isLoggedIn())
+{
+	redirect("/");
+}
+
 $alert = '';
 if(isset($_POST['Submit'])) 
 {
