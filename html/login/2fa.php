@@ -8,37 +8,6 @@ if (isLoggedIn())
 $alert = '';
 if(isset($_POST['Submit'])) 
 {
-	$username = cleanInput($_POST['username']);
-	$email = cleanInput($_POST['email']);
-	$userdetails = $pdo->prepare("SELECT * FROM users WHERE email = :e AND username = :u");
-	$userdetails->bindParam(":e", $email, PDO::PARAM_STR);
-	$userdetails->bindParam(":u", $username, PDO::PARAM_STR);
-	$userdetails->execute();
-
-	if ($userdetails->rowCount() > 0)
-	{
-		$userdetails2 = $userdetails->fetch(PDO::FETCH_OBJ);
-		$userid = (int)$userdetails2->id;
-		$resetstatus = sendPasswordReset("info@alphaland.cc", $email, $userid);
-		
-		if ($resetstatus == 1)
-		{
-			$alert = "<div class='alert alert-success' role='alert'>Check your email!</div>";
-		}
-		elseif ($resetstatus == 2)
-		{
-			$alert = "<div class='alert alert-danger' role='alert'>Please wait before attempting again</div>";
-		}
-		elseif ($resetstatus == 3)
-		{
-			$alert = "<div class='alert alert-danger' role='alert'>An error occurred, contact an admin</div>";
-		}
-		
-	}
-	else
-	{
-		$alert = "<div class='alert alert-danger' role='alert'>No account found</div>";
-	}
 }
 
 $body = <<<EOT
