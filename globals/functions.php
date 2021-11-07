@@ -5110,14 +5110,18 @@ function getAssetRender($id)
 			if ($assetinfo->AssetTypeId == 1 || $assetinfo->AssetTypeId == 22) //images and group emblems
 			{
 				$assethash = $assetinfo->Hash;
-				return constructThumbnailHashUrl($assethash);
+				if (file_exists($GLOBALS['thumbnailCDNPath'].$assethash))  {
+					return constructThumbnailHashUrl($assethash);
+				}	
 			}
 			else //default to grab the assets ThumbHash
 			{
 				if (!empty($assetinfo->ThumbHash)) //if a render was ever performed
 				{
 					$thumbhash = $assetinfo->ThumbHash;
-					return constructRenderHashUrl($thumbhash);
+					if (file_exists($GLOBALS['renderCDNPath'].$thumbhash))  {
+						return constructRenderHashUrl($thumbhash);
+					}
 				}
 			}
 		}
