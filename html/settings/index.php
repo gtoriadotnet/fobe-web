@@ -3,15 +3,6 @@
 $alert = '';
 $body = '';
 
-function obfuscate_email($email)
-{
-    $em   = explode("@",$email);
-    $name = implode('@', array_slice($em, 0, count($em)-1));
-    $len  = floor(strlen($name)/2);
-
-    return substr($name,0, $len) . str_repeat('.', $len) . "@" . end($em);   
-}
-
 $info = userInfo($GLOBALS['user']->id); // add true as a second param if u wanna use usernames instead
 $username = $info->username;
 $email = $info->email;
