@@ -43,6 +43,19 @@ function isbase64png($base64) //must already be decoded
 
 // ...
 
+//obfuscation
+
+function obfuscate_email($email)
+{
+    $em   = explode("@",$email);
+    $name = implode('@', array_slice($em, 0, count($em)-1));
+    $len  = floor(strlen($name)/2);
+
+    return substr($name,0, $len) . str_repeat('.', $len) . "@" . end($em);   
+}
+
+// ..
+
 //safe generation utilities
 
 function genHash($len)
@@ -5224,14 +5237,22 @@ function getBC($id) {
 //end character colors portion }
 
 //settings portion {
+
+function is2FAInitialized($userid)
+{
+	$isinit = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `validated` = 1 AND `userid` = :uid");
+	$isinit->bindParam(":uid", $userid, PDO::PARAM_INT);
+	$isinit->execute();
+	if ($isinit->rowCount() > 0) {
+		return true;
+	}
+	return false;
+}
 	
 function setBlurb($newblurb)
 {
-	if (strlen($newblurb)>4096) //limit 4096 characters
-	{
-		return false;
-	}
-	else
+	$newblurb = cleanInput($newblurb);
+	if (strlen($newblurb)<=4096) //limit 4096 characters
 	{
 		$localplayer = $GLOBALS['user']->id;
 		
@@ -6504,7 +6525,7 @@ function getCurrentThemeLogo() //grabs the alphaland logo for the users selected
 {
 	$currenttheme = getCurrentTheme();
 
-	return $GLOBALS['url'] . "/alphaland/cdn/imgs/alpha-spooky/alphalandzombie.png"; //spooky
+	//return $GLOBALS['url'] . "/alphaland/cdn/imgs/alpha-spooky/alphalandzombie.png"; //spooky
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
