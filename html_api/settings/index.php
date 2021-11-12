@@ -26,6 +26,9 @@ $joinpref = $userquery->canJoin;
 $tradepref = null;
 $theme = $userquery->theme;
 
+//initialize 2FA in the database if it hasnt been already
+initialize2FA($userid);
+
 $userInfo = array (
 	"userid" => $userid,
 	"username" => $username,
