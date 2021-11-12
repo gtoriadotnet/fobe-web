@@ -5259,6 +5259,10 @@ function deleteUser2FA($userid)
 	$del = $GLOBALS['pdo']->prepare("DELETE FROM `google_2fa` WHERE `userid` = :uid");
 	$del->bindParam(":uid", $userid, PDO::PARAM_INT);
 	$del->execute();
+	if ($del->rowCount() > 0) {
+		return true;
+	}
+	return false;
 }
 
 function getUser2FASecret($userid)
@@ -5324,6 +5328,17 @@ function initialize2FA($userid)
 		}
 	}
 }
+
+function getUser2FAQR($userid)
+{
+	$qrcode = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
+	$qrcode->bindParam(":uid", $userid, PDO::PARAM_INT);
+	$qrcode->execute();
+	if ($qrcode->rowCount() > 0) {
+		return $qrcode->fetch(PDO::FETCH_OBJ)->qr;
+	}
+}
+
 
 
 	
