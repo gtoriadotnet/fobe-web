@@ -90,6 +90,9 @@ try
 	//alphaland specfic dependencies
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 
+	//authenticator 
+	$authenticator = new PHPGangsta_GoogleAuthenticator();
+	
 	//mailer
 	$mail = new PHPMailer\PHPMailer\PHPMailer(true);
 	$mail->IsSMTP();
