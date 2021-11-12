@@ -5238,6 +5238,63 @@ function getBC($id) {
 
 //settings portion {
 
+function safeGenerate2FASecret()
+{
+	$secret = "";
+	while (true) {
+		$secret = $GLOBALS['authenticator']->createSecret();
+		
+		$keycheck = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `secret` = :ac");
+		$keycheck->bindParam(":ac", $secret, PDO::PARAM_STR);
+		$keycheck->execute();
+		if ($keycheck->rowCount() == 0) {
+			break;
+		}
+	}
+	return $secret;
+}
+
+function deleteUser2FA($userid)
+{
+	$del = $GLOBALS['pdo']->prepare("DELETE FROM `google_2fa` WHERE `userid` = :uid");
+	$del->bindParam(":uid", $userid, PDO::PARAM_INT);
+	$del->execute();
+}
+
+function getUser2FASecret($userid)
+{
+	$code = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
+	$code->bindParam(":uid", $userid, PDO::PARAM_INT);
+	$code->execute();
+	if ($code->rowCount() > 0) {
+		return $code->fetch(PDO::FETCH_OBJ)->secret;
+	}
+}
+
+function verify2FACode($userid, $code)
+{
+	$secret = getUser2FASecret($userid);
+	if ($secret) {
+		if ($GLOBALS['authenticator']->verifyCode($secret, $code, 0)) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function activateUser2FA($userid, $code) //after initializing we make sure it works with a first time activation code
+{
+	if(!is2FAInitialized($userid) && 
+	verify2FACode($userid, $code)) {
+		$check = $GLOBALS['pdo']->prepare("UPDATE `google_2fa` SET `validated` = 1 WHERE `userid` = :uid");
+		$check->bindParam(":uid", $userid, PDO::PARAM_INT);
+		if ($check->execute()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function is2FAInitialized($userid)
 {
 	$isinit = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `validated` = 1 AND `userid` = :uid");
@@ -5248,6 +5305,27 @@ function is2FAInitialized($userid)
 	}
 	return false;
 }
+	
+function initialize2FA($userid)
+{
+	$check = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
+	$check->bindParam(":uid", $userid, PDO::PARAM_INT);
+	$check->execute();
+	if ($check->rowCount() == 0) {
+		$username = getUsername($userid);
+		if ($username) {
+			$secret = safeGenerate2FASecret();
+			$qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "alphaland.cc");
+			$new2fa = $GLOBALS['pdo']->prepare("INSERT INTO `google_2fa`(`userid`, `secret`, `qr`, `whenGenerated`) VALUES (:uid, :secret, :qr, UNIX_TIMESTAMP())");
+			$new2fa->bindParam(":uid", $userid, PDO::PARAM_INT);
+			$new2fa->bindParam(":secret", $secret, PDO::PARAM_STR);
+			$new2fa->bindParam(":qr", $qrcode, PDO::PARAM_STR);
+			$new2fa->execute();
+		}
+	}
+}
+
+
 	
 function setBlurb($newblurb)
 {
