@@ -92,7 +92,7 @@ try
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
-	
+
 	//mailer
 	$mail = new PHPMailer\PHPMailer\PHPMailer(true);
 	$mail->IsSMTP();
@@ -130,24 +130,36 @@ try
 		$activated = $activated->isUserActivated($GLOBALS['user']->id);
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);
+		$twofactor = isSession2FAUnlocked();
 
+
+		//step 1, check if under maintenance
 		if ($maintenance) { //maintenance redirect
 			if ($accesseddirectory != "/maintenance.php") {
 				redirect($url . "/maintenance");
 			}
 		}
 
-		if ($banned && !$maintenance) { //ban redirect
+		//step 2, check if user is banned
+		if ($GLOBALS['user']->logged_in && $banned) { //ban redirect
 			if ($accesseddirectory != "/ban.php" &&
 			$accesseddirectory != "/logout.php") {
 				redirect($url . "/ban");
 			}
 		}
 	
-		if ($GLOBALS['user']->logged_in && !$activated && !$banned && !$maintenance) { //activation redirect
+		//step 3, check if user is activated
+		if ($GLOBALS['user']->logged_in && !$activated) { //activation redirect
 			if ($accesseddirectory != "/activate.php" && 
 			$accesseddirectory != "/logout.php") {
 				redirect($url . "/activate");
+			}
+		}
+
+		//step 4, check if 2fa is authenticated
+		if ($GLOBALS['user']->logged_in && !$twofactor) { //2fa redirect
+			if ($accesseddirectory != "/2fa.php") {
+				redirect($url . "/2fa");
 			}
 		}
 

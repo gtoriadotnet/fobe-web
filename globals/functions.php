@@ -5260,6 +5260,7 @@ function deleteUser2FA($userid)
 	$del->bindParam(":uid", $userid, PDO::PARAM_INT);
 	$del->execute();
 	if ($del->rowCount() > 0) {
+		deauth2FAUserSession();
 		return true;
 	}
 	return false;
@@ -5293,6 +5294,7 @@ function activateUser2FA($userid, $code) //after initializing we make sure it wo
 		$check = $GLOBALS['pdo']->prepare("UPDATE `google_2fa` SET `validated` = 1 WHERE `userid` = :uid");
 		$check->bindParam(":uid", $userid, PDO::PARAM_INT);
 		if ($check->execute()) {
+			auth2FAUserSession();
 			return true;
 		}
 	}
@@ -5339,9 +5341,54 @@ function getUser2FAQR($userid)
 	}
 }
 
+function isSession2FAUnlocked()
+{
+	$localuser = $GLOBALS['user']->id;
+	$session = $GLOBALS['user']->sessionCookieID;
 
+	$check = $GLOBALS['pdo']->prepare("SELECT * FROM `sessions` WHERE `twoFactorUnlocked` = 1 AND `id` = :session");
+	$check->bindParam(":session", $session, PDO::PARAM_INT);
+	$check->execute();
+	if ($check->rowCount() > 0 || !is2FAInitialized($localuser)) {
+		return true;
+	}
+	return false;
+}
 
-	
+function auth2FAUserSession()
+{
+	$session = $GLOBALS['user']->sessionCookieID;
+
+	$check = $GLOBALS['pdo']->prepare("UPDATE `sessions` SET `twoFactorUnlocked` = 1 WHERE `id` = :session");
+	$check->bindParam(":session", $session, PDO::PARAM_INT);
+	if ($check->execute()) {
+		return true;
+	}
+	return false;
+}
+
+function deauth2FAUserSession()
+{
+	$session = $GLOBALS['user']->sessionCookieID;
+
+	$check = $GLOBALS['pdo']->prepare("UPDATE `sessions` SET `twoFactorUnlocked` = 0 WHERE `id` = :session");
+	$check->bindParam(":session", $session, PDO::PARAM_INT);
+	if ($check->execute()) {
+		return true;
+	}
+	return false;
+}
+
+function attemptSession2FAUnlock($code)
+{
+	$localuser = $GLOBALS['user']->id;
+	if (!isSession2FAUnlocked()) {
+		if (verify2FACode($localuser, $code)) {
+			auth2FAUserSession();
+		}
+	}
+}
+
 function setBlurb($newblurb)
 {
 	$newblurb = cleanInput($newblurb);
