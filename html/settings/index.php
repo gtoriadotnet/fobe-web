@@ -88,7 +88,6 @@ $body = <<<EOT
                                         <button class="btn btn-danger w-100" onclick="disable2FA()">Disable 2FA</button>
                                     </div>
                                 </div>
-                                <hr>
                                 <div class="row" id="settings_2fadisabled" style="display:none;">
                                     <div class="col-sm-4" align="center">
                                         <div class="card">
