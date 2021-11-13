@@ -12,4 +12,9 @@ header('Content-Type: application/json');
 
 $userid = $user->id;
 
+//feature tester locked
+if (!inFeatureTesterGroup($userid)) {
+	die(http_response_code(401));
+}
+
 die(json_encode(["qr"=>getUser2FAQR($userid)]));

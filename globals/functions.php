@@ -724,6 +724,19 @@ function isNextInQueue($placeid, $jobid, $userid)
 
 // ...
 
+//feature testers
+
+function inFeatureTesterGroup($user)
+{
+	if (isInGroup($user, 27)) //id 22 is the official referral program group
+	{
+		return true;
+	}
+	return false;
+}
+
+// ...
+
 //referral program
 
 function inReferralProgram($user)

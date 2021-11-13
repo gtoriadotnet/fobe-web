@@ -35,6 +35,7 @@ $userInfo = array (
 	"email" => $email,
 	"verified" => $verified,
 	"blurb" => $blurb,
+	"featuretester" => inFeatureTesterGroup($userid),
 	"twofactorenabled" => is2FAInitialized($userid),
 	"referralprogram" => inReferralProgram($userid),
 	"joinpref" => $joinpref,
