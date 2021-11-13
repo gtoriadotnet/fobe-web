@@ -1458,7 +1458,7 @@ function updateGeneralConfig($groupid, $description, $approval, $base64emblem) /
 			$autoincrement = $b->rowCount() + 1; //initial auto increment value
 					
 			//add texture to assets
-			$assetname = $name . " Emblem";
+			$assetname = getGroupName($groupid) . " Emblem";
 			$x = $GLOBALS['pdo']->prepare("INSERT INTO `assets`(`id`, `AssetTypeId`, `Name`, `Description`, `Created`, `Updated`, `CreatorId`, `TargetId`, `PriceInAlphabux`, `Sales`, `IsNew`, `IsForSale`, `IsPublicDomain`, `IsLimited`, `IsLimitedUnique`, `IsApproved`, `Remaining`, `MinimumMembershipLevel`, `ContentRatingTypeId`, `Favorited`, `Visited`, `MaxPlayers`, `UpVotes`, `DownVotes`, `Hash`) VALUES (:aid,22,:aname,'Group Emblem',UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),:oid,:aid2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,:hash)");
 			$x->bindParam(":aid", $autoincrement, PDO::PARAM_INT);
 			$x->bindParam(":aname", $assetname, PDO::PARAM_STR);
@@ -3643,28 +3643,6 @@ function setAssetApproved($id)
 	$approve = $GLOBALS['pdo']->prepare("UPDATE assets SET IsApproved = 1, IsModerated = 0 WHERE id = :i");
 	$approve->bindParam(":i", $id, PDO::PARAM_INT);
 	$approve->execute();
-}
-
-function alphalandAssetGetTexture($assetid)
-{
-	$assetinfo = getAssetInfo($id);
-	$assetData = file_get_contents($assetscdn . $assetinfo->Hash);
-
-	$validXML = true;
-	try
-	{
-		$ParsedXML = new SimpleXMLElement($assetData);
-	}
-	catch (Exception $e)
-	{
-		$validXML = false;
-	}
-
-	if ($validXML)
-	{
-
-	}
-
 }
 
 function approveAsset($id) //currently supports t-shirts, shirts and pants
