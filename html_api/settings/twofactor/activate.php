@@ -10,11 +10,6 @@ header("access-control-allow-credentials: true");
 
 $userid = $user->id;
 
-//feature tester locked
-if (!inFeatureTesterGroup($userid)) {
-	die(http_response_code(401));
-}
-
 $data = json_decode(file_get_contents('php://input'));
 
 if (!$data)

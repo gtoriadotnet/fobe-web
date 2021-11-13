@@ -5334,7 +5334,7 @@ function initialize2FA($userid)
 		$username = getUsername($userid);
 		if ($username) {
 			$secret = safeGenerate2FASecret();
-			$qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "alphaland.cc");
+			$qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "Alphaland");
 			$new2fa = $GLOBALS['pdo']->prepare("INSERT INTO `google_2fa`(`userid`, `secret`, `qr`, `whenGenerated`) VALUES (:uid, :secret, :qr, UNIX_TIMESTAMP())");
 			$new2fa->bindParam(":uid", $userid, PDO::PARAM_INT);
 			$new2fa->bindParam(":secret", $secret, PDO::PARAM_STR);

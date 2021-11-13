@@ -19,7 +19,7 @@ $body = <<<EOT
                 <div class="card-body text-center">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active red-a-nounder" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="true">Account</a>
-                        <a style="display:none;" class="nav-link red-a-nounder" id="v-pills-2fa-tab" data-toggle="pill" href="#v-pills-2fa" role="tab" aria-controls="v-pills-2fa" aria-selected="false">2FA</a>
+                        <a class="nav-link red-a-nounder" id="v-pills-2fa-tab" data-toggle="pill" href="#v-pills-2fa" role="tab" aria-controls="v-pills-2fa" aria-selected="false">2FA</a>
                         <a class="nav-link red-a-nounder" id="v-pills-privacy-tab" data-toggle="pill" href="#v-pills-privacy" role="tab" aria-controls="v-pills-privacy" aria-selected="false">Privacy</a>
                         <a class="nav-link red-a-nounder" id="v-pills-theme-tab" data-toggle="pill" href="#v-pills-theme" role="tab" aria-controls="v-pills-theme" aria-selected="false">Theme</a>				
                         <a style="display:none;" class="nav-link red-a-nounder" id="v-pills-referral-tab" data-toggle="pill" href="#v-pills-referral" role="tab" aria-controls="v-pills-referral" aria-selected="false">Referrals</a>							
@@ -328,11 +328,6 @@ function initializeSettings()
 		} else {
 			$("#settings_email_unverified").show()
 		}
-
-        //currently locked to feature testers
-        if(object.featuretester) {
-            $("#v-pills-2fa-tab").show()
-        }
 	});
 }
 

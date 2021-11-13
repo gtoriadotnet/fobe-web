@@ -132,7 +132,6 @@ try
 		$banned = checkIfBanned($GLOBALS['user']->id);
 		$twofactor = isSession2FAUnlocked();
 
-
 		//step 1, check if under maintenance
 		if ($maintenance) { //maintenance redirect
 			if ($accesseddirectory != "/maintenance.php") {
