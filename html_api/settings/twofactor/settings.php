@@ -12,4 +12,4 @@ header('Content-Type: application/json');
 
 $userid = $user->id;
 
-die(json_encode(["qr"=>getUser2FAQR($userid)]));
+die(json_encode(["qr"=>getUser2FAQR($userid),"secret"=>getUser2FASecret($userid)]));

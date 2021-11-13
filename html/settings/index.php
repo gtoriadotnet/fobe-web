@@ -95,6 +95,12 @@ $body = <<<EOT
                                                 <img class="img-fluid w-100" id="settings_qrcode">
                                             </div>
                                         </div>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6>Authenticator Secret:</h6>
+                                                <code id="settings_auth_secret"></code>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm">
                                         <div class="row">
@@ -244,11 +250,12 @@ function activate2FA(code)
 	});
 }
 
-function set2FAQR()
+function setup2FA()
 {
-	getJSONCDS("https://api.alphaland.cc/settings/twofactor/qr")
+    getJSONCDS("https://api.alphaland.cc/settings/twofactor/settings")
 	.done(function(object) {
 		$("#settings_qrcode").attr("src",object.qr);
+        $("#settings_auth_secret").html(object.secret);
 	});
 }
 
@@ -315,7 +322,7 @@ function initializeSettings()
 		if (object.twofactorenabled) {
 			twofactorEnabled();
 		} else {
-			set2FAQR();
+			setup2FA();
 			twofactorDisabled();
 		}
 

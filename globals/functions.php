@@ -5171,7 +5171,6 @@ function usingCustomThumbnail($id) //so the thumb doesnt break while rendering
 function handleRenderPlace($placeid) //we have a 60 second wait, and we verify the render job was sent.
 {
 	$assetinfo = getAssetInfo($placeid);
-	$creatorid = $assetinfo->CreatorId;	
 	$lastrender = $assetinfo->lastPlaceRender;
 			
 	if(($lastrender + (60)) < time()) //60 second interval
