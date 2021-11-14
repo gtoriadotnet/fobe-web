@@ -6615,6 +6615,14 @@ function cleanOutput($t, $linebreaks=true) {
 	return filterText($t);
 }
 
+function cleanOutputNoFilter($t, $linebreaks=true) {
+	$t = htmlentities($t);
+	if ($linebreaks) {
+		$t = nl2br($t);
+	}
+	return strip_tags($t, '<br>');
+}
+
 //theme stuff
 function setTheme($theme) //sets the users theme
 {

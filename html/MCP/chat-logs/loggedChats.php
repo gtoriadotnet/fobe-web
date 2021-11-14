@@ -74,13 +74,13 @@ foreach($messages as $message)
 {
 	$userid = $message['whoSent'];
 	$gameAssetId = $message['gameAssetId'];
-	$loggedMessage = $message['message'];
+	$loggedMessage = cleanOutputNoFilter($message['message']);
 	$whenlogged = date("m/d/Y", $message['whenSent']);
 	$loggedMessages = array(
 		"userid" => $userid,
-		"username" => getUsername($userid),
+		"username" => cleanOutputNoFilter(getUsername($userid)),
 		"thumbnail" => getPlayerRender($userid),
-		"placeName" =>  getAssetInfo($gameAssetId)->Name,
+		"placeName" =>  cleanOutputNoFilter(getAssetInfo($gameAssetId)->Name),
 		"placeId" => $gameAssetId,
 		"message" => $loggedMessage,
 		"date" => $whenlogged

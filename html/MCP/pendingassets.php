@@ -61,8 +61,8 @@ foreach($assets as $asset)
 	$assetid = $asset['id'];
 	$creatorid = $asset['CreatorId'];
 	$assettypeid = $asset['AssetTypeId'];
-	$name = cleanOutput($asset['Name']);
-	$desc = cleanOutput($asset['Description']); //description of the game
+	$name = cleanOutputNoFilter($asset['Name']);
+	$desc = cleanOutputNoFilter($asset['Description']); //description of the game
 	$creatorname = getUsername($creatorid); //creator of the game username
 	$image = "";
 	if ($assettypeid == 2|| $assettypeid == 11 || $assettypeid == 12) { //tshirts, shirts and pants

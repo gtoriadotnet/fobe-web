@@ -41,8 +41,8 @@ if ($validXML) {
     $commentdata = explode(";", $ParsedXML->comment);
 
     $abuserid = (int)filter_var($commentdata[0], FILTER_SANITIZE_NUMBER_INT);
-    $reportreason = (string)trim($commentdata[1]);
-    $reportdescription = (string)$commentdata[2];
+    $reportreason = (string)cleanOutputNoFilter(trim($commentdata[1]));
+    $reportdescription = (string)cleanOutputNoFilter($commentdata[2]);
 
     $chats = $ParsedXML->xpath('//message');
 
@@ -58,7 +58,7 @@ if ($validXML) {
     foreach($chats as $chat) {
         $userid = (int)$chat['userID'];
 		$username = (string)getUsername($userid);
-        $userchat = (string)$chat;
+        $userchat = (string)cleanOutputNoFilter($chat);
 
         $chatData = array(
 			"username" => $username,

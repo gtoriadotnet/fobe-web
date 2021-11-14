@@ -85,7 +85,7 @@ if ($b->rowCount() > 0)
 	{
 		$banneddate = date("m/d/Y", $bannedplayer['whenBanned']);
 		$bannedusername = getUsername($bannedplayer['uid']);
-		$bannedreason = cleanOutput($bannedplayer['banReason']);
+		$bannedreason = cleanOutputNoFilter($bannedplayer['banReason']);
 		$bannedExpiration = (int)$bannedplayer['banExpiration'];
 		$bannedType = (int)$bannedplayer['banType'];
 		
