@@ -3540,6 +3540,11 @@ function getUserGearsAccoutrements($userid) //ghetto
 	return $gears;
 }
 
+function getRobloxAssetThumbnail($assetid, $width, $height, $fileformat)
+{
+	return json_decode(file_get_contents($GLOBALS['ROBLOXAssetThumbnailAPI'].$assetid."&size=".$width."x".$height."&format=".$fileformat."&isCircular=false"))->data[0]->imageUrl;
+}
+
 function getRobloxProductInfo($assetid)
 {
 	$json = file_get_contents($GLOBALS['ROBLOXProductInfoAPI'].$assetid);

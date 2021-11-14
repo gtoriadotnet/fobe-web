@@ -35,6 +35,7 @@ try
 	$clientUserAgent = "Roblox/WinInet";
 	$ROBLOXAssetAPI = "https://assetdelivery.roblox.com/v1/asset/?id=";
 	$ROBLOXProductInfoAPI = "https://api.roblox.com/marketplace/productinfo?assetId=";
+	$ROBLOXAssetThumbnailAPI = "https://thumbnails.roblox.com/v1/assets?assetIds=";
 
 	//default character hashes
 	$defaultOutfitHash = "e335382cb0ef996df9053df58adcbe95"; //default render hash for characters
