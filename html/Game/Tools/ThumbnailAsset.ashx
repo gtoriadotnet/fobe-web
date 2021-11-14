@@ -71,5 +71,6 @@ if ($check->rowCount() > 0) //asset exists on Alphaland
 }
 else
 {
-    redirect('https://www.roblox.com/Game/Tools/ThumbnailAsset.ashx?fmt=' . $fmt . '&wd=' . $wd . '&ht=' . $ht . '&aid=' . $aid);
+	$json = json_decode(file_get_contents("https://thumbnails.roblox.com/v1/assets?assetIds=".$aid."&size=".$wd."x".$ht."&format=".$fmt."&isCircular=false"));
+    redirect($json->data[0]->imageUrl);
 }
