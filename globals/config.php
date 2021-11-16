@@ -178,8 +178,6 @@ try
 				$accesseddirectory != "/Game/Negotiate.ashx" &&
 				$accesseddirectory != "/asset/index.php" &&
 				$accesseddirectory != "/settings/resetpassword.php" &&
-				//$accesseddirectory != "/Game/Join.ashx" &&
-				//$accesseddirectory != "/Game/PlaceLauncher.ashx" &&
 				$accesseddirectory != "/secret/localtesting.php") { //for local client testing, doesn't contain anything sensitive
 					redirect($url);
 				}

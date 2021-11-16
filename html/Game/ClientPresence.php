@@ -130,7 +130,7 @@ else if ($action == "connect")
 		$new_visit = true;
 	}
 				
-	if (new_visit)
+	if ($new_visit)
 	{
 		$setgamevisit = $pdo->prepare("UPDATE assets SET Visited = (Visited + 1) WHERE id = :g");
 		$setgamevisit->bindParam(":g", $placeid, PDO::PARAM_INT);
