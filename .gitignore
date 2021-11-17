@@ -10,6 +10,7 @@ html_thumbs_cdn/
 ## Misc
 html_data/Error/uploads/
 ## Setup
-html_setup/
-!html_setup/*.php
+html_setup/*.txt
+html_setup/*.zip
+html_setup/*.exe
 !html_setup/cdn.txt
