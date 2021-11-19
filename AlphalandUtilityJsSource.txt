@@ -26,34 +26,35 @@ function parseHtml(html, limit, object, message, singleObject=false) {
 		}
 		
 		for (var pos = 0; pos <= html.length; pos++) {
-			if (html.charAt(pos) == "{") { //first position
+			var firstFound = false;
+			var functionCall = false;
+			var secondPositionIdentifier = "";
+			if (html.charAt(pos) == "{") {
+				firstFound = true;
+				secondPositionIdentifier = "}";
+			} else if (html.charAt(pos) == "[") {
+				firstFound = true;
+				functionCall = true;
+				secondPositionIdentifier = "]";
+			}
+
+			if (firstFound) { //first position
 				for (var len = pos; len; len++) {
-					if (html.charAt(len) == "}") { //second position
+					if (html.charAt(len) == secondPositionIdentifier) {
 						var marker = "";
 						for (var d = pos; d < len+1; d++) { //data between the two positions
 							marker += html.charAt(d);
 						}
 						
-						buffer = buffer.replace(marker, objectData[marker.substring(1, marker.length - 1)]); //using replace instead of replaceAll for compatibility
-						break;
-					}
-				}
-			}
-            else if (html.charAt(pos) == "[") { //first position
-				for (var len = pos; len; len++) {
-					if (html.charAt(len) == "]") { //second position
-						var marker = "";
-						for (var d = pos; d < len+1; d++) { //data between the two positions
-							marker += html.charAt(d);
-						}
-
-                        var call = marker.substring(1, marker.length - 1); //grab the function name we wanna call  
-                        try {
-							call = window[call](objectData) //call the function with the object passed as a parameter
-							buffer = buffer.replace(marker, call); //replace the marker with the data returned from the call //using replace instead of replaceAll for compatibility
-						}
-						catch (error) {
-							//do nothing
+						if (!functionCall) {
+							buffer = buffer.replace(marker, objectData[marker.substring(1, marker.length - 1)]); //using replace instead of replaceAll for compatibility
+						} else {
+							try {
+								buffer = buffer.replace(marker, window[marker.substring(1, marker.length - 1)](objectData)); //replace the marker with the data returned from the call //using replace instead of replaceAll for compatibility
+							}
+							catch (error) {
+								//do nothing
+							}
 						}
 						break;
 					}
