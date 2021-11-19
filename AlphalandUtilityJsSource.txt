@@ -1,6 +1,5 @@
 /*
 	Alphaland JS Utilities 2021
-	I maintain all the code on Alphaland myself, so this is probably not the cleanest
 */
 
 //utility for populating HTML with data from object OR calling a function with the objects current position and replacing the marker with returned data
@@ -40,17 +39,19 @@ function parseHtml(html, limit, object, message, singleObject=false) {
 
 			if (firstFound) { //first position
 				for (var len = pos; len; len++) {
-					if (html.charAt(len) == secondPositionIdentifier) {
+					if (html.charAt(len) == secondPositionIdentifier) { //second position
 						var marker = "";
 						for (var d = pos; d < len+1; d++) { //data between the two positions
 							marker += html.charAt(d);
 						}
 						
+						//start the real fun
+						//using replace instead of replaceAll for compatibility
 						if (!functionCall) {
-							buffer = buffer.replace(marker, objectData[marker.substring(1, marker.length - 1)]); //using replace instead of replaceAll for compatibility
+							buffer = buffer.replace(marker, objectData[marker.substring(1, marker.length - 1)]); //replace marker with data from the object
 						} else {
 							try {
-								buffer = buffer.replace(marker, window[marker.substring(1, marker.length - 1)](objectData)); //replace the marker with the data returned from the call //using replace instead of replaceAll for compatibility
+								buffer = buffer.replace(marker, window[marker.substring(1, marker.length - 1)](objectData)); //replace the marker with the data returned from the call
 							}
 							catch (error) {
 								//do nothing
@@ -151,7 +152,6 @@ function multiPageHelper(callName, args, api, loadingurl, container, buttonsid, 
 		var firstPos = 0;
 		var secondPos = 0;
 		var pageCount = jsonData.pageCount;
-		var halfPages = Math.ceil(pageCount / 2);
 		var pageResults = jsonData.pageResults;
 		var currentPage = page;
 		var nextPage = currentPage + 1;
