@@ -741,11 +741,14 @@ function inFeatureTesterGroup($user)
 
 function inReferralProgram($user)
 {
+	/*
 	if (isInGroup($user, 22)) //id 22 is the official referral program group
 	{
 		return true;
 	}
 	return false;
+	*/
+	return true;
 }
 
 function isSignupKeyUserGenerated($signupkey)
