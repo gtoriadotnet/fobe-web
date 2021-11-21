@@ -45,7 +45,7 @@ function parseHtml(html, limit, object, message, singleObject=false) {
 							marker += html.charAt(d);
 						}
 						
-						//start the real fun
+						//where we handle the data O_O
 						//using replace instead of replaceAll for compatibility
 						if (!functionCall) {
 							buffer = buffer.replace(marker, objectData[marker.substring(1, marker.length - 1)]); //replace marker with data from the object
