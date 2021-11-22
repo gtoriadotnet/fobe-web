@@ -3,6 +3,7 @@
 /*
 	Alphaland 2021 site configuration
 	This is extremely sensitive.
+	TODO: not ideal to hardcode paths like this, clean up
 
 	Fuck u nsg
 	Fuck you too Austin :)
