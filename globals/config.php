@@ -128,7 +128,7 @@ try
 		}
 
 		$activated = new Alphaland\Users\Activation();
-		$activated = $activated->isUserActivated($GLOBALS['user']->id);
+		$activated = $activated::isUserActivated($GLOBALS['user']->id);
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);
 		$twofactor = isSession2FAUnlocked();
@@ -183,8 +183,7 @@ try
 				}
 			}
 			else if ($accesseddomain == "api.".$domain) { //api
-				if ($accesseddirectory != "/logo.php" &&
-				$accesseddirectory != "/moderation/v2/filtertext.php") {
+				if ($accesseddirectory != "/logo.php") {
 					redirect($url);
 				}
 			}

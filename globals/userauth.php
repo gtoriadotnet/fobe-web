@@ -68,7 +68,7 @@ class user {
 
 					//activation stuff
 					$activated = new Alphaland\Users\Activation();
-					$activated = $activated->isUserActivated($this->id);
+					$activated = $activated::isUserActivated($this->id);
 					
 					if (!banned($this->id))
 					{

@@ -1,11 +1,11 @@
 <?php
 $activation = new Alphaland\Users\Activation();
 
-if ($activation->isUserActivated($user->id)) {
+if ($activation::isUserActivated($user->id)) {
 	redirect("/");
 }
 
-$activationcode = $activation->getUserActivationCode($user->id);
+$activationcode = $activation::getUserActivationCode($user->id);
 
 $body = '
 <div class="container-fluid" style="display: flex;justify-content: center;align-items: center;text-align: center;min-height: 100vh;">

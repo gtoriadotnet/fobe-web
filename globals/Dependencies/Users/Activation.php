@@ -10,7 +10,7 @@ namespace Alphaland\Users {
 
     class Activation
     {
-        private function generateActivationCode()
+        private static function generateActivationCode()
         {
             $hash = "";
             while (true) {
@@ -26,7 +26,7 @@ namespace Alphaland\Users {
             return $hash;
         }
 
-        public function getUserActivationCode(int $userid)
+        public static function getUserActivationCode(int $userid)
         {
             $query = $GLOBALS['pdo']->prepare("SELECT * FROM `alphaland_verification` WHERE `uid` = :uid");
             $query->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -37,7 +37,7 @@ namespace Alphaland\Users {
             return false;
         }
         
-        public function isUserActivated(int $userid)
+        public static function isUserActivated(int $userid)
         {
             $query = $GLOBALS['pdo']->prepare("SELECT * FROM `alphaland_verification` WHERE `isactivated` = 1 AND `uid` = :uid");
             $query->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -46,12 +46,12 @@ namespace Alphaland\Users {
                 return true;
             }
             return false;
-        }  
+        } 
 
-        public function setupUserActivation(int $userid) //this should be ran when the user first signs up
+        public static function setupUserActivation(int $userid) //this should be ran when the user first signs up
         {
-            if (!$this->isUserActivated($userid)) {
-                $activationcode = $this->generateActivationCode();
+            if (!Activation::isUserActivated($userid)) {
+                $activationcode = Activation::generateActivationCode();
 
                 $n = $GLOBALS['pdo']->prepare("INSERT INTO `alphaland_verification`(`activationcode`,`uid`) VALUES(:ac, :userid)");
                 $n->bindParam(":ac", $activationcode, PDO::PARAM_STR);

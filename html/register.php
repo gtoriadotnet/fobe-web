@@ -131,7 +131,7 @@ else
 
 						//setup the activation system
 						$activation = new Alphaland\Users\Activation();
-						$activation->setupUserActivation($userID);
+						$activation::setupUserActivation($userID);
 						
 						//create new session
 						createSession($userID);
