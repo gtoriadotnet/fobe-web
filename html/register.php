@@ -2,7 +2,7 @@
 
 /*
 	Alphaland 2021 Registration Page
-	TODO: re-do this page, this was a very early implementation (perhaps add to )
+	TODO: This needs a re-do. This is one of the first pages on this project
 */
 
 $body = '';
