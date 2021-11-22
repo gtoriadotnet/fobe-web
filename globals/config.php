@@ -91,6 +91,7 @@ try
 	
 	//alphaland specfic dependencies
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -130,9 +131,12 @@ try
 
 		$activated = new Alphaland\Users\Activation();
 		$activated = $activated::isUserActivated($GLOBALS['user']->id);
+
+		$twofactor = new Alphaland\Users\TwoFactor();
+		$twofactor = $twofactor::isSession2FAUnlocked();
+		
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);
-		$twofactor = isSession2FAUnlocked();
 
 		//step 1, check if under maintenance
 		if ($maintenance) { //maintenance redirect
