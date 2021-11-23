@@ -1458,6 +1458,8 @@ function updateGeneralConfig($groupid, $description, $approval, $base64emblem) /
 			}
 			
 			$creatorid = $GLOBALS['user']->id;
+
+			$assetname = getGroupName($groupid) . " Emblem";
 					
 			$GLOBALS['pdo']->exec("LOCK TABLES assets WRITE"); //lock since this stuff is sensitive
 					
@@ -1468,7 +1470,6 @@ function updateGeneralConfig($groupid, $description, $approval, $base64emblem) /
 			$autoincrement = $b->rowCount() + 1; //initial auto increment value
 					
 			//add texture to assets
-			$assetname = getGroupName($groupid) . " Emblem";
 			$x = $GLOBALS['pdo']->prepare("INSERT INTO `assets`(`id`, `AssetTypeId`, `Name`, `Description`, `Created`, `Updated`, `CreatorId`, `TargetId`, `PriceInAlphabux`, `Sales`, `IsNew`, `IsForSale`, `IsPublicDomain`, `IsLimited`, `IsLimitedUnique`, `IsApproved`, `Remaining`, `MinimumMembershipLevel`, `ContentRatingTypeId`, `Favorited`, `Visited`, `MaxPlayers`, `UpVotes`, `DownVotes`, `Hash`) VALUES (:aid,22,:aname,'Group Emblem',UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),:oid,:aid2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,:hash)");
 			$x->bindParam(":aid", $autoincrement, PDO::PARAM_INT);
 			$x->bindParam(":aname", $assetname, PDO::PARAM_STR);
