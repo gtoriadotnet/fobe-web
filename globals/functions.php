@@ -748,7 +748,11 @@ function inReferralProgram($user)
 	}
 	return false;
 	*/
-	return true;
+	if ($GLOBALS['user']->isOwner())
+	{
+		return true;
+	}
+	return false;
 }
 
 function isSignupKeyUserGenerated($signupkey)
@@ -758,7 +762,10 @@ function isSignupKeyUserGenerated($signupkey)
 	$key->execute();
 	if ($key->rowCount() > 0)
 	{
-		return true;
+		if (!banned($key->fetch(PDO::FETCH_OBJ)->userGen))
+		{
+			return true;
+		}
 	}
 	return false;
 }
@@ -4997,18 +5004,21 @@ function banUser($uid, $reason, $banexpiration, $bantype)
 		
 		if ($isstaffcheck->rowCount() == 0)
 		{
-			kickUserIfInGame($uid, "You've been banned from Alphaland, '".$reason."'");
-			
-			$ban = $GLOBALS['pdo']->prepare("INSERT INTO user_bans(uid, banReason, whenBanned, banExpiration, banType, whoBanned, valid) VALUES(:u, :br, UNIX_TIMESTAMP(), :be, :bt, :wb, 1)");
-			$ban->bindParam(":u", $uid, PDO::PARAM_INT);
-			$ban->bindParam(":br", $reason, PDO::PARAM_STR);
-			$ban->bindParam(":be", $banexpiration, PDO::PARAM_INT);
-			$ban->bindParam(":bt", $bantype, PDO::PARAM_INT);
-			$ban->bindParam(":wb", $GLOBALS['user']->id, PDO::PARAM_INT);
-			$ban->execute();
-			if ($ban->rowCount() > 0)
+			if (!banned($uid))
 			{
-				return true;
+				kickUserIfInGame($uid, "You've been banned from Alphaland, '".$reason."'");
+				
+				$ban = $GLOBALS['pdo']->prepare("INSERT INTO user_bans(uid, banReason, whenBanned, banExpiration, banType, whoBanned, valid) VALUES(:u, :br, UNIX_TIMESTAMP(), :be, :bt, :wb, 1)");
+				$ban->bindParam(":u", $uid, PDO::PARAM_INT);
+				$ban->bindParam(":br", $reason, PDO::PARAM_STR);
+				$ban->bindParam(":be", $banexpiration, PDO::PARAM_INT);
+				$ban->bindParam(":bt", $bantype, PDO::PARAM_INT);
+				$ban->bindParam(":wb", $GLOBALS['user']->id, PDO::PARAM_INT);
+				$ban->execute();
+				if ($ban->rowCount() > 0)
+				{
+					return true;
+				}
 			}
 		}
 	}
