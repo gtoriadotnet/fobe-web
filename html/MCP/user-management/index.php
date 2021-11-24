@@ -10,6 +10,7 @@ $body = <<<EOT
     <div id = "error_alert" class="alert alert-danger" role="alert" style="display:none;"></div>
 	<div id = "success_alert" class="alert alert-success" role="alert" style="display:none;"></div>
     <h5>User Management</h5>
+	<h6><b>PLEASE MAKE SURE YOU READ THE DISCORD CHANNEL "staff-resources"</b></h6>
     <div class="card" style="max-width: 38rem;margin: auto;">
         <div class="card-body">
             <div class="row">
@@ -24,8 +25,6 @@ $body = <<<EOT
                 </div>
             </div>
             <br>
-			<h6>PLEASE MAKE SURE YOU READ THE DISCORD CHANNEL "staff-resources"</h6>
-			<hr>
             <div title="Warn the account, can be immediately reactivated" class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" name="warning_checkbox" class="custom-control-input sev_check" id="warning" autocomplete="off">
                 <label class="custom-control-label" for="warning">Warning</label>
@@ -38,6 +37,7 @@ $body = <<<EOT
                 <input type="checkbox" name="perm_checkbox" class="custom-control-input sev_check" id="perm" autocomplete="off">
                 <label class="custom-control-label" for="perm">Permanent</label>
             </div>
+			<hr>
             <div title="Permanently ban all accounts associated with the accounts ip address" class="custom-control custom-checkbox custom-control-inline">
                 <input type="checkbox" name="poison_perm_checkbox" class="custom-control-input sev_check" id="poison_perm" autocomplete="off">
                 <label class="custom-control-label" for="poison_perm">Poison Ban (Permanent)</label>
