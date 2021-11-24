@@ -92,6 +92,7 @@ try
 	//alphaland specfic dependencies
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -134,7 +135,7 @@ try
 
 		$twofactor = new Alphaland\Users\TwoFactor();
 		$twofactor = $twofactor::isSession2FAUnlocked();
-		
+
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);
 

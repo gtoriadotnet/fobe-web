@@ -69,8 +69,12 @@ class user {
 					//activation stuff
 					$activated = new Alphaland\Users\Activation();
 					$activated = $activated::isUserActivated($this->id);
-					
-					if (!banned($this->id))
+
+					//banned
+					$banned = new Alphaland\Moderation\UserModerationManager();
+					$banned = $banned::IsBanned($this->id);
+
+					if (!$banned)
 					{
 						//update token interval
 						$updateLastSeen = $GLOBALS['pdo']->prepare("UPDATE users SET lastseen = UNIX_TIMESTAMP() WHERE id = :id");
@@ -84,7 +88,7 @@ class user {
 					$updateip->bindParam(":id", $info->uid, PDO::PARAM_INT);
 					$updateip->execute();
 							
-					if ($activated && !banned($this->id))
+					if ($activated && !$banned)
 					{
 						//reward currency daily
 						if (($userInfo->dailytime + (86400 * 1)) < time() || $userInfo->dailytime == 0) //its been a day or first time
