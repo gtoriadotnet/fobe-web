@@ -5,10 +5,12 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\TwoFactor;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 
-$twofactor = new Alphaland\Users\TwoFactor();
 $userid = $user->id;
 
 $data = json_decode(file_get_contents('php://input'));
@@ -21,5 +23,5 @@ else
 {	
 	$code = $data->code;
 	header('Content-Type: application/json');
-	echo json_encode(array("success" => $twofactor::activateUser2FA($userid, $code)));
+	echo json_encode(array("success" => TwoFactor::ActivateUser2FA($userid, $code)));
 }

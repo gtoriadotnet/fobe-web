@@ -1,14 +1,14 @@
 <?php
 
-$twofactor = new Alphaland\Users\TwoFactor();
+use Alphaland\Users\TwoFactor;
 
-if ($twofactor::isSession2FAUnlocked()){
+if (TwoFactor::IsSession2FAUnlocked()){
     redirect("/");
 }
 
 if(isset($_POST['submit_2fa'])) 
 {
-    $twofactor::attemptSession2FAUnlock($_POST['2fa_code']);
+    TwoFactor::AttemptSession2FAUnlock($_POST['2fa_code']);
     redirect("/");
 }
 

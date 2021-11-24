@@ -6,11 +6,16 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\TwoFactor;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
-$twofactor = new Alphaland\Users\TwoFactor();
 $userid = $user->id;
 
-die(json_encode(["qr"=>$twofactor::getUser2FAQR($userid),"secret"=>$twofactor::getUser2FASecret($userid)]));
+die(json_encode([
+    "qr" => TwoFactor::getUser2FAQR($userid),
+    "secret" => TwoFactor::GetUser2FASecret($userid)
+]));

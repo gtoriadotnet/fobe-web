@@ -10,6 +10,8 @@
 	my balls yo jaws
 */
 
+use Alphaland\Users\TwoFactor;
+
 try 
 {
 	//php config
@@ -133,8 +135,7 @@ try
 		$activated = new Alphaland\Users\Activation();
 		$activated = $activated::isUserActivated($GLOBALS['user']->id);
 
-		$twofactor = new Alphaland\Users\TwoFactor();
-		$twofactor = $twofactor::isSession2FAUnlocked();
+		$twofactor = TwoFactor::IsSession2FAUnlocked();
 
 		$maintenance = checkIfUnderMaintenance();
 		$banned = checkIfBanned($GLOBALS['user']->id);

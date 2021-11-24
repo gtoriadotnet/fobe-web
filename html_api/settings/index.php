@@ -6,11 +6,13 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\TwoFactor;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
-$twofactor = new Alphaland\Users\TwoFactor();
 $userid = $user->id;
 
 //user info
@@ -28,7 +30,7 @@ $tradepref = null;
 $theme = $userquery->theme;
 
 //initialize 2FA in the database if it hasnt been already
-$twofactor::initialize2FA($userid);
+TwoFactor::Initialize2FA($userid);
 
 $userInfo = array (
 	"userid" => $userid,
@@ -36,7 +38,7 @@ $userInfo = array (
 	"email" => $email,
 	"verified" => $verified,
 	"blurb" => $blurb,
-	"twofactorenabled" => $twofactor::is2FAInitialized($userid),
+	"twofactorenabled" => TwoFactor::Is2FAInitialized($userid),
 	"referralprogram" => inReferralProgram($userid),
 	"joinpref" => $joinpref,
 	"tradepref" => $tradepref,

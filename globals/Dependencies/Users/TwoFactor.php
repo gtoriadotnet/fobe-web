@@ -5,6 +5,7 @@
 */
 
 // Astro, please make public members start with capital letters
+// Also where you aren't actually fetching data, please make it do a COUNT(*)
 
 namespace Alphaland\Users {
 
@@ -12,7 +13,7 @@ namespace Alphaland\Users {
 
     class TwoFactor
     {
-        public static function safeGenerate2FASecret()
+        public static function SafeGenerate2FASecret()
         {
             $secret = "";
             do {
@@ -24,7 +25,7 @@ namespace Alphaland\Users {
             return $secret;
         }
 
-        public static function deauth2FAUserSession()
+        public static function Deauth2FAUserSession()
         {
             $session = $GLOBALS['user']->sessionCookieID;
             $check = $GLOBALS['pdo']->prepare("UPDATE `sessions` SET `twoFactorUnlocked` = 0 WHERE `id` = :session");
@@ -35,19 +36,19 @@ namespace Alphaland\Users {
             return false;
         }
 
-        public static function deleteUser2FA($userid)
+        public static function DeleteUser2FA(int $userid)
         {
             $del = $GLOBALS['pdo']->prepare("DELETE FROM `google_2fa` WHERE `userid` = :uid");
             $del->bindParam(":uid", $userid, PDO::PARAM_INT);
             $del->execute();
             if ($del->rowCount() > 0) {
-                TwoFactor::deauth2FAUserSession();
+                TwoFactor::Deauth2FAUserSession();
                 return true;
             }
             return false;
         }
 
-        public static function getUser2FASecret($userid)
+        public static function GetUser2FASecret(int $userid)
         {
             $code = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
             $code->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -57,9 +58,9 @@ namespace Alphaland\Users {
             }
         }
 
-        public static function verify2FACode($userid, $code)
+        public static function Verify2FACode(int $userid, string $code)
         {
-            $secret = TwoFactor::getUser2FASecret($userid);
+            $secret = TwoFactor::GetUser2FASecret($userid);
             if ($secret) {
                 if ($GLOBALS['authenticator']->verifyCode($secret, $code, 0)) {
                     return true;
@@ -68,7 +69,7 @@ namespace Alphaland\Users {
             return false;
         }
 
-        public static function is2FAInitialized($userid)
+        public static function Is2FAInitialized(int $userid)
         {
             $isinit = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `validated` = 1 AND `userid` = :uid");
             $isinit->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -79,7 +80,7 @@ namespace Alphaland\Users {
             return false;
         }
 
-        public static function auth2FAUserSession()
+        public static function Auth2FAUserSession()
         {
             $session = $GLOBALS['user']->sessionCookieID;
             $check = $GLOBALS['pdo']->prepare("UPDATE `sessions` SET `twoFactorUnlocked` = 1 WHERE `id` = :session");
@@ -90,21 +91,20 @@ namespace Alphaland\Users {
             return false;
         }
 
-        public static function activateUser2FA($userid, $code) //after initializing we make sure it works with a first time activation code
+        public static function ActivateUser2FA(int $userid, string $code) //after initializing we make sure it works with a first time activation code
         {
-            if(!TwoFactor::is2FAInitialized($userid) && 
-            TwoFactor::verify2FACode($userid, $code)) {
+            if(!TwoFactor::Is2FAInitialized($userid) && TwoFactor::Verify2FACode($userid, $code)) {
                 $check = $GLOBALS['pdo']->prepare("UPDATE `google_2fa` SET `validated` = 1 WHERE `userid` = :uid");
                 $check->bindParam(":uid", $userid, PDO::PARAM_INT);
                 if ($check->execute()) {
-                    TwoFactor::auth2FAUserSession();
+                    TwoFactor::Auth2FAUserSession();
                     return true;
                 }
             }
             return false;
         }
             
-        public static function initialize2FA($userid)
+        public static function Initialize2FA(int $userid)
         {
             $check = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
             $check->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -112,7 +112,7 @@ namespace Alphaland\Users {
             if ($check->rowCount() == 0) {
                 $username = getUsername($userid);
                 if ($username) {
-                    $secret = TwoFactor::safeGenerate2FASecret();
+                    $secret = TwoFactor::SafeGenerate2FASecret();
                     $qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "Alphaland");
                     $new2fa = $GLOBALS['pdo']->prepare("INSERT INTO `google_2fa`(`userid`, `secret`, `qr`, `whenGenerated`) VALUES (:uid, :secret, :qr, UNIX_TIMESTAMP())");
                     $new2fa->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -123,7 +123,7 @@ namespace Alphaland\Users {
             }
         }
 
-        public static function getUser2FAQR($userid)
+        public static function GetUser2FAQR(int $userid)
         {
             $qrcode = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
             $qrcode->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -133,25 +133,25 @@ namespace Alphaland\Users {
             }
         }
 
-        public static function isSession2FAUnlocked()
+        public static function IsSession2FAUnlocked()
         {
             $localuser = $GLOBALS['user']->id;
             $session = $GLOBALS['user']->sessionCookieID;
             $check = $GLOBALS['pdo']->prepare("SELECT * FROM `sessions` WHERE `twoFactorUnlocked` = 1 AND `id` = :session");
             $check->bindParam(":session", $session, PDO::PARAM_INT);
             $check->execute();
-            if ($check->rowCount() > 0 || !TwoFactor::is2FAInitialized($localuser)) {
+            if ($check->rowCount() > 0 || !TwoFactor::Is2FAInitialized($localuser)) {
                 return true;
             }
             return false;
         }
 
-        public static function attemptSession2FAUnlock($code)
+        public static function AttemptSession2FAUnlock(string $code)
         {
             $localuser = $GLOBALS['user']->id;
-            if (!TwoFactor::isSession2FAUnlocked()) {
-                if (TwoFactor::verify2FACode($localuser, $code)) {
-                    TwoFactor::auth2FAUserSession();
+            if (!TwoFactor::IsSession2FAUnlocked()) {
+                if (TwoFactor::Verify2FACode($localuser, $code)) {
+                    TwoFactor::Auth2FAUserSession();
                     return true;
                 }
             }
