@@ -41,7 +41,7 @@ namespace Alphaland\Users {
         public function UpdateLastSeen()
         {
             if (!UserModerationManager::IsBanned($this->ID)) {
-                $query = $this->pdo->prepare("UPDATE `users` SET `lastseen` = UNIX_TIMESTAMP() WHERE `id` = :id");
+                $query = $GLOBALS['pdo']->prepare("UPDATE `users` SET `lastseen` = UNIX_TIMESTAMP() WHERE `id` = :id");
                 $query->bindParam(":id", $this->ID, PDO::PARAM_INT);
                 $query->execute();
             }
@@ -52,7 +52,7 @@ namespace Alphaland\Users {
             if (!UserModerationManager::IsBanned($this->ID)) {
                 if (($dailyTime + User::SecondsInDays) < time() || $dailyTime == 0) {
                     // it has been a day or this is their first collection.
-                    $query = $this->pdo->prepare("UPDATE `users` SET `dailytime` = UNIX_TIMESTAMP(), `currency` = (`currency` + 20) WHERE `id` = :id");
+                    $query = $GLOBALS['pdo']->prepare("UPDATE `users` SET `dailytime` = UNIX_TIMESTAMP(), `currency` = (`currency` + 20) WHERE `id` = :id");
                     $query->bindParam(":id", $this->ID, PDO::PARAM_INT);
                     $query->execute();
                 }
@@ -62,7 +62,7 @@ namespace Alphaland\Users {
         public function UpdateIpAddress()
         {
             $ip = WebContextManager::GetCurrentIPAddress();
-            $query = $this->pdo->prepare("UPDATE `users` SET `ip` = :ip WHERE `id` = :id");
+            $query = $GLOBALS['pdo']->prepare("UPDATE `users` SET `ip` = :ip WHERE `id` = :id");
             $query->bindParam(":ip", $ip, PDO::PARAM_STR);
             $query->bindParam(":id", $this->ID, PDO::PARAM_INT);
             $query->execute();
@@ -70,7 +70,7 @@ namespace Alphaland\Users {
 
         public function ValidateToken(string $token): bool
         {
-            $query = $this->pdo->prepare("SELECT * FROM `users` WHERE `id` = :id");
+            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `users` WHERE `id` = :id");
             $query->bindParam(":tk", $token, PDO::PARAM_STR);
             $query->execute();
 
@@ -86,7 +86,7 @@ namespace Alphaland\Users {
         public function Logout()
         {
             if ($this->IsLoggedIn) {
-                $query = $this->pdo->prepare("UPDATE `sessions` SET `valid` = 0 WHERE `id` = :id");
+                $query = $GLOBALS['pdo']->prepare("UPDATE `sessions` SET `valid` = 0 WHERE `id` = :id");
                 $query->bindParam(":id", $this->SessionCookieID, PDO::PARAM_INT);
                 $query->execute();
             }
@@ -94,7 +94,7 @@ namespace Alphaland\Users {
 
         private function ValidateTokenInternal($session): bool
         {
-            $query = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+            $query = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :id");
             $query->bindParam(":id", $session->uid, PDO::PARAM_INT);
             $query->execute();
 
@@ -126,8 +126,6 @@ namespace Alphaland\Users {
             $this->Currency = $userInfo->currency;
         }
 
-
-        private PDO $pdo = $GLOBALS['pdo'];
-        private const $SecondsInDays = 86400;
+        private const SecondsInDays = 86400;
     }
 }

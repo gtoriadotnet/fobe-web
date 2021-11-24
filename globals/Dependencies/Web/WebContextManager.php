@@ -14,7 +14,7 @@ namespace Alphaland\Web {
 
         public static function IsUnderMaintenance(): bool
         {
-            $query = WebContextManager::$pdo->prepare("SELECT * FROM `websettings` WHERE `maintenance` = 1");
+            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `websettings` WHERE `maintenance` = 1");
             $query->execute();
 
             if ($query->rowCount() > 0)
@@ -31,7 +31,7 @@ namespace Alphaland\Web {
             if (!WebContextManager::IsUnderMaintenance()) return true;
 
             if (
-                !WebContextManager::CurrentUser->IsAdministrator()
+                !WebContextManager::$CurrentUser->IsAdministrator()
                 && !WebContextManager::IsCurrentIpAddressWhitelisted()
             ) return false;
 
@@ -46,8 +46,6 @@ namespace Alphaland\Web {
             return in_array($currentIp, $ipWhitelist);
         }
 
-        private static PDO $pdo = $GLOBALS['pdo'];
-
-        public static const $CurrentUser = new User();
+        public static $CurrentUser = new User();
     }
 }
