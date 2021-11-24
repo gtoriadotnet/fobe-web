@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Moderation\UserModerationManager;
+
 $alert = "";
 
 if(isset($_GET['id'])) 
@@ -23,8 +25,7 @@ if(isset($_GET['id']))
 			acceptFriendRequest($info->id);
 		}
 			
-		$modmanager = new Alphaland\Moderation\UserModerationManager();
-		if ($modmanager::IsBanned($id))
+		if (UserModerationManager::IsBanned($id))
 		{
 			redirect("/404");
 		}

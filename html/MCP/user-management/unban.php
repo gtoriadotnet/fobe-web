@@ -4,6 +4,8 @@
 Alphaland 2021 
 */
 
+use Alphaland\Moderation\UserModerationManager;
+
 if(!$user->isStaff()) {
     redirect("/");
 }
@@ -13,7 +15,7 @@ header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 
-$modmanager = new Alphaland\Moderation\UserModerationManager();
+// if it's static you don't need to instantiate the class
 
 $data = json_decode(file_get_contents('php://input'));
 
@@ -22,7 +24,7 @@ if ($data) {
 	$username = $data->username;
 
 	if($username) {
-		$unban = $modmanager::UnbanUser(getID($username));
+		$unban = UserModerationManager::UnbanUser(getID($username));
 	}
 }
 die(json_encode(array("success" => $unban)));

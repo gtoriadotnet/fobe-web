@@ -8,6 +8,8 @@
 
 //img tools (potentially high resource usage) (probably blocking)
 
+use Alphaland\Moderation\UserModerationManager;
+
 function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
 	$cut = imagecreatetruecolor($src_w, $src_h);
 	imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
@@ -762,8 +764,7 @@ function isSignupKeyUserGenerated($signupkey)
 	$key->execute();
 	if ($key->rowCount() > 0)
 	{
-		$banned = new Alphaland\Moderation\UserModerationManager();
-		$banned = $banned::IsBanned($key->fetch(PDO::FETCH_OBJ)->userGen);
+		$banned = UserModerationManager::IsBanned($key->fetch(PDO::FETCH_OBJ)->userGen);
 		if (!$banned)
 		{
 			return true;

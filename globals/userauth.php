@@ -5,6 +5,8 @@
 	User class
 */
 
+use Alphaland\Moderation\UserModerationManager;
+
 class user {
 	public $id = -1;
 	public $name = "";
@@ -71,8 +73,7 @@ class user {
 					$activated = $activated::isUserActivated($this->id);
 
 					//banned
-					$banned = new Alphaland\Moderation\UserModerationManager();
-					$banned = $banned::IsBanned($this->id);
+					$banned = UserModerationManager::IsBanned($this->id);
 
 					if (!$banned)
 					{

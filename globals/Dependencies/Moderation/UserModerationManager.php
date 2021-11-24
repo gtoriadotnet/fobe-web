@@ -17,7 +17,7 @@ namespace Alphaland\Moderation {
             return false;
         }
         
-        public static function UnbanUser($uid)
+        public static function UnbanUser(int $uid)
         {
             if($GLOBALS['user']->isStaff()) {
                 if (userExists($uid)) { 
@@ -33,7 +33,8 @@ namespace Alphaland\Moderation {
             return false;
         }
 
-        public static function BanUser($uid, $reason, $banexpiration, $bantype)
+        // Nikita: TODO: Convert the bantype to a an enum
+        public static function BanUser(int $uid, string $reason, int $banexpiration, int $bantype)
         {
             if($GLOBALS['user']->isStaff()) {
                 if (userExists($uid)) {
@@ -73,7 +74,7 @@ namespace Alphaland\Moderation {
             return false;
         }
 
-        public static function ReferralLimbBan($userid, $reason)
+        public static function ReferralLimbBan(int $userid, string $reason)
         {
             $query = $GLOBALS['pdo']->prepare("SELECT * FROM `users_invited` WHERE `whoInvited` = :userid");
             $query->bindParam(":userid", $userid, PDO::PARAM_INT);
@@ -89,7 +90,7 @@ namespace Alphaland\Moderation {
             return false;
         }
 
-        public static function PoisonBan($userid, $reason)
+        public static function PoisonBan(int $userid, string $reason)
         {
             $ip = userInfo($userid)->ip;
             if (UserModerationManager::BanUser($userid, $reason, 0, 2)) {

@@ -4,6 +4,8 @@
 Alphaland 2021 
 */
 
+use Alphaland\Moderation\UserModerationManager;
+
 if(!$user->isStaff()) {
     redirect("/");
 }
@@ -12,8 +14,6 @@ if(!$user->isStaff()) {
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
-
-$modmanager = new Alphaland\Moderation\UserModerationManager();
 
 $data = json_decode(file_get_contents('php://input'));
 
@@ -29,19 +29,19 @@ if ($data) {
 		$reason = cleanInput($reason);
 		switch ($type) {
 			case "warn":
-				$ban = $modmanager::BanUser($userid, $reason, $expiration, 0); //0 warning type
+				$ban = UserModerationManager::BanUser($userid, $reason, $expiration, 0); //0 warning type
 				break;
 			case "temp":
-				$ban = $modmanager::BanUser($userid, $reason, $expiration, 1); //1 temp type
+				$ban = UserModerationManager::BanUser($userid, $reason, $expiration, 1); //1 temp type
 				break;
 			case "perm":
-				$ban = $modmanager::BanUser($userid, $reason, $expiration, 2); //2 perm type
+				$ban = UserModerationManager::BanUser($userid, $reason, $expiration, 2); //2 perm type
 				break;
 			case "poison":
-				$ban = $modmanager::PoisonBan($userid, $reason);
+				$ban = UserModerationManager::PoisonBan($userid, $reason);
 				break;
 			case "limb":
-				$ban = $modmanager::ReferralLimbBan($userid, $reason);
+				$ban = UserModerationManager::ReferralLimbBan($userid, $reason);
 				break;
 			default:
 				break;		

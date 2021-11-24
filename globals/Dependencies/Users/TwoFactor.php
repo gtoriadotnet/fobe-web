@@ -4,6 +4,8 @@
     Alphaland 2021
 */
 
+// Astro, please make public members start with capital letters
+
 namespace Alphaland\Users {
 
     use PDO;
