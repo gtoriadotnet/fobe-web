@@ -12,6 +12,12 @@ if(isset($_POST['submit_2fa']))
     redirect("/");
 }
 
+if(isset($_POST['logout'])) 
+{
+    $user->logout();
+    redirect("/");
+}
+
 $body = <<<EOT
 <form action="" method="post">
     <div class="container" align="center" style="display: flex;justify-content: center;align-items: center;text-align: center;min-height: 100vh;">
@@ -36,6 +42,9 @@ $body = <<<EOT
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm text-center mt-3">
+                  <button name="logout" class="btn btn-danger">Logout</button>
                 </div>
             </div>
         </div>
