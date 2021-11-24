@@ -5,6 +5,8 @@
 	TODO: This needs a re-do. This is one of the first pages on this project
 */
 
+use Alphaland\Users\Activation;
+
 $body = '';
 $error = '';
 
@@ -130,8 +132,7 @@ else
 						setDefaults($userID); //gives default outfit, body colors and wears the default outfit
 
 						//setup the activation system
-						$activation = new Alphaland\Users\Activation();
-						$activation::setupUserActivation($userID);
+						Activation::SetupUserActivation($userID);
 						
 						//create new session
 						createSession($userID);

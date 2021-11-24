@@ -10,6 +10,7 @@
 	my balls yo jaws
 */
 
+use Alphaland\Users\Activation;
 use Alphaland\Users\TwoFactor;
 
 try 
@@ -95,6 +96,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php"
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -132,8 +134,7 @@ try
 			forceHttpsCloudflare();
 		}
 
-		$activated = new Alphaland\Users\Activation();
-		$activated = $activated::isUserActivated($GLOBALS['user']->id);
+		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
 
 		$twofactor = TwoFactor::IsSession2FAUnlocked();
 
