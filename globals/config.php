@@ -97,6 +97,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();

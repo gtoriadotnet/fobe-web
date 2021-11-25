@@ -84,6 +84,17 @@ namespace Alphaland\Web {
             return false;
         }
 
+        public static function IsIpInRangeList(string $ip, array $ranges)
+        {
+            foreach ($ranges as $range) {
+                if (self::IsIpInRange($ip, $range)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         /**
          * @param string $ip IP address
          * @param string $netmask Netmask
@@ -105,6 +116,16 @@ namespace Alphaland\Web {
             return false;
         }
 
+        public static function IsIpInNetmaskList(string $ip, array $netmasks)
+        {
+            foreach ($netmasks as $netmask) {
+                if (self::IsIpInNetmask($ip, $netmask)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /**
          * @param string $ip IP address
@@ -122,6 +143,28 @@ namespace Alphaland\Web {
             $mask = -1 << (32 - $bits);
             $subnet &= $mask; # nb: in case the supplied subnet wasn't correctly aligned
             return ($ip & $mask) == $subnet;
+        }
+
+        public static function IsIpInCidrRangeList(string $ip, array $cidrs)
+        {
+            foreach ($cidrs as $cidr) {
+                if (self::IsIpInCidrRange($ip, $cidr)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static function IsIpInCidrNetmaskOrRangeList(string $ip, array $cidrs)
+        {
+            foreach ($cidrs as $cidr) {
+                if (self::IsIpInCidrRange($ip, $cidr) || self::IsIpInNetmask($ip, $cidr) || self::IsIpInRange($ip, $cidr) || $ip === $cidr) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
