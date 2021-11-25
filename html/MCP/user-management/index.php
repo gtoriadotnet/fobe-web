@@ -66,6 +66,7 @@ $body = <<<EOT
                     <table class="table atable-dark">
                         <thead>
                             <tr>
+								<th>Moderator</th>
                                 <th>Date</th>
                                 <th>Username</th>
                                 <th>Reason</th>
@@ -178,6 +179,7 @@ function banUser()
 function getBanlist()
 {
 	html = `<tr>
+		<td>{whoBannedUser}</td>
 		<td>{whenBanned}</td>
 		<td>{bannedUser}</td>
 		<td>{banReason}</td>

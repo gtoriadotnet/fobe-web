@@ -39,7 +39,7 @@ foreach($bans as $ban) {
         "banType" => $type,
         "banReason" => cleanOutput($ban['banReason']),
         "bannedUser" => cleanOutput(getUsername($ban['uid'])),
-        "whoBannedUser" => $ban['whoBanned'],
+        "whoBannedUser" => cleanOutput(getUsername($ban['whoBanned'])),
         "whenBanned" => date("m/d/Y", $ban['whenBanned']),
         "banExpiration" => $banexpire
     );
