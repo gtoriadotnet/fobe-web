@@ -19,7 +19,7 @@ $body = <<<EOT
                         <input type="text" name="banuser" class="form-control" id="ban_username" placeholder="Username" autocomplete="off">
                         <input type="text" name="banreason" class="form-control" id="ban_reason" placeholder="Moderation Reason" autocomplete="off">
                         <div class="input-group-append">
-                            <button type="button" class="btn btn-danger" type="button" onclick="banUser()">Moderate User</button>
+                            <button type="button" class="btn btn-danger" type="button" onclick="banUser()">Moderate</button>
                         </div>
                     </div>
                 </div>
