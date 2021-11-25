@@ -35,7 +35,7 @@ namespace Alphaland\Users {
             return null;
         }
         
-        public static function isUserActivated(int $userid)
+        public static function IsUserActivated(int $userid)
         {
             $query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `alphaland_verification` WHERE `isactivated` = 1 AND `uid` = :uid");
             $query->bindParam(":uid", $userid, PDO::PARAM_INT);
@@ -46,7 +46,7 @@ namespace Alphaland\Users {
             return false;
         } 
 
-        public static function setupUserActivation(int $userid) //this should be ran when the user first signs up
+        public static function SetupUserActivation(int $userid) //this should be ran when the user first signs up
         {
             if (!Activation::IsUserActivated($userid)) {
                 $activationcode = Activation::GenerateActivationCode();
