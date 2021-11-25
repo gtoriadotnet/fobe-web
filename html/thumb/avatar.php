@@ -35,7 +35,7 @@ if ($userID | $height | $width)
 	$userhash->bindParam(":i", $userID, PDO::PARAM_INT);
 	$userhash->execute();
 	$userhash = $userhash->fetch(PDO::FETCH_OBJ);
-	$userhash = $userhash->ThumbHash;
+	$userhash = $userhash->HeadshotThumbHash;
 	// ...
 	
 	//construct the path
