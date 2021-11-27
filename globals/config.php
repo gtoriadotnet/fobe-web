@@ -12,6 +12,7 @@
 
 use Alphaland\Users\Activation;
 use Alphaland\Users\TwoFactor;
+use Alphaland\Moderation\UserModerationManager;
 
 try 
 {
@@ -136,11 +137,10 @@ try
 		}
 
 		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
-
 		$twofactor = TwoFactor::IsSession2FAUnlocked();
+		$banned = UserModerationManager::IsBanned($GLOBALS['user']->id);
 
 		$maintenance = checkIfUnderMaintenance();
-		$banned = checkIfBanned($GLOBALS['user']->id);
 
 		//step 1, check if under maintenance
 		if ($maintenance) { //maintenance redirect

@@ -1,6 +1,8 @@
 <?php
 
-if (checkIfBanned($user->id))
+use Alphaland\Moderation\UserModerationManager;
+
+if (UserModerationManager::IsBanned($user->id))
 {
 	$banInfo = $pdo->prepare("SELECT * FROM user_bans WHERE uid = :id AND valid = 1");
 	$banInfo->bindParam(":id", $user->id, PDO::PARAM_INT);
@@ -105,5 +107,5 @@ if (checkIfBanned($user->id))
 else
 {
 	//not banned
-	redirect("/404");	
+	redirect("/");	
 }

@@ -6846,19 +6846,6 @@ function RCCHeaderEnvironment($nodie=false) //authenticates if the accesskey hea
 	return false;
 }
 
-function checkIfBanned($uid)
-{
-	$checkban = $GLOBALS['pdo']->prepare("SELECT * FROM user_bans WHERE uid = :i AND valid = 1");
-	$checkban->bindParam(":i", $uid, PDO::PARAM_INT);
-	$checkban->execute();
-	
-	if ($checkban->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
 function isUnderMaintenance()
 {
 	$checkMaintenance = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE maintenance = 1");
