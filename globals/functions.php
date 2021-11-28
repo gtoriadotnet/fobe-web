@@ -750,11 +750,7 @@ function inReferralProgram($user)
 	}
 	return false;
 	*/
-	if ($GLOBALS['user']->isOwner())
-	{
-		return true;
-	}
-	return false;
+	return true;
 }
 
 function isSignupKeyUserGenerated($signupkey)
