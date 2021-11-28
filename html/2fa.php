@@ -6,14 +6,13 @@ if (TwoFactor::IsSession2FAUnlocked()){
     redirect("/");
 }
 
-if(isset($_POST['submit_2fa'])) 
-{
-    TwoFactor::AttemptSession2FAUnlock($_POST['2fa_code']);
-    redirect("/");
+if(isset($_POST['submit_2fa'])) {
+    if (TwoFactor::AttemptSession2FAUnlock($_POST['2fa_code'])) {
+        redirect("/");
+    }
 }
 
-if(isset($_POST['logout'])) 
-{
+if(isset($_POST['logout'])) {
     $user->logout();
     redirect("/");
 }

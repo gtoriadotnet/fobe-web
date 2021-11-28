@@ -151,8 +151,9 @@ namespace Alphaland\Users {
             $localuser = $GLOBALS['user']->id;
             if (!TwoFactor::IsSession2FAUnlocked()) {
                 if (TwoFactor::Verify2FACode($localuser, $code)) {
-                    TwoFactor::Auth2FAUserSession();
-                    return true;
+                    if (TwoFactor::Auth2FAUserSession()) {
+                        return true;
+                    }
                 }
             }
             return false;
