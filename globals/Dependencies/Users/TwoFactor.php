@@ -13,7 +13,7 @@ namespace Alphaland\Users {
 
     class TwoFactor
     {
-        public static function SafeGenerate2FASecret()
+        private static function SafeGenerate2FASecret()
         {
             $secret = "";
             do {
