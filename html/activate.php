@@ -19,6 +19,7 @@ $body = '
 						<hr>
 						<h5>To play Alphaland, you must activate this account in the <a href=https://discord.gg/RDj4aVh8VS>Discord Server</a>.</h5>
 						<h5>After joining, send the activation code below in the activation channel and refresh this page.</h5>
+						<h5>It is required to be in the Discord Server for moderation and communication purposes.</h5>
 						<hr>
 						<code>'.$activationcode.'</code>
 						<hr>
