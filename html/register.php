@@ -76,17 +76,14 @@ else
 			if (emailRegistered($email))
 			{
 				$error = "Email is already registered";
-				//redirect("/login"); //email already exists, redirect to login
 			}
 
 			$ip = getIP();
-			/*
+
 			if (isIPAssociatedWithAccount($ip))
 			{
-				$error = "IP Associated with another account";
-				redirect("/login"); //ip is associated with another account, redirect to login
+				$error = "Please contact an Administrator if possible.";
 			}
-			*/
 
 			if($error == "") 
 			{
