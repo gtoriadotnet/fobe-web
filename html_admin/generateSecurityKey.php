@@ -1,6 +1,8 @@
 <?php
 
-forceHttpsCloudflare();
+use Alphaland\Web\WebContextManager;
+
+WebContextManager::ForceHttpsCloudflare();
 
 header("Access-Control-Allow-Origin: https://crackpot.alphaland.cc");
 header("access-control-allow-credentials: true");

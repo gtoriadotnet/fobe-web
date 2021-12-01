@@ -1,6 +1,8 @@
 <?php
 
-forceHttpsCloudflare();
+use Alphaland\Web\WebContextManager;
+
+WebContextManager::ForceHttpsCloudflare();
 
 if(!($user->isOwner())) {
 	if ($user->isAdmin()) {

@@ -14,6 +14,8 @@
 use Alphaland\Users\Activation;
 use Alphaland\Users\TwoFactor;
 use Alphaland\Moderation\UserModerationManager;
+use Alphaland\Web\WebContextManager;
+use Alphaland\Common\System;
 
 try 
 {
@@ -101,6 +103,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebContextManager.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/System.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -127,22 +130,21 @@ try
 	require_once 'userauth.php';
 	
 	//redirects
-	if (!commandLine() && //is not executed from cmd line
-	!RCCHeaderEnvironment(true)) //is not an authenticated rcc
+	if (!System::IsCommandLine() && //is not executed from cmd line
+	!WebContextManager::VerifyAccessKeyHeader()) //is not an authenticated rcc
 	{
 		$accesseddomain = $_SERVER['SERVER_NAME'];
 		$accesseddirectory = $_SERVER['PHP_SELF'];
 
 		if ($accesseddomain == "www.".$domain && //if the domain the user is visiting www
 		$_SERVER['HTTP_USER_AGENT'] != $clientUserAgent) { //is not client user agent
-			forceHttpsCloudflare();
+			WebContextManager::ForceHttpsCloudflare();
 		}
 
 		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
 		$twofactor = TwoFactor::IsSession2FAUnlocked();
 		$banned = UserModerationManager::IsBanned($GLOBALS['user']->id);
-
-		$maintenance = checkIfUnderMaintenance();
+		$maintenance = WebContextManager::IsUnderMaintenance();
 
 		//step 1, check if under maintenance
 		if ($maintenance) { //maintenance redirect

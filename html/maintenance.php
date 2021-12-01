@@ -1,5 +1,8 @@
 <?php
-if (!isUnderMaintenance())
+
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::IsUnderMaintenance())
 {
 	redirect("/");
 }

@@ -11,18 +11,6 @@ namespace Alphaland\Web {
             return (isset($_SERVER["HTTP_CF_CONNECTING_IP"]) ? $_SERVER["HTTP_CF_CONNECTING_IP"] : $_SERVER['REMOTE_ADDR']);
         }
 
-        public static function IsUnderMaintenance(): bool
-        {
-            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `websettings` WHERE `maintenance` = 1");
-            $query->execute();
-
-            if ($query->rowCount() > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
         public static function IsCurrentIpAddressWhitelisted()
         {
             $currentIp = WebContextManager::GetCurrentIPAddress();
@@ -33,15 +21,21 @@ namespace Alphaland\Web {
 
         public static function CanBypassMaintenance()
         {
-            // Wouldn't really be a bypass per say, but you know, reusing existing code is better than
-            // copying already existing code.
-            if (!WebContextManager::IsUnderMaintenance()) return true;
+            return $GLOBALS['user']->isAdmin() || WebContextManager::IsCurrentIpAddressWhitelisted();
+        }
+        
+        public static function IsUnderMaintenance(bool $status = false)
+        {
+            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `websettings` WHERE `maintenance` = 1");
+            $query->execute();
 
-            if (!$GLOBALS['user']->isAdmin()
-                && !WebContextManager::IsCurrentIpAddressWhitelisted()
-            ) return false;
-
-            return true;
+            if ($query->rowCount() > 0) {
+                if ($status) {
+                    return true;
+                }
+                return !WebContextManager::CanBypassMaintenance();
+            }
+            return false;
         }
 
         public static function GetRequestHeaders() 
@@ -82,10 +76,17 @@ namespace Alphaland\Web {
         
         public static function ForceHttpsCloudflare() 
         {
-            if(!is_https_cloudflare()) {
+            if(!WebContextManager::IsCloudflareHttps()) {
                 header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
                 exit();
             }
+        }
+        
+        public static function Redirect($url, $code = 302)
+        {
+            http_response_code($code);
+            header("Location: $url");
+            die();
         }
 
         public static function HttpGetPing($url, $timeout) //to see if a URL times out

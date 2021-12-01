@@ -9,6 +9,7 @@
 //img tools (potentially high resource usage) (probably blocking)
 
 use Alphaland\Moderation\UserModerationManager;
+use Alphaland\Web\WebContextManager;
 
 function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
 	$cut = imagecreatetruecolor($src_w, $src_h);
@@ -6550,15 +6551,6 @@ function getCSS($studio=false)
 
 //utilities
 
-function commandLine()
-{
-	if (php_sapi_name() === 'cli')
-	{
-		return true;
-	}
-	return false;
-}
-
 function httpGetPing($url, $timeoutms) //to see if a URL times out
 {
 	$curl_do = curl_init(); 
@@ -6655,7 +6647,7 @@ function getNav()
 		';
 	}
 
-	if (isUnderMaintenance())
+	if (WebContextManager::IsUnderMaintenance(true))
 	{
 		$maintenancestatus = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-danger' role='alert'>MAINTENANCE MODE IS ENABLED</div>";
 	}
@@ -6806,70 +6798,6 @@ function fetchAnnouncement()
 	}
 }
 
-function getallrequestheaders() {
-    $headers = [];
-    foreach ($_SERVER as $name => $value) {
-        if (substr($name, 0, 5) == 'HTTP_') {
-            $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
-        }
-    }
-    return $headers;
-    }
-
-function RCCHeaderEnvironment($nodie=false) //authenticates if the accesskey header is valid and the ip whitelisted
-{
-	$ip = getIP(); //get the requesters ip address
-	$whitelisted_ips = explode(";", $GLOBALS['ws']->webservice_whitelist); //splits up all the ip's in the whitelist with ; being the marker
-	
-	$headers = getallrequestheaders(); //grab all the headers sent from the requester
-	$accesskey = $headers['Accesskey']; //if the Accesskey header from requester is present, the contents wil be stored here
-
-	if(in_array($ip, $whitelisted_ips))	//if the IP from the requester is whitelisted
-	{
-		if (!empty($accesskey)) //if the contents of the accesskey variable is not empty
-		{
-			if($accesskey == $GLOBALS['ws']->webservice_key) //if the contents of the accesskey variable equals the webservicekey in the database
-			{
-				return true;
-			}
-		}
-	}
-	
-	if (!$nodie)
-	{
-		die(http_response_code(401)); //all of the conditions arent met
-	}
-	return false;
-}
-
-function isUnderMaintenance()
-{
-	$checkMaintenance = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE maintenance = 1");
-	$checkMaintenance->execute();
-	
-	if ($checkMaintenance->rowCount() > 0) //if under maintenance
-	{
-		return true;
-	}
-	return false;
-}
-
-function checkIfUnderMaintenance() 
-{
-	$rank = $GLOBALS['user']->rank;
-	$checkMaintenance = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE maintenance = 1");
-	$checkMaintenance->execute();
-
-	if ($checkMaintenance->rowCount() > 0) //if under maintenance
-	{
-		if ($rank !=2 && !in_array(getIP(), explode(";", $GLOBALS['ws']->webservice_whitelist))) //if not admin or whitelisted ip
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
 function canRegister()
 {
 	$check = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE registration = 1");
@@ -6882,22 +6810,9 @@ function canRegister()
 	return false;
 }
 
-function is_https_cloudflare() {
-    return isset($_SERVER['HTTPS']) ||
-        ($visitor = json_decode($_SERVER['HTTP_CF_VISITOR'])) &&
-            $visitor->scheme == 'https';
-}
-
-function forceHttpsCloudflare() {
-	if(!is_https_cloudflare()) {
-		header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
-		exit();
-	}
-}
-
 function adminPanelStats() {
 	$maintenancestatus = "ON";
-	if (!isUnderMaintenance())
+	if (!WebContextManager::IsUnderMaintenance(true))
 	{
 		$maintenancestatus = "OFF";
 	}
