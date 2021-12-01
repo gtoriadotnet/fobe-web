@@ -2,7 +2,12 @@
 
 //the design choice here was to tie in clientpresence with recently played and visits and make it fully server-sided besides the client pings
 
-RCCHeaderEnvironment();
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::VerifyAccessKeyHeader())
+{
+    die(http_response_code(400));
+}
 
 $action = (string)$_GET['action'];
 $userid = (int)$_GET['UserID'];

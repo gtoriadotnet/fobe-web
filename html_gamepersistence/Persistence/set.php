@@ -1,7 +1,12 @@
 <?php
 header("Content-Type: application/json");
 
-RCCHeaderEnvironment(); //since this is only meant to be used from rcc, we check for the whitelisted IP and the accesskey header. If valid, we continue
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::VerifyAccessKeyHeader())
+{
+    die(http_response_code(400));
+}
 
 if(isset($_SERVER["HTTP_CF_CONNECTING_IP"]))
 {

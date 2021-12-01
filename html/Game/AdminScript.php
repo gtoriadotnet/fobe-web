@@ -2,7 +2,12 @@
 
 //stuff for staff will be handled here
 
-RCCHeaderEnvironment(); //secure for RCC access only
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::VerifyAccessKeyHeader())
+{
+    die(http_response_code(400));
+}
 
 /*
 local GUI = Instance.new("BillboardGui")

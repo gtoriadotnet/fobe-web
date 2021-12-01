@@ -94,12 +94,13 @@ try
 	//autoloader include
 	require 'C:\Users\Administrator\vendor\autoload.php';
 	
-	//alphaland specfic dependencies
+	//alphaland specfic dependencies (listing manually for now due to active rewrite of stuff)
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebContextManager.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();

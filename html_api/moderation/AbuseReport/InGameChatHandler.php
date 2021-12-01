@@ -5,7 +5,12 @@
     Abuse reports
 */
 
-RCCHeaderEnvironment(); //secure access RCC only
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::VerifyAccessKeyHeader())
+{
+    die(http_response_code(400));
+}
 
 $xml = file_get_contents('php://input');
 

@@ -1,6 +1,11 @@
 <?php
 
-RCCHeaderEnvironment(); //we dont want people to change ranks, restrict this to rcc
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::VerifyAccessKeyHeader())
+{
+    die(http_response_code(400));
+}
 
 /*
 Alphaland 2021 

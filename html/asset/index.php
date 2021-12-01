@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");
 header("Expires: -1");
@@ -42,7 +44,7 @@ if ($id)
 	{
 		if (isAssetApproved($id) and !isAssetModerated($id)) //if the asset is approved and not moderated
 		{
-			if (RCCHeaderEnvironment(true)) //immediately allow full access (passing true disables die() and returns true or false)
+			if (WebContextManager::VerifyAccessKeyHeader()) //immediately allow full access (passing true disables die() and returns true or false)
 			{
 				ReturnAsset($iteminfo->Hash, $iteminfo->AssetTypeId);
 			}
