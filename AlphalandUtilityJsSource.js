@@ -54,7 +54,7 @@ function parseHtml(html, limit, object, message, singleObject=false) {
 								buffer = buffer.replace(marker, window[marker.substring(1, marker.length - 1)](objectData)); //replace the marker with the data returned from the call
 							}
 							catch (error) {
-								//do nothing
+								console.log('[functionCall] Something went wrong.')
 							}
 						}
 						break;
