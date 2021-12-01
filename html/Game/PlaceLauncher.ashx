@@ -42,7 +42,7 @@ function constructJson($jobid, $status, $joinscripturl, $authenticationurl, $aut
 
 if(!$requesttype || !$placeid || ($_SERVER['HTTP_USER_AGENT'] != $GLOBALS['clientUserAgent']))
 {
-	die(http_response_code(400));
+	die(http_response_code(401));
 }
 
 function genToken($jobid) {

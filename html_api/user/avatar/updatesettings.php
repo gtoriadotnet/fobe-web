@@ -15,7 +15,7 @@ $angleLeft = (bool)$_GET['angleLeft'];
 
 if ($angleRight && $angleLeft)
 {
-	die(http_response_code(400));
+	die(http_response_code(401));
 }
 else
 {

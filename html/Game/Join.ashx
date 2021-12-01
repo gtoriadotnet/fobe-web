@@ -95,4 +95,4 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 		}
 	} 
 }
-die(http_response_code(400));
+die(http_response_code(401));

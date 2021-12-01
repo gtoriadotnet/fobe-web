@@ -4,7 +4,7 @@ use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {
-    die(http_response_code(400));
+    die(http_response_code(401));
 }
 
 $firstuser = $_GET['firstUserId'];

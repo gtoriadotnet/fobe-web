@@ -6,7 +6,7 @@ use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {
-    die(http_response_code(400));
+    die(http_response_code(401));
 }
 
 $action = (string)$_GET['action'];
@@ -17,7 +17,7 @@ $isteleport = (bool)$_GET['IsTeleport'];
 
 function BadRequest()
 {
-	die(http_response_code(400));
+	die(http_response_code(401));
 }
 
 if (!$action || !$userid || !$placeid)
