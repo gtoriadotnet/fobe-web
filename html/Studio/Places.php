@@ -1,8 +1,10 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 if(!isLoggedIn())
 {
-	redirect("../login?referral=" . "https://www.alphaland.cc/Studio/Places");
+	WebContextManager::Redirect("../login?referral=" . "https://www.alphaland.cc/Studio/Places");
 }
 
 $games_html = "";
@@ -10,15 +12,17 @@ $games = getAllGames($user->id)->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($games as $game)
 {
-	$placethumbnail = handleGameThumb($game[id]);
+	$placeid = $game['id'];
+	$placename = $game['Name'];
+	$placethumbnail = handleGameThumb($game['id']);
 	$games_html .= <<<EOT
 	<li>
-		<div class="studio-place-card text-center" style="cursor: pointer;" onclick="openGame({$game[id]})">
+		<div class="studio-place-card text-center" style="cursor: pointer;" onclick="openGame({$placeid})">
 			<a href="#">
 			<div class="studio-place-card-img">
 			<img class="img-fluid" src="{$placethumbnail}">
 		</div>
-			<p class="no-overflow">{$game[Name]}</p>
+			<p class="no-overflow">{$placename}</p>
 			</a>
 		</div>
 	</li>
