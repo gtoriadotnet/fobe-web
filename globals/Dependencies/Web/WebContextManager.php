@@ -82,14 +82,14 @@ namespace Alphaland\Web {
             }
         }
         
-        public static function Redirect($url, $code = 302)
+        public static function Redirect(string $url, $code = 302)
         {
             http_response_code($code);
             header("Location: $url");
             die();
         }
 
-        public static function HttpGetPing($url, $timeout) //to see if a URL times out
+        public static function HttpGetPing(string $url, int $timeout) //to see if a URL times out
         {
             $curl_do = curl_init(); 
             curl_setopt($curl_do, CURLOPT_URL,          	      $url);   
