@@ -81,7 +81,7 @@ else
 
 			$ip = getIP();
 
-			if (isIPAssociatedWithAccount($ip))
+			if (WebContextManager::IsIpRegistered($ip))
 			{
 				$error = "Please contact an Administrator if possible.";
 			}

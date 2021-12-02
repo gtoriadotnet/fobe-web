@@ -110,5 +110,17 @@ namespace Alphaland\Web {
             }
             return false;
         }
+
+        public static function IsIpRegistered(string $ip)
+        {
+            $userip = $GLOBALS['pdo']->prepare('SELECT * FROM `users` WHERE ip = :ipaddy');
+            $userip->bindParam(':ipaddy', $ip, PDO::PARAM_STR);
+            $userip->execute();
+            if ($userip->rowCount() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
