@@ -63,6 +63,6 @@ if ($id)
 	}
 	else //fallback to roblox assets (compatibility)(will break eventually, need a better solution)(instruct players to use roblox asset url for compatibility?) roblox.com/asset/?id=
 	{
-		redirect("https://assetdelivery.roblox.com/v1/asset/?id=" . $id . "&version=" . $assetversion);
+		WebContextManager::Redirect("https://assetdelivery.roblox.com/v1/asset/?id=" . $id . "&version=" . $assetversion);
 	}
 }

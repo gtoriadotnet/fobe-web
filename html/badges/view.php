@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $body = "";
 if(isset($_GET['id'])) 
 {
@@ -61,13 +63,13 @@ if(isset($_GET['id']))
 	else
 	{
 		//item doesnt exist
-		redirect("../../404");
+		WebContextManager::Redirect("../../404");
 	}
 }
 else 
 {
 	//no url parameter
-	redirect("../../404");
+	WebContextManager::Redirect("../../404");
 }
 pageHandler();
 $ph->pageTitle(cleanOutput($i->Name));

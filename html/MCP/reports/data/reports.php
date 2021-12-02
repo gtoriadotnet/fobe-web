@@ -4,12 +4,14 @@
 	Alphaland 2021
 */
 
+use Alphaland\Web\WebContextManager;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
 if(!$user->isStaff()) {
-    redirect("/MCP");
+    WebContextManager::Redirect("/");
 }
 
 $report = $GLOBALS['pdo']->prepare("SELECT * FROM user_reports WHERE closed = 0 ORDER BY whenReported ASC");

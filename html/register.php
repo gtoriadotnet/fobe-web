@@ -6,6 +6,7 @@
 */
 
 use Alphaland\Users\Activation;
+use Alphaland\Web\WebContextManager;
 
 $body = '';
 $error = '';
@@ -136,7 +137,7 @@ else
 
 						//send verification email
 						sendVerificationEmail("info@alphaland.cc", $email);
-						redirect("/");
+						WebContextManager::Redirect("/");
 					} 
 					else 
 					{

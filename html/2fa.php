@@ -1,20 +1,21 @@
 <?php
 
 use Alphaland\Users\TwoFactor;
+use Alphaland\Web\WebContextManager;
 
 if (TwoFactor::IsSession2FAUnlocked()){
-    redirect("/");
+    WebContextManager::Redirect("/");
 }
 
 if(isset($_POST['submit_2fa'])) {
     if (TwoFactor::AttemptSession2FAUnlock($_POST['2fa_code'])) {
-        redirect("/");
+        WebContextManager::Redirect("/");
     }
 }
 
 if(isset($_POST['logout'])) {
     $user->logout();
-    redirect("/");
+    WebContextManager::Redirect("/");
 }
 
 $body = <<<EOT

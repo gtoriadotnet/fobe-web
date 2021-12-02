@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 header('Content-Type: application/json');
 
 $assetid = $_GET['assetId'];
@@ -12,7 +14,7 @@ if (!$assetid)
 
 if ($useroblox == "true")
 {
-	redirect("https://api.roblox.com/marketplace/productinfo?assetId=" . $assetid);	
+	WebContextManager::Redirect("https://api.roblox.com/marketplace/productinfo?assetId=" . $assetid);	
 }
 else
 {

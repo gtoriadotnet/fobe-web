@@ -5,8 +5,10 @@
     Report viewer
 */
 
+use Alphaland\Web\WebContextManager;
+
 if(!$user->isStaff()) {
-    redirect("/");
+    WebContextManager::Redirect("/");
 }
 
 //chek
@@ -14,7 +16,7 @@ $report = $GLOBALS['pdo']->prepare("SELECT * FROM user_reports WHERE `id` = :id 
 $report->bindParam(":id", $_GET['id'], PDO::PARAM_INT);
 $report->execute();
 if ($report->rowCount() == 0) {
-	redirect("/MCP/reports/");
+	WebContextManager::Redirect("/MCP/reports/");
 }
 
 $body = <<<EOT

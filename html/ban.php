@@ -1,6 +1,7 @@
 <?php
 
 use Alphaland\Moderation\UserModerationManager;
+use Alphaland\Web\WebContextManager;
 
 if (UserModerationManager::IsBanned($user->id))
 {
@@ -17,7 +18,7 @@ if (UserModerationManager::IsBanned($user->id))
 	if(isset($_POST['logout'])) 
 	{
 		$user->logout();
-		redirect("/");
+		WebContextManager::Redirect("/");
 	}
 								
 	if(isset($_POST['agree'])) 
@@ -28,7 +29,7 @@ if (UserModerationManager::IsBanned($user->id))
 			$unban = $pdo->prepare("UPDATE user_bans SET valid = 0 WHERE uid = :u");
 			$unban->bindParam(":u", $user->id, PDO::PARAM_INT);
 			$unban->execute();
-			redirect("/");
+			WebContextManager::Redirect("/");
 		}
 		elseif ($banType == 1) //temporary
 		{
@@ -38,7 +39,7 @@ if (UserModerationManager::IsBanned($user->id))
 				$unban = $pdo->prepare("UPDATE user_bans SET valid = 0 WHERE uid = :u");
 				$unban->bindParam(":u", $user->id, PDO::PARAM_INT);
 				$unban->execute();
-				redirect("/");
+				WebContextManager::Redirect("/");
 			}
 		}
 	}
@@ -107,5 +108,5 @@ if (UserModerationManager::IsBanned($user->id))
 else
 {
 	//not banned
-	redirect("/");	
+	WebContextManager::Redirect("/");	
 }

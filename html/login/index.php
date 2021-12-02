@@ -1,9 +1,12 @@
 <?php
+
+use Alphaland\Web\WebContextManager;
+
 $error = "";
 
 if (isLoggedIn())
 {
-	redirect("/");
+	WebContextManager::Redirect("/");
 }
 
 if(isset($_POST['lg'])) 

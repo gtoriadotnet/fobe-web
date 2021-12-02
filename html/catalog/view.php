@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $body = "";
 if(isset($_GET['id'])) 
 {
@@ -21,7 +23,7 @@ if(isset($_GET['id']))
 		}
 		elseif ($result == 2)
 		{
-			redirect("/catalog/view?id=". $id . "");
+			WebContextManager::Redirect("/catalog/view?id=". $id . "");
 		}
 	}
 	// ...
@@ -61,7 +63,7 @@ if(isset($_GET['id']))
 		//redirect if a game
 		if ($i->AssetTypeId == 9)
 		{
-			redirect("/games/view?id=" . $id);
+			WebContextManager::Redirect("/games/view?id=" . $id);
 		}
 		// ...
 		
@@ -246,13 +248,13 @@ EOT;
 	else
 	{
 		//item doesnt exist
-		redirect("../../404");
+		WebContextManager::Redirect("/404");
 	}
 }
 else 
 {
 	//no url parameter
-	redirect("/");
+	WebContextManager::Redirect("/");
 }
 pageHandler();
 $ph->pageTitle(cleanOutput($i->Name));

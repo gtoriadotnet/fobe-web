@@ -6,7 +6,7 @@ WebContextManager::ForceHttpsCloudflare();
 
 if(!($user->isOwner())) {
 	if ($user->isAdmin()) {
-		redirect("/");
+		WebContextManager::Redirect("/");
 	}
 	die('bababooey');
 }

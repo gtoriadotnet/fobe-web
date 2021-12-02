@@ -3570,13 +3570,13 @@ function getRobloxAssetType($assetid)
 function ReturnAssetFromHash($hash) //asset CDN
 {
 	//alphaland assets cdn
-	redirect(constructAssetHashUrl($hash));
+	WebContextManager::Redirect(constructAssetHashUrl($hash));
 }
 
 function ReturnThumbnailFromHash($hash) //thumb CDN (images)
 {
 	//alphaland thumb (images) cdn
-	redirect(constructThumbnailHashUrl($hash));
+	WebContextManager::Redirect(constructThumbnailHashUrl($hash));
 }
 
 function CreateAsset($AssetTypeId, $IconImageAssetId, $TargetId, $ProductType, $Name, $Description, $Created, $Updated, $CreatorId, $PriceInAlphabux, $Sales, $isPersonalServer, $IsNew, $IsForSale, $IsPublicDomain, $IsLimited, $IsLimitedUnique, $IsCommentsEnabled, $IsApproved, $IsModerated, $Remaining, $MinimumMembershipLevel, $ContentRatingTypeId, $Favorited, $Visited, $MaxPlayers, $UpVotes, $DownVotes, $Hash, $ThumbHash)
@@ -6319,12 +6319,6 @@ function getID($username) {
 		return $id->id;
 	}
 	return false; //user not found
-}
-
-function redirect($location, $code = 302) {
-	http_response_code($code);
-	header("Location: $location");
-	die();
 }
 
 function passwordCorrect($userID, $password) {

@@ -5,6 +5,8 @@
 	Closes an active report
 */
 
+use Alphaland\Web\WebContextManager;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
@@ -12,7 +14,7 @@ header('Content-Type: application/json');
 $id = (int)$_GET['id'];
 
 if(!$user->isStaff() || !$id) {
-    redirect("/MCP");
+    WebContextManager::Redirect("/");
 }
 
 $report = $GLOBALS['pdo']->prepare("UPDATE user_reports SET `closed` = 1 WHERE `id` = :id AND `closed` = 0");

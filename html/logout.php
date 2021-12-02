@@ -1,3 +1,6 @@
 <?php
+
+use Alphaland\Web\WebContextManager;
+
 $user->logout();
-redirect("/");
+WebContextManager::Redirect("/");

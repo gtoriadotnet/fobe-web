@@ -6,13 +6,16 @@ Alphaland 2021
 
 
 //headers
+
+use Alphaland\Web\WebContextManager;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
 
 if(!$user->isStaff())
 {
-    redirect("../home"); //u not admin nigga
+    WebContextManager::Redirect("/");
 }
 
 $assetid = $_GET['id'];

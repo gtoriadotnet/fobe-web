@@ -4,7 +4,7 @@ use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::IsUnderMaintenance())
 {
-	redirect("/");
+	WebContextManager::Redirect("/");
 }
 
 $websettings = $pdo->prepare("SELECT * FROM websettings");

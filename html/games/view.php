@@ -4,6 +4,8 @@
 	Alphaland 2021 
 */
 
+use Alphaland\Web\WebContextManager;
+
 $gameID = $_GET['id'];
 $gInfo = getAssetInfo($gameID);
 
@@ -12,12 +14,12 @@ if($gInfo !== false)
 	$gameName = $gInfo->Name;
 	if ($gInfo->AssetTypeId != 9) //make sure its actually a place
 	{
-		redirect("/404");
+		WebContextManager::Redirect("/404");
 	}
 }
 else
 {
-	redirect("/404");
+	WebContextManager::Redirect("/404");
 }
 
 checkForDeadJobs($gameID);

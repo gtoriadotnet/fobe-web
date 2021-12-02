@@ -1,7 +1,10 @@
 <?php
+
+use Alphaland\Web\WebContextManager;
+
 if(!($user->isStaff())) 
 {
-    redirect("../404"); //u not admin nigga
+    WebContextManager::Redirect("/");
 }
 $body = <<<EOT
 <h5 class="text-center">Moderation Control Panel</h5>

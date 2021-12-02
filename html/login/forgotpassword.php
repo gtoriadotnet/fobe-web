@@ -1,8 +1,10 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 if (isLoggedIn())
 {
-	redirect("/");
+	WebContextManager::Redirect("/");
 }
 
 $alert = '';

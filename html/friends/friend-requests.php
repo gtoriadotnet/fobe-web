@@ -1,6 +1,8 @@
 <?php
 
-	$body = '';
+use Alphaland\Web\WebContextManager;
+
+$body = '';
 
 	if(isset($_POST['acceptfriend'])) 
 	{
@@ -174,22 +176,22 @@ if ($pages != 0)
 {
 	if ($_GET['page'] == 0)
 	{
-		redirect("friend-requests?page=1");
+		WebContextManager::Redirect("friend-requests?page=1");
 	}
 	elseif ($_GET['page'] == $pages + 1)
 	{
-		redirect("friend-requests?page=".$pages."");
+		WebContextManager::Redirect("friend-requests?page=".$pages."");
 	} 
 }
 elseif ($pages == 0)
 {
 	if (!$_GET['page'])
 	{
-		redirect("friend-requests?page=1");
+		WebContextManager::Redirect("friend-requests?page=1");
 	}
 	elseif($_GET['page'] > 1)
 	{
-		redirect("friend-requests?page=1");
+		WebContextManager::Redirect("friend-requests?page=1");
 	}
 }
 

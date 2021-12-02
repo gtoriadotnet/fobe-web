@@ -149,7 +149,7 @@ try
 		//step 1, check if under maintenance
 		if ($maintenance) { //maintenance redirect
 			if ($accesseddirectory != "/maintenance.php") {
-				redirect($url . "/maintenance");
+				WebContextManager::Redirect($url . "/maintenance");
 			}
 		}
 
@@ -157,7 +157,7 @@ try
 		if ($GLOBALS['user']->logged_in && $banned) { //ban redirect
 			if ($accesseddirectory != "/ban.php" &&
 			$accesseddirectory != "/logout.php") {
-				redirect($url . "/ban");
+				WebContextManager::Redirect($url . "/ban");
 			}
 		}
 	
@@ -165,14 +165,14 @@ try
 		if ($GLOBALS['user']->logged_in && !$activated) { //activation redirect
 			if ($accesseddirectory != "/activate.php" && 
 			$accesseddirectory != "/logout.php") {
-				redirect($url . "/activate");
+				WebContextManager::Redirect($url . "/activate");
 			}
 		}
 
 		//step 4, check if 2fa is authenticated
 		if ($GLOBALS['user']->logged_in && !$twofactor) { //2fa redirect
 			if ($accesseddirectory != "/2fa.php") {
-				redirect($url . "/2fa");
+				WebContextManager::Redirect($url . "/2fa");
 			}
 		}
 
@@ -192,17 +192,17 @@ try
 				$accesseddirectory != "/asset/index.php" &&
 				$accesseddirectory != "/settings/resetpassword.php" &&
 				$accesseddirectory != "/secret/localtesting.php") { //for local client testing, doesn't contain anything sensitive
-					redirect($url);
+					WebContextManager::Redirect($url);
 				}
 			}
 			else if ($accesseddomain == "api.".$domain) { //api
 				if ($accesseddirectory != "/logo.php") {
-					redirect($url);
+					WebContextManager::Redirect($url);
 				}
 			}
 			else if ($accesseddomain == "data.".$domain) { //data
 				if ($accesseddirectory != "/Error/Dmp.ashx") {
-					redirect($url);
+					WebContextManager::Redirect($url);
 				}
 			}
 			else if ($accesseddomain == "setup.".$domain) { //setup
@@ -211,7 +211,7 @@ try
 			else if ($accesseddomain == "clientsettings.api.".$domain) { //clientsettings
 				//do nothing (we arent restricting on this subdomain)
 			} else {
-				redirect($url);
+				WebContextManager::Redirect($url);
 			}
 		}
 	}

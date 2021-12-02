@@ -5,13 +5,16 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Web\WebContextManager;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
 if(!$user->isStaff())
 {
-    redirect("/");
+    WebContextManager::Redirect("/");
 }
 
 //get params

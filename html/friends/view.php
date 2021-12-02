@@ -1,10 +1,12 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $body = '';
 
 if(!isset($_GET['id'])) 
 {
-	redirect('view?id='. $GLOBALS['user']->id . '');
+	WebContextManager::Redirect('view?id='. $GLOBALS['user']->id . '');
 }
 
 $id = (int)$_GET['id'];
@@ -90,7 +92,7 @@ EOT;
 }
 else
 {
-	redirect("../../404");
+	WebContextManager::Redirect("/404");
 }
 
 //page buttons handling {

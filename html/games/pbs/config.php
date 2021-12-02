@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $body = '';
 
 $gameid = (int)$_GET['id'];
@@ -8,7 +10,7 @@ if ($gameid)
 {
 	if(getAssetInfo($gameid)->isPersonalServer == 0)
 	{
-		redirect("/games/config?id=".$gameid);
+		WebContextManager::Redirect("/games/config?id=".$gameid);
 	}
 	
 	if (!is_int($gameid) || getAssetInfo($gameid)->AssetTypeId != 9 || getAssetInfo($gameid)->isPersonalServer != 1)
@@ -28,7 +30,7 @@ if (isset($_POST['ConvertToRegular']))
 		if (setRegularGame($gameid))
 		{
 			handleRenderPlace($gameid);
-			redirect("/games/config?id=".$gameid);
+			WebContextManager::Redirect("/games/config?id=".$gameid);
 		}	
 		else
 		{

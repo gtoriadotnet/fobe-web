@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $body = '';
 $alert = "";
 if(isset($_GET['id'])) 
@@ -8,7 +10,7 @@ if(isset($_GET['id']))
 	
 	if (isAssetModerated($id) || !isOwner($id))
 	{
-		redirect("/");
+		WebContextManager::Redirect("/");
 	}
 	
 	//Query
@@ -154,7 +156,7 @@ if(isset($_GET['id']))
 							// ...
 						}
 						
-						redirect("config?id={$id}");
+						WebContextManager::Redirect("config?id={$id}");
 					}
 				}
 				elseif (isset($_POST['RegenItem'])) //for admin regen stuff
@@ -303,7 +305,7 @@ if(isset($_GET['id']))
 						}
 						else
 						{
-							redirect("/catalog/view?id=".$id);
+							WebContextManager::Redirect("/catalog/view?id=".$id);
 						}
 					}
 				}
@@ -311,19 +313,19 @@ if(isset($_GET['id']))
 			else
 			{
 				//not a modifiable asset (to the end user)
-				redirect("/");
+				WebContextManager::Redirect("/");
 			}
 	}
 	else
 	{
 		//catalog item doesnt exist
-		redirect("/");
+		WebContextManager::Redirect("/");
 	}
 }
 else
 {
 	//no url parameter
-	redirect("/");	
+	WebContextManager::Redirect("/");	
 }
 
 $moderatebutton = '';

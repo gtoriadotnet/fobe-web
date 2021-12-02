@@ -6,7 +6,7 @@ WebContextManager::ForceHttpsCloudflare();
 
 if(!($user->isOwner())) {
 	if ($user->isAdmin()) {
-		redirect("/");
+		WebContextManager::Redirect("/");
 	}
 	die('bababooey');
 }
@@ -53,13 +53,13 @@ else
 if(isset($_POST['maintenanceon'])) 
 {
 	enableMaintenance($_POST['optionalmaintenancetext']);
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if(isset($_POST['maintenanceoff']))
 {
 	disableMaintenance();
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if(isset($_POST['devmodeon'])) 
@@ -80,7 +80,7 @@ if(isset($_POST['devmodeon']))
 
 	$curl_response = curl_exec($soap_do);
 	
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if(isset($_POST['devmodeoff']))
@@ -101,7 +101,7 @@ if(isset($_POST['devmodeoff']))
 
 	$curl_response = curl_exec($soap_do);
 	
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['clearcachesubmit']))
@@ -121,7 +121,7 @@ if (isset($_POST['clearcachesubmit']))
 
 	$curl_response = curl_exec($soap_do);
 	
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['submitwskey']))
@@ -130,7 +130,7 @@ if (isset($_POST['submitwskey']))
 	$setwskey = $pdo->prepare("UPDATE websettings SET webservice_key = :k");
 	$setwskey->bindParam(":k", $key, PDO::PARAM_STR);
 	$setwskey->execute();
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['setwsipwhitelist']))
@@ -138,21 +138,21 @@ if (isset($_POST['setwsipwhitelist']))
 	$setwsip = $pdo->prepare("UPDATE websettings SET webservice_whitelist = :w");
 	$setwsip->bindParam(":w", $_POST['setwsipwhitelist'], PDO::PARAM_STR);
 	$setwsip->execute();
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['cachingon']))
 {
 	$setapprovals = $pdo->prepare("UPDATE websettings SET avatarCaching = 1");
 	$setapprovals->execute();
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['cachingoff']))
 {
 	$setapprovals = $pdo->prepare("UPDATE websettings SET avatarCaching = 0");
 	$setapprovals->execute();
-	redirect("configuration");
+	WebContextManager::Redirect("configuration");
 }
 
 $maintenancestatus = "";

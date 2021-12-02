@@ -1,6 +1,7 @@
 <?php
 
 use Alphaland\Moderation\UserModerationManager;
+use Alphaland\Web\WebContextManager;
 
 $alert = "";
 
@@ -27,7 +28,7 @@ if(isset($_GET['id']))
 			
 		if (UserModerationManager::IsBanned($id))
 		{
-			redirect("/404");
+			WebContextManager::Redirect("/404");
 		}
 
 		$body = <<<EOT
@@ -457,7 +458,7 @@ EOT;
 	}
 	else 
 	{
-		redirect('/404');
+		WebContextManager::Redirect('/404');
 	}
 } 
 else 

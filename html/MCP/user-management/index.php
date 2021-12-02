@@ -1,8 +1,10 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $body = '';
 if(!($user->isStaff())) {
-    redirect("/"); //u not admin nigga
+    WebContextManager::Redirect("/");
 }
 
 $body = <<<EOT

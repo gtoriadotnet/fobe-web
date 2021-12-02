@@ -4,6 +4,8 @@
 Alphaland 2021
 */
 
+use Alphaland\Web\WebContextManager;
+
 $body = '';
 $alert = '';
 $cosmuploadsuccess = $_GET['cosSuccess'];
@@ -261,7 +263,7 @@ function newPlace()
 	//POINT OF NO RETURN 
 	
 	$newplace = createPlace($GLOBALS['user']->id, $name, $description, 12);
-	redirect("/games/config?id=".$newplace);
+	WebContextManager::Redirect("/games/config?id=".$newplace);
 }
 
 function newPBSPlace($placetype)
@@ -298,7 +300,7 @@ function newPBSPlace($placetype)
 	//POINT OF NO RETURN 
 	$newpbs = createPBSPlace($GLOBALS['user']->id, $name, $description, 12, $selectedPlacePath);
 
-	redirect("/games/pbs/config?id=".$newpbs);
+	WebContextManager::Redirect("/games/pbs/config?id=".$newpbs);
 }
 
 if (isset($_POST['SubmitPBSSuperflat']))
@@ -310,7 +312,7 @@ if (isset($_POST['SubmitPBSSuperflat']))
 	}
 	else
 	{
-		redirect('/create?pbsSuccess=true');
+		WebContextManager::Redirect('/create?pbsSuccess=true');
 	}
 }
 
@@ -323,7 +325,7 @@ if (isset($_POST['SubmitPBSRugged']))
 	}
 	else
 	{
-		redirect('/create?pbsSuccess=true');
+		WebContextManager::Redirect('/create?pbsSuccess=true');
 	}
 }
 
@@ -336,7 +338,7 @@ if (isset($_POST['SubmitPBSHappyHome']))
 	}
 	else
 	{
-		redirect('/create?pbsSuccess=true');
+		WebContextManager::Redirect('/create?pbsSuccess=true');
 	}
 }
 
@@ -349,7 +351,7 @@ if (isset($_POST['SubmitPBSBaseplate']))
 	}
 	else
 	{
-		redirect('/create?pbsSuccess=true');
+		WebContextManager::Redirect('/create?pbsSuccess=true');
 	}
 }
 
@@ -367,7 +369,7 @@ if (isset($_POST['SubmitAsset']))
 	}
 	else
 	{
-		redirect('/create?cosSuccess=true');
+		WebContextManager::Redirect('/create?cosSuccess=true');
 	}
 }
 
@@ -381,7 +383,7 @@ if (isset($_POST['SubmitPlace']))
 	}
 	else
 	{
-		redirect('/create?placeSuccess=true');
+		WebContextManager::Redirect('/create?placeSuccess=true');
 	}
 }
 	

@@ -5,6 +5,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Web\WebContextManager;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 
@@ -15,4 +18,4 @@ if (!$userid) {
 	$userid = $user->id;
 }
 
-redirect(getPlayerRender($userid, $headshot)); //cachebuster
+WebContextManager::Redirect(getPlayerRender($userid, $headshot)); //cachebuster

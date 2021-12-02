@@ -1,8 +1,10 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 if (isLoggedIn())
 {
-	redirect('/');
+	WebContextManager::Redirect('/');
 }
 
 $alert = '';
@@ -38,7 +40,7 @@ if(isset($_GET['token']))
 					}
 					else
 					{
-						redirect("/forgotpassword");
+						WebContextManager::Redirect("/forgotpassword");
 					}
 				}
 			}
@@ -50,12 +52,12 @@ if(isset($_GET['token']))
 	}
 	else
 	{
-		redirect("/");
+		WebContextManager::Redirect("/");
 	}
 }
 else
 {
-	redirect("/");
+	WebContextManager::Redirect("/");
 }
 
 $body = <<<EOT

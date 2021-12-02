@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $gearsportion = false;
 
 $body = '';
@@ -70,7 +72,7 @@ function convertToPBSPlace($placetype, $placeid)
 					$deletepersistence->execute();
 	
 					handleRenderPlace($placeid);
-					redirect("/games/pbs/config?id=".$placeid);
+					WebContextManager::Redirect("/games/pbs/config?id=".$placeid);
 				}
 			}
 		}
@@ -86,7 +88,7 @@ if(isset($_GET['id']))
 
 	if(getAssetInfo($id)->isPersonalServer)
 	{
-		redirect("/games/pbs/config?id=".$id);
+		WebContextManager::Redirect("/games/pbs/config?id=".$id);
 	}
 	
 	//Query
@@ -265,7 +267,7 @@ if(isset($_GET['id']))
 							}
 							else
 							{
-								redirect("config?id={$id}");
+								WebContextManager::Redirect("config?id={$id}");
 							}
 						}
 					}
@@ -306,7 +308,7 @@ if(isset($_GET['id']))
 
 							setPlaceUsingCustomThumbnail($id); //set not using rendered thumb
 
-							redirect("config?id={$id}");
+							WebContextManager::Redirect("config?id={$id}");
 						}
 						else
 						{
@@ -323,7 +325,7 @@ if(isset($_GET['id']))
 
 								setPlaceUsingCustomThumbnail($id); //set not using rendered thumb
 							}
-							redirect("config?id={$id}");
+							WebContextManager::Redirect("config?id={$id}");
 						}
 						// ...
 					}
@@ -402,17 +404,17 @@ if(isset($_GET['id']))
 		}
 		else
 		{
-			redirect("/"); //not owner or not admin
+			WebContextManager::Redirect("/"); //not owner or not admin
 		}
 	}
 	else
 	{
-		redirect("/"); //place doesnt exist
+		WebContextManager::Redirect("/"); //place doesnt exist
 	}
 }
 else
 {
-	redirect("/"); //no url parameters
+	WebContextManager::Redirect("/"); //no url parameters
 }
 
 $gearshtml = "";

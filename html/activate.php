@@ -1,9 +1,10 @@
 <?php
 
 use Alphaland\Users\Activation;
+use Alphaland\Web\WebContextManager;
 
 if (Activation::IsUserActivated($user->id)) {
-	redirect("/");
+	WebContextManager::Redirect("/");
 }
 
 $activationcode = Activation::GetUserActivationCode($user->id);
