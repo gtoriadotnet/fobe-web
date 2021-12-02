@@ -6545,29 +6545,6 @@ function getCSS($studio=false)
 
 //utilities
 
-function httpGetPing($url, $timeoutms) //to see if a URL times out
-{
-	$curl_do = curl_init(); 
-	curl_setopt($curl_do, CURLOPT_URL,          	      $url);   
-	curl_setopt($curl_do, CURLOPT_RETURNTRANSFER,         true);
-	curl_setopt($curl_do, CURLOPT_CONNECTTIMEOUT_MS,$timeoutms); 
-	curl_setopt($curl_do, CURLOPT_TIMEOUT_MS,       $timeoutms); 
-	curl_setopt($curl_do, CURLOPT_SSL_VERIFYPEER,        false);  
-	curl_setopt($curl_do, CURLOPT_SSL_VERIFYHOST,        false); 
-	curl_setopt($curl_do, CURLOPT_POST,                  false ); 
-	curl_setopt($curl_do, CURLOPT_HEADER, 1);
-	
-	$result = curl_exec($curl_do);
-	
-	curl_close($curl_do);
-	
-	if ($result)
-	{
-		return true;
-	}
-	return false;
-}
-
 function getFooter() 
 {
 	$usercount = (int)onlineUsersCount();
