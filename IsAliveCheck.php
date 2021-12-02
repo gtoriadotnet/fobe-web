@@ -5,6 +5,9 @@ Alphaland 2021
 */
 
 //vars
+
+use Alphaland\Web\WebContextManager;
+
 $thumbalive = false;
 $gamealive = false;
 
@@ -12,7 +15,7 @@ $gamealive = false;
 function checkThumb($override)
 {
 	//thumbnailer check
-	if (httpGetPing($GLOBALS['thumbnailArbiter'], 5000)) //thumb arbiter online
+	if (WebContextManager::HttpGetPing($GLOBALS['thumbnailArbiter'], 5000)) //thumb arbiter online
 	{
 		if (!$GLOBALS['thumbalive'] or $override) //to prevent flooding mysql calls
 		{
@@ -35,7 +38,7 @@ function checkThumb($override)
 function checkGame($override)
 {
 	//gameserver check
-	if (httpGetPing($GLOBALS['gamesArbiter'], 5000)) //gameserver arbiter online
+	if (WebContextManager::HttpGetPing($GLOBALS['gamesArbiter'], 5000)) //gameserver arbiter online
 	{
 		if (!$GLOBALS['gamealive'] or $override) //to prevent flooding mysql calls
 		{

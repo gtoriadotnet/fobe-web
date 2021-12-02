@@ -167,7 +167,7 @@ $alert = '';
 				$alert = "<div class='alert alert-success' role='alert'>Uploaded item</div>";
 
 				if ($onsale) {
-					httpGetPing("localhost:4098/?type=itemrelease&assetid=".$autoincrement."&name=".urlencode($_POST['item'])."&description=".urlencode($_POST['itemdesc'])."&price=".$price."&image=".$GLOBALS['renderCDN']."/".getAssetInfo($autoincrement)->ThumbHash, 8000);
+					WebContextManager::HttpGetPing("localhost:4098/?type=itemrelease&assetid=".$autoincrement."&name=".urlencode($_POST['item'])."&description=".urlencode($_POST['itemdesc'])."&price=".$price."&image=".$GLOBALS['renderCDN']."/".getAssetInfo($autoincrement)->ThumbHash, 8000);
 				}
 				}
 				// ...
@@ -281,7 +281,7 @@ $alert = '';
 					$alert = "<div class='alert alert-success' role='alert'>Uploaded face</div>";
 
 					if ($onsale) {
-						httpGetPing("localhost:4098/?type=itemrelease&assetid=".$autoincrement."&name=".urlencode($_POST['item'])."&description=".urlencode($_POST['itemdesc'])."&price=".$price."&image=".$GLOBALS['renderCDN']."/".getAssetInfo($autoincrement)->ThumbHash, 8000);
+						WebContextManager::HttpGetPing("localhost:4098/?type=itemrelease&assetid=".$autoincrement."&name=".urlencode($_POST['item'])."&description=".urlencode($_POST['itemdesc'])."&price=".$price."&image=".$GLOBALS['renderCDN']."/".getAssetInfo($autoincrement)->ThumbHash, 8000);
 					}
 				}
 				// ...

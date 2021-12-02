@@ -2,6 +2,7 @@
 
 namespace Alphaland\Moderation {
 
+    use Alphaland\Web\WebContextManager;
     use PDO;
 
     class UserModerationManager
@@ -62,7 +63,7 @@ namespace Alphaland\Moderation {
                                     $discordid->execute();
                                     if ($discordid->rowCount() > 0) {
                                         $discordid = $discordid->fetch(PDO::FETCH_OBJ)->discordid;
-                                        httpGetPing("http://localhost:4098/?type=ban&id=".$discordid."&reason=".urlencode($reason), 5000); 
+                                        WebContextManager::HttpGetPing("http://localhost:4098/?type=ban&id=".$discordid."&reason=".urlencode($reason), 5000); 
                                     }
                                 }
                                 return true;

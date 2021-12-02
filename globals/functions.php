@@ -3506,7 +3506,7 @@ function submitRobloxAssetWorker($requestedassetid, $assettypeid, $assetname, $a
 
 				//discord bot api
 				if ($onsale) {
-					httpGetPing("localhost:4098/?type=itemrelease&assetid=".$newassetid."&name=".urlencode($assetname)."&description=".urlencode($assetdescription)."&price=".$price."&image=".$GLOBALS['renderCDN']."/".getAssetInfo($newassetid)->ThumbHash, 8000);
+					WebContextManager::HttpGetPing("localhost:4098/?type=itemrelease&assetid=".$newassetid."&name=".urlencode($assetname)."&description=".urlencode($assetdescription)."&price=".$price."&image=".$GLOBALS['renderCDN']."/".getAssetInfo($newassetid)->ThumbHash, 8000);
 				}
 
 				return true;
