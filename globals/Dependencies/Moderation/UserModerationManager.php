@@ -2,7 +2,6 @@
 
 namespace Alphaland\Moderation {
 
-    use Alphaland\Users\User;
     use Alphaland\Web\WebContextManager;
     use PDO;
 
