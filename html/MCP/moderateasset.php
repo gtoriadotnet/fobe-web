@@ -7,6 +7,7 @@ Alphaland 2021
 
 //headers
 
+use Alphaland\Moderation\UserModerationManager;
 use Alphaland\Web\WebContextManager;
 
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
@@ -28,7 +29,7 @@ else
 {
 	$moderate = moderateAsset($assetid);
 	if ($moderate === true) {
-		logStaffAction("Moderated Asset ".$assetid);
+		UserModerationManager::LogAction("Moderated Asset ".$assetid);
 		$moderate = "Moderated Asset";
 	}
 	header('Content-Type: application/json');

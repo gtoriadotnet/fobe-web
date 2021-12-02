@@ -6832,14 +6832,4 @@ function isIPAssociatedWithAccount($ip)
 	return false;
 }
 
-function logStaffAction($action)
-{
-	$localuser = $GLOBALS['user']->id;
-
-	$log = $GLOBALS['pdo']->prepare('INSERT INTO staff_actions(userid, action, whenOccurred) VALUES (:uid, :action, UNIX_TIMESTAMP())');
-	$log->bindParam(':uid', $localuser, PDO::PARAM_INT);
-	$log->bindParam(':action', $action, PDO::PARAM_STR);
-	$log->execute();
-}
-
 //end utility }

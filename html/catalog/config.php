@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Moderation\UserModerationManager;
+use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
 
 $body = '';
@@ -104,7 +106,7 @@ if(isset($_GET['id']))
 					{
 						if ($user->isStaff())
 						{
-							logStaffAction("Configure Item ".$id);
+							UserModerationManager::LogAction("Configure Item ".$id);
 						}
 
 						//update item name
@@ -132,7 +134,7 @@ if(isset($_GET['id']))
 						{
 							if ($user->isStaff())
 							{
-								logStaffAction("Configure Item Onsale ".$id);
+								UserModerationManager::LogAction("Configure Item Onsale ".$id);
 							}
 
 							//update onsale
@@ -145,7 +147,7 @@ if(isset($_GET['id']))
 						}
 						else
 						{
-							logStaffAction("Configure Item Offsale ".$id);
+							UserModerationManager::LogAction("Configure Item Offsale ".$id);
 
 							//update onsale
 							$onsale = 0;
@@ -166,7 +168,7 @@ if(isset($_GET['id']))
 						$script = "";
 						$scripttype = "";
 
-						logStaffAction("Render Item ".$id);
+						UserModerationManager::LogAction("Render Item ".$id);
 						if ($itemtypeint == 8)
 						{
 							//Hat

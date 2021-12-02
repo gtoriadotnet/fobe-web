@@ -2,11 +2,21 @@
 
 namespace Alphaland\Moderation {
 
+    use Alphaland\Users\User;
     use Alphaland\Web\WebContextManager;
     use PDO;
 
     class UserModerationManager
     {
+        public static function LogAction(string $action)
+        {
+            $localuser = $GLOBALS['user']->id;
+            $log = $GLOBALS['pdo']->prepare('INSERT INTO staff_actions(userid, action, whenOccurred) VALUES (:uid, :action, UNIX_TIMESTAMP())');
+            $log->bindParam(':uid', $localuser, PDO::PARAM_INT);
+            $log->bindParam(':action', $action, PDO::PARAM_STR);
+            $log->execute();     
+        }
+
         public static function IsBanned(int $userId)
         {
             $query = $GLOBALS['pdo']->prepare("SELECT * FROM `user_bans` WHERE `uid` = :i AND `valid` = 1");
@@ -26,7 +36,7 @@ namespace Alphaland\Moderation {
                     $unban->bindParam(":u", $uid, PDO::PARAM_INT);
                     $unban->execute();
                     if ($unban->rowCount() > 0) {
-                        logStaffAction("Unbanned User ".$uid);
+                        UserModerationManager::LogAction("Unbanned User ".$uid);
                         return true;
                     }
                 }
@@ -54,7 +64,7 @@ namespace Alphaland\Moderation {
                             $ban->execute();
                             if ($ban->rowCount() > 0) {
                                 kickUserIfInGame($uid, "You've been banned from Alphaland, '".$reason."'");
-                                logStaffAction("Banned User ".$uid);
+                                UserModerationManager::LogAction("Banned User ".$uid);
                                 
                                 //ban user from discord with bot
                                 if($bantype == 2) { //perm ban

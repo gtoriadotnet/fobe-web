@@ -7,6 +7,7 @@ Alphaland 2021
 
 //headers
 
+use Alphaland\Moderation\UserModerationManager;
 use Alphaland\Web\WebContextManager;
 
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
@@ -29,7 +30,7 @@ else
 	if (isThumbnailerAlive()) {
 		$approve = approveAsset($assetid);
 		if ($approve === true) {
-			logStaffAction("Approved Asset ".$assetid);
+			UserModerationManager::LogAction("Approved Asset ".$assetid);
 			$approve = "Approved Asset";
 		}
 	} else {
