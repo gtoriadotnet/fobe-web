@@ -4,15 +4,17 @@ $games_html = "";
 $games = getAllGames($user->id)->fetchAll(PDO::FETCH_ASSOC);
 foreach ($games as $game)
 {
-	$placethumbnail = handleGameThumb($game[id]);
+	$placeid = $game['id'];
+	$placethumbnail = handleGameThumb($placeid);
+	$placename = $game['Name'];
 	$games_html .= <<<EOT
 	<li>
-		<div class="studio-place-card text-center" style="cursor: pointer;" onclick="updateGame({$game[id]})">
+		<div class="studio-place-card text-center" style="cursor: pointer;" onclick="updateGame({$placeid})">
 			<a href="#">
 			<div class="studio-place-card-img">
 			<img class="img-fluid" src="{$placethumbnail}">
 		</div>
-			<p class="no-overflow">{$game[Name]}</p>
+			<p class="no-overflow">{$placename}</p>
 			</a>
 		</div>
 	</li>
