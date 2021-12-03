@@ -54,6 +54,13 @@ namespace Alphaland\Users {
             return $userkey->rowCount() > 0;
         }
 
+        public static function DeleteAllKeys(int $user)
+        {
+            $keys = $GLOBALS['pdo']->prepare("DELETE FROM user_signup_keys WHERE userGen = :u");
+            $keys->bindParam(":u", $user, PDO::PARAM_INT);
+            $keys->execute();
+        }
+
         public static function UserKeysCount(int $user)
         {
             $keys = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM user_signup_keys WHERE userGen = :u");
@@ -62,35 +69,52 @@ namespace Alphaland\Users {
             return $keys->fetchColumn();
         }
 
-        public static function UserKeysLimit(int $user)
+        public static function NextRenewal(int $user)
         {
-            return userInfo($user)->referralCooldown + 604800 >= time();
+            return userInfo($user)->referralNextRenewal;
         }
 
-        public static function UpdateCooldown(int $user)
+        public static function IsRenewable(int $user)
         {
-            $updateuser = $GLOBALS['pdo']->prepare('UPDATE users SET referralCooldown = (UNIX_TIMESTAMP() + 604800) WHERE id = :userid');
+            return time() >= ReferralProgram::NextRenewal($user); //returns true if the current timestamp is greater or equal than the scheduled renewal
+        }
+
+        public static function UpdateNextRenewal(int $user)
+        {
+            $updateuser = $GLOBALS['pdo']->prepare('UPDATE users SET referralNextRenewal = (UNIX_TIMESTAMP() + 604800) WHERE id = :userid');
             $updateuser->bindParam(":userid", $user, PDO::PARAM_INT);
             $updateuser->execute();
         }
 
-        public static function GenerateUserKey(int $user)
+        public static function CreateKey(int $user)
+        {
+            $newkey = ReferralProgram::GenerateKey(32);
+            $n = $GLOBALS['pdo']->prepare("INSERT INTO user_signup_keys(userGen,signupkey,whenGenerated) VALUES(:user,:key,UNIX_TIMESTAMP())");
+            $n->bindParam(":user", $user, PDO::PARAM_INT);
+            $n->bindParam(":key", $newkey, PDO::PARAM_STR);
+            $n->execute();
+            return $newkey;
+        }
+
+        public static function CheckUserKeys(int $user)
         {
             if (ReferralProgram::IsMember($user)) {
-                if (!ReferralProgram::UserKeysLimit($user)) {
-                    if (ReferralProgram::UserKeysCount($user) >= 1) {
-                        ReferralProgram::UpdateCooldown($user);
-                    }
-                    $newkey = ReferralProgram::GenerateKey(32);
-                    $n = $GLOBALS['pdo']->prepare("INSERT INTO user_signup_keys(userGen,signupkey,whenGenerated) VALUES(:user,:key,UNIX_TIMESTAMP())");
-                    $n->bindParam(":user", $user, PDO::PARAM_INT);
-                    $n->bindParam(":key", $newkey, PDO::PARAM_STR);
-                    $n->execute();
-                    return $newkey;
+                if (ReferralProgram::IsRenewable($user))
+                {
+                    //step 1, update the next renewal time
+                    ReferralProgram::UpdateNextRenewal($user);
+
+                    //step 2, delete all the current keys
+                    ReferralProgram::DeleteAllKeys($user);
+
+                    //step 3, generate two keys
+                    ReferralProgram::CreateKey($user);
+                    ReferralProgram::CreateKey($user);
+
+                    return true;
                 }
-                return "Maximum keys generated, check back in a week.";
             }
-            return "Error occurred";
+            return false;
         }
 
         public static function ConfirmSignup(int $newuser, string $key)

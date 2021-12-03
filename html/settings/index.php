@@ -171,28 +171,16 @@ $body = <<<EOT
                             </div>
                             <div class="tab-pane fade" id="v-pills-referral" role="tabpanel" aria-labelledby="v-pills-referral-tab">
                             	<h5>Referral Program</h5>
-                                <h6>Maximum of two referral codes every 2 weeks.</h6>
+                                <h6 id="next_ref_regen"></h6>
                                 <hr>
                                 <div class="text-center">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="input-group">
-                                                <input type="text" id="generatedkey" class="form-control" autocomplete="off" readonly>
-                                                <div class="input-group-append">	
-                                                    <button type="button" onclick="generateKey()" class="btn btn-success" type="button">Generate</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr>
                                     <p>
-                                        <button class="btn btn-danger w-50" type="button" data-toggle="collapse" data-target="#signupkeyslist" aria-expanded="false" aria-controls="signupkeyslist" onclick="activeKeys()">Active Keys</button>
+                                        <button class="btn btn-danger w-50" type="button" data-toggle="collapse" data-target="#signupkeyslist" aria-expanded="false" aria-controls="signupkeyslist" onclick="activeKeys()">Show Keys</button>
                                     </p>
                                     <div class="collapse" id="signupkeyslist">
                                     	<table class="table atable-dark">
                                             <thead>
                                                 <tr>
-                                                    <th>Date Generated</th>
                                                     <th>Signup Key</th>
                                                 </tr>
                                             </thead>
@@ -316,6 +304,7 @@ function initializeSettings()
 		$("#settings_username").html(object.username);
 		$("#settings_email").html(object.email);
 		$("#settings_blurb").html(object.blurb);
+        $("#next_ref_regen").html("New keys available starting: <b>" + object.referralkeyrefresh + "</b>");
 		$('#settings_theme').val(object.theme);
 		$('#settings_joinpref').val(object.joinpref);
 
@@ -366,8 +355,8 @@ function generateKey()
 }
 function activeKeys()
 {
+    initializeSettings();
 	var html = '<tr>';
-	html += '<td>{whenGenerated}</td>';
 	html += '<td>{key}</td>';
 	html += '</tr>';
 		

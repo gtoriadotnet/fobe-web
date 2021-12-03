@@ -14,7 +14,7 @@ header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
-$userid = $user->id;
+$userid = $GLOBALS['user']->id;
 
 //user info
 $userquery = $pdo->prepare('SELECT * FROM `users` WHERE id = :uid');
@@ -32,6 +32,7 @@ $theme = $userquery->theme;
 
 //initialize 2FA in the database if it hasnt been already
 TwoFactor::Initialize2FA($userid);
+ReferralProgram::CheckUserKeys($userid);
 
 $userInfo = array (
 	"userid" => $userid,
@@ -41,6 +42,7 @@ $userInfo = array (
 	"blurb" => $blurb,
 	"twofactorenabled" => TwoFactor::Is2FAInitialized($userid),
 	"referralprogram" => ReferralProgram::IsMember($userid),
+	"referralkeyrefresh" => date("m/d/Y", ReferralProgram::NextRenewal($userid)),
 	"joinpref" => $joinpref,
 	"tradepref" => $tradepref,
 	"theme" => $theme
