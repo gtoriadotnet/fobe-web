@@ -82,11 +82,13 @@ else
 
 			$ip = getIP();
 
+			/*
 			if (WebContextManager::IsIpRegistered($ip))
 			{
 				$error = "Please contact an Administrator if possible.";
 			}
-
+			*/
+			
 			if($error == "") 
 			{
 				$isUserGen = false;
