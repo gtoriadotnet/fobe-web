@@ -7,6 +7,7 @@ Alphaland 2021
 
 //headers
 
+use Alphaland\Users\ReferralProgram;
 use Alphaland\Users\TwoFactor;
 
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
@@ -39,7 +40,7 @@ $userInfo = array (
 	"verified" => $verified,
 	"blurb" => $blurb,
 	"twofactorenabled" => TwoFactor::Is2FAInitialized($userid),
-	"referralprogram" => inReferralProgram($userid),
+	"referralprogram" => ReferralProgram::IsMember($userid),
 	"joinpref" => $joinpref,
 	"tradepref" => $tradepref,
 	"theme" => $theme

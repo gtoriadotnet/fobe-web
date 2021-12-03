@@ -6,6 +6,7 @@
 */
 
 use Alphaland\Users\Activation;
+use Alphaland\Users\ReferralProgram;
 use Alphaland\Web\WebContextManager;
 
 $body = '';
@@ -90,7 +91,7 @@ else
 			{
 				$isUserGen = false;
 				$isAdminGen = false;
-				if (isSignupKeyUserGenerated($signupkey)) //referral system
+				if (ReferralProgram::IsUserGeneratedKey($signupkey)) //referral system
 				{
 					$isUserGen = true;
 				}
@@ -119,7 +120,7 @@ else
 						//referral system
 						if ($isUserGen)
 						{
-							handleSignupWithUserKey($userID, $signupkey);
+							ReferralProgram::ConfirmSignup($userID, $signupkey);
 						}
 						
 						//first place

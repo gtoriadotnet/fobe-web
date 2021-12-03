@@ -99,6 +99,7 @@ try
 	//alphaland specfic dependencies (listing manually for now due to active rewrite of stuff)
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/ReferralProgram.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
