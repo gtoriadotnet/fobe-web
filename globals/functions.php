@@ -8,7 +8,6 @@
 
 //img tools (potentially high resource usage) (probably blocking)
 
-use Alphaland\Moderation\UserModerationManager;
 use Alphaland\Web\WebContextManager;
 
 function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
