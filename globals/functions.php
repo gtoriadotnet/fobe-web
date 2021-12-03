@@ -3459,11 +3459,6 @@ function getRobloxProductInfo($assetid)
 	return json_decode($json);
 }
 
-function getRobloxAssetType($assetid)
-{
-	return getRobloxProductInfo($assetid)->AssetTypeId;
-}
-
 function ReturnAssetFromHash($hash) //asset CDN
 {
 	//alphaland assets cdn
@@ -3524,24 +3519,6 @@ function CreateAsset($AssetTypeId, $IconImageAssetId, $TargetId, $ProductType, $
 	$GLOBALS['pdo']->exec("UNLOCK TABLES"); //unlock since we are done with sensitive asset stuff
 	
 	return $autoincrement;
-}
-
-function createXmlAsset($assetid, $name, $description, $price, $onsale, $hash)
-{
-	//setup the new asset in the DB, lock it!
-	$GLOBALS['pdo']->exec("LOCK TABLES assets WRITE");
-
-	$m = $GLOBALS['pdo']->prepare("INSERT INTO `assets`(`id`, `AssetTypeId`, `Name`, `Description`, `Created`, `Updated`, `CreatorId`, `TargetId`, `PriceInAlphabux`, `Sales`, `IsNew`, `IsForSale`, `IsPublicDomain`, `IsLimited`, `IsLimitedUnique`, `IsApproved`, `Remaining`, `MinimumMembershipLevel`, `ContentRatingTypeId`, `Favorited`, `Visited`, `MaxPlayers`, `UpVotes`, `DownVotes`, `Hash`) VALUES (:aid,18,:aname,:adesc,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),1,:aid2,:price,0,0,:onsale,1,0,0,1,0,0,0,0,0,8,0,0,:hash)");
-	$m->bindParam(":aid", $assetid, PDO::PARAM_INT);
-	$m->bindParam(":aname", $name, PDO::PARAM_STR);
-	$m->bindParam(":adesc", $description, PDO::PARAM_STR);
-	$m->bindParam(":aid2", $assetid, PDO::PARAM_INT);
-	$m->bindParam(":price", $price, PDO::PARAM_INT);
-	$m->bindParam(":onsale", $onsale, PDO::PARAM_INT);
-	$m->bindParam(":hash", $hash, PDO::PARAM_STR);
-	$m->execute();
-
-	$GLOBALS['pdo']->exec("UNLOCK TABLES"); //unlock since we are done with sensitive asset stuff
 }
 
 function setAssetModerated($id)
@@ -3817,49 +3794,6 @@ function getAssetInfo($id)
 	return false;
 }
 
-function assetTypeCategoryArray()
-{
-	$types = array(	
-    0  => "Products",
-	1  => "Images",
-    2  => "T-Shirts",
-    3  => "Audios",
-    4  => "Meshes",
-    5  => "Lua",
-    6  => "HTML",
-    7  => "Text",
-    8  => "Hats",
-    9  => "Places",
-    10 => "Models",
-    11 => "Shirts",
-    12 => "Pants",
-    13 => "Decals",
-    16 => "Avatars",
-    17 => "Heads",
-    18 => "Faces",
-    19 => "Gears",
-    21 => "Badges",
-    22 => "Group Emblem",
-    24 => "Animations",
-    25 => "Arms",
-    26 => "Legs",
-    27 => "Torsos",
-    28 => "Right Arms",
-    29 => "Left Arms",
-    30 => "Left Legs",
-    31 => "Right Legs",
-    32 => "Packages",
-    33 => "YouTube Videos",
-    34 => "Game Passes",
-	35 => "App",
-	37 => "Code",
-	38 => "Plugins",
-	39 => "SolidModel",
-	40 => "MeshPart"
-	);
-	return $types;
-}
-
 function assetTypeArray()
 {
 	$types = array(	
@@ -4094,15 +4028,6 @@ function friendStatus($userid)
 //end user functions
 
 //asset comments stuff {
-
-function assetCommentsCount($aid)
-{
-	$count = $GLOBALS['pdo']->prepare("SELECT * FROM asset_comments WHERE aid = :a");
-	$count->bindParam(":a", $aid, PDO::PARAM_INT);
-	$count->execute();
-	
-	return (int)$count->rowCount();
-}
 	
 function placeAssetComment($aid, $comment) //1 = comment placed, 2 = cooldown, 3 = error
 {
@@ -4156,18 +4081,6 @@ function placeAssetComment($aid, $comment) //1 = comment placed, 2 = cooldown, 3
 //end catalog comments stuff }
 
 //canjoin stuff {
-	
-function getCurrentCanJoinStatus()
-{
-	$localuser = $GLOBALS['user']->id;
-	
-	$canjoinstatusquery = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :i");
-	$canjoinstatusquery->bindParam(":i", $localuser, PDO::PARAM_INT);
-	$canjoinstatusquery->execute();
-	$canjoinstatus = (int)$canjoinstatusquery->fetch(PDO::FETCH_OBJ)->canJoin;
-	
-	return $canjoinstatus;
-}
 	
 function setCanJoinUser($status)
 {
@@ -5319,22 +5232,6 @@ function equipItem($assetId)
 	return true;
 }
 
-function playerOwnedHats($id) 
-{
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM owned_assets WHERE uid = :i");
-	$check->bindParam(":i", $id, PDO::PARAM_INT);
-	$check->execute();
-	return $check;
-}
-
-function itemOwnerCount($id) 
-{
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM owned_assets WHERE aid = :i");
-	$check->bindParam(":i", $id, PDO::PARAM_INT);
-	$check->execute();
-	return $check->rowCount();
-}
-
 function itemSalesCount($id)
 {
 	$check = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
@@ -5380,17 +5277,6 @@ function removeCurrency($amount, $info="")
 		$check->bindParam(":i", $localuser, PDO::PARAM_INT);
 		$check->bindParam(":u", $amount, PDO::PARAM_INT);
 		$check->execute();
-		return true;
-	}
-	return false;
-}
-
-function userHasEnoughCurrency($amount, $userid)
-{
-	$playercurrency = userInfo($userid)->currency;
-
-	if ($playercurrency >= $amount)
-	{
 		return true;
 	}
 	return false;
@@ -6106,27 +5992,6 @@ function setUserRank($rank, $userid)
 	$updaterank->bindParam(":r", $rank, PDO::PARAM_INT);
 	$updaterank->bindParam(":i", $userid, PDO::PARAM_INT);
 	$updaterank->execute();
-}
-	
-
-function httpPost($url, $fields)
-{
-	// build the urlencoded data
-	$postvars = http_build_query($fields);
-
-	// open connection
-	$ch = curl_init();
-
-	// set the url, number of POST vars, POST data
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_POST, count($fields));
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $postvars);
-
-	// execute post
-	$result = curl_exec($ch);
-
-	// close connection
-	curl_close($ch);
 }
 
 function isAdmin() { //todo: make these use userids
