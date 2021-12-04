@@ -47,7 +47,6 @@ if (UserModerationManager::IsBanned($user->id))
 	$bandisplay = "";
 	$date = "";
 	$banexpirationdisplay = "";
-	$banappealdiscorddisplay = "";
 	$banagreement = "";
 	if ($banType == 0)	
 	{
@@ -67,17 +66,12 @@ if (UserModerationManager::IsBanned($user->id))
 		{
 			$banagreement = '<button type="submit" name="agree" class="btn btn-success">I\'ve read the ban reason</button><br><br>';
 		}
-		else //ban isnt expired, show discord appeal link
-		{
-			//$banappealdiscorddisplay = '<p>If you wish to appeal your Ban, make an appeal on our discord <a href="https://discord.gg/4Ut9sbkQ5b" class="red-a">here</a></p>';
-		}
 	}
 	elseif ($banType == 2)	
 	{
 		//permanent ban stuff
 		$bandisplay = '<h5 class="text-center mb-3">You\'ve been permanently banned</h5>';
 		$date = '<p><b>Reviewed:</b> '.$banDate.'</p>';
-		//$banappealdiscorddisplay = '<p>If you wish to appeal your Termination, make an appeal on our discord <a href="https://discord.gg/4Ut9sbkQ5b" class="red-a">here</a></p>';
 	}
 	
 	echo getCSS(); //print out site css
@@ -93,7 +87,6 @@ if (UserModerationManager::IsBanned($user->id))
 				'.$banexpirationdisplay.'
 				<p><b>Reason:</b> '.$banreason.'</p>
 				<hr>
-				'.$banappealdiscorddisplay.'
 				<div class="container text-center">
 					<form method="post">
 						'.$banagreement.'

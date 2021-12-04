@@ -136,14 +136,6 @@ if(!isLoggedIn())
 		</div>
 	</div>
 EOT;
-/*
-<div class="index-row">
-	<h5 class="text-white">Alphaland is currently in the Alpha stage</h5>
-</div>
-<div class="index-row">
-	<h6 class="text-white">Invite only</h6>
-</div>
-*/
 }
 else
 {
