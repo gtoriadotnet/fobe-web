@@ -109,7 +109,7 @@ class user {
 	}
 	function logout() {
 		if($this->logged_in) {
-			$logout = $GLOBALS['pdo']->prepare("UPDATE sessions SET valid = 0 AND twoFactorUnlocked = 0 WHERE id = :id");
+			$logout = $GLOBALS['pdo']->prepare("DELETE FROM sessions WHERE id = :id");
 			$logout->bindParam(":id", $this->sessionCookieID, PDO::PARAM_INT);
 			$logout->execute();
 		}
