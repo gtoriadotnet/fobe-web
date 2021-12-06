@@ -142,36 +142,27 @@ try
 			WebContextManager::ForceHttpsCloudflare();
 		}
 
+		//account status checks
 		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
 		$twofactor = TwoFactor::IsSession2FAUnlocked();
 		$banned = UserModerationManager::IsBanned($GLOBALS['user']->id);
 		$maintenance = WebContextManager::IsUnderMaintenance();
 
-		//step 1, check if under maintenance
-		if ($maintenance) { //maintenance redirect
+		if ($maintenance) { //check if under maintenance
 			if ($accesseddirectory != "/maintenance.php") {
 				WebContextManager::Redirect($url . "/maintenance");
 			}
-		}
-
-		//step 2, check if user is banned
-		if ($GLOBALS['user']->logged_in && $banned) { //ban redirect
+		} else if ($GLOBALS['user']->logged_in && $banned) { //check if banned
 			if ($accesseddirectory != "/ban.php" &&
 			$accesseddirectory != "/logout.php") {
 				WebContextManager::Redirect($url . "/ban");
 			}
-		}
-	
-		//step 3, check if user is activated
-		if ($GLOBALS['user']->logged_in && !$activated) { //activation redirect
+		} else if ($GLOBALS['user']->logged_in && !$activated) { //check if activated
 			if ($accesseddirectory != "/activate.php" && 
 			$accesseddirectory != "/logout.php") {
 				WebContextManager::Redirect($url . "/activate");
 			}
-		}
-
-		//step 4, check if 2fa is authenticated
-		if ($GLOBALS['user']->logged_in && !$twofactor) { //2fa redirect
+		} else if ($GLOBALS['user']->logged_in && !$twofactor) { //check if 2fa is unlocked
 			if ($accesseddirectory != "/2fa.php") {
 				WebContextManager::Redirect($url . "/2fa");
 			}
@@ -179,7 +170,7 @@ try
 
 		//pages accessible to users who aren't logged in
 		if (!$GLOBALS['user']->logged_in) { //not logged in
-			if ($accesseddomain == "www.".$domain) { //www
+			if ($accesseddomain == "www.".$domain) { //accessing www
 				if ($accesseddirectory != "/index.php" &&
 				$accesseddirectory != "/login/index.php" &&
 				$accesseddirectory != "/login/forgotpassword.php" &&
