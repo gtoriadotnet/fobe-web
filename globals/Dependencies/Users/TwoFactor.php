@@ -18,7 +18,7 @@ namespace Alphaland\Users {
             $secret = "";
             do {
                 $secret = $GLOBALS['authenticator']->createSecret();
-                $keycheck = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `secret` = :ac");
+                $keycheck = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `secret` = :ac");
                 $keycheck->bindParam(":ac", $secret, PDO::PARAM_STR);
                 $keycheck->execute();
             } while ($keycheck->rowCount() != 0);
@@ -38,7 +38,7 @@ namespace Alphaland\Users {
 
         public static function DeleteUser2FA(int $userid)
         {
-            $del = $GLOBALS['pdo']->prepare("DELETE FROM `google_2fa` WHERE `userid` = :uid");
+            $del = $GLOBALS['pdo']->prepare("DELETE FROM `twofactor` WHERE `userid` = :uid");
             $del->bindParam(":uid", $userid, PDO::PARAM_INT);
             $del->execute();
             if ($del->rowCount() > 0) {
@@ -50,7 +50,7 @@ namespace Alphaland\Users {
 
         public static function GetUser2FASecret(int $userid)
         {
-            $code = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
+            $code = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `userid` = :uid");
             $code->bindParam(":uid", $userid, PDO::PARAM_INT);
             $code->execute();
             if ($code->rowCount() > 0) {
@@ -71,7 +71,7 @@ namespace Alphaland\Users {
 
         public static function Is2FAInitialized(int $userid)
         {
-            $isinit = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `validated` = 1 AND `userid` = :uid");
+            $isinit = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `validated` = 1 AND `userid` = :uid");
             $isinit->bindParam(":uid", $userid, PDO::PARAM_INT);
             $isinit->execute();
             if ($isinit->rowCount() > 0) {
@@ -94,7 +94,7 @@ namespace Alphaland\Users {
         public static function ActivateUser2FA(int $userid, string $code) //after initializing we make sure it works with a first time activation code
         {
             if(!TwoFactor::Is2FAInitialized($userid) && TwoFactor::Verify2FACode($userid, $code)) {
-                $check = $GLOBALS['pdo']->prepare("UPDATE `google_2fa` SET `validated` = 1 WHERE `userid` = :uid");
+                $check = $GLOBALS['pdo']->prepare("UPDATE `twofactor` SET `validated` = 1 WHERE `userid` = :uid");
                 $check->bindParam(":uid", $userid, PDO::PARAM_INT);
                 if ($check->execute()) {
                     TwoFactor::Auth2FAUserSession();
@@ -106,7 +106,7 @@ namespace Alphaland\Users {
             
         public static function Initialize2FA(int $userid)
         {
-            $check = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
+            $check = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `userid` = :uid");
             $check->bindParam(":uid", $userid, PDO::PARAM_INT);
             $check->execute();
             if ($check->rowCount() == 0) {
@@ -114,7 +114,7 @@ namespace Alphaland\Users {
                 if ($username) {
                     $secret = TwoFactor::SafeGenerate2FASecret();
                     $qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "Alphaland");
-                    $new2fa = $GLOBALS['pdo']->prepare("INSERT INTO `google_2fa`(`userid`, `secret`, `qr`, `whenGenerated`) VALUES (:uid, :secret, :qr, UNIX_TIMESTAMP())");
+                    $new2fa = $GLOBALS['pdo']->prepare("INSERT INTO `twofactor`(`userid`, `secret`, `qr`, `whenGenerated`) VALUES (:uid, :secret, :qr, UNIX_TIMESTAMP())");
                     $new2fa->bindParam(":uid", $userid, PDO::PARAM_INT);
                     $new2fa->bindParam(":secret", $secret, PDO::PARAM_STR);
                     $new2fa->bindParam(":qr", $qrcode, PDO::PARAM_STR);
@@ -125,7 +125,7 @@ namespace Alphaland\Users {
 
         public static function GetUser2FAQR(int $userid)
         {
-            $qrcode = $GLOBALS['pdo']->prepare("SELECT * FROM `google_2fa` WHERE `userid` = :uid");
+            $qrcode = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `userid` = :uid");
             $qrcode->bindParam(":uid", $userid, PDO::PARAM_INT);
             $qrcode->execute();
             if ($qrcode->rowCount() > 0) {
