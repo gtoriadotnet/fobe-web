@@ -32,7 +32,10 @@ namespace Alphaland\Web {
     class IpHelper
     {
         /**
+         * Is the given IP address a valid IPv4 address?
+         * 
          * @param string $ip IP address
+         * 
          * @return bool true if IP is an IPv4 address
          */
         public static function IsIpv4(string $ip)
@@ -41,7 +44,10 @@ namespace Alphaland\Web {
         }
 
         /**
+         * Is the given IP address a valid IPv6 address?
+         * 
          * @param string $ip IP address
+         * 
          * @return bool true if IP is an IPv6 address
          */
         public static function IsIpv6(string $ip)
@@ -50,7 +56,10 @@ namespace Alphaland\Web {
         }
 
         /**
+         * Is the given IP address a valid IPv4 or IPv6 address?
+         * 
          * @param string $ip IP address
+         * 
          * @return bool true if IP is an IPv4 or IPv6 address
          */
         public static function IsIp(string $ip)
@@ -59,8 +68,16 @@ namespace Alphaland\Web {
         }
 
         /**
+         * Determines if the given ip is in the IP range notation like below:
+         * 
+         * $ip = "127.0.0.1"
+         * $range = "127.0.0.0-127.255.255.255"
+         * 
+         * $isInRange = IpHelper::IsIpInRange($ip, $range); // true
+         * 
          * @param string $ip IP address
          * @param string $range IP range
+         * 
          * @return bool true if IP is in the range
          */
         public static function IsIpInRange(string $ip, string $range)
@@ -84,6 +101,14 @@ namespace Alphaland\Web {
             return false;
         }
 
+        /**
+         * Determines if the given address is in the list of IP range notations.
+         * 
+         * @param string $ip IP address
+         * @param array $ranges IP ranges
+         * 
+         * @return bool true if IP is in any of the ranges
+         */
         public static function IsIpInRangeList(string $ip, array $ranges)
         {
             foreach ($ranges as $range) {
@@ -96,8 +121,16 @@ namespace Alphaland\Web {
         }
 
         /**
+         * Determine if the given IP is in the Netmask notation like below:
+         * 
+         * $ip = "127.0.0.1"
+         * $netmask = "127.0.0.0/255.255.255.0"
+         * 
+         * $isInNetmask = IpHelper::IsIpInNetmask($ip, $netmask); // true
+         * 
          * @param string $ip IP address
          * @param string $netmask Netmask
+         * 
          * @return bool true if IP is in the netmask
          */
         public static function IsIpInNetmask(string $ip, string $netmask)
@@ -116,6 +149,14 @@ namespace Alphaland\Web {
             return false;
         }
 
+        /**
+         * Determines if the given address is in the list of Netmask notations.
+         * 
+         * @param string $ip IP address
+         * @param array $netmasks Netmasks
+         * 
+         * @return bool true if IP is in any of the netmasks
+         */
         public static function IsIpInNetmaskList(string $ip, array $netmasks)
         {
             foreach ($netmasks as $netmask) {
@@ -128,6 +169,13 @@ namespace Alphaland\Web {
         }
 
         /**
+         * Determines if the given IP is in the CIDR notation like below:
+         * 
+         * $ip = "127.0.0.1"
+         * $cidr = "127.0.0.0/8"
+         * 
+         * $isInCidr = IpHelper::IsIpInCidrRange($ip, $cidr); // true
+         * 
          * @param string $ip IP address
          * @param string $cidr CIDR
          * @return bool true if IP is in the CIDR
@@ -145,6 +193,14 @@ namespace Alphaland\Web {
             return ($ip & $mask) == $subnet;
         }
 
+        /**
+         * Determine if the given IP is in the CIDR notation list.
+         * 
+         * @param string $ip IP address
+         * @param array $cidrs CIDRs
+         * 
+         * @return bool true if IP is in any of the CIDRs
+         */
         public static function IsIpInCidrRangeList(string $ip, array $cidrs)
         {
             foreach ($cidrs as $cidr) {
@@ -156,6 +212,14 @@ namespace Alphaland\Web {
             return false;
         }
 
+        /**
+         * Determines if the given IP is in the given CIDR, Range or Netmask list
+         * 
+         * @param string $ip IP address
+         * @param string $cidr CIDR, Range or Netmask
+         * 
+         * @return bool true if IP is in the any of the CIDRs, Ranges or Netmasks
+         */
         public static function IsIpInCidrNetmaskOrRangeList(string $ip, array $cidrs)
         {
             foreach ($cidrs as $cidr) {
