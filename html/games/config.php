@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Games\Game;
 use Alphaland\Web\WebContextManager;
 
 $gearsportion = false;
@@ -112,6 +113,25 @@ if(isset($_GET['id']))
 			if ($gameinfo->IsCommentsEnabled == true)
 			{
 				$commentsstatus = 'checked';
+			}
+
+			$chatclassic = "";
+			$chatbubble = "";
+			$chatclassicbubble = "";
+			switch (Game::GetChatStyle($id))
+			{
+				case 0:
+					$chatclassic = "checked";
+					break;
+				case 1:
+					$chatbubble = "checked";
+					break;
+				case 2:
+					$chatclassicbubble = "checked";
+					break;
+				default:
+					$chatclassicbubble = "checked";
+					break;
 			}
 
 			$thumbnailstatus = '';
@@ -235,6 +255,15 @@ if(isset($_GET['id']))
 					$c->bindParam(":i", $id, PDO::PARAM_INT); //catalog id
 					$c->execute();
 					// ...
+
+					//update place chat style
+					if (isset($_POST['chatstyle_classic_checkbox'])) {
+						Game::SetChatStyle($id, 0);
+					} else if (isset($_POST['chatstyle_bubble_checkbox'])) {
+						Game::SetChatStyle($id, 1);
+					} else if (isset($_POST['chatstyle_classicbubble_checkbox'])) {
+						Game::SetChatStyle($id, 2);
+					}
 					
 					if (isset($_POST['comments_checkbox']))
 					{
@@ -264,10 +293,6 @@ if(isset($_GET['id']))
 							$placepost = handleRenderPlace($id);
 							if ($placepost !== true) {
 								$alert = "<div class='alert alert-danger' role='alert'>".$placepost."</div>";
-							}
-							else
-							{
-								WebContextManager::Redirect("config?id={$id}");
 							}
 						}
 					}
@@ -307,8 +332,6 @@ if(isset($_GET['id']))
 							resize(768, 432, $thumbnailuploadDirectory . $thumbnailHash, $_FILES['thumbnail_file']['tmp_name']);
 
 							setPlaceUsingCustomThumbnail($id); //set not using rendered thumb
-
-							WebContextManager::Redirect("config?id={$id}");
 						}
 						else
 						{
@@ -325,10 +348,10 @@ if(isset($_GET['id']))
 
 								setPlaceUsingCustomThumbnail($id); //set not using rendered thumb
 							}
-							WebContextManager::Redirect("config?id={$id}");
 						}
 						// ...
 					}
+					WebContextManager::Redirect("config?id={$id}");
 				}
 			}
 
@@ -494,14 +517,24 @@ EOT;
 								</div>
 								<hr>
 								<div class="container text-center">
+									<hr>
+									<h5>Chat Style</h5>
 									<div class="custom-control custom-checkbox custom-control-inline">
-										<input type="checkbox" name="comments_checkbox" {$commentsstatus} class="custom-control-input" autocomplete="off" id="comments">
-										<label class="custom-control-label" for="comments">Comments Enabled</label>
+										<input type="checkbox" name="chatstyle_classic_checkbox" {$chatclassic} class="custom-control-input sev_check" autocomplete="off" id="chatstyle_classic">
+										<label class="custom-control-label" for="chatstyle_classic">Classic</label>
+									</div>
+									<div class="custom-control custom-checkbox custom-control-inline">
+										<input type="checkbox" name="chatstyle_bubble_checkbox" {$chatbubble} class="custom-control-input sev_check" autocomplete="off" id="chatstyle_bubble">
+										<label class="custom-control-label" for="chatstyle_bubble">Bubble</label>
+									</div>
+									<div class="custom-control custom-checkbox custom-control-inline">
+										<input type="checkbox" name="chatstyle_classicbubble_checkbox" {$chatclassicbubble} class="custom-control-input sev_check" autocomplete="off" id="chatstyle_classicbubble">
+										<label class="custom-control-label" for="chatstyle_classicbubble">Classic And Bubble</label>
 									</div>
 								</div>
-								</hr>
+								<hr>
 								<div class="container text-center marg-bot-15">
-									<label for="playerrange" style="float:left;text-align:top;">Max Players</label>
+									<h5>Max Players</h5>
 									<input class="form-control-range custom-range" min="1" max="12" name="gdskill[1]" id="gdskill1" value="{$gamemaxplayers}" step="1" type="range" name="placemaxplayers" oninput="Output1.value = gdskill1.value">
 									<output id="Output1" class="output" style="font-size:18px;">{$gamemaxplayers}</output>
 									<datalist id="ticks">
@@ -518,6 +551,16 @@ EOT;
 										<option>11</option>
 										<option>12</option>
 									</datalist>
+								</div>
+								<hr>
+								<div class="text-center mb-3">
+									<h5>Miscellaneous</h5>
+								</div>
+								<div class="text-center mb-3">
+									<div class="custom-control custom-checkbox custom-control-inline">
+										<input type="checkbox" name="comments_checkbox" {$commentsstatus} class="custom-control-input" autocomplete="off" id="comments">
+										<label class="custom-control-label" for="comments">Comments Enabled</label>
+									</div>
 								</div>
 								<div class="text-center">
 									<h6>If you'd like to use the last Studio position as the Thumbnail, check it below</h6>
@@ -630,6 +673,10 @@ function checkTick()
 	  $("#custom_thumb_container").show();
 }
 checkTick()
+
+$('.sev_check').click(function() {
+  $('.sev_check').not(this).prop('checked', false);
+});
 
 </script>
 EOT;

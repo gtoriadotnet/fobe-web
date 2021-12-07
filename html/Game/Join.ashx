@@ -5,6 +5,8 @@
 	Very messy but will clean up
 */
 
+use Alphaland\Games\Game;
+
 header("Content-Type: text/plain");
 
 $token = (string)$_GET['ticket'];
@@ -73,7 +75,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 				"GameId" => '00000000-0000-0000-0000-000000000000', //not set rn?
 				"PlaceId" => $placeid,
 				"BaseUrl" => $url . "/",
-				"ChatStyle" => "ClassicAndBubble", //TODO: make an option for this
+				"ChatStyle" => Game::ConvertChatStyle(Game::GetChatStyle($placeid)), //TODO: make an option for this
 				"VendorId" => 0, //0, dont need this rn?
 				"ScreenShotInfo" => "", //blank, dont need this rn?
 				"VideoInfo" => "", //blank, dont need this rn?
