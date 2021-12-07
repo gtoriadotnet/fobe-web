@@ -8,6 +8,7 @@
  * Date: 25/11/2021
  * 
  * Ported from MFDLABS/corp-integral/src/lib/web/settings.fx
+ * MFDLABS TwoTime (c) 2021-
  */
 
 // Do not use until it actually works.
@@ -18,6 +19,8 @@ namespace Alphaland\Web {
 
     class WebsiteSettings
     {
+        // default return if no settings are found
+        // because there may be a NULL value in the database
         private const DOES_NOT_EXIST = 'does_not_exist';
 
         private static array $validTypes = [
@@ -190,6 +193,13 @@ namespace Alphaland\Web {
             return $settings;
         }
 
+        /**
+         * Determines if a website setting exists.
+         * 
+         * @param string $name The name of the setting.
+         * 
+         * @return bool Whether the setting exists.
+         */
         public static function SettingExists(string $name): bool
         {
             $query = $GLOBALS['pdo']->prepare("SELECT `name` FROM `websettings` WHERE `name` = :name");
@@ -204,6 +214,11 @@ namespace Alphaland\Web {
             return $result !== false;
         }
 
+        /**
+         * Deletes all website settings.
+         * 
+         * @return bool Whether the settings were deleted.
+         */
         public static function DeleteAllSettings(): bool
         {
             $query = $GLOBALS['pdo']->prepare("DELETE FROM `websettings`");
