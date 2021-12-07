@@ -134,12 +134,15 @@ else if ($action == "connect")
 							
 		$new_visit = true;
 	}
-				
-	if ($new_visit)
+			
+	$creatorid = getAssetInfo($placeid)->CreatorId;
+	if ($new_visit && $creatorid != $userid)
 	{
 		$setgamevisit = $pdo->prepare("UPDATE assets SET Visited = (Visited + 1) WHERE id = :g");
 		$setgamevisit->bindParam(":g", $placeid, PDO::PARAM_INT);
 		$setgamevisit->execute();
+
+		giveCurrency(1, $creatorid);
 	}
 	// ...
 }
