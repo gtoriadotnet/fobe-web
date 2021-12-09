@@ -7,6 +7,9 @@
 */
 
 namespace Alphaland\Grid {
+
+    use stdClass;
+
     class RccServiceHelper
     {
         private string $ServiceIp;
@@ -16,13 +19,13 @@ namespace Alphaland\Grid {
             $this->ServiceIp = $ServiceIp;
         }
 
-        private function SoapCallService(string $name, array $arguments = []): mixed
+        private function SoapCallService(string $name, array $arguments = [])
         {
             $soapcl = new \SoapClient($GLOBALS['RCCwsdl'], ["location" => "http://" . $this->ServiceIp, "uri" => "http://roblox.com/", "exceptions" => false]);
             return $soapcl->{$name}($arguments); //thanks BrentDaMage didnt know u can do this
         }
 
-        private function VerifyLuaValue(mixed $value): string //mostly due to booleans, but maybe something will come up in the future
+        private function VerifyLuaValue($value) //mostly due to booleans, but maybe something will come up in the future
         {
             switch ($value) {
                 case is_bool(json_encode($value)) || $value == 1:
@@ -46,113 +49,120 @@ namespace Alphaland\Grid {
 
         private function ConstructLuaArguments(array $arguments = []): array //arguments for a script being executed
         {
-            if (!empty($arguments)) {
-                $luavalue = array("LuaValue" => array());
-                foreach ($arguments as $argument) {
-                    array_push($luavalue['LuaValue'], array(
-                        "type" => $this->GetLuaType($argument),
-                        "value" => $this->VerifyLuaValue($argument)
-                    ));
-                }
-                return $luavalue;
+            $luavalue = array("LuaValue" => array());
+            foreach ($arguments as $argument) {
+                array_push($luavalue['LuaValue'], array(
+                    "type" => $this->GetLuaType($argument),
+                    "value" => $this->VerifyLuaValue($argument)
+                ));
             }
+            return $luavalue;
         }
 
-        private function ConstructJobTemplate(string $servicename, string $jobid, int $expiration, int $category, int $cores, string $scriptname, string $script, array $arguments = []): mixed
+        public function ConstructGenericJob(string $jobid, int $expiration, int $category, int $cores, string $scriptname, string $script, array $arguments = []): array
         {
-            return $this->SoapCallService(
-                $servicename,
-                array(
-                    "job" => array(
-                        "id" => $jobid,
-                        "expirationInSeconds" => $expiration,
-                        "category" => $category,
-                        "cores" => $cores
-                    ),
-                    "script" => array(
-                        "name" => $scriptname,
-                        "script" => $script,
-                        "arguments" => $this->ConstructLuaArguments($arguments)
-                    )
+            return array(
+                "job" => array(
+                    "id" => $jobid,
+                    "expirationInSeconds" => $expiration,
+                    "category" => $category,
+                    "cores" => $cores
+                ),
+                "script" => array(
+                    "name" => $scriptname,
+                    "script" => $script,
+                    "arguments" => $this->ConstructLuaArguments($arguments)
                 )
             );
         }
 
-        public function GetVersion(): mixed
+        public function ConstructGenericScriptExecute(string $jobid, string $scriptname, string $script, array $arguments = []): array
+        {
+            return array(
+                "jobID" => $jobid,
+                "script" => array(
+                    "name" => $scriptname,
+                    "script" => $script,
+                    "arguments" => $this->ConstructLuaArguments($arguments)
+                )
+            );
+        }
+
+        public function GetVersion(): stdClass
         {
             return $this->SoapCallService("GetVersion");
         }
 
-        public function HelloWorld(): mixed
+        public function HelloWorld(): stdClass
         {
             return $this->SoapCallService("HelloWorld");
         }
 
-        public function CloseAllJobs(): mixed
+        public function CloseAllJobs(): stdClass
         {
             return $this->SoapCallService("CloseAllJobs");
         }
 
-        public function CloseExpiredJobs(): mixed
+        public function CloseExpiredJobs(): stdClass
         {
             return $this->SoapCallService("CloseExpiredJobs");
         }
 
-        public function GetAllJobsEx(): mixed
+        public function GetAllJobsEx(): stdClass
         {
             return $this->SoapCallService("GetAllJobsEx");
         }
 
-        public function GetStatus(): mixed
+        public function GetStatus(): stdClass
         {
             return $this->SoapCallService("GetStatus");
         }
 
-        public function DiagEx(string $type, string $jobid): mixed
+        public function DiagEx(string $type, string $jobid): stdClass
         {
             return $this->SoapCallService("DiagEx", array("type" => $type, "jobID" => $jobid));
         }
 
         // this doesn't return anything
+        // austin: i know this doesnt return anything
         // https://pastebin.com/raw/pr5NDBwC
-        public function CloseJob(string $jobid): mixed
+        public function CloseJob(string $jobid): stdClass
         {
             return $this->SoapCallService("CloseJob", array("jobID" => $jobid));
         }
 
-        public function GetExpiration(string $jobid): mixed
+        public function GetExpiration(string $jobid): stdClass
         {
             return $this->SoapCallService("GetExpiration", array("jobID" => $jobid));
         }
 
-        public function ExecuteEx(string $jobid, string $scriptname, string $script, array $arguments = []): mixed
-        {
-            return $this->SoapCallService(
-                "ExecuteEx",
-                array(
-                    "jobID" => $jobid,
-                    "script" => array(
-                        "name" => $scriptname,
-                        "script" => $script,
-                        "arguments" => $this->ConstructLuaArguments($arguments)
-                    )
-                )
-            );
-        }
-
-        public function RenewLease(string $jobid, int $expiration): mixed
+        public function RenewLease(string $jobid, int $expiration): stdClass
         {
             return $this->SoapCallService("RenewLease", array("jobID" => $jobid, "expirationInSeconds" => $expiration));
         }
-
-        public function OpenJobEx(string $jobid, int $expiration, string $scriptname, string $script, array $arguments = []): mixed
+       
+        public function ExecuteEx(array $soapargs = []): stdClass
         {
-            return $this->ConstructJobTemplate("OpenJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
+            return $this->SoapCallService(
+                "ExecuteEx",
+                $soapargs
+            );
         }
 
-        public function BatchJobEx(string $jobid, int $expiration, string $scriptname, string $script, array $arguments = []): mixed
+        public function OpenJobEx(array $soapargs = []): stdClass
         {
-            return $this->ConstructJobTemplate("BatchJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
+            return $this->SoapCallService(
+                "OpenJobEx",
+                $soapargs
+            );
+        }
+
+        public function BatchJobEx(array $soapargs = []): stdClass
+        {
+            return $this->SoapCallService(
+                "BatchJobEx",
+                $soapargs
+            );
         }
     }
 }

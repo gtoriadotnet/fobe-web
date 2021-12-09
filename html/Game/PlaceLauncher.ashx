@@ -5,6 +5,8 @@ This is used on the client (if the client has the session token set) to request 
 TODO: Clean up
 */
 
+use Alphaland\Grid\RccServiceHelper;
+
 $requesttype = $_GET['request'];
 
 $local = $_GET['local'];
@@ -83,13 +85,16 @@ function StartServer($gid)
 	
 	//launch the server
 	$script = file_get_contents($GLOBALS['gameserverscript']);
-	$gameSpawnResult = soapOpenJobEx($GLOBALS['gamesArbiter'], $jobuuid, 60, "Start Server ".$gid, $script, array(
+
+	$gameSpawnResult = new RccServiceHelper($GLOBALS['gamesArbiter']);
+	$gameSpawnResult->OpenJobEx(
+		$gameSpawnResult->ConstructGenericJob($jobuuid, 60, 0, 0, "Start Server ".$gid, $script, array(
 			$gid, //placeid
 			$port, //gameserver port
 			$GLOBALS['domain'], //domain
 			$gameInfo->CreatorId, //place creatorid
 			(bool)$gameInfo->isPersonalServer //ispersonalserver
-		)
+		))
 	);
 
 	if (is_soap_fault($gameSpawnResult)) {
