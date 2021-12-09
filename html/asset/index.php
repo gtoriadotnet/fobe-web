@@ -44,7 +44,7 @@ if ($id)
 	{
 		if (isAssetApproved($id) and !isAssetModerated($id)) //if the asset is approved and not moderated
 		{
-			if (WebContextManager::VerifyAccessKeyHeader()) //immediately allow full access (passing true disables die() and returns true or false)
+			if (WebContextManager::VerifyAccessKeyHeader()) //immediately allow full access
 			{
 				ReturnAsset($iteminfo->Hash, $iteminfo->AssetTypeId);
 			}

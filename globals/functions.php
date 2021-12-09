@@ -1781,18 +1781,6 @@ function rankExists($groupid, $rank)
 	return false;
 }
 
-function generalGroupConfig($groupid)
-{
-	$group = $GLOBALS['pdo']->prepare("SELECT * FROM groups WHERE id = :u");
-	$group->bindParam(":u", $groupid, PDO::PARAM_INT);
-	$group->execute();
-	$group = $group->fetch(PDO::FETCH_OBJ);
-	$groupname = $group->name;
-	$groupdescription = $group->description;
-	$groupapproval = $group->manualapproval;
-	
-}
-
 function groupJoinRequests($groupid)
 {
 	$requests = $GLOBALS['pdo']->prepare("SELECT * FROM group_join_requests WHERE groupid = :gid ORDER BY whenRequested DESC");
