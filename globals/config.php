@@ -106,6 +106,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebContextManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/System.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Game.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Grid/RccServiceHelper.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
