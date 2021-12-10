@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Grid\RccServiceHelper;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -17,10 +18,13 @@ $script = $data->script;
 $output = "";
 if (!isJobMarkedClosed($jobid))
 {
-	$output = soapExecuteEx($GLOBALS['gamesArbiter'], $jobid, "Execution From ACP", $script);
+	$jobExecuteEx = new RccServiceHelper($GLOBALS['gamesArbiter']);
+	$jobExecuteEx->ExecuteEx(
+		$jobExecuteEx->ConstructGenericScriptExecute($jobid, "Execution From ACP", $script)
+	);
 }
 
-if (!$output->faultstring && $script) //logging
+if (!$jobExecuteEx->faultstring && $script) //logging
 {
 	$log = $GLOBALS['pdo']->prepare("INSERT INTO admin_job_execute_logs(userid, jobid, script, whenExecuted) VALUES (:uid, :jid, :script, UNIX_TIMESTAMP())");
 	$log->bindParam(":uid", $user->id, PDO::PARAM_INT);
@@ -29,4 +33,4 @@ if (!$output->faultstring && $script) //logging
 	$log->execute();
 }
 
-echo json_encode(array("result" => $output->faultstring));
+echo json_encode(array("result" => $jobExecuteEx->faultstring));

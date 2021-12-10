@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Grid\RccServiceHelper;
 use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
@@ -30,7 +31,8 @@ else
 		
 		if ($players->rowCount() > 0) //atleast 1 player in job
 		{
-			soapRenewLease($GLOBALS['gamesArbiter'], $jobid, 90); //add 1.50 min to the job
+			$jobRenew = new RccServiceHelper($GLOBALS['gamesArbiter']);
+			$jobRenew->RenewLease($jobid, 90);
 		}
 		
 		$newping = $pdo->prepare("UPDATE open_servers SET lastPing = UNIX_TIMESTAMP() WHERE gameID = :g AND jobid = :j");

@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Grid\RccServiceHelper;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 
@@ -27,8 +30,9 @@ else
 	{
 		if ($shutdownserver) 
 		{
-			//soapclosejob doesnt have any return data, so we set message to true
-			soapCloseJob($GLOBALS['gamesArbiter'],$jobid);
+			//doesnt have any return data, so we set message to true
+			$jobClose = new RccServiceHelper($GLOBALS['gamesArbiter']);
+			$jobClose->CloseJob($jobid);
 			$message = true;
 		}
 
