@@ -6213,7 +6213,7 @@ function getCurrentThemeLogo() //grabs the alphaland logo for the users selected
 {
 	$currenttheme = getCurrentTheme();
 
-	//return $GLOBALS['url'] . "/alphaland/cdn/imgs/alpha-spooky/alphalandzombie.png"; //spooky
+	return $GLOBALS['url'] . "/alphaland/cdn/imgs/alpha-christmas/alphalandchristmas.png"; //force christmas logo
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
