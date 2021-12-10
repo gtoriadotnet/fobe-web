@@ -11,8 +11,6 @@
  * MFDLABS TwoTime (c) 2021-
  */
 
-// Do not use until it actually works.
-
 namespace Alphaland\Web {
 
     use PDO;
