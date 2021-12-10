@@ -20,8 +20,6 @@ if(getBC($clr) != "-")
 {
 	if (isThumbnailerAlive())
 	{
-		//if (!isPendingRender())
-		//{
 		if (!isRenderCooldown($localuser))
 		{
 			$upd = $pdo->prepare("UPDATE body_colours SET {$bcdb[$cbc]} = :b WHERE uid = :u");
@@ -37,6 +35,5 @@ if(getBC($clr) != "-")
 		{
 			http_response_code(500);
 		}
-		//}
 	}
 }
