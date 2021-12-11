@@ -409,6 +409,16 @@ namespace Alphaland\Client {
             $combinedDependencies = self::GetApplicationSettings($applicationName);
 
             foreach ($currentDependencies as $dependency) {
+                // skip it if it doesn't exist just to be safe
+                if (!self::ApplicationExists($dependency)) {
+                    continue;
+                }
+
+                // Check if the dependency has a dep on us already
+                if (self::ApplicationHasDependency($dependency, $applicationName)) {
+                    continue;
+                }
+
                 if ($recursive && self::ApplicationHasAnyDependencies($dependency)) {
                     $combinedDependencies = array_merge($combinedDependencies, self::FetchCombinedApplicationDependencies($dependency, $recursive));
                 } else {
@@ -464,7 +474,7 @@ namespace Alphaland\Client {
     /**
      * The client settings kind.
      */
-    class ClientSettingsKind
+    abstract class ClientSettingsKind
     {
         public const Unscoped = "Unscoped";
         public const FastLog = "FastLog";

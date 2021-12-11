@@ -15,7 +15,7 @@ namespace Alphaland\Web {
 
     use PDO;
 
-    class WebsiteSettings
+    /* public static */ class WebsiteSettings
     {
         // default return if no settings are found
         // because there may be a NULL value in the database
@@ -97,6 +97,24 @@ namespace Alphaland\Web {
             }
 
             return self::ConvertStringToValue($result['value'], $result['type']);
+        }
+
+        /**
+         * Gets or sets the value of a website setting.
+         * 
+         * @param string $name The name of the setting.
+         * @param mixed $value The value of the setting.
+         * @param string $type The type of the setting.
+         * 
+         * @return mixed The value of the setting.
+         */
+        public static function GetOrCreateSetting(string $name, $value = null, string $type = null)
+        {
+            if (!self::SettingExists($name)) {
+                self::UpdateSetting($name, $value, $type);
+            }
+
+            return self::GetSetting($name);
         }
 
         /**
