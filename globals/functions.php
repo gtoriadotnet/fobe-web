@@ -3436,6 +3436,9 @@ function getUserGearsAccoutrements($userid) //ghetto
 	return $gears;
 }
 
+//TODO: FIX THIS DUMB SHIT
+//file_get_contents adds &amp after every &
+//2 lazy to look further into this right now, annoying as fuck
 function getRobloxAssetThumbnail($assetid, $width, $height, $fileformat)
 {
 	return json_decode(file_get_contents($GLOBALS['ROBLOXAssetThumbnailAPI'].$assetid."&size=".$width."x".$height."&format=".$fileformat."&isCircular=false"))->data[0]->imageUrl;
