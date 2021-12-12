@@ -1,5 +1,10 @@
 <?php
-RCCHeaderEnvironment();
+use Alphaland\Web\WebContextManager;
+
+if (!WebContextManager::VerifyAccessKeyHeader())
+{
+    die(http_response_code(401));
+}
 
 header("Cache-Control: no-cache, no-store");
 header("Pragma: no-cache");

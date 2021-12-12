@@ -3,6 +3,8 @@
 
 //turns out this is XML format
 
+use Alphaland\Web\WebContextManager;
+
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");
 header("Expires: -1");
@@ -7760,6 +7762,6 @@ elseif ($sid)
     else
     {
         //idk just for compatibiliy if for some reason the game needs to use this
-        redirect('https://assetgame.roblox.com/Game/Tools/InsertAsset.ashx?sid='. $sid);
+		WebContextManager::Redirect('https://assetgame.roblox.com/Game/Tools/InsertAsset.ashx?sid='. $sid);
     }
 }

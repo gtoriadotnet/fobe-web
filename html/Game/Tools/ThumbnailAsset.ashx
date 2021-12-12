@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Web\WebContextManager;
+
 $fmt = $_GET['fmt'];
 $wd = $_GET['wd'];
 $ht = $_GET['ht'];
@@ -47,11 +49,11 @@ if ($check->rowCount() > 0) //asset exists on Alphaland
         //assuming its none of these asset types, redirect to ROBLOX
         if ($check->AssetTypeId == 4) //handle mesh asset, return default image for now (TODO: RENDER THESE)
 		{
-			redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
 		}
 		elseif ($check->AssetTypeId == 40) //handle MeshPart asset, return default image for now (TODO: RENDER THESE)
 		{
-			redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
 		}
 		elseif ($check->AssetTypeId == 10) //handle model asset, return default image for now (TODO: RENDER THESE)
 		{
@@ -59,17 +61,17 @@ if ($check->rowCount() > 0) //asset exists on Alphaland
 			{
 				$thumbhash = $check->ThumbHash;
 
-				redirect("https://trcdn.alphaland.cc/" . $thumbhash);
+				WebContextManager::Redirect("https://trcdn.alphaland.cc/" . $thumbhash);
 			}
-			redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
 		}
 		elseif ($check->AssetTypeId == 39) //handle SolidModel asset, return default image for now (TODO: RENDER THESE)
 		{
-			redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
 		}
     }
 }
 else
 {
-	redirect(getRobloxAssetThumbnail($aid, $wd, $ht, $fmt));
+	//WebContextManager::Redirect(getRobloxAssetThumbnail($aid, $wd, $ht, $fmt));
 }
