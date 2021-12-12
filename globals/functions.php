@@ -4954,6 +4954,11 @@ function handleGameThumb($id)
 	$thumbhash = $placeinfo->ThumbHash;
 	if ($thumbhash)
 	{
+		//broken check
+		if (!file_get_contents($GLOBALS['renderCDNPath'].$thumbhash))
+		{
+			return getImageFromAsset(4);
+		}
 		return constructRenderHashUrl($thumbhash);
 	}
 
