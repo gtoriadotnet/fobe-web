@@ -73,5 +73,5 @@ if ($check->rowCount() > 0) //asset exists on Alphaland
 }
 else
 {
-	//WebContextManager::Redirect(getRobloxAssetThumbnail($aid, $wd, $ht, $fmt));
+	//WebContextManager::Redirect(getRobloxAssetThumbnail($aid, $wd, $ht, $fmt)); //todo: fix this bullshit
 }
