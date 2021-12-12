@@ -14,14 +14,11 @@ namespace Alphaland\Users {
     {
         public static function IsMember(int $userid)
         {
-            /*
             if (isInGroup($userid, 22)) //id 22 is the official referral program group
             {
                 return true;
             }
             return false;
-            */
-            return true;
         }
 
         public static function IsUserGeneratedKey(string $key)
@@ -124,13 +121,16 @@ namespace Alphaland\Users {
             $userkey->execute();
             if ($userkey->rowCount() > 0) {
                 $whoinvited = $userkey->fetch(PDO::FETCH_OBJ)->userGen;
-                $n = $GLOBALS['pdo']->prepare("INSERT INTO users_invited(invitedUser,whoInvited,whenAccepted) VALUES(:inviteduser,:whoinvited,UNIX_TIMESTAMP())");
-                $n->bindParam(":inviteduser", $newuser, PDO::PARAM_INT);
-                $n->bindParam(":whoinvited", $whoinvited, PDO::PARAM_INT);
-                $n->execute();
+                if (ReferralProgram::IsMember($whoinvited)) //double check they are currently in the program
+                {
+                    $n = $GLOBALS['pdo']->prepare("INSERT INTO users_invited(invitedUser,whoInvited,whenAccepted) VALUES(:inviteduser,:whoinvited,UNIX_TIMESTAMP())");
+                    $n->bindParam(":inviteduser", $newuser, PDO::PARAM_INT);
+                    $n->bindParam(":whoinvited", $whoinvited, PDO::PARAM_INT);
+                    $n->execute();
 
-                if (ReferralProgram::DeleteUserKey($key)){
-                    return true;
+                    if (ReferralProgram::DeleteUserKey($key)){
+                        return true;
+                    }
                 }
             }
             return false;
