@@ -11,7 +11,14 @@
 ]]
 
 
-local userid, url, asseturl, fileExtension, x, y, quadratic, OnlyCheckHeadAccessoryInHeadShot, angleRight, angleLeft, baseHatZoom, maxHatZoom, cameraOffsetX, cameraOffsetY = ...
+local userid, url, asseturl, fileExtension, x, y, angleRight, angleLeft = ...
+
+local quadratic = false
+local OnlyCheckHeadAccessoryInHeadShot = false
+local baseHatZoom = 0
+local maxHatZoom = 90
+local cameraOffsetX = 0
+local cameraOffsetY = -0.1
 
 print ('Render Player Closeup ' .. userid);
 

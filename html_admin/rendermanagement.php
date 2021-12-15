@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Users\Render;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -12,7 +13,7 @@ adminPanelStats();
 
 if(isset($_POST['renderplayer']))
 {
-	RenderPlayer($_POST['userid']);
+	Render::RenderPlayer($_POST['userid']);
 }
 
 $body = <<<EOT

@@ -3,8 +3,9 @@
 /*
 Alphaland 2021 
 The purpose of this is to upload SolidModels (Unions) from studio, since studio does not serialize the actual Union
-*/;
+*/
 
+use Alphaland\Assets\Render;
 
 $assetTypeName = $_GET['assetTypeName'];
 $name = $_GET['name'];
@@ -134,9 +135,9 @@ if ($assetTypeName && $name && $isPublic && $allowComments)
 							NULL //ThumbHash
 						);
 						// ...
-						if (!RenderModel($newitem))
+						if (!Render::RenderModel($newitem))
 						{
-							RenderModel($newitem); //if first fail do it again
+							Render::RenderModel($newitem); //if first fail do it again
 						}
 						giveItem($user->id, $newitem);
 					}

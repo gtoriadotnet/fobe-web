@@ -5,6 +5,8 @@ Alphaland 2021
 This is for uploading data from studio, this requires the user to have access to the asset.
 */
 
+use Alphaland\Assets\Render;
+
 $id = (int)$_GET['id'];
 
 $iteminfo = getAssetInfo($id);
@@ -96,8 +98,7 @@ if($iteminfo !== FALSE) //asset id exists in alphaland db
 					//unlock asset db
 					$pdo->exec("UNLOCK TABLES"); //unlock since we are done with sensitive asset stuff
 
-					RenderModel($iteminfo->id);
-
+					Render::RenderModel($iteminfo->id);
 				}
 			}
 			else

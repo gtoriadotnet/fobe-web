@@ -5,48 +5,51 @@
 	kinda shit but its meant for background render processes so not really a concern
 */
 
+use Alphaland\Assets\Render as AssetRender;
+use Alphaland\Users\Render as UserRender;
+
 $assetid = $argv[1];
 $type = $argv[2];
 
 switch ($type)
 {
 	case "avatar":
-		RenderPlayer($assetid);
+		UserRender::RenderPlayer($assetid);
 		break;
 	case "avatarcloseup":
-		RenderPlayerCloseup($assetid);
+		UserRender::RenderPlayerCloseup($assetid);
 		break;
 	case "hat":
-		RenderHat($assetid);
+		AssetRender::RenderHat($assetid);
 		break;
 	case "tshirt":
-		RenderTShirt($assetid);
+		AssetRender::RenderTShirt($assetid);
 		break;
 	case "shirt":
-		RenderShirt($assetid);
+		AssetRender::RenderShirt($assetid);
 		break;
 	case "pants":
-		RenderPants($assetid);
+		AssetRender::RenderPants($assetid);
 		break;
 	case "face":
-		RenderFace($assetid);
+		AssetRender::RenderFace($assetid);
 		break;
 	case "gear":
-		RenderGear($assetid);
+		AssetRender::RenderGear($assetid);
 		break;
 	case "head":
-		RenderHead($assetid);
+		AssetRender::RenderHead($assetid);
 		break;
 	case "place":
 		RenderPlace($assetid);
 		break;
 	case "package":
-		RenderPackage($assetid);
+		AssetRender::RenderPackage($assetid);
 		break;
 	case "model":
-		RenderModel($assetid);
+		AssetRender::RenderModel($assetid);
 	case "mesh":
-		RenderMesh($assetid);
+		AssetRender::RenderMesh($assetid);
 		break;
 	default:
 		break;

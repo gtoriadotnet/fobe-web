@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Assets\Render;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -158,7 +159,7 @@ $alert = '';
 					
 				//render
 
-				if (!RenderHat($autoincrement))
+				if (!Render::RenderHat($autoincrement))
 				{
 					$alert = "<div class='alert alert-danger' role='alert'>Error Rendering Hat, it's been uploaded but not Rendered</div>";
 				}
@@ -272,7 +273,7 @@ $alert = '';
 					
 				//render
 				
-				if (!RenderFace($autoincrement))
+				if (!Render::RenderFace($autoincrement))
 				{
 					$alert = "<div class='alert alert-danger' role='alert'>Error Rendering face, it's been uploaded but not Rendered</div>";
 				}
@@ -433,7 +434,7 @@ $alert = '';
 				}
 				// ...
 
-				if (!RenderHead($autoincrement))
+				if (!Render::RenderHead($autoincrement))
 				{
 					$alert = "<div class='alert alert-danger' role='alert'>Error Rendering Head, it's been uploaded but not Rendered</div>";
 				}

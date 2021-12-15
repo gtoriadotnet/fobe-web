@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Assets\Render;
 use Alphaland\Moderation\UserModerationManager;
 use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
@@ -172,7 +173,7 @@ if(isset($_GET['id']))
 						if ($itemtypeint == 8)
 						{
 							//Hat
-							if (!RenderHat($id))
+							if (!Render::RenderHat($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Hat Failed</div>";
 							}
@@ -184,7 +185,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 2)
 						{
 							//T Shirt
-							if (!RenderTShirt($id))
+							if (!Render::RenderTShirt($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render TShirt Failed</div>";
 							}
@@ -196,7 +197,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 4)
 						{
 							//Mesh
-							if (!RenderMesh($id))
+							if (!Render::RenderMesh($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render TShirt Failed</div>";
 							}
@@ -208,7 +209,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 11)
 						{
 							//Shirt
-							if (!RenderShirt($id))
+							if (!Render::RenderShirt($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Shirt Failed</div>";
 							}
@@ -220,7 +221,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 12)
 						{
 							//Pants
-							if (!RenderPants($id))
+							if (!Render::RenderPants($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Pants Failed</div>";
 							}
@@ -232,7 +233,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 18)
 						{
 							//Faces
-							if (!RenderFace($id))
+							if (!Render::RenderFace($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Face Failed</div>";
 							}
@@ -244,7 +245,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 19)
 						{
 							//Gears
-							if (!RenderGear($id))
+							if (!Render::RenderGear($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Gear Failed</div>";
 							}
@@ -256,7 +257,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 17)
 						{
 							//Heads
-							if (!RenderHead($id))
+							if (!Render::RenderHead($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Head Failed</div>";
 							}
@@ -268,7 +269,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 32)
 						{
 							//Packages
-							if (!RenderPackage($id))
+							if (!Render::RenderPackage($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Package Failed</div>";
 							}
@@ -280,7 +281,7 @@ if(isset($_GET['id']))
 						elseif ($itemtypeint == 10)
 						{
 							//Models
-							if (!RenderModel($id))
+							if (!Render::RenderModel($id))
 							{
 								$alert = "<div class='alert alert-danger' role='alert'>Render Model Failed</div>";
 							}

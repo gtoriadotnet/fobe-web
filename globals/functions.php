@@ -8,6 +8,8 @@
 
 //img tools (potentially high resource usage) (probably blocking)
 
+use Alphaland\Assets\Render;
+use Alphaland\Users\Render as UsersRender;
 use Alphaland\Web\WebContextManager;
 
 function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
@@ -222,34 +224,6 @@ function genGameLaunchTokenHash($len)
 		$tokencheck->bindParam(":t", $hash, PDO::PARAM_STR);
 		$tokencheck->execute();
 		if ($tokencheck->rowCount() > 0) {
-			continue;
-		} else {
-			$alloc = false;
-		}
-	}
-	return $hash;
-}
-
-function genThumbHash($len)
-{
-	$hash = "";
-	$alloc = true;
-	while ($alloc) {
-		$hash = genHash($len);
-		
-		$usercheck = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE ThumbHash = :t");
-		$usercheck->bindParam(":t", $hash, PDO::PARAM_STR);
-		$usercheck->execute();
-
-		$headshotusercheck = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE HeadshotThumbHash = :t");
-		$headshotusercheck->bindParam(":t", $hash, PDO::PARAM_STR);
-		$headshotusercheck->execute();
-		
-		$assetscheck = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE ThumbHash = :t");
-		$assetscheck->bindParam(":t", $hash, PDO::PARAM_STR);
-		$assetscheck->execute();
-		
-		if ($usercheck->rowCount() > 0 || $assetscheck->rowCount() > 0 || $headshotusercheck->rowCount() > 0) {
 			continue;
 		} else {
 			$alloc = false;
@@ -611,7 +585,7 @@ function applyOutfit($userid, $outfitid)
 
 				if ($headshothash == NULL) //outfit was created before headshots release (probably?)
 				{
-					RenderPlayerCloseup($userid);
+					UsersRender::RenderPlayerCloseup($userid);
 
 					$headshothash = userInfo($userid)->HeadshotThumbHash;
 
@@ -2206,72 +2180,6 @@ function isJobMarkedClosed($jobid)
 
 //render utility functions
 
-function RenderPlayer($userid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		RenderPlayerCloseup($userid, true); //run in the background so it will *hopefully* finish with this
-
-		$script = $GLOBALS['avatarthumbnailscript'];
-		
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render player ".$userid, file_get_contents($script), array(
-				$userid,
-				"https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
-				"https://www.alphaland.cc/",
-				"png",
-				"840",
-				"840",
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (resizebase64img(352 , 352 , $path . $newhash, $render)) //scale down for a SLIGHT AA effect
-				{
-					//delete old render
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :i");
-					$prevhash->bindParam(":i", $userid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					if ($oldhash != $newhash && !isThumbHashInOutfit($oldhash)) //dont delete hash if its part of an outfit
-					{
-						unlink($path . $oldhash);
-					}
-
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE users SET ThumbHash = :h, pendingRender = 0, renderCount = renderCount-1 WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $userid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				}
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Player ".$userid." Job", $script);
-		}
-		return false;
-	}
-}
-
 function setHeadshotAngleRight($userid)
 {
 	$right = $GLOBALS['pdo']->prepare('UPDATE users SET headshotAngleRight = 1, headshotAngleLeft = 0 WHERE id = :uid');
@@ -2306,520 +2214,6 @@ function setHeadshotAngleCenter($userid)
 		return true;
 	}
 	return false;
-}
-
-function RenderPlayerCloseup($userid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['avatarcloseupthumbnailscript'];
-		
-		$angleright = userInfo($userid)->headshotAngleRight;
-		$angleleft = userInfo($userid)->headshotAngleLeft;
-		
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Player Closeup ".$userid, file_get_contents($script), array(
-				$userid,
-				"https://www.alphaland.cc/",
-				"https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
-				"png",
-				"840",
-				"840",
-				false, //quadratic
-				false, //OnlyCheckHeadAccessoryInHeadShot
-				(bool)$angleright, //angleRight
-				(bool)$angleleft, //angleLeft
-				0, //baseHatZoom
-				90, //maxHatZoom (100 for little farther out)
-				0, //cameraOffsetX
-				-0.1 //cameraOffsetY
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (resizebase64img(352 , 352 , $path . $newhash, $render)) //scale down for a SLIGHT AA effect
-				{
-					//delete old render
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :i");
-					$prevhash->bindParam(":i", $userid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->HeadshotThumbHash;
-					if ($oldhash != $newhash && !isHeadshotThumbHashInOutfit($oldhash)) //dont delete hash if its part of an outfit
-					{
-						unlink($path . $oldhash);
-					}
-
-					//$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE users SET ThumbHash = :h, pendingRender = 0, renderCount = renderCount-1 WHERE id = :i");
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE users SET HeadshotThumbHash = :h, pendingHeadshotRender = 0, renderCount = renderCount-1 WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $userid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				}
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Player Closeup ".$userid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderHat($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." hat", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['hatthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Hat ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/",
-				"png",
-				"750",
-				"750"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Hat ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderTShirt($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." tshirt", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['tshirtthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render TShirt ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/asset/?id=38",
-				"https://www.alphaland.cc/",
-				"png",
-				"750",
-				"750"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render TShirt ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderShirt($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." shirt", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['shirtthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Shirt ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/asset/?id=38",
-				"https://www.alphaland.cc/",
-				"png",
-				"750",
-				"750"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Shirt ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderPants($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." pants", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['pantsthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Pants ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/asset/?id=38",
-				"https://www.alphaland.cc/",
-				"png",
-				"750",
-				"750"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Pants ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderFace($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." face", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['facethumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Face ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/",
-				"png",
-				"750",
-				"750"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Face ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderGear($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." gear", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['gearthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Gear ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"png",
-				"750",
-				"750",
-				"https://www.alphaland.cc/"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Gear ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderHead($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." head", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['headthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Head ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/asset/?id=38",
-				"https://www.alphaland.cc/",
-				"png",
-				"750",
-				"750"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Head ".$itemid." Job", $script);
-		}
-		return false;
-	}
 }
 
 function RenderPlace($placeid, $fork=false)
@@ -2898,194 +2292,6 @@ function RenderPlace($placeid, $fork=false)
 	}
 }
 
-function RenderPackage($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." package", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['packagescript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Package ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=27112025;https://www.alphaland.cc/asset/?id=27112039;https://www.alphaland.cc/asset/?id=27112052",
-				"https://www.alphaland.cc/",
-				"https://www.alphaland.cc/asset/?id=38",
-				"https://www.alphaland.cc/",
-				"png",
-				"768",
-				"432"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Package ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderModel($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." model", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['modelthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Model ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/",
-				"png",
-				"768",
-				"432"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Model ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
-function RenderMesh($itemid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$itemid." mesh", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['meshthumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Mesh ".$itemid, file_get_contents($script), array(
-				$itemid,
-				"https://www.alphaland.cc/asset/?id=".$itemid,
-				"https://www.alphaland.cc/",
-				"png",
-				"768",
-				"432"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//delete old hash
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					
-					//set new hash
-					$newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-					$newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-					$newthumbhash->bindParam(":i", $itemid, PDO::PARAM_INT);
-					$newthumbhash->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Mesh ".$itemid." Job", $script);
-		}
-		return false;
-	}
-}
-
 function wearingAssets($userid) //returns wearing asset list separated by ;
 {
 	$wearingitems = $GLOBALS['pdo']->prepare('SELECT * FROM wearing_items WHERE uid = :uid ORDER BY aid ASC'); //wearing items from lowest to highest (EZ)
@@ -3109,31 +2315,7 @@ function rerenderutility()
 	$setrenderstat = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 1, pendingHeadshotRender = 1, renderCount = renderCount+1, lastRender = UNIX_TIMESTAMP(), lastHeadshotRender = UNIX_TIMESTAMP() WHERE id = :u");
 	$setrenderstat->bindParam(":u", $localplayer, PDO::PARAM_INT);
 	$setrenderstat->execute();	
-	RenderPlayer($localplayer);
-}
-
-function isPendingRender()
-{
-	$localplayer = $GLOBALS['user']->id;
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :u");
-	$check->bindParam(":u", $localplayer, PDO::PARAM_INT);
-	$check->execute();
-	$checkdata = $check->fetch(PDO::FETCH_OBJ);
-	
-	if ($checkdata->pendingRender == true) //render pending
-	{
-		if (($checkdata->lastRender + 30) < time()) //last render still pending after 30 seconds
-		{
-			$update = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 0 WHERE id = :u");
-			$update->bindParam(":u", $localplayer, PDO::PARAM_INT);
-			$update->execute();
-		}
-		else
-		{
-			return true;
-		}
-	}
-	return false;
+	UsersRender::RenderPlayer($localplayer);
 }
 
 function checkUserPendingRender($player)
@@ -3339,7 +2521,7 @@ function submitRobloxAssetWorker($requestedassetid, $assettypeid, $assetname, $a
 				$assetid = uploadRobloxMesh($assetname, $assetid, 1);
 				if ($assetid !== FALSE) {
 					$xml=str_replace($mesh, $GLOBALS['url'] . "/asset/?id=" . $assetid, $xml);
-					RenderMesh($assetid);
+					Render::RenderMesh($assetid);
 				} else {
 					$meshuploadsuccess = false;
 					break;
@@ -3377,13 +2559,13 @@ function submitRobloxAssetWorker($requestedassetid, $assettypeid, $assetname, $a
 			
 				switch ($assettypeid) {
 					case 8:
-						RenderHat($newassetid);
+						Render::RenderHat($newassetid);
 						break;
 					case 18:
-						RenderFace($newassetid);
+						Render::RenderFace($newassetid);
 						break;
 					case 19:
-						RenderGear($newassetid);
+						Render::RenderGear($newassetid);
 						break;
 					default:
 						break;
@@ -3546,13 +2728,13 @@ function approveAsset($id) //currently supports t-shirts, shirts and pants
 		switch ($assettype)
 		{
 			case 2: //TShirt
-				RenderTShirt($id, true);
+				Render::RenderTShirt($id, true);
 				break;
 			case 11: //Shirt
-				RenderShirt($id, true);
+				Render::RenderShirt($id, true);
 				break;
 			case 12: //Pants
-				RenderPants($id, true);
+				Render::RenderPants($id, true);
 				break;
 			default:
 				break;
@@ -3673,7 +2855,7 @@ function moderateAsset($id) //currently supports t-shirts, shirts and pants
 				
 				foreach($assetowners as $owner)
 				{
-					RenderPlayer($owner['uid']);
+					UsersRender::RenderPlayer($owner['uid']);
 					Sleep(2);
 				}
 			}
