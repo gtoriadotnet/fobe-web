@@ -88,37 +88,37 @@ namespace Alphaland\Grid {
             );
         }
 
-        public function GetVersion(): stdClass
+        public function GetVersion()
         {
             return $this->SoapCallService("GetVersion");
         }
 
-        public function HelloWorld(): stdClass
+        public function HelloWorld()
         {
             return $this->SoapCallService("HelloWorld");
         }
 
-        public function CloseAllJobs(): stdClass
+        public function CloseAllJobs()
         {
             return $this->SoapCallService("CloseAllJobs");
         }
 
-        public function CloseExpiredJobs(): stdClass
+        public function CloseExpiredJobs()
         {
             return $this->SoapCallService("CloseExpiredJobs");
         }
 
-        public function GetAllJobsEx(): stdClass
+        public function GetAllJobsEx()
         {
             return $this->SoapCallService("GetAllJobsEx");
         }
 
-        public function GetStatus(): stdClass
+        public function GetStatus()
         {
             return $this->SoapCallService("GetStatus");
         }
 
-        public function DiagEx(string $type, string $jobid): stdClass
+        public function DiagEx(string $type, string $jobid)
         {
             return $this->SoapCallService("DiagEx", array("type" => $type, "jobID" => $jobid));
         }
@@ -126,22 +126,22 @@ namespace Alphaland\Grid {
         // this doesn't return anything
         // austin: i know this doesnt return anything
         // https://pastebin.com/raw/pr5NDBwC
-        public function CloseJob(string $jobid): stdClass
+        public function CloseJob(string $jobid)
         {
             return $this->SoapCallService("CloseJob", array("jobID" => $jobid));
         }
 
-        public function GetExpiration(string $jobid): stdClass
+        public function GetExpiration(string $jobid)
         {
             return $this->SoapCallService("GetExpiration", array("jobID" => $jobid));
         }
 
-        public function RenewLease(string $jobid, int $expiration): stdClass
+        public function RenewLease(string $jobid, int $expiration)
         {
             return $this->SoapCallService("RenewLease", array("jobID" => $jobid, "expirationInSeconds" => $expiration));
         }
        
-        public function ExecuteEx(array $soapargs = []): stdClass
+        public function ExecuteEx(array $soapargs = [])
         {
             return $this->SoapCallService(
                 "ExecuteEx",
@@ -149,7 +149,7 @@ namespace Alphaland\Grid {
             );
         }
 
-        public function OpenJobEx(array $soapargs = []): stdClass
+        public function OpenJobEx(array $soapargs = [])
         {
             return $this->SoapCallService(
                 "OpenJobEx",
@@ -157,7 +157,7 @@ namespace Alphaland\Grid {
             );
         }
 
-        public function BatchJobEx(array $soapargs = []): stdClass
+        public function BatchJobEx(array $soapargs = [])
         {
             return $this->SoapCallService(
                 "BatchJobEx",

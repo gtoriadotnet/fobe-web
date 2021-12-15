@@ -3862,49 +3862,14 @@ function luaArguments($arguments=[]) //arguments for a script being executed
 	}
 }
 
-function soapGetVersion($arbiter)
-{
-	return soapCallService($arbiter, "GetVersion");
-}
-
-function soapHelloWorld($arbiter)
-{
-	return soapCallService($arbiter, "HelloWorld");
-}
-
 function soapCloseAllJobs($arbiter)
 {
 	return soapCallService($arbiter, "CloseAllJobs");
 }
 
-function soapCloseExpiredJobs($arbiter)
-{
-	return soapCallService($arbiter, "CloseExpiredJobs");
-}
-
-function soapGetAllJobsEx($arbiter)
-{
-	return soapCallService($arbiter, "GetAllJobsEx");
-}
-
-function soapGetStatus($arbiter)
-{
-	return soapCallService($arbiter, "GetStatus");
-}
-
-function soapDiagEx($arbiter, $type, $jobid)
-{
-	return soapCallService($arbiter, "DiagEx", array("type" => $type, "jobID" => $jobid));
-}
-
 function soapCloseJob($arbiter, $jobid)
 {
 	return soapCallService($arbiter, "CloseJob", array("jobID" => $jobid));
-}
-
-function soapGetExpiration($arbiter, $jobid)
-{
-	return soapCallService($arbiter, "GetExpiration", array("jobID" => $jobid));
 }
 
 function soapExecuteEx($arbiter, $jobid, $scriptname, $script, $arguments=[])
@@ -3918,16 +3883,6 @@ function soapExecuteEx($arbiter, $jobid, $scriptname, $script, $arguments=[])
 			)
 		)
 	);
-}
-
-function soapRenewLease($arbiter, $jobid, $expiration)
-{
-	return soapCallService($arbiter, "RenewLease", array("jobID" => $jobid, "expirationInSeconds" => $expiration));
-}
-
-function soapOpenJobEx($arbiter, $jobid, $expiration, $scriptname, $script, $arguments=[])
-{
-	return soapJobTemplate($arbiter, "OpenJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
 }
 
 function soapBatchJobEx($arbiter, $jobid, $expiration, $scriptname, $script, $arguments=[])
