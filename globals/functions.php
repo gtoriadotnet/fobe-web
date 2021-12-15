@@ -67,25 +67,6 @@ function genHash($len)
 	return bin2hex(openssl_random_pseudo_bytes($len));
 }
 
-function safeSignupKey($len)
-{
-	$hash = "";
-	$alloc = true;
-	while ($alloc) {
-		$hash = genHash($len);
-		
-		$keycheck = $GLOBALS['pdo']->prepare("SELECT * FROM user_signup_keys WHERE signupkey = :t");
-		$keycheck->bindParam(":t", $hash, PDO::PARAM_STR);
-		$keycheck->execute();
-		if ($keycheck->rowCount() > 0) {
-			continue;
-		} else {
-			$alloc = false;
-		}
-	}
-	return $hash;
-}
-
 function genTicketHash($len)
 {
 	$hash = "";
@@ -366,33 +347,6 @@ function isHeadshotThumbHashInOutfit($thumbhash)
 	return false;
 }
 
-function isOutfit($userid)
-{
-	//queries
-	$wearingcolors = $GLOBALS['pdo']->prepare('SELECT * FROM body_colours WHERE uid = ' . $userid);
-	$wearingcolors->execute();
-	$wearingcolors = $wearingcolors->fetch(PDO::FETCH_OBJ);
-
-	//users current body colors
-	$head = (int)$wearingcolors->h;
-	$torso = (int)$wearingcolors->t;
-	$leftarm = (int)$wearingcolors->la;
-	$rightarm = (int)$wearingcolors->ra;
-	$leftleg = (int)$wearingcolors->ll;
-	$rightleg = (int)$wearingcolors->rl;
-
-	//current wearing items separated by ;
-	$wearingassets = wearingAssets($userid);
-		
-	$outfit = $GLOBALS['pdo']->prepare('SELECT * FROM user_outfits WHERE userid = '.$userid.' AND assets = "'.$wearingassets.'" AND h = '.$head.' AND t = '.$torso.' AND la = '.$leftarm.' AND ra = '.$rightarm.' AND ll = '.$leftleg.' AND rl = '.$rightleg);
-	$outfit->execute();
-	if ($outfit->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
 function createOutfit($name, $userid)
 {
 	$name = cleanInput($name);
@@ -611,17 +565,6 @@ function applyOutfit($userid, $outfitid)
 	return "Error occurred";
 }
 
-function getOutfitInfo($id)
-{
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM user_outfits WHERE id = :i");
-	$check->bindParam(":i", $id, PDO::PARAM_INT);
-	$check->execute();
-	if($check->rowCount() > 0) {
-		return $check->fetch(PDO::FETCH_OBJ);
-	}
-	return false;
-}
-
 //place launcher queue system
 
 function removePlayerFromQueue($userid)
@@ -671,15 +614,6 @@ function addPlayerToQueue($placeid, $jobid, $userid)
 	}
 }
 
-function getQueueSize($placeid, $jobid)
-{
-	$queuesize = $GLOBALS['pdo']->prepare("SELECT * FROM game_launch_queue WHERE placeid = :pid AND jobid = :jid");
-	$queuesize->bindParam(":pid", $placeid, PDO::PARAM_INT);
-	$queuesize->bindParam(":jid", $jobid, PDO::PARAM_STR);
-	$queuesize->execute();
-	return $queuesize->rowCount();
-}
-
 function isNextInQueue($placeid, $jobid, $userid)
 {
 	$queue = $GLOBALS['pdo']->prepare("SELECT * FROM game_launch_queue WHERE placeid = :pid AND jobid = :jid ORDER BY whenQueued DESC LIMIT 1");
@@ -692,19 +626,6 @@ function isNextInQueue($placeid, $jobid, $userid)
 		removePlayerFromQueue($queue->userid);
 	}
 	else if ($queue->userid == $userid)
-	{
-		return true;
-	}
-	return false;
-}
-
-// ...
-
-//feature testers
-
-function inFeatureTesterGroup($user)
-{
-	if (isInGroup($user, 27)) //id 22 is the official referral program group
 	{
 		return true;
 	}
@@ -999,11 +920,6 @@ function getBuildServerRank($placeid, $userid)
 		}
 	}
 	return 10; //no rank. consider them Visitor rank
-}
-
-function banPBSUser($placeid, $userid)
-{
-	updateBuildServerRank($placeid, $userid, 0);
 }
 
 function removePBSUser($placeid, $userid)
@@ -1755,14 +1671,6 @@ function rankExists($groupid, $rank)
 	return false;
 }
 
-function groupJoinRequests($groupid)
-{
-	$requests = $GLOBALS['pdo']->prepare("SELECT * FROM group_join_requests WHERE groupid = :gid ORDER BY whenRequested DESC");
-	$requests->bindParam(":gid", $groupid, PDO::PARAM_INT);
-	$requests->execute();
-	return $requests;
-}
-
 function groupExists($groupid)
 {
 	$group = $GLOBALS['pdo']->prepare("SELECT * FROM groups WHERE id = :u");
@@ -1908,8 +1816,6 @@ function isPendingRequest($groupid)
 
 function isManualApproval($groupid)
 {
-	$localplayer = $GLOBALS['user']->id;
-	
 	$manual = $GLOBALS['pdo']->prepare("SELECT * FROM groups WHERE id = :gid AND manualapproval = 1");
 	$manual->bindParam(":gid", $groupid, PDO::PARAM_INT);
 	$manual->execute();
@@ -2148,19 +2054,6 @@ function checkForDeadJobs($placeid)
 		$editjob->bindParam(":j", $job['jobid'], PDO::PARAM_STR);
 		$editjob->execute();
 	}
-}
-
-function isJobDead($jobid)
-{
-	$job = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE jobid = :j AND (lastPing + 95) < UNIX_TIMESTAMP() AND (status = 0 OR status = 1)");
-	$job->bindParam(":j", $jobid, PDO::PARAM_STR);
-	$job->execute();
-	
-	if ($job->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
 }
 
 function isJobMarkedClosed($jobid)
@@ -4302,8 +4195,6 @@ function equipItem($assetId)
 			{
 				if (isThumbnailerAlive())
 				{
-					//if (!isPendingRender())
-					//{
 					if (!isRenderCooldown($localuser))
 					{
 						if (!isAssetModerated($assetId))
@@ -4344,8 +4235,6 @@ function equipItem($assetId)
 					{
 						return "Slow down!";
 					}
-					//}
-					//return "Please wait for the current Render";
 				}
 				else
 				{
