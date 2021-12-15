@@ -9,6 +9,7 @@
 	Fuck you too Austin :)
 	my balls yo jaws
 	from m.2 ssd
+	TODO: kill nsg
 */
 
 use Alphaland\Users\Activation;
