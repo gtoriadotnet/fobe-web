@@ -84,15 +84,28 @@ namespace Alphaland\Moderation {
             return false;
         }
 
-        public static function ReferralLimbBan(int $userid, string $reason)
+        public static function GetInvitedUsers(int $userid)
         {
             $query = $GLOBALS['pdo']->prepare("SELECT * FROM `users_invited` WHERE `whoInvited` = :userid");
             $query->bindParam(":userid", $userid, PDO::PARAM_INT);
             $query->execute();
-            if ($query->rowCount() > 0) {
-                if (UserModerationManager::BanUser($userid, $reason, 0, 2)) {
-                    foreach($query as $user) {
-                        UserModerationManager::BanUser($user['invitedUser'], $reason, 0, 2); //perm ban
+            return $query;
+        }
+
+        public static function ReferralLimbBan(int $userid, string $reason)
+        {
+            if (UserModerationManager::BanUser($userid, $reason, 0, 2)) 
+            {
+                $query = UserModerationManager::GetInvitedUsers($userid);
+                foreach($query as $user) 
+                {
+                    UserModerationManager::BanUser($user['invitedUser'], $reason, 0, 2); //perm ban
+
+                    //ban users that invited users invited
+                    $query2 = UserModerationManager::GetInvitedUsers($user['invitedUser']);
+                    foreach ($query2 as $users2)
+                    {
+                        UserModerationManager::BanUser($users2['invitedUser'], $reason, 0, 2); //perm ban
                     }
                 }
                 return true;
