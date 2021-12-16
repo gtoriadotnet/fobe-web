@@ -371,7 +371,7 @@ namespace Alphaland\Assets {
             }
         }
 
-        public static function Update(int $assetid, $soapobject, $placerender=false)
+        private static function Update(int $assetid, $soapobject, $placerender=false)
         {
             $rendersPath = $GLOBALS['renderCDNPath'];
             $render = base64_decode($soapobject->BatchJobExResult->LuaValue[0]->value);
