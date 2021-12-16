@@ -47,7 +47,7 @@ function Blizzard(parentId) {
     function setPositions() {
         //canvas dimensions
         W = (parent)? parent.clientWidth : window.innerWidth;
-        H = (parent)? parent.clientHeight : window.innerHeight;
+        H = $(document).height();
 
         c.width = W;
         c.height = H;
