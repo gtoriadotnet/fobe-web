@@ -6,7 +6,7 @@ namespace Alphaland\UI {
 
     class ImageHelper
     {
-        public static function CopyMergeImageAlpha(GdImage $dst_image, GdImage $src_image, int $dst_x, int $dst_y, int $src_x, int $src_y, int $src_w, int $src_h, int $pct): void
+        public static function CopyMergeImageAlpha($dst_image, $src_image, int $dst_x, int $dst_y, int $src_x, int $src_y, int $src_w, int $src_h, int $pct): void
         {
             $img = imagecreatetruecolor($src_w, $src_h);
             imagecopy($img, $dst_image, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
