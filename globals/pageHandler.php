@@ -26,7 +26,7 @@ class page_handler {
 		<title>%s</title>
 		%s
 	</head>
-	<body>
+	<body id="alphaland-main-body">
 		%s
 		%s
 		%s
