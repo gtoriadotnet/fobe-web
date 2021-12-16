@@ -5406,6 +5406,7 @@ function getNav()
 			</header>
 			<script>
 				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute
+				$("#alphaland-main-body").ready(function() {new Blizzard("alphaland-main-body")});
 			</script>
 			<br/>';
 	}
