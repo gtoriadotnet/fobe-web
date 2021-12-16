@@ -19,21 +19,6 @@ function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, 
 	imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
 } 
 
-function resizebase64img($newWidth, $newHeight, $targetFile, $originalFile) //must already be decoded
-{
-    $img = imagecreatefromstring($originalFile);
-	$width = imagesx($img);
-	$height = imagesy($img);
-    $tmp = imagecreatetruecolor($newWidth, $newHeight);
-	imagealphablending($tmp , false);
-	imagesavealpha($tmp , true);
-    imagecopyresampled($tmp, $img, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-    if (imagepng($tmp, "$targetFile")) {
-		return true;
-	}
-	return false;
-}
-
 function isbase64png($base64) //must already be decoded
 {
 	$mimetype = finfo_buffer(finfo_open(), $base64, FILEINFO_MIME_TYPE); //file type
