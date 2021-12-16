@@ -41,7 +41,7 @@ switch ($type)
 		AssetRender::RenderHead($assetid);
 		break;
 	case "place":
-		RenderPlace($assetid);
+		AssetRender::RenderPlace($assetid);
 		break;
 	case "package":
 		AssetRender::RenderPackage($assetid);

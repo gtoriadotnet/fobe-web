@@ -339,31 +339,82 @@ namespace Alphaland\Assets {
             }
         }
 
-        public static function Update(int $assetid, $soapobject)
+        public static function RenderPlace(int $assetid, bool $fork=false)
         {
+            if ($fork) {
+                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." place", "r"); //throwaway background process
+                if ($job !== FALSE); {
+                    pclose($job);
+                    return true;
+                }
+                return false;
+            } else {
+                $thumbnailScript = file_get_contents($GLOBALS['placethumbnailscript']);
+                $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
+                $soap = $soap->BatchJobEx(
+                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Place ".$assetid, $thumbnailScript, array(
+                        $assetid,
+                        "https://www.alphaland.cc/asset/?id=".$assetid,
+                        "https://www.alphaland.cc/",
+                        "png",
+                        "768",
+                        "432"
+                    ))
+                );
+
+                if (!is_soap_fault($soap)) {
+                    Render::Update($assetid, $soap, true);
+                    return true;
+                }
+                logSoapFault($soap, "Render Place ".$assetid." Job", $thumbnailScript);
+                return false;
+            }
+        }
+
+        public static function Update(int $assetid, $soapobject, $placerender=false)
+        {
+            $rendersPath = $GLOBALS['renderCDNPath'];
             $render = base64_decode($soapobject->BatchJobExResult->LuaValue[0]->value);
 
             if (ImageHelper::IsBase64PNGImage($render)) //PNG
             {
                 $newhash = HashingUtiltity::VerifyMD5(md5($render));
-                if (!file_get_contents($GLOBALS['renderCDNPath'] . $newhash))
+                if (!file_get_contents($rendersPath . $newhash))
                 {
-                    if (file_put_contents($GLOBALS['renderCDNPath'] . $newhash, $render))
+                    if (file_put_contents($rendersPath . $newhash, $render))
                     {
+                        if ($placerender) {
+                            if (getAssetInfo($assetid)->isPersonalServer == 1) {
+                                $render = imagecreatefrompng($rendersPath . $newhash);
+                                $overlay = imagecreatefrompng($GLOBALS['pbsOverlayPath']);
+                                ImageHelper::CopyMergeImageAlpha($render, $overlay, 0, 0, 0, 0, imagesx($render), imagesy($render), 100);
+                                if (!imagepng($render, $rendersPath . $newhash)) {
+                                    return false;
+                                }
+                            }
+                        }
+
                         //delete old hash
                         $prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
                         $prevhash->bindParam(":i", $assetid, PDO::PARAM_INT);
                         $prevhash->execute();
                         $prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
                         $oldhash = $prevhash->ThumbHash;
-                        unlink($GLOBALS['renderCDNPath'] . $oldhash);
-                        
-                        //set new hash
-                        $newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-                        $newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-                        $newthumbhash->bindParam(":i", $assetid, PDO::PARAM_INT);
-                        $newthumbhash->execute();
+                        unlink($rendersPath . $oldhash);
 
+                        if ($placerender) {
+                            //update place thumbhash n details
+                            $c = $GLOBALS['pdo']->prepare("UPDATE assets SET isPlaceRendered = 1, IconImageAssetId = 0, ThumbHash = :n WHERE id = :i");
+                            $c->bindParam(":n", $newhash, PDO::PARAM_INT); //item price
+                            $c->bindParam(":i", $assetid, PDO::PARAM_INT); //catalog id
+                            $c->execute();
+                        } else {
+                            //set new hash
+                            $newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
+                            $newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
+                            $newthumbhash->bindParam(":i", $assetid, PDO::PARAM_INT);
+                            $newthumbhash->execute();
+                        }
                         return true;
                     } 
                 }

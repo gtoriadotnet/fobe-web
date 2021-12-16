@@ -56,7 +56,7 @@ if($iteminfo !== FALSE) //asset id exists in alphaland db
 					
 					if (isPlaceUsingRender($iteminfo->id))
 					{
-						RenderPlace($iteminfo->id);
+						Render::RenderPlace($iteminfo->id);
 					}
 				}
 				else

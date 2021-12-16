@@ -1,4 +1,6 @@
 <?php
+
+use Alphaland\Assets\Render;
 use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
@@ -56,7 +58,7 @@ if($iteminfo !== FALSE) //asset id exists in alphaland db
 					//epic
 					if (isPlaceUsingRender($iteminfo->id))
 					{
-						RenderPlace($iteminfo->id, true); //we pass true to fork from this session
+						Render::RenderPlace($iteminfo->id, true); //we pass true to fork from this session
 					}
 				}
 			}

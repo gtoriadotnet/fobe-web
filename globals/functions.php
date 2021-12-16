@@ -2094,82 +2094,6 @@ function setHeadshotAngleCenter($userid)
 	return false;
 }
 
-function RenderPlace($placeid, $fork=false)
-{
-	if ($fork)
-	{
-		$job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$placeid." place", "r"); //throwaway background process
-		if ($job !== FALSE);
-		{
-			pclose($job);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		$script = $GLOBALS['placethumbnailscript'];
-
-		$result = soapBatchJobEx($GLOBALS['thumbnailArbiter'], gen_uuid(), 25, "Render Place ".$placeid, file_get_contents($script), array(
-				$placeid,
-				"https://www.alphaland.cc/asset/?id=".$placeid,
-				"https://www.alphaland.cc/",
-				"png",
-				"768",
-				"432"
-			)
-		);
-
-		if (!is_soap_fault($result))
-		{
-			$render = base64_decode($result->BatchJobExResult->LuaValue[0]->value); //returned by rcc
-			$path = $GLOBALS['renderCDNPath'];
-			$pbsoverlaypath = "C:/Webserver/nginx/Alphaland/PersonalServerOverlay.png";
-			
-			if (isbase64png($render)) //PNG
-			{
-				$newhash = safeAssetMD5(md5($render));
-				if (file_put_contents($path . $newhash, $render))
-				{
-					//handle overlay for personal build servers TODO: FIX THIS SO ITS NOT SO BAD
-					if (getAssetInfo($placeid)->isPersonalServer == 1)
-					{
-						$render = imagecreatefrompng($path . $newhash);
-						$overlay = imagecreatefrompng($pbsoverlaypath);
-						imagecopymerge_alpha($render, $overlay, 0, 0, 0, 0, imagesx($render), imagesy($render), 100);
-						if (!imagepng($render, $path . $newhash))
-						{
-							return false;
-						}
-					}
-
-					//delete old thumb
-					$prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-					$prevhash->bindParam(":i", $placeid, PDO::PARAM_INT);
-					$prevhash->execute();
-					$prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-					$oldhash = $prevhash->ThumbHash;
-					unlink($path . $oldhash);
-					// ...
-								
-					//update place thumbhash n details
-					$c = $GLOBALS['pdo']->prepare("UPDATE assets SET isPlaceRendered = 1, IconImageAssetId = 0, ThumbHash = :n WHERE id = :i");
-					$c->bindParam(":n", $newhash, PDO::PARAM_INT); //item price
-					$c->bindParam(":i", $placeid, PDO::PARAM_INT); //catalog id
-					$c->execute();
-
-					return true;
-				} 
-			}
-		}
-		else
-		{
-			logSoapFault($result, "Render Place ".$placeid." Job", $script);
-		}
-		return false;
-	}
-}
-
 function wearingAssets($userid) //returns wearing asset list separated by ;
 {
 	$wearingitems = $GLOBALS['pdo']->prepare('SELECT * FROM wearing_items WHERE uid = :uid ORDER BY aid ASC'); //wearing items from lowest to highest (EZ)
@@ -3948,7 +3872,7 @@ function handleRenderPlace($placeid) //we have a 60 second wait, and we verify t
 			
 	if(($lastrender + (60)) < time()) //60 second interval
 	{
-		if (RenderPlace($placeid))
+		if (Render::RenderPlace($placeid))
 		{
 			$c = $GLOBALS['pdo']->prepare("UPDATE assets SET lastPlaceRender = UNIX_TIMESTAMP() WHERE id = :i");
 			$c->bindParam(":i", $placeid, PDO::PARAM_INT); //place id
