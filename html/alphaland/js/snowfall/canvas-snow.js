@@ -53,7 +53,7 @@ function Blizzard(parentId) {
         c.height = H;
 
         //This varies the number of snowflakes showing dependent on size of the element
-        numFlakes = Math.floor(W / 25);
+        numFlakes = Math.floor(W);
         ctx.clearRect(0, 0, W, H);
 
         //snowflake flakes
@@ -62,7 +62,7 @@ function Blizzard(parentId) {
             flakes.push({
                 x: Math.random() * W, //x-coordinate
                 y: Math.random() * H, //y-coordinate
-                r: Math.random() * 9 + 1 //radius
+                r: Math.random() * 3 //radius
             });
         }
 
@@ -90,7 +90,7 @@ function Blizzard(parentId) {
 
         for (var i = 0; i < numFlakes; i++) {
 
-            angle += 0.01;
+            //angle += 0.01;
 
             var p = flakes[i];
             //Updating X and Y coordinates
