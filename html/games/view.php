@@ -112,7 +112,7 @@ function playGame(id) {
 		$("#linfo").html("Starting Alphaland...");
 		$("#launching").modal("show");
 		$("#closediv").hide();
-		location.href = "alphaland-player-cc:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.alphaland.cc/Game/PlaceLauncher.ashx?request=RequestGame&placeid=" + id;
+		location.href = "alphaland-player-cc:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.alphaland.cc/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
 		setTimeout(function() {
 			$("#launching").modal("hide");
 		}, 2500);	

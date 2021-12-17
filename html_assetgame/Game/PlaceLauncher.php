@@ -7,4 +7,4 @@ $placeid = $_GET['placeId'];
 $userid = $_GET['userid'];
 $isTeleport = $_GET['isTeleport'];
 
-WebContextManager::Redirect("https://www.alphaland.cc/Game/PlaceLauncher.ashx?request=" . $requesttype . "&placeId=" . $placeid . "&isTeleport=" . $isTeleport);
+WebContextManager::Redirect("https://www.alphaland.cc/Game/PlaceLauncher?request=" . $requesttype . "&placeId=" . $placeid . "&isTeleport=" . $isTeleport);
