@@ -34,8 +34,8 @@ try
 	$pdo = new PDO("mysql:host=localhost;dbname=alphalanddatabase", "aa9205c5b776b2368833bec1e8b34e1c", "68adae776e087fb1b34baf439710cf94", $pdoOptions);
 
 	//general vars
-	$jsversion = "3.08"; //update this after updating JS, this will re-cache the latest js for users
-	$cssversion = "3.02"; //update this after updating CSS, this will re-cache the latest css for users
+	$jsversion = "12.00"; //update this after updating JS, this will re-cache the latest js for users
+	$cssversion = "12.00"; //update this after updating CSS, this will re-cache the latest css for users
 
 	$siteName = "Alphaland"; //site name
 	$domain = "alphaland.cc";

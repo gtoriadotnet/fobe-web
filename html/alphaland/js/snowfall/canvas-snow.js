@@ -13,7 +13,7 @@ var requestAnimationFrame =
         return setTimeout(callback, 1);
     };
 
-function Blizzard(parentId) {
+function Snow(parentId) {
     //Set up required variables
     var parent = document.getElementById(parentId);
     parent.style.position = "relative";
