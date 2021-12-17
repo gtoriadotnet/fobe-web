@@ -80,6 +80,7 @@ try
 	$RCCwsdl = "C:/Webserver/nginx/Alphaland/RCCService.wsdl"; //wsdl path for SOAP
 
 	//misc paths
+	$pbsOverlayPath = "C:/Webserver/nginx/Alphaland/PersonalServerOverlay.png";
 	$setupHtmlPath = "C:/Webserver/nginx/Alphaland/html_setup/";
 	$defaultPlacesPath = "C:/Webserver/nginx/Alphaland/default_places/"; //path to where the default places are stored
 	$defaultPbsPlacesPath = "C:/Webserver/nginx/Alphaland/default_pbs_places/"; //path to where the default pbs places are stored
