@@ -6,31 +6,9 @@
 	TODO: clean up a lot of legacy code
 */
 
-//img tools (potentially high resource usage) (probably blocking)
-
 use Alphaland\Assets\Render;
 use Alphaland\Users\Render as UsersRender;
 use Alphaland\Web\WebContextManager;
-
-function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct) {
-	$cut = imagecreatetruecolor($src_w, $src_h);
-	imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
-	imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
-	imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
-} 
-
-function isbase64png($base64) //must already be decoded
-{
-	$mimetype = finfo_buffer(finfo_open(), $base64, FILEINFO_MIME_TYPE); //file type
-									
-	if (in_array($mimetype, array('image/png'))) //verify that its a valid png image (not corrupted or something in a weird scenario)
-	{	
-		return true;
-	}
-	return false;
-}
-
-// ...
 
 //obfuscation
 
@@ -167,17 +145,6 @@ function genAssetHash($len)
 	return $hash;
 }
 
-function safeAssetMD5($md5)
-{
-	$hashcheck = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE Hash = :t");
-	$hashcheck->bindParam(":t", $md5, PDO::PARAM_STR);
-	$hashcheck->execute();
-	if ($hashcheck->rowCount() > 0) {
-		$md5 = genAssetHash(16); //fallback to random gen hash (this should never happen)
-	}
-	return $md5;
-}
-
 function genGameLaunchTokenHash($len)
 {
 	$hash = "";
@@ -266,22 +233,6 @@ function genTicket()
 }
 
 //end auth ticket utilities
-
-//signing utilities
-
-function signData($data, $rbxsig=true)
-{
-	$sig = "";
-	$key = "-----BEGIN RSA PRIVATE KEY-----\n" . wordwrap(file_get_contents($GLOBALS['privateKeyPath']), 64, "\n",true) . "\n-----END RSA PRIVATE KEY-----\n";
-	openssl_sign($data, $sig, $key, OPENSSL_ALGO_SHA1);
-
-	if ($rbxsig) {
-		return "--rbxsig%" . base64_encode($sig) . "%" . $data;
-	}
-	return base64_encode($sig);
-}
-
-//end signing utilities
 
 //TODO: Render Queue?
 
@@ -2002,14 +1953,6 @@ function configPermission($groupid)
 
 //game utility functions 
 
-function generateClientTicket($userid, $accountage, $username, $characterappearance, $jobid) //generates a client ticket with the provided data, this is later verified on RCC preventing any important info being spoofed
-{
-	$timestamp = date("m/d/Y h:m:s A", time()); //timestamp for the client ticket
-	$sig1 = signData($userid . "\n" . $accountage . "\n" . $username . "\n" . $characterappearance . "\n" . $jobid . "\n" . $timestamp, false);
-	$sig2 = signData($userid . "\n" . $jobid . "\n" . $timestamp, false);
-	return $timestamp.";".$sig1.";".$sig2; //proper format for the timestamp and signatures
-}
-
 function userAccessToGame($placeid, $userid)
 {
 	if (getAssetInfo($placeid)->isGameWhitelisted == 1) //game whitelisted
@@ -2116,7 +2059,7 @@ function rerenderutility()
 	
 	$setrenderstat = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 1, pendingHeadshotRender = 1, renderCount = renderCount+1, lastRender = UNIX_TIMESTAMP(), lastHeadshotRender = UNIX_TIMESTAMP() WHERE id = :u");
 	$setrenderstat->bindParam(":u", $localplayer, PDO::PARAM_INT);
-	$setrenderstat->execute();	
+	$setrenderstat->execute();
 	UsersRender::RenderPlayer($localplayer);
 }
 
@@ -5406,7 +5349,7 @@ function getNav()
 			</header>
 			<script>
 				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute
-				setTimeout(function() { new Blizzard("alphaland-main-body");}, 800);
+				setTimeout(function() { new Snow("alphaland-main-body");}, 800);
 			</script>
 			<br/>';
 	}
