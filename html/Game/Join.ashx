@@ -5,7 +5,9 @@
 	Very messy but will clean up
 */
 
+use Alphaland\Common\Signing;
 use Alphaland\Games\Game;
+use Alphaland\Games\Ticket;
 
 header("Content-Type: text/plain");
 
@@ -32,7 +34,7 @@ if ($local)
 		"PingInterval" => 45
 	), JSON_UNESCAPED_SLASHES);
 	
-	die(signData($joinparams));
+	die(Signing::SignData($joinparams));
 }
 
 if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent restricted
@@ -99,7 +101,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 				"BrowserTrackerId" => "" //blank, dont need this rn?
 			), JSON_UNESCAPED_SLASHES);
 			
-			die(signData($joinparams));
+			die(Signing::SignData($joinparams));
 		}
 	} 
 }

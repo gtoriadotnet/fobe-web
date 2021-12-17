@@ -1,4 +1,7 @@
 <?php
+
+use Alphaland\Common\Signing;
+
 $userid = $_GET['UserID'];
 $isplaysolo = $_GET['IsPlaySolo'];
 $placeid = $_GET['PlaceID'];
@@ -92,4 +95,4 @@ if ($isplaysolo == 1)
 EOT;
 }
 
-echo signData($script);
+echo Signing::SignData($script);

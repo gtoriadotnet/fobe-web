@@ -2,6 +2,7 @@
 
 //stuff for staff will be handled here
 
+use Alphaland\Common\Signing;
 use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
@@ -40,4 +41,4 @@ end)
 
 EOF;
 
-echo signData($script); //return the signature+script
+echo Signing::SignData($script);

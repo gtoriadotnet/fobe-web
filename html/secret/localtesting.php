@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Common\Signing;
+
 $user = $_GET['user'];
 
 if ($user == 1)
@@ -37,7 +39,7 @@ if ($user == 1)
 		"BrowserTrackerId" => "" //blank, dont need this rn?
 	), JSON_UNESCAPED_SLASHES);
 	
-	die(signData($joinparams));
+	die(Signing::SignData($joinparams));
 }
 elseif ($user == 2)
 {
@@ -74,7 +76,7 @@ elseif ($user == 2)
 		"BrowserTrackerId" => "" //blank, dont need this rn?
 	), JSON_UNESCAPED_SLASHES);
 	
-	die(signData($joinparams));
+	die(Signing::SignData($joinparams));
 }
 elseif ($user == 3)
 {
@@ -111,7 +113,7 @@ elseif ($user == 3)
 		"BrowserTrackerId" => "" //blank, dont need this rn?
 	), JSON_UNESCAPED_SLASHES);
 	
-	die(signData($joinparams));
+	die(Signing::SignData($joinparams));
 }
 else
 {
