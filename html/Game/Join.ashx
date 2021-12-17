@@ -71,7 +71,13 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 				"UserId" => $userid,
 				"SuperSafeChat" => false, //always false, dont need this
 				"CharacterAppearance" => $characterappearance,
-				"ClientTicket" => generateClientTicket($userid, $accountage, $username, $characterappearance, $jobid), //generate epic clientticket
+				"ClientTicket" => Ticket::ClientTicket(array(
+					$userid,
+					$accountage,
+					$username,
+					$characterappearance,
+					$jobid
+				)),
 				"GameId" => '00000000-0000-0000-0000-000000000000', //not set rn?
 				"PlaceId" => $placeid,
 				"BaseUrl" => $url . "/",

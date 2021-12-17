@@ -112,6 +112,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/UI/ImageHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Render.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/Signing.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Ticket.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
