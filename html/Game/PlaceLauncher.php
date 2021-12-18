@@ -162,7 +162,7 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 							else
 							{
 								$newticket = genToken($sInfo->jobid);
-								echo constructJson($sInfo->jobid."", 2, "https://alphaland.cc/Game/Join.ashx?ticket=" .$newticket, "", "", "");
+								echo constructJson($sInfo->jobid."", 2, "https://alphaland.cc/Game/Join?ticket=" .$newticket, "", "", "");
 							}
 						}
 						else
@@ -225,7 +225,7 @@ else if ($requesttype == "RequestFollowUser") //follow user
 					else //job isnt full, join it
 					{
 						$newticket = genToken($playersgamejobid);
-						echo constructJson($playersgamejobid."", 2, "https://alphaland.cc/Game/Join.ashx?ticket=" .$newticket, "", "", "");
+						echo constructJson($playersgamejobid."", 2, "https://alphaland.cc/Game/Join?ticket=" .$newticket, "", "", "");
 					}
 				}
 				else //user left game
