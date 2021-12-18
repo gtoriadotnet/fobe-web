@@ -66,7 +66,7 @@ function Snow(parentId) {
             });
         }
 
-        window.addEventListener("resize", setPositions);
+        //window.addEventListener("resize", setPositions);
 
     }
 
