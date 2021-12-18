@@ -189,7 +189,7 @@ try
 				$accesseddirectory != "/noJS.php" &&
 				$accesseddirectory != "/ban.php" &&
 				$accesseddirectory != "/404.php" &&
-				$accesseddirectory != "/Game/Negotiate.ashx" &&
+				$accesseddirectory != "/Game/Negotiate.php" &&
 				$accesseddirectory != "/settings/resetpassword.php" &&
 				$accesseddirectory != "/secret/localtesting.php") { //for local client testing, doesn't contain anything sensitive
 					WebContextManager::Redirect($url);
