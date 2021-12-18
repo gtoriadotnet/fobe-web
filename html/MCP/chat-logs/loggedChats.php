@@ -38,7 +38,7 @@ if ($page < 1 || $limit < 1)
 }
 
 //$query = "SELECT * FROM chat_logs WHERE whoSent = :who AND trippedFilter = :tf";
-$query = "SELECT * FROM chat_logs WHERE message LIKE :u" . (!empty($userid) && is_int($userid)?" AND whoSent = ".$userid." ":" ") . " AND whoSent > 2 ORDER BY whenSent DESC"; 
+$query = "SELECT * FROM chat_logs WHERE message LIKE :u" . (!empty($userid) && is_int($userid)?" AND whoSent = ".$userid." ":" ") . " AND whoSent > 4 ORDER BY whenSent DESC"; 
 
 //count how many games without offset/limit
 $messagescount = $pdo->prepare($query);
