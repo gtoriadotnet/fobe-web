@@ -66,7 +66,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 				"ClientPort" => 0,
 				"MachineAddress" => $serverInfo->ip,
 				"ServerPort" => $serverInfo->port,
-				"PingUrl" => $url . "/Game/ClientPing.ashx?UserID=" . $userid . "&PlaceID=" . $placeid,
+				"PingUrl" => $url . "/Game/ClientPing?UserID=" . $userid . "&PlaceID=" . $placeid,
 				"PingInterval" => 45,
 				"UserName" => $username,
 				"SeleniumTestMode" => false, //always false, dont need this
