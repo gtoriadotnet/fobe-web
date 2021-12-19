@@ -105,7 +105,7 @@ if(isset($_GET['id']))
 					}
 					else
 					{
-						if ($user->isStaff())
+						if ($user->IsStaff())
 						{
 							UserModerationManager::LogAction("Configure Item ".$id);
 						}
@@ -133,7 +133,7 @@ if(isset($_GET['id']))
 							
 						if (isset($_POST['onsale_checkbox']))
 						{
-							if ($user->isStaff())
+							if ($user->IsStaff())
 							{
 								UserModerationManager::LogAction("Configure Item Onsale ".$id);
 							}
@@ -164,7 +164,7 @@ if(isset($_GET['id']))
 				}
 				elseif (isset($_POST['RegenItem'])) //for admin regen stuff
 				{
-					if ($user->isStaff())
+					if ($user->IsStaff())
 					{
 						$script = "";
 						$scripttype = "";
@@ -298,7 +298,7 @@ if(isset($_GET['id']))
 				}
 				elseif (isset($_POST['ModerateItem'])) //for mods
 				{
-					if ($user->isStaff())
+					if ($user->IsStaff())
 					{
 						$moderation = moderateAsset($id);
 
@@ -333,7 +333,7 @@ else
 
 $moderatebutton = '';
 $regenbutton = '';
-if ($user->isStaff())
+if ($user->IsStaff())
 {
 	$regenbutton = '<button type="Submit" name="RegenItem" class="btn btn-danger w-100 mb-2">Regen '.$itemtype.'</button>';
 	$moderatebutton = '<button type="Submit" name="ModerateItem" class="btn btn-danger w-100 mb-2">Moderate '.$itemtype.'</button>';

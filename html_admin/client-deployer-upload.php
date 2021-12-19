@@ -5,8 +5,8 @@ use Alphaland\Web\WebContextManager;
 WebContextManager::ForceHttpsCloudflare();
 
 //permissions
-if(!($user->isOwner())) {
-	if ($user->isAdmin()) {
+if(!($user->IsOwner())) {
+	if ($user->IsAdmin()) {
 		WebContextManager::Redirect("/");
 	}
 	die('bababooey');

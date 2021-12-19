@@ -31,7 +31,7 @@ $userInfo = array(
 	"CreatorId" => $assetinfo->CreatorId,
 	"isPersonalServer" => boolval($assetinfo->isPersonalServer),
 	"playPermission" => userAccessToGame($assetinfo->id, $user->id),
-	"canManage" => boolval($assetinfo->CreatorId == $user->id || $user->isAdmin()),
+	"canManage" => boolval($assetinfo->CreatorId == $user->id || $user->IsAdmin()),
 	"CommentsEnabled" => boolval($assetinfo->IsCommentsEnabled),
 	"PersonalServerWhitelist" => boolval($assetinfo->isGameWhitelisted),
 	"MaxPlayers" => $assetinfo->MaxPlayers,

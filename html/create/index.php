@@ -238,7 +238,7 @@ function newPlace()
 	$description = $_POST['place_desc'];
 	
 	//how many games the user has
-	if (getAllGames($GLOBALS['user']->id)->rowCount() >= 6 && !$GLOBALS['user']->isAdmin())
+	if (getAllGames($GLOBALS['user']->id)->rowCount() >= 6 && !$GLOBALS['user']->IsAdmin())
 	{
 		return "Games limit reached";
 	}
@@ -275,7 +275,7 @@ function newPBSPlace($placetype)
 	$description = $_POST['place_desc'];
 
 	//how many games the user has
-	if (getAllGames($GLOBALS['user']->id)->rowCount() > 6 && !$GLOBALS['user']->isAdmin())
+	if (getAllGames($GLOBALS['user']->id)->rowCount() > 6 && !$GLOBALS['user']->IsAdmin())
 	{
 		return "Games limit reached";
 	}

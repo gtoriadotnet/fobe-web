@@ -21,7 +21,7 @@ namespace Alphaland\Web {
 
         public static function CanBypassMaintenance()
         {
-            return $GLOBALS['user']->isStaff() || WebContextManager::IsCurrentIpAddressWhitelisted();
+            return $GLOBALS['user']->IsStaff() || WebContextManager::IsCurrentIpAddressWhitelisted();
         }
         
         public static function IsUnderMaintenance(bool $status = false)

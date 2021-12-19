@@ -99,7 +99,7 @@ if(isset($_GET['id']))
 	
 	if($q->rowCount() > 0) 
 	{
-		if (isOwner($id) or $user->isAdmin()) //if the user is the owner of the game, or staff
+		if (isOwner($id) or $user->IsAdmin()) //if the user is the owner of the game, or staff
 		{
 			//item parameters
 			$gameinfo = getAssetInfo($id);

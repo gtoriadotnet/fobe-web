@@ -14,7 +14,7 @@ if(isset($_POST['submit_2fa'])) {
 }
 
 if(isset($_POST['logout'])) {
-    $user->logout();
+    $user->Logout();
     WebContextManager::Redirect("/");
 }
 

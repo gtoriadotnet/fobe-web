@@ -4,7 +4,7 @@ use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
-if(!($user->isOwner())) {
+if(!($user->IsOwner())) {
 	die('bababooey');
 }
 

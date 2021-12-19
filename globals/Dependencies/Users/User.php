@@ -12,7 +12,7 @@ namespace Alphaland\Users
     use Alphaland\Web\WebContextManager;
     use PDO;
 
-    class user 
+    class User 
     {
         public $id = -1;
         public $name = "";
@@ -24,27 +24,27 @@ namespace Alphaland\Users
 
         private const SecondsInDays = 86400;
         
-        function __construct() {
+        public function __construct() {
             if(isset($_COOKIE['token'])) { 
                 $this->ValidateSession($_COOKIE['token']); 
             }
         }
 
-        function isOwner() {
+        public function IsOwner() {
             if ($this->rank == 3) {
                 return true;
             }
             return false;
         }
         
-        function isAdmin() {
+        public function IsAdmin() {
             if($this->rank == 2 || $this->rank == 3) {
                 return true;
             }
             return false;
         }
 
-        function isStaff() {
+        public function IsStaff() {
             if($this->rank == 1 || $this->rank == 2 || $this->rank == 3) {
                 return true;
             }
@@ -119,7 +119,7 @@ namespace Alphaland\Users
             return false;
         }
 
-        function logout() 
+        public function Logout() 
         {
             if($this->logged_in) {
                 $logout = $GLOBALS['pdo']->prepare("DELETE FROM sessions WHERE id = :id");

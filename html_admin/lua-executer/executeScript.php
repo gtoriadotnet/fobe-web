@@ -5,7 +5,7 @@ use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
-if(!($user->isAdmin())) {
+if(!($user->IsAdmin())) {
 	die('bababooey');
 }
 

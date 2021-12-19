@@ -7,7 +7,7 @@ WebContextManager::ForceHttpsCloudflare();
 header("Access-Control-Allow-Origin: https://crackpot.alphaland.cc");
 header("access-control-allow-credentials: true");
 
-if(!($user->isAdmin())) {
+if(!($user->IsAdmin())) {
 	die('bababooey');
 }
 

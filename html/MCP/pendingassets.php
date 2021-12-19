@@ -6,7 +6,7 @@ Alphaland 2021
 
 use Alphaland\Web\WebContextManager;
 
-if(!$user->isStaff())
+if(!$user->IsStaff())
 {
     WebContextManager::Redirect("/");
 }

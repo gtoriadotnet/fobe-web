@@ -2,7 +2,7 @@
 
 use Alphaland\Web\WebContextManager;
 
-if(!($user->isStaff())) 
+if(!($user->IsStaff())) 
 {
     WebContextManager::Redirect("/");
 }

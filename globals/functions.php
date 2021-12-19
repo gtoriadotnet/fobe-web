@@ -978,7 +978,7 @@ function userGroupsCount()
 
 function createGroup($name, $description, $approval, $base64emblem)
 {
-	if (userGroupsCount() == 6 && !$GLOBALS['user']->isAdmin())
+	if (userGroupsCount() == 6 && !$GLOBALS['user']->IsAdmin())
 	{
 		return "Limited to 6 groups per player";
 	}
@@ -1728,7 +1728,7 @@ function isGroupOwner($groupid)
 	$owner->bindParam(":gid", $groupid, PDO::PARAM_INT);
 	$owner->bindParam(":cid", $localplayer, PDO::PARAM_INT);
 	$owner->execute();
-	if ($owner->rowCount() > 0 || $GLOBALS['user']->isAdmin())
+	if ($owner->rowCount() > 0 || $GLOBALS['user']->IsAdmin())
 	{
 		return true;
 	}
@@ -1815,7 +1815,7 @@ function wallViewPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->AccessGroupWall == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->AccessGroupWall == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1831,7 +1831,7 @@ function wallPostPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->PostGroupWall == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->PostGroupWall == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1847,7 +1847,7 @@ function wallDeletePermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->DeleteGroupWallPosts == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->DeleteGroupWallPosts == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1863,7 +1863,7 @@ function postShoutPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->PostGroupShout == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->PostGroupShout == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1879,7 +1879,7 @@ function manageLowerRankPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->ManageLowerRanks == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->ManageLowerRanks == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1895,7 +1895,7 @@ function kickLowerRankPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->KickLowerRanks == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->KickLowerRanks == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1911,7 +1911,7 @@ function acceptJoinRequestPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->AcceptJoinRequests == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->AcceptJoinRequests == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1927,7 +1927,7 @@ function viewAuditLogPermission($groupid)
 	{
 		$role = groupRoleInfo($groupid, groupMemberInfo($groupid, $localplayer)->rank);
 		
-		if ($role->ViewAuditLog == 1 || $GLOBALS['user']->isAdmin())
+		if ($role->ViewAuditLog == 1 || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}	
@@ -1939,9 +1939,9 @@ function configPermission($groupid)
 {
 	$localplayer = $GLOBALS['user']->id;
 	
-	if (isGroupMember($localplayer, $groupid) || $GLOBALS['user']->isAdmin())
+	if (isGroupMember($localplayer, $groupid) || $GLOBALS['user']->IsAdmin())
 	{
-		if (manageLowerRankPermission($groupid) || kickLowerRankPermission($groupid) || acceptJoinRequestPermission($groupid) || viewAuditLogPermission($groupid) || $GLOBALS['user']->isAdmin())
+		if (manageLowerRankPermission($groupid) || kickLowerRankPermission($groupid) || acceptJoinRequestPermission($groupid) || viewAuditLogPermission($groupid) || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}
@@ -1961,7 +1961,7 @@ function userAccessToGame($placeid, $userid)
 		$whitelist->bindParam(":pid", $placeid, PDO::PARAM_INT);
 		$whitelist->bindParam(":uid", $userid, PDO::PARAM_INT);
 		$whitelist->execute();
-		if ($whitelist->rowCount() > 0 || $userid == getAssetInfo($placeid)->CreatorId || $GLOBALS['user']->isAdmin())
+		if ($whitelist->rowCount() > 0 || $userid == getAssetInfo($placeid)->CreatorId || $GLOBALS['user']->IsAdmin())
 		{
 			return true;
 		}
@@ -2842,7 +2842,7 @@ function userPlaying($userid)
 
 function isUserInventoryPrivate($userid)
 {
-	if(userInfo($userid)->privateInventory && !$GLOBALS['user']->isAdmin())
+	if(userInfo($userid)->privateInventory && !$GLOBALS['user']->IsAdmin())
 	{
 		return true;
 	}
@@ -4254,14 +4254,14 @@ function isOwner($id, $userid=NULL)
 
 		//handle game assets
 		if ($assettypeid == 9) {
-			if ($creatorid == $userid || $GLOBALS['user']->isOwner()) {
+			if ($creatorid == $userid || $GLOBALS['user']->IsOwner()) {
 				return true;
 			}
 			return false;
 		}
 		
 		//others
-		if ($creatorid == $userid || $GLOBALS['user']->isStaff()) {
+		if ($creatorid == $userid || $GLOBALS['user']->IsStaff()) {
 			return true;
 		}
 	}
@@ -5233,7 +5233,7 @@ function getNav()
 
 	$modbutton = "";
 	$pendingassetscount = 0;
-	if ($GLOBALS['user']->isStaff())
+	if ($GLOBALS['user']->IsStaff())
 	{
 		$pendingassetscount = fetchPendingAssets()->rowCount();
 
@@ -5315,7 +5315,7 @@ function getNav()
 								<a class="nav-link" href="/create/">Create</a>
 							</li>
 							'.$modbutton.'
-							'.(($user->isAdmin())? '
+							'.(($user->IsAdmin())? '
 							<li class="nav-item">
 								<a class="nav-link" href="https://crackpot.alphaland.cc">Admin</a>
 							</li>':'').'

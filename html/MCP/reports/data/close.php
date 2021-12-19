@@ -13,7 +13,7 @@ header('Content-Type: application/json');
 
 $id = (int)$_GET['id'];
 
-if(!$user->isStaff() || !$id) {
+if(!$user->IsStaff() || !$id) {
     WebContextManager::Redirect("/");
 }
 

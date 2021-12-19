@@ -12,7 +12,7 @@ header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
-if(!$user->isStaff())
+if(!$user->IsStaff())
 {
     WebContextManager::Redirect("/");
 }

@@ -2,5 +2,5 @@
 
 use Alphaland\Web\WebContextManager;
 
-$user->logout();
+$user->Logout();
 WebContextManager::Redirect("/");

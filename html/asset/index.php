@@ -52,7 +52,7 @@ if ($id)
 			{
 				if(isLoggedIn())
 				{
-					if ($iteminfo->IsPublicDomain == true or $iteminfo->CreatorId == $user->id or $user->isOwner())
+					if ($iteminfo->IsPublicDomain == true or $iteminfo->CreatorId == $user->id or $user->IsOwner())
 					{
 						ReturnAsset($iteminfo->Hash, $iteminfo->AssetTypeId);
 					}

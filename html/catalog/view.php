@@ -121,7 +121,7 @@ if(isset($_GET['id']))
 		
 		//only allow shirts, pants and t shirts to be modified by the end user (admins can regardless)
 		$configbutton_html = "";
-		if ($itemtypeint == 2 or $itemtypeint == 11 or $itemtypeint == 12 or $user->isAdmin())
+		if ($itemtypeint == 2 or $itemtypeint == 11 or $itemtypeint == 12 or $user->IsAdmin())
 		{
 			if (isOwner($id) && !isAssetModerated($id)) //owner of the item or admin
 			{

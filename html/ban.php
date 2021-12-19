@@ -17,7 +17,7 @@ if (UserModerationManager::IsBanned($user->id))
 								
 	if(isset($_POST['logout'])) 
 	{
-		$user->logout();
+		$user->Logout();
 		WebContextManager::Redirect("/");
 	}
 								
