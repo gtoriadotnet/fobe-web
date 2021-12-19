@@ -24,7 +24,7 @@ namespace Alphaland\Users
 
         private const SecondsInDays = 86400;
         
-        public function __construct() {
+        function __construct() {
             if(isset($_COOKIE['token'])) { 
                 $this->ValidateSession($_COOKIE['token']); 
             }
