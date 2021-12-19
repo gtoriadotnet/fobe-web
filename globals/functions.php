@@ -4984,7 +4984,7 @@ function createSession($userID) {
 	$session->bindParam(":ua", $user_agent, PDO::PARAM_STR);
 	if($session->execute()) {
 		setcookie("token", $token, time() + (86400 * 30), "/", ".alphaland.cc"); //30 day expiration on token for (hopefully) all alphaland paths 
-		$GLOBALS['user']->checkIfTokenValid($token);
+		$GLOBALS['user']->ValidateSession($token);
 		return true;
 	} else {
 		return false;

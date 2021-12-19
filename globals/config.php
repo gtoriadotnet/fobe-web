@@ -17,6 +17,7 @@ use Alphaland\Users\TwoFactor;
 use Alphaland\Moderation\UserModerationManager;
 use Alphaland\Web\WebContextManager;
 use Alphaland\Common\System;
+use Alphaland\Users\User;
 
 try 
 {
@@ -114,6 +115,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Render.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/Signing.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Ticket.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/User.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -137,7 +139,9 @@ try
 	
 	//more includes
 	require_once 'functions.php';
-	require_once 'userauth.php';
+
+	//user
+	$user = new User();
 	
 	//redirects
 	if (!System::IsCommandLine() && //is not executed from cmd line
