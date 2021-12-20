@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\Outfit;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -26,18 +29,24 @@ else
 		$outfitid = $data->id;
 		$name = $data->name;
 
-		$outfitchange = updateOutfit($user->id, $outfitid, $name);
-		if ($outfitchange === true) {
-			$outfitchange = "Outfit Updated";
+		try {
+			if (Outfit::UpdateOutfit($user->id, $id, $name)) {
+				$outfitchange = "Outfit Updated";
+			}
+		} catch (Exception $e) {
+			$outfitchange = $e->getMessage();
 		}
 	}
 	else if ($deleteoutfit)
 	{
 		$outfitid = $data->id;
 
-		$outfitchange = deleteOutfit($user->id, $outfitid);
-		if ($outfitchange === true) {
-			$outfitchange = "Outfit Deleted";
+		try {
+			if (Outfit::DeleteOutfit($user->id, $outfitid)) {
+				$outfitchange = "Outfit Deleted";
+			}
+		} catch (Exception $e) {
+			$outfitchange = $e->getMessage();
 		}
 	}
 	

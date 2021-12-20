@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\Outfit;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -18,10 +21,12 @@ if (!$data)
 	http_response_code(400);
 }
 else
-{
-	$applyoutfit = applyOutfit($user->id, $id);
-	if ($applyoutfit === true) {
-		$applyoutfit = "Outfit Applied";
+{	try {
+		if (Outfit::ApplyOutfit($user->id, $id)) {
+			$applyoutfit = "Outfit Applied";
+		}
+	} catch (Exception $e) {
+		$applyoutfit = $e->getMessage();
 	}
 	
 	header('Content-Type: application/json');
