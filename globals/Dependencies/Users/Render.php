@@ -13,6 +13,57 @@ namespace Alphaland\Users {
 
     class Render
     {
+        public static function SetRenderCount(int $userid, int $count)
+        {
+            $update = $GLOBALS['pdo']->prepare("UPDATE `users` SET `renderCount` = :count WHERE `id` = :userid");
+            $update->bindParam(":count", $count, PDO::PARAM_INT);
+            $update->bindParam(":userid", $userid, PDO::PARAM_INT);
+            $update->execute();
+        }
+
+        public static function RenderCount(int $userid)
+        {
+            $userinfo = userInfo($userid);
+            if (($userinfo->lastRender + 15) < time()) {
+                Render::SetRenderCount($userid, 0);
+            }
+            return $userinfo->renderCount;
+        }
+
+        public static function RenderCooldown(int $userid)
+        {
+            if (Render::RenderCount($userid) > 3) {
+                return true;
+            }
+            return false;
+        }
+
+        public static function PendingRendering(int $userid)
+        {
+            $pending = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :u");
+            $pending->bindParam(":u", $userid, PDO::PARAM_INT);
+            $pending->execute();
+            $pending = $pending->fetch(PDO::FETCH_OBJ);
+        
+            if ($pending->pendingRender) { //render pending
+                if (($pending->lastRender + 15) < time()) { //if the render is stalled after 15 seconds
+                    $update = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 0 WHERE id = :u");
+                    $update->bindParam(":u", $userid, PDO::PARAM_INT);
+                    $update->execute();
+                }
+                return true;
+            }
+            if ($pending->pendingHeadshotRender) { //headshot render pending
+                if (($pending->lastHeadshotRender + 15) < time()) { //if the render is stalled after 15 seconds
+                    $update = $GLOBALS['pdo']->prepare("UPDATE users SET pendingHeadshotRender = 0 WHERE id = :u");
+                    $update->bindParam(":u", $userid, PDO::PARAM_INT);
+                    $update->execute();
+                }
+                return true;
+            }
+            return false;
+        }
+
         public static function RenderPlayerCloseup(int $userid, bool $fork=false)
         {
             if ($fork)
@@ -112,7 +163,7 @@ namespace Alphaland\Users {
 
                     if ($headshot) {
                         $oldhash = $prevhash->HeadshotThumbHash;
-                        if ($oldhash != $newhash && !isHeadshotThumbHashInOutfit($oldhash)) {
+                        if ($oldhash != $newhash && !Outfit::HeadshotThumbHashInOutfit($oldhash)) {
                             unlink($path . $oldhash);
                         }
                         $newthumbhash = $GLOBALS['pdo']->prepare("UPDATE users SET HeadshotThumbHash = :h, pendingHeadshotRender = 0, renderCount = renderCount-1 WHERE id = :i");
@@ -121,7 +172,7 @@ namespace Alphaland\Users {
                         $newthumbhash->execute();
                     } else {
                         $oldhash = $prevhash->ThumbHash;
-                        if ($oldhash != $newhash && !isThumbHashInOutfit($oldhash)) {
+                        if ($oldhash != $newhash && !Outfit::ThumbHashInOutfit($oldhash)) {
                             unlink($path . $oldhash);
                         }
                         $newthumbhash = $GLOBALS['pdo']->prepare("UPDATE users SET ThumbHash = :h, pendingRender = 0, renderCount = renderCount-1 WHERE id = :i");

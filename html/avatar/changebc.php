@@ -8,6 +8,9 @@
 4 = Left Leg
 5 = Right Leg
 */
+
+use Alphaland\Users\Render;
+
 $bcdb = array("0" => "h", "1" => "t", "2" => "la", "3" => "ra", "4" => "ll", "5" => "rl");
 $cbc = (int)$_POST['bct'];
 $clr = (int)$_POST['clr'];
@@ -20,7 +23,7 @@ if(getBC($clr) != "-")
 {
 	if (isThumbnailerAlive())
 	{
-		if (!isRenderCooldown($localuser))
+		if (!Render::RenderCooldown($user->id))
 		{
 			$upd = $pdo->prepare("UPDATE body_colours SET {$bcdb[$cbc]} = :b WHERE uid = :u");
 			$upd->bindParam(":u", $user->id, PDO::PARAM_INT);

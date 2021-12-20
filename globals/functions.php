@@ -3973,28 +3973,6 @@ function equippedAssetByType($type) //returns the users last equipped item by ty
 	return $wearing;
 }
 
-function currentRenderCount($userid)
-{
-	$userinfo = userInfo($userid);
-	if (($userinfo->lastRender + 15) < time())
-	{
-		$update = $GLOBALS['pdo']->prepare("UPDATE users SET renderCount = 0 WHERE id = :u");
-		$update->bindParam(":u", $userid, PDO::PARAM_INT);
-		$update->execute();
-	}
-
-	return $userinfo->renderCount;
-}
-
-function isRenderCooldown($userid)
-{
-	if (currentRenderCount($userid) > 3)
-	{
-		return true;
-	}
-	return false;
-}
-
 function deequipItem($assetId)
 {
 	$localuser = $GLOBALS['user']->id;
@@ -4006,7 +3984,7 @@ function deequipItem($assetId)
 	{
 		if (isThumbnailerAlive())
 		{
-			if (!isRenderCooldown($localuser))
+			if (!UsersRender::RenderCooldown($localuser))
 			{
 				$deequip = $GLOBALS['pdo']->prepare("DELETE from wearing_items WHERE uid = :u AND aid = :a"); //delete db key
 				$deequip->bindParam(":u", $localuser, PDO::PARAM_INT);
@@ -4047,7 +4025,7 @@ function equipItem($assetId)
 			{
 				if (isThumbnailerAlive())
 				{
-					if (!isRenderCooldown($localuser))
+					if (!UsersRender::RenderCooldown($localuser))
 					{
 						if (!isAssetModerated($assetId))
 						{
