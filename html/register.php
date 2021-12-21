@@ -80,7 +80,7 @@ else
 				$error = "Email is already registered";
 			}
 
-			$ip = getIP();
+			$ip = WebContextManager::GetCurrentIPAddress();
 
 			/*
 			if (WebContextManager::IsIpRegistered($ip))
