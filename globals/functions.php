@@ -1440,46 +1440,6 @@ function rerenderutility()
 	UsersRender::RenderPlayer($localplayer);
 }
 
-function checkUserPendingRender($player)
-{
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :u");
-	$check->bindParam(":u", $player, PDO::PARAM_INT);
-	$check->execute();
-	$checkdata = $check->fetch(PDO::FETCH_OBJ);
-	
-	$waspendingrender = false;
- 
-	if ($checkdata->pendingRender == true) //render pending
-	{
-		if (($checkdata->lastRender + 15) < time()) //last render still pending after 15 seconds
-		{
-			$update = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 0 WHERE id = :u");
-			$update->bindParam(":u", $player, PDO::PARAM_INT);
-			$update->execute();
-		}
-		else
-		{
-			$waspendingrender = true;
-	}
-	}
-
-	if ($checkdata->pendingHeadshotRender == true) //headshot render pending
-	{
-		if (($checkdata->lastHeadshotRender + 15) < time()) //last render still pending after 15 seconds
-		{
-			$update = $GLOBALS['pdo']->prepare("UPDATE users SET pendingHeadshotRender = 0 WHERE id = :u");
-			$update->bindParam(":u", $player, PDO::PARAM_INT);
-			$update->execute();
-		}
-		else
-		{
-			$waspendingrender = true;
-	}
-	}
-
-	return $waspendingrender;
-}
-
 //end local user render utility functions
 
 //asset functions
@@ -3008,7 +2968,7 @@ function getImageFromAsset($id)
 function getPlayerRender($uid, $headshot=false)
 {
 	//check if the user has a stalled render
-	checkUserPendingRender($uid);
+	UsersRender::PendingRender($uid);
 	
 	$player = userInfo($uid);
 

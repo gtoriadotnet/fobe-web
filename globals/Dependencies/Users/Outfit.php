@@ -67,7 +67,7 @@ namespace Alphaland\Users {
             else if (Outfit::UserOutfitCount($userid) >= 24) {
                 throw new Exception('Limit of 24 outfits');
             }
-            else if (Render::PendingRendering($userid)) {
+            else if (Render::PendingRender($userid)) {
                 throw new Exception('Please wait for the current render');
             } else {
                 //queries
@@ -140,7 +140,7 @@ namespace Alphaland\Users {
                 throw new Exception('Name too long, must be less than 50 characters 1');
             } else if (!Outfit::UserOwnsOutfit($userid, $outfitid)) {
                 throw new Exception('Error occurred');
-            } else if (Render::PendingRendering($userid)) {
+            } else if (Render::PendingRender($userid)) {
                 throw new Exception('Please wait for the current render');
             } else if (!Outfit::DeleteOutfit($userid, $outfitid)) {
                 throw new Exception('Failed to update outfit, contact an Administrator');
@@ -155,7 +155,7 @@ namespace Alphaland\Users {
         {
             if (!Outfit::UserOwnsOutfit($userid, $outfitid)) {
                 throw new Exception('Error occurred');
-            } else if (Render::PendingRendering($userid)) {
+            } else if (Render::PendingRender($userid)) {
                 throw new Exception('Please wait for the current render');
             } else {
                 $outfit = $GLOBALS['pdo']->prepare('SELECT * FROM user_outfits WHERE userid = :uid AND id = :id');

@@ -24,7 +24,7 @@ else
 {
 	$alert = false;
 
-	if (!checkUserPendingRender($user->id))
+	if (!Render::PendingRender($user->id))
 	{
 		if ($angleRight) {
 			if (setHeadshotAngleRight($user->id)) {

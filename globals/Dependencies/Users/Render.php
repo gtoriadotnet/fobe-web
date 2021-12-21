@@ -38,7 +38,7 @@ namespace Alphaland\Users {
             return false;
         }
 
-        public static function PendingRendering(int $userid)
+        public static function PendingRender(int $userid)
         {
             $pending = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :u");
             $pending->bindParam(":u", $userid, PDO::PARAM_INT);
