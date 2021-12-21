@@ -2,6 +2,7 @@
 
 //the design choice here was to tie in clientpresence with recently played and visits and make it fully server-sided besides the client pings
 
+use Alphaland\Games\Game;
 use Alphaland\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
@@ -70,7 +71,7 @@ else if ($action == "connect")
 	// ...
 
 	//remove them from queue (once presence is created above, placelauncher will detect playercount correctly. should be very rare for two people to get in a single slot)
-	removePlayerFromQueue($userid);
+	Game::RemovePlayerFromQueue($userid);
 	
 	//update or create player recently played (TODO: restrict to 4 database entries to save space)
 	$checkforrecent = $pdo->prepare("SELECT * FROM game_recents WHERE uid = :i AND gid = :g");

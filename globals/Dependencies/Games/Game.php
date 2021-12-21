@@ -254,5 +254,62 @@ namespace Alphaland\Games {
                     return "Banned";
             }
         }
+
+        public static function RemovePlayerFromQueue(int $userid)
+        {
+            $removeQueue = $GLOBALS['pdo']->prepare("DELETE FROM game_launch_queue WHERE userid = :uid");
+            $removeQueue->bindParam(":uid", $userid, PDO::PARAM_INT);
+            $removeQueue->execute();
+            if ($removeQueue->rowCount() > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        public static function IsPlayerInQueue(int $placeid, string $jobid, int $userid)
+        {
+            $playerinqueue = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM game_launch_queue WHERE placeid = :pid AND jobid = :jid AND userid = :uid");
+            $playerinqueue->bindParam(":pid", $placeid, PDO::PARAM_INT);
+            $playerinqueue->bindParam(":jid", $jobid, PDO::PARAM_STR);
+            $playerinqueue->bindParam(":uid", $userid, PDO::PARAM_INT);
+            $playerinqueue->execute();
+            if ($playerinqueue->fetchColumn() > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        public static function AddPlayerToQueue(int $placeid, string $jobid, int $userid)
+        {
+            if (!Game::IsPlayerInQueue($placeid, $jobid, $userid)) {
+                Game::RemovePlayerFromQueue($userid); //if any queue leftover
+                $newQueue = $GLOBALS['pdo']->prepare("INSERT INTO game_launch_queue(placeid, jobid, userid, queuePing, whenQueued) VALUES (:pid, :jid, :uid, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())");
+                $newQueue->bindParam(":pid", $placeid, PDO::PARAM_INT);
+                $newQueue->bindParam(":jid", $jobid, PDO::PARAM_STR);
+                $newQueue->bindParam(":uid", $userid, PDO::PARAM_INT);
+                $newQueue->execute();
+            } else { //ping
+                $updateQueue = $GLOBALS['pdo']->prepare("UPDATE game_launch_queue SET queuePing = UNIX_TIMESTAMP() WHERE placeid = :pid AND jobid = :jid AND userid = :uid");
+                $updateQueue->bindParam(":pid", $placeid, PDO::PARAM_INT);
+                $updateQueue->bindParam(":jid", $jobid, PDO::PARAM_STR);
+                $updateQueue->bindParam(":uid", $userid, PDO::PARAM_INT);
+                $updateQueue->execute();
+            }
+        }
+
+        public static function IsNextInQueue($placeid, $jobid, $userid)
+        {
+            $queue = $GLOBALS['pdo']->prepare("SELECT * FROM game_launch_queue WHERE placeid = :pid AND jobid = :jid ORDER BY whenQueued DESC LIMIT 1");
+            $queue->bindParam(":pid", $placeid, PDO::PARAM_INT);
+            $queue->bindParam(":jid", $jobid, PDO::PARAM_STR);
+            $queue->execute();
+            $queue = $queue->fetch(PDO::FETCH_OBJ);
+            if ((int)$queue->queuePing + 10 < time()) { //hasnt pinged in 10 seconds, assume they left queue
+                Game::RemovePlayerFromQueue($queue->userid);
+            } else if ($queue->userid == $userid) {
+                return true;
+            }
+            return false;
+        }
     }
 }

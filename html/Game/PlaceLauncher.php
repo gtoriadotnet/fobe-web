@@ -154,8 +154,8 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 					}
 					elseif($sInfo->status == 1) //game is open, check if its joinable (player count, queue, etc)
 					{
-						addPlayerToQueue($gameID,  $sInfo->jobid, $user->id); //add player to queue (if they are in it, this updates ping)
-						if (isNextInQueue($gameID,  $sInfo->jobid, $user->id)) //player next in queue
+						Game::AddPlayerToQueue($gameID, $sInfo->jobid, $user->id); //add player to queue (if they are in it, this updates ping)
+						if (Game::IsNextInQueue($gameID, $sInfo->jobid, $user->id)) //player next in queue
 						{
 							if (Game::JobPlayerCount($gameID, $sInfo->jobid) >= $gInfo->MaxPlayers)
 							{
