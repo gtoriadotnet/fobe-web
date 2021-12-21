@@ -3131,41 +3131,10 @@ function soapCloseAllJobs($arbiter)
 	return soapCallService($arbiter, "CloseAllJobs");
 }
 
-function soapCloseJob($arbiter, $jobid)
-{
-	return soapCallService($arbiter, "CloseJob", array("jobID" => $jobid));
-}
-
 function soapExecuteEx($arbiter, $jobid, $scriptname, $script, $arguments=[])
 {
 	return soapCallService($arbiter, "ExecuteEx", array(
 			"jobID" => $jobid, 
-			"script" => array(
-				"name" => $scriptname,
-				"script" => $script,
-				"arguments" => luaArguments($arguments)
-			)
-		)
-	);
-}
-
-function soapBatchJobEx($arbiter, $jobid, $expiration, $scriptname, $script, $arguments=[])
-{
-	return soapJobTemplate($arbiter, "BatchJobEx", $jobid, $expiration, 1, 3, $scriptname, $script, $arguments);
-}
-
-function soapJobTemplate($arbiter, $servicename, $jobid, $expiration, $category, $cores, $scriptname, $script, $arguments=[])
-{
-	return soapCallService(
-		$arbiter,
-		$servicename,
-		array(
-			"job" => array(
-				"id" => $jobid,
-				"expirationInSeconds" => $expiration,
-				"category" => $category,
-				"cores" => $cores
-			),
 			"script" => array(
 				"name" => $scriptname,
 				"script" => $script,
@@ -4293,20 +4262,6 @@ function setUserRank($rank, $userid)
 	$updaterank->execute();
 }
 
-function isAdmin() { //todo: make these use userids
-	if($GLOBALS['user']->rank == 2) {
-		return true;
-	}
-	return false;
-}
-
-function isStaff() {
-	if($GLOBALS['user']->rank == 1 || $GLOBALS['user']->rank == 2) {
-		return true;
-	}
-	return false;
-}
-
 function onlineUsersCount() 
 {
 	$check = $GLOBALS['pdo']->prepare("SELECT * FROM users"); 
@@ -4392,10 +4347,6 @@ function isValidPasswordResetToken($token)
 		return true;
 	}
 	return false;
-}
-
-function getIP() {
-	return (isset($_SERVER["HTTP_CF_CONNECTING_IP"])?$_SERVER["HTTP_CF_CONNECTING_IP"]:$_SERVER['REMOTE_ADDR']);
 }
 
 function pageHandler() {
