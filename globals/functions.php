@@ -8,6 +8,7 @@
 
 use Alphaland\Assets\Render;
 use Alphaland\Games\Game;
+use Alphaland\Moderation\Filter;
 use Alphaland\Users\Render as UsersRender;
 use Alphaland\Web\WebContextManager;
 
@@ -4183,7 +4184,7 @@ function cleanOutput($t, $linebreaks=true) {
 		$t = nl2br($t);
 	}
 	$t = strip_tags($t, '<br>');
-	return filterText($t);
+	return Filter::FilterText($t);
 }
 
 function cleanOutputNoFilter($t, $linebreaks=true) {
