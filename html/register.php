@@ -5,6 +5,7 @@
 	TODO: This needs a re-do. This is one of the first pages on this project
 */
 
+use Alphaland\Moderation\Filter;
 use Alphaland\Users\Activation;
 use Alphaland\Users\ReferralProgram;
 use Alphaland\Web\WebContextManager;
@@ -55,7 +56,7 @@ else
 				{
 					$error = '<div class="alert alert-danger" role="alert">Your username must be between 3 and 20 characters long</div>';
 				}
-				if(isFiltered($uname))
+				if (Filter::IsTextFiltered($uname))
 				{
 					$error = '<div class="alert alert-danger" role="alert">Username is not appropriate for Alphaland</div>';
 				}

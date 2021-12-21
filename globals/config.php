@@ -117,6 +117,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Ticket.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/User.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Outfit.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/Filter.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();

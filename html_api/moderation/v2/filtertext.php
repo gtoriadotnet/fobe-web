@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Moderation\Filter;
 
 header('Content-Type: application/json');
 
@@ -11,7 +12,8 @@ if (!$text || !$userid)
 	die(json_encode(array("success" => false)));
 }
 
-if (isFiltered($text)) {
+if (Filter::IsTextFiltered($text))
+{
 	logChatMessage($userid, $text, true);
 
 	if (chatFilterInfractionLimit($userid, 3, 120)) //3 infraction within 2 minutes
@@ -19,7 +21,7 @@ if (isFiltered($text)) {
 		die(kickUserIfInGame($userid, "'".$text."' is not appropriate on Alphaland, continued infractions will lead to a ban."));
 	}
 
-	$text = filterText($text);
+	$text = Filter::FilterText($text);
 	//$text = "[ Content Deleted ]";
 }
 
