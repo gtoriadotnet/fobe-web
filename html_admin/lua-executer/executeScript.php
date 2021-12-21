@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Games\Game;
 use Alphaland\Grid\RccServiceHelper;
 use Alphaland\Web\WebContextManager;
 
@@ -16,7 +17,7 @@ $jobid = $data->jobid;
 $script = $data->script;
 
 $output = "";
-if (!isJobMarkedClosed($jobid))
+if (!Game::JobClosed($jobid))
 {
 	$jobExecuteEx = new RccServiceHelper($GLOBALS['gamesArbiter']);
 	$jobExecuteEx->ExecuteEx(

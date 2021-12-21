@@ -8,6 +8,9 @@ This is parsed with javascript on the users end, this allows the user to handle 
 
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -75,7 +78,7 @@ foreach($games as $game)
 	$visits = $game['Visited']; //visit count of the game
 	$creation = date("m/d/Y", $game['Created']); //creation date of the game NOTE: to get the date, use UNIX_TIMESTAMP()
 	$creatorN = getUsername($game['CreatorId']); //creator of the game username
-	$playercount = gamePlayerCount($gameID); //players in the game	
+	$playercount = Game::TotalPlayerCount($gameID); //players in the game
 	$placerender = handleGameThumb($gameID);
 	
 	$placeInfo = array(

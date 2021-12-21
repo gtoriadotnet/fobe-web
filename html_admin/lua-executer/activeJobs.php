@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Games\Game;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -26,7 +27,7 @@ foreach($b as $jobInfo)
 {
 	$jobid = $jobInfo['jobid'];
 	$placeid = $jobInfo['gameID'];
-	checkForDeadJobs($placeid);
+	Game::CloseDeadJobs($placeid);
 	
 	$jsonInfo = array(
 		"JobID" => $jobid,

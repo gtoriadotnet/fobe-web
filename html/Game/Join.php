@@ -53,7 +53,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 
 		$gameInfo = getAssetInfo($serverInfo->gameID);
 
-		if (userAccessToGame($gameInfo->id, $sInfo->uid))
+		if (Game::UserAccess($gameInfo->id, $sInfo->uid))
 		{
 			$jobid = $sInfo->jobid;
 			$placeid = $gameInfo->id;

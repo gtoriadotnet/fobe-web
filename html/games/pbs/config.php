@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Games\Game;
 use Alphaland\Web\WebContextManager;
 
 $body = '';
@@ -25,16 +26,16 @@ else
 
 if (isset($_POST['ConvertToRegular']))
 {
-	if (gameCloseAllJobs($gameid))
+	if (Game::CloseAllJobs($gameid))
 	{
-		if (setRegularGame($gameid))
+		if (Game::SetToPlace($gameid))
 		{
 			handleRenderPlace($gameid);
 			WebContextManager::Redirect("/games/config?id=".$gameid);
 		}	
 		else
 		{
-			setPBSGame($gameid);
+			Game::SetToPersonalBuildPlace($gameid);
 		}
 	}
 }
@@ -286,6 +287,7 @@ function updatePBSGen()
 
 function whitelistUser(username)
 {
+	updatePBSGen();
 	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&whitelist=true", JSON.stringify({"username": username}))
 	.done(function(object) {
 		var alert = object.alert;

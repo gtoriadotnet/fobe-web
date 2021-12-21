@@ -6,6 +6,9 @@
 */
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -85,7 +88,7 @@ foreach($members as $member)
 			"username" => $username,
 			"userid" => $userid,
 			"thumbnail" => $thumbnail,
-			"rankname" => getPBSRankName($rank),
+			"rankname" => Game::PersonalBuildRankToName($rank),
 			"rank" => $rank	
 		);
 	}

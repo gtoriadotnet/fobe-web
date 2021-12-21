@@ -4,6 +4,7 @@
 	Alphaland 2021 
 */
 
+use Alphaland\Games\Game;
 use Alphaland\Web\WebContextManager;
 
 $gameID = $_GET['id'];
@@ -22,7 +23,7 @@ else
 	WebContextManager::Redirect("/404");
 }
 
-checkForDeadJobs($gameID);
+Game::CloseDeadJobs($gameID);
 
 $body = '
 

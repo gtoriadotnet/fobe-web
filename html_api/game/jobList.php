@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
@@ -65,7 +68,7 @@ $jsonData = array(
 foreach($servers as $server)
 {
 	$jobid = $server['jobid'];
-	$playing = jobPlayerCount($server['gameID'], $jobid);
+	$playing = Game::JobPlayerCount($server['gameID'], $jobid);
 	$maxplayers = (int)getAssetInfo($server['gameID'])->MaxPlayers;
 	$isowner = isOwner($server['gameID']);
 	$whenStarted = date("h:ia", $server['whenStarted']);

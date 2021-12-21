@@ -7,6 +7,7 @@
 */
 
 use Alphaland\Assets\Render;
+use Alphaland\Games\Game;
 use Alphaland\Users\Render as UsersRender;
 use Alphaland\Web\WebContextManager;
 
@@ -186,24 +187,6 @@ function gen_uuid() {
         // 48 bits for "node"
         mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
     );
-}
-
-function genJobId()
-{
-	$uuid = "";
-	$alloc = true;
-	while ($alloc) {
-		$uuid = gen_uuid();
-		$uuidcheck = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE jobid = :u");
-		$uuidcheck->bindParam(":u", $uuid, PDO::PARAM_STR);
-		$uuidcheck->execute();
-		if ($uuidcheck->rowCount() > 0) {
-			continue;
-		} else {
-			$alloc = false;
-		}
-	}
-	return $uuid;
 }
 
 //
@@ -449,89 +432,6 @@ function logChatMessage($userid, $text, $trippedfilter) //privacy concern?
 
 //personal build servers 
 
-function isUserWhitelisted($placeid, $userid)
-{
-	$whitelist = $GLOBALS['pdo']->prepare("SELECT * FROM game_access WHERE placeid = :pid AND userid = :uid");
-	$whitelist->bindParam(":pid", $placeid, PDO::PARAM_INT);
-	$whitelist->bindParam(":uid", $userid, PDO::PARAM_INT);
-	$whitelist->execute();
-	if ($whitelist->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-function gameWhitelistAddUser($placeid, $userid)
-{
-	if (isOwner($placeid))
-	{
-		if ($userid != getAssetInfo($placeid)->CreatorId && !isUserWhitelisted($placeid, $userid))
-		{
-			$whitelist = $GLOBALS['pdo']->prepare("INSERT INTO game_access(placeid, userid, whenWhitelisted) VALUES (:pid, :uid, UNIX_TIMESTAMP())");
-			$whitelist->bindParam(":pid", $placeid, PDO::PARAM_INT);
-			$whitelist->bindParam(":uid", $userid, PDO::PARAM_INT);
-			if ($whitelist->execute())
-			{
-				return true;
-			}
-			return "Failed to whitelist user";
-		}
-		return "Invalid User";
-	}
-	return "No Permission";
-}
-
-function gameWhitelistRemoveUser($placeid, $userid)
-{
-	if (isOwner($placeid))
-	{
-		if ($userid != getAssetInfo($placeid)->CreatorId)
-		{
-			$whitelistremove = $GLOBALS['pdo']->prepare("DELETE FROM game_access WHERE placeid = :pid AND userid = :uid");
-			$whitelistremove->bindParam(":pid", $placeid, PDO::PARAM_INT);
-			$whitelistremove->bindParam(":uid", $userid, PDO::PARAM_INT);
-			$whitelistremove->execute();
-			if ($whitelistremove->rowCount() > 0)
-			{
-				return true;
-			}
-			return "Failed to unwhitelist user";
-		}
-		return "Invalid User";
-	}
-	return "No Permission";
-}
-
-function gameClearWhitelist($placeid)
-{
-	if (isOwner($placeid))
-	{
-		$whitelistclear = $GLOBALS['pdo']->prepare("DELETE FROM game_access WHERE placeid = :pid");
-		$whitelistclear->bindParam(":pid", $placeid, PDO::PARAM_INT);
-		$whitelistclear->execute();
-		return true;
-	}
-	return false;
-}
-
-function getPBSRankName($rank) 
-{
-	switch ($rank)
-	{
-		case 255:
-			return "Owner";
-		case 240:
-			return "Admin";
-		case 128:
-			return "Member";
-		case 10:
-			return "Visitor";
-		case 0:
-			return "Banned";
-	}
-}
-
 function updateBuildServerRank($placeid, $userid, $rank)
 {
 	if ($userid != getAssetInfo($placeid)->CreatorId && getAssetInfo($placeid)->isPersonalServer == 1)
@@ -657,7 +557,7 @@ function updatePBSGameSettings($placeid, $name, $description, $commentsenabled, 
 
 			if ($whitelistenabled == 0) //whitelist being disabled
 			{
-				if (!gameClearWhitelist($placeid))
+				if (!Game::ClearWhitelist($placeid))
 				{
 					$whitelistenabled = 1;
 				}
@@ -1686,54 +1586,6 @@ function configPermission($groupid)
 
 // ...
 
-//game utility functions 
-
-function userAccessToGame($placeid, $userid)
-{
-	if (getAssetInfo($placeid)->isGameWhitelisted == 1) //game whitelisted
-	{
-		$whitelist = $GLOBALS['pdo']->prepare("SELECT * FROM game_access WHERE placeid = :pid AND userid = :uid");
-		$whitelist->bindParam(":pid", $placeid, PDO::PARAM_INT);
-		$whitelist->bindParam(":uid", $userid, PDO::PARAM_INT);
-		$whitelist->execute();
-		if ($whitelist->rowCount() > 0 || $userid == getAssetInfo($placeid)->CreatorId || $GLOBALS['user']->IsAdmin())
-		{
-			return true;
-		}
-		return false;
-	}
-	return true;
-}
-
-function checkForDeadJobs($placeid)
-{
-	$jobinfo = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE gameID = :g AND (lastPing + 95) < UNIX_TIMESTAMP() AND (status = 0 OR status = 1)"); 
-	$jobinfo->bindParam(":g", $placeid, PDO::PARAM_INT);
-	$jobinfo->execute();
-
-	foreach ($jobinfo as $job)
-	{
-		$editjob = $GLOBALS['pdo']->prepare("UPDATE open_servers SET status = 2, killedby = 0, whenDied = UNIX_TIMESTAMP() WHERE jobid = :j"); 
-		$editjob->bindParam(":j", $job['jobid'], PDO::PARAM_STR);
-		$editjob->execute();
-	}
-}
-
-function isJobMarkedClosed($jobid)
-{
-	$job = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE jobid = :j AND status = 2");
-	$job->bindParam(":j", $jobid, PDO::PARAM_STR);
-	$job->execute();
-	
-	if ($job->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-//end game utility functions
-
 //render utility functions
 
 function setHeadshotAngleRight($userid)
@@ -1806,7 +1658,7 @@ function checkUserPendingRender($player)
 	$checkdata = $check->fetch(PDO::FETCH_OBJ);
 	
 	$waspendingrender = false;
-
+ 
 	if ($checkdata->pendingRender == true) //render pending
 	{
 		if (($checkdata->lastRender + 15) < time()) //last render still pending after 15 seconds
@@ -1818,7 +1670,7 @@ function checkUserPendingRender($player)
 		else
 		{
 			$waspendingrender = true;
-		}
+	}
 	}
 
 	if ($checkdata->pendingHeadshotRender == true) //headshot render pending
@@ -1832,7 +1684,7 @@ function checkUserPendingRender($player)
 		else
 		{
 			$waspendingrender = true;
-		}
+	}
 	}
 
 	return $waspendingrender;
@@ -3233,22 +3085,6 @@ function rewardUserBadge($UserID, $BadgeID, $PlaceID)
 
 //backend communication and utilities for jobs {
 
-function gameCloseAllJobs($id)
-{
-	$s = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE gameID = :gid AND status < 2");
-	$s->bindParam(":gid", $id, PDO::PARAM_INT);
-	
-	if ($s->execute())
-	{
-		foreach ($s as $server)
-		{
-			soapCloseJob($GLOBALS['gamesArbiter'], $server['jobid']);
-		}
-		return true;
-	}
-	return false;
-}
-
 function logSoapFault($soapresult, $description, $script)
 {
 	$theFault = print_r($soapresult, TRUE);
@@ -3257,39 +3093,6 @@ function logSoapFault($soapresult, $description, $script)
 	$fault->bindParam(":sc", $script, PDO::PARAM_STR);
 	$fault->bindParam(":f", $theFault, PDO::PARAM_STR);
 	$fault->execute();
-}
-
-function allocGamePort() //allocs a port between 50000 - 60000, verifies the port isn't in use by another game server
-{
-	$port = 0;
-	$alloc = true;
-	while ($alloc)
-	{
-		$port = rand(50000,60000); //port range forwarded on the server side (support up to 10000 jobs)
-		
-		$s = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE port = :p AND status < 2");
-		$s->bindParam(":p", $port, PDO::PARAM_STR);
-		$s->execute();
-		
-		if ($s->rowCount() > 0 || $port == 57236) {
-			continue;
-		} else {
-			$alloc = false;
-		}
-	}
-	return $port;
-}
-
-function isGameServerAlive() //the main portion of this check is now a background script
-{
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE isGameServerAlive = 1");
-	$check->execute();
-	
-	if ($check->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
 }
 
 function isThumbnailerAlive() //the main portion of this check is now a background script
@@ -4361,30 +4164,6 @@ function userShout($uid)
 //end of shouts }
 
 //games portion {
-
-function setPBSGame($placeid)
-{
-	$set = $GLOBALS['pdo']->prepare("UPDATE assets SET isPersonalServer = 1 WHERE id = :i");
-	$set->bindParam(":i", $placeid, PDO::PARAM_INT);
-	$set->execute();
-	if ($set->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-function setRegularGame($placeid)
-{
-	$set = $GLOBALS['pdo']->prepare("UPDATE assets SET isPersonalServer = 0 WHERE id = :i");
-	$set->bindParam(":i", $placeid, PDO::PARAM_INT);
-	$set->execute();
-	if ($set->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
 	
 function createPlace($userid, $name, $description, $maxplayers)
 {
@@ -4501,54 +4280,6 @@ function userPlaceVisits($userid)
 	
 }
 
-function getAllSiteGames()
-{
-	$check = $GLOBALS['pdo']->query("SELECT * FROM assets WHERE AssetTypeId = 9 ORDER BY Visited DESC");
-	return $check;
-}
-
-function getRecentlyPlayed()
-{
-	$localuser = $GLOBALS['user']->id;
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM game_recents WHERE uid = :u ORDER by whenPlayed DESC");
-	$check->bindParam(":u", $localuser, PDO::PARAM_INT);
-	$check->execute();
-	return $check;
-}
-
-function gamePlayerCount($id)
-{
-	$sQ = $GLOBALS['pdo']->prepare("SELECT * FROM open_servers WHERE status != 2 AND gameID = :i");
-	$sQ->bindParam(":i", $id, PDO::PARAM_INT);
-	$sQ->execute();
-	
-	if($sQ->rowCount() > 0) 
-	{
-		$servers = $sQ->fetchAll(PDO::FETCH_ASSOC);
-	
-		foreach($servers as $server) // TODO: re-work this when i implement job-id based presence
-		{
-			$p = $GLOBALS['pdo']->prepare("SELECT * FROM game_presence WHERE placeid = :p AND (lastPing + 50) > UNIX_TIMESTAMP()");
-			$p->bindParam(":p", $id, PDO::PARAM_INT);
-			$p->execute();
-			
-			return $p->rowCount();
-		}
-	}
-	else
-	{
-		return 0;
-	}
-}
-
-function jobPlayerCount($placeid, $jobid)
-{
-	$p = $GLOBALS['pdo']->prepare("SELECT * FROM game_presence WHERE placeid = :p AND jobid = :j AND (lastPing + 50) > UNIX_TIMESTAMP()");
-	$p->bindParam(":p", $placeid, PDO::PARAM_INT);
-	$p->bindParam(":j", $jobid, PDO::PARAM_STR);
-	$p->execute();
-	return $p->rowCount();
-}
 //end games portion }
 
 //utility {
@@ -4978,7 +4709,7 @@ function getNav()
 		$thumbnailerstatus = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-danger' role='alert'>WARNING: Thumbnailer is offline, no Avatar changes will be applied</div>";
 	}
 	
-	if (!isGameServerAlive())
+	if (!Game::ArbiterOnline())
 	{
 		$gameserverstatus = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-danger' role='alert'>WARNING: Gameserver is offline, games will not launch</div>";
 	}
@@ -5062,7 +4793,7 @@ function getNav()
 			</header>
 			<script>
 				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute
-				setTimeout(function() { new Snow("alphaland-main-body");}, 800);
+					setTimeout(function() { new Snow("alphaland-main-body");}, 800);
 			</script>
 			<br/>';
 	}
@@ -5146,7 +4877,7 @@ function adminPanelStats() {
 	}
 
 	$gameserverstatus = "OK";
-	if (!isGameServerAlive())
+	if (!Game::ArbiterOnline())
 	{
 		$gameserverstatus = "DOWN";
 	}

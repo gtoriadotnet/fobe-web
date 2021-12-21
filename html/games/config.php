@@ -57,9 +57,9 @@ function convertToPBSPlace($placetype, $placeid)
 	//copy template, set the game type to PBS, update the hash, delete persistence data, close all servers, start place render and redirect
 	if (copy($selectedPlacePath, $assetcdn . $gamehash))
 	{
-		if (gameCloseAllJobs($placeid))
+		if (Game::CloseAllJobs($placeid))
 		{
-			if (setPBSGame($placeid))
+			if (Game::SetToPersonalBuildPlace($placeid))
 			{
 				$set = $GLOBALS['pdo']->prepare("UPDATE assets SET Hash = :hash WHERE id = :i");
 				$set->bindParam(":hash", $gamehash, PDO::PARAM_INT);
@@ -77,7 +77,7 @@ function convertToPBSPlace($placetype, $placeid)
 				}
 			}
 		}
-		setRegularGame($placeid);
+		Game::SetToPlace($placeid);
 	}
 	return "Error converting to PBS";
 }

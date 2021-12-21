@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -68,17 +71,29 @@ else
 		$userid = getID($data->username);
 		if ($userid)
 		{
-			$message = gameWhitelistAddUser($assetid, $userid);
+			try {
+				if (Game::WhitelistAddUser($assetid, $userid)) {
+					$message = true;
+				}
+			} catch (Exception $e) {
+				$message = $e->getMessage();
+			}
 		}
 		else
 		{
-			$message = "Invalid User";
+			$message = "User not found";
 		}
 	}
 	else if ($removewhitelistuser)
 	{
 		$userid = $data->userid;
-		$message = gameWhitelistRemoveUser($assetid, $userid);
+		try {
+			if (Game::WhitelistRemoveUser($assetid, $userid)) {
+				$message = true;
+			}
+		} catch (Exception $e) {
+			$message = $e->getMessage();
+		}
 	}
 
 	if ($message === true) {

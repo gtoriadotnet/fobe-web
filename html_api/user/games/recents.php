@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -71,7 +74,7 @@ foreach($recents as $game)
 	$id = $game['gid'];
 	$visits = $placeinfo->Visited;
 	$placename = cleanOutput($placeinfo->Name);
-	$playercount = gamePlayerCount($game['gid']);
+	$playercount = Game::TotalPlayerCount($game['gid']);
 	$creatorid = $placeinfo->CreatorId;
 	$creator = getUsername($creatorid);
 	$thumbnail = handleGameThumb($game['gid']);

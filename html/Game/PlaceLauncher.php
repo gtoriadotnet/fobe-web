@@ -5,6 +5,8 @@ This is used on the client (if the client has the session token set) to request 
 TODO: Clean up
 */
 
+use Alphaland\Assets\Asset;
+use Alphaland\Games\Game;
 use Alphaland\Grid\RccServiceHelper;
 
 $requesttype = $_GET['request'];
@@ -72,8 +74,9 @@ function StartServer($gid)
 {
 	$gameInfo = getAssetInfo($gid);
 	$jobuuid = genJobId(); //generate a UUID for the job
+	$jobuuid = Game::GenerateJobId(); //generate a UUID for the job
 	$ip = $GLOBALS['gameMachine']; //IP address of the gameserver machine
-	$port = allocGamePort(); //generate an available port for the gameserver
+	$port = Game::AllocatePort(); //generate an available port for the gameserver
 
 	//add this server to the database
 	$s = $GLOBALS['pdo']->prepare("INSERT INTO open_servers(jobid,gameID,ip,port,whenStarted,lastPing) VALUES(:j,:g,:ip,:port,UNIX_TIMESTAMP(),UNIX_TIMESTAMP())");
@@ -134,10 +137,10 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 		{
 			//safe ID
 			$gameID = $gInfo->id;
-			
-			checkForDeadJobs($gameID);
+	
+			Game::CloseDeadJobs($gameID);
 
-			if (userAccessToGame($gameID, $user->id))
+			if (Game::UserAccess($gameID, $user->id))
 			{
 				//check for open servers
 				$servers = $pdo->prepare("SELECT * FROM open_servers WHERE gameID = :i AND (status = 0 OR status = 1) ORDER BY status DESC LIMIT 1");
@@ -155,7 +158,7 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 						addPlayerToQueue($gameID,  $sInfo->jobid, $user->id); //add player to queue (if they are in it, this updates ping)
 						if (isNextInQueue($gameID,  $sInfo->jobid, $user->id)) //player next in queue
 						{
-							if (jobPlayerCount($gameID, $sInfo->jobid) >= $gInfo->MaxPlayers)
+							if (Game::JobPlayerCount($gameID, $sInfo->jobid) >= $gInfo->MaxPlayers)
 							{
 								echo constructJson($sInfo->jobid."", 6, "", "", "", ""); //return job full
 							}
@@ -203,7 +206,7 @@ else if ($requesttype == "RequestFollowUser") //follow user
 			
 			if ($assettype == 9) //asset is a game
 			{
-				checkForDeadJobs($placeid);
+				Game::CloseDeadJobs($placeid);
 				
 				$playersgame = $pdo->prepare("SELECT * FROM game_presence WHERE uid = :u AND placeid = :p");
 				$playersgame->bindParam(":u", $userid, PDO::PARAM_INT);

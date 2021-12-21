@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -30,7 +33,7 @@ $userInfo = array(
 	"Creator" => getUsername($assetinfo->CreatorId),
 	"CreatorId" => $assetinfo->CreatorId,
 	"isPersonalServer" => boolval($assetinfo->isPersonalServer),
-	"playPermission" => userAccessToGame($assetinfo->id, $user->id),
+	"playPermission" => Game::UserAccess($assetinfo->id, $user->id),
 	"canManage" => boolval($assetinfo->CreatorId == $user->id || $user->IsAdmin()),
 	"CommentsEnabled" => boolval($assetinfo->IsCommentsEnabled),
 	"PersonalServerWhitelist" => boolval($assetinfo->isGameWhitelisted),
