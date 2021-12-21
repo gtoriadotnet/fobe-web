@@ -107,25 +107,6 @@ function genSignupKeyHash($len)
 	return $hash;
 }
 
-function genSessionHash($len)
-{
-	$hash = "";
-	$alloc = true;
-	while ($alloc) {
-		$hash = genHash($len);
-		
-		$tokencheck = $GLOBALS['pdo']->prepare("SELECT * FROM sessions WHERE token = :t");
-		$tokencheck->bindParam(":t", $hash, PDO::PARAM_STR);
-		$tokencheck->execute();
-		if ($tokencheck->rowCount() > 0) {
-			continue;
-		} else {
-			$alloc = false;
-		}
-	}
-	return $hash;
-}
-
 function genAssetHash($len)
 {
 	$hash = "";
@@ -4399,55 +4380,6 @@ function getID($username) {
 		return $id->id;
 	}
 	return false; //user not found
-}
-
-function passwordCorrect($userID, $password) {
-	$check = $GLOBALS['pdo']->prepare("SELECT pwd FROM users WHERE id = :i");
-	$check->bindParam(":i", $userID, PDO::PARAM_INT);
-	$check->execute();
-	if($check->rowCount() > 0) {
-		$passwordb = $check->fetch(PDO::FETCH_OBJ);
-		if(password_verify($password, $passwordb->pwd)) {
-			return true; //correct
-		}
-		return false; //incorrect password
-	}
-	return false; // user not found
-}
-
-function createSession($userID) {
-    $token = genSessionHash(128); //generate the auth token
-	$ip = getIP();
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	   
-	$session = $GLOBALS['pdo']->prepare("INSERT INTO sessions(token, uid, ip, whenCreated, user_agent)
-										 VALUES(:t,:u,:i,UNIX_TIMESTAMP(),:ua)");
-	$session->bindParam(":t", $token, PDO::PARAM_STR);
-	$session->bindParam(":u", $userID, PDO::PARAM_INT);
-	$session->bindParam(":i", $ip, PDO::PARAM_STR);
-	$session->bindParam(":ua", $user_agent, PDO::PARAM_STR);
-	if($session->execute()) {
-		setcookie("token", $token, time() + (86400 * 30), "/", ".alphaland.cc"); //30 day expiration on token for (hopefully) all alphaland paths 
-		$GLOBALS['user']->ValidateSession($token);
-		return true;
-	} else {
-		return false;
-	}
-}
-
-function updateLastSeen($userID) {
-	$updateLastSeen = $GLOBALS['pdo']->prepare("UPDATE users SET lastseen = UNIX_TIMESTAMP() WHERE id = :id");
-	$updateLastSeen->bindParam(":id", $userID, PDO::PARAM_INT);
-	if ($updateLastSeen->execute()) {
-		return true;
-	}
-	return false;
-}
-
-function logoutAllSessions($userID) {
-	$sessions = $GLOBALS['pdo']->prepare("UPDATE sessions SET valid = 0 WHERE uid = :uid");
-	$sessions->bindParam(":uid", $userID, PDO::PARAM_INT);
-	$sessions->execute();
 }
 
 function isValidPasswordResetToken($token)

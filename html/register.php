@@ -136,7 +136,7 @@ else
 						Activation::SetupUserActivation($userID);
 						
 						//create new session
-						createSession($userID);
+						$GLOBALS['user']->CreateSession($userID);
 
 						//send verification email
 						sendVerificationEmail("info@alphaland.cc", $email);

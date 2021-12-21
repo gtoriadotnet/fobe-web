@@ -30,7 +30,7 @@ if(isset($_GET['token']))
 					{
 						if (changePasswordUid($userid, $newpassword))
 						{
-							logoutAllSessions($userid);
+							$GLOBALS['user']->LogoutAllSessions($userid);
 							$alert = "<div class='alert alert-success' role='alert'>Password updated</div>";
 						}
 						else

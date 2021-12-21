@@ -13,7 +13,7 @@ if(isset($_POST['Submit']))
 		else
 		{
 			$password = cleanInput($_POST['password']);
-			if(passwordCorrect($user->id, $password)) 
+			if ($GLOBALS['user']->ValidatePassword($user->id, $password))
 			{
 				$changeemail = changeEmail($_POST['email']);
 				

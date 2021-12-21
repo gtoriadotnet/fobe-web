@@ -4,7 +4,7 @@ $alert = '';
 if(isset($_POST['Submit'])) 
 {
 	$currentpassword = cleanInput($_POST['curpassword']);
-	if(passwordCorrect($user->id, $currentpassword)) 
+	if ($GLOBALS['user']->ValidatePassword($user->id, $currentpassword) )
 	{
 		if ($_POST['npassword'] == $_POST['cnpassword'])
 		{

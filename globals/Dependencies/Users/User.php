@@ -7,6 +7,8 @@
 
 namespace Alphaland\Users
 {
+
+    use Alphaland\Common\HashingUtiltity;
     use Alphaland\Moderation\UserModerationManager;
     use Alphaland\Users\Activation;
     use Alphaland\Web\WebContextManager;
@@ -30,6 +32,18 @@ namespace Alphaland\Users
             }
         }
 
+        public function GenerateSessionToken(int $len)
+        {
+            $hash = "";
+            do {
+                $hash = HashingUtiltity::GenerateByteHash($len);
+                $tokencheck = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM sessions WHERE token = :t");
+                $tokencheck->bindParam(":t", $hash, PDO::PARAM_STR);
+                $tokencheck->execute();
+            } while ($tokencheck->fetchColumn() != 0);
+            return $hash;
+        }
+
         public function IsOwner() {
             if ($this->rank == 3) {
                 return true;
@@ -51,13 +65,35 @@ namespace Alphaland\Users
             return false;
         }
 
+        public function CreateSession(int $userid) 
+        {
+            $token = $this->GenerateSessionToken(128); //generate the auth token
+            $ip = WebContextManager::GetCurrentIPAddress();
+            $user_agent = $_SERVER['HTTP_USER_AGENT'];
+               
+            $session = $GLOBALS['pdo']->prepare("INSERT INTO sessions(token, uid, ip, whenCreated, user_agent) VALUES(:t,:u,:i,UNIX_TIMESTAMP(),:ua)");
+            $session->bindParam(":t", $token, PDO::PARAM_STR);
+            $session->bindParam(":u", $userid, PDO::PARAM_INT);
+            $session->bindParam(":i", $ip, PDO::PARAM_STR);
+            $session->bindParam(":ua", $user_agent, PDO::PARAM_STR);
+            if($session->execute()) {
+                setcookie("token", $token, time() + (86400 * 30), "/", ".alphaland.cc"); //30 day expiration on token for (hopefully) all alphaland paths 
+                $this->ValidateSession($token);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         public function UpdateLastSeen()
         {
             if (!UserModerationManager::IsBanned($this->id)) {
                 $updateLastSeen = $GLOBALS['pdo']->prepare("UPDATE users SET lastseen = UNIX_TIMESTAMP() WHERE id = :id");
                 $updateLastSeen->bindParam(":id", $this->id, PDO::PARAM_INT);
                 $updateLastSeen->execute();
+                return true;
             }
+            return false;
         }
 
         public function UpdateDailyTime(int $dailyTime)
@@ -116,6 +152,30 @@ namespace Alphaland\Users
             }
             //No valid session
             setcookie("token", null, time(), "/", ".alphaland.cc"); //delete (all token?) cookies
+            return false;
+        }
+
+        public function ValidatePassword($userid, string $password) 
+        {
+            $userpassword = $GLOBALS['pdo']->prepare("SELECT pwd FROM users WHERE id = :i");
+            $userpassword->bindParam(":i", $userid, PDO::PARAM_INT);
+            $userpassword->execute();
+            if($userpassword->rowCount() > 0) {
+                if(password_verify($password, $userpassword->fetch(PDO::FETCH_OBJ)->pwd)) {
+                    return true; //correct
+                }
+            }
+            return false;
+        }
+
+        public function LogoutAllSessions(int $userid) 
+        {
+            $sessions = $GLOBALS['pdo']->prepare("DELETE FROM sessions WHERE uid = :uid");
+            $sessions->bindParam(":uid", $userid, PDO::PARAM_INT);
+            $sessions->execute();
+            if ($sessions->rowCount() > 0) {
+                return true;
+            }
             return false;
         }
 

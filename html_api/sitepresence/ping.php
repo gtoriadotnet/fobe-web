@@ -10,7 +10,7 @@ header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
 $success = false;
-if (updateLastSeen($GLOBALS['user']->id)) {
+if ($GLOBALS['user']->UpdateLastSeen()) {
    $success = true;
 }
 die(json_encode(["success" => $success]));

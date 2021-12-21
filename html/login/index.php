@@ -16,9 +16,9 @@ if(isset($_POST['lg']))
 	if(usernameExists($username)) 
 	{
 		$userID = getID($username);
-		if(passwordCorrect($userID, $password)) 
+		if ($GLOBALS['user']->ValidatePassword($userID, $password))
 		{
-			createSession($userID);
+			$GLOBALS['user']->CreateSession($userID);
 			
 			if (isset($_GET['referral']))
 			{
