@@ -72,8 +72,7 @@ function genToken($jobid) {
 
 function StartServer($gid) 
 {
-	$gameInfo = getAssetInfo($gid);
-	$jobuuid = genJobId(); //generate a UUID for the job
+	$gameInfo = Asset::GetAssetInfo($gid);
 	$jobuuid = Game::GenerateJobId(); //generate a UUID for the job
 	$ip = $GLOBALS['gameMachine']; //IP address of the gameserver machine
 	$port = Game::AllocatePort(); //generate an available port for the gameserver
