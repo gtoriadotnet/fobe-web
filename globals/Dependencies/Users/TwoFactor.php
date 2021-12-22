@@ -4,9 +4,6 @@
     Alphaland 2021
 */
 
-// Astro, please make public members start with capital letters
-// Also where you aren't actually fetching data, please make it do a COUNT(*)
-
 namespace Alphaland\Users {
 
     use PDO;
@@ -18,10 +15,10 @@ namespace Alphaland\Users {
             $secret = "";
             do {
                 $secret = $GLOBALS['authenticator']->createSecret();
-                $keycheck = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `secret` = :ac");
+                $keycheck = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `twofactor` WHERE `secret` = :ac");
                 $keycheck->bindParam(":ac", $secret, PDO::PARAM_STR);
                 $keycheck->execute();
-            } while ($keycheck->rowCount() != 0);
+            } while ($keycheck->fetchColumn() != 0);
             return $secret;
         }
 
@@ -71,10 +68,10 @@ namespace Alphaland\Users {
 
         public static function Is2FAInitialized(int $userid)
         {
-            $isinit = $GLOBALS['pdo']->prepare("SELECT * FROM `twofactor` WHERE `validated` = 1 AND `userid` = :uid");
+            $isinit = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `twofactor` WHERE `validated` = 1 AND `userid` = :uid");
             $isinit->bindParam(":uid", $userid, PDO::PARAM_INT);
             $isinit->execute();
-            if ($isinit->rowCount() > 0) {
+            if ($isinit->fetchColumn() > 0) {
                 return true;
             }
             return false;
@@ -137,10 +134,10 @@ namespace Alphaland\Users {
         {
             $localuser = $GLOBALS['user']->id;
             $session = $GLOBALS['user']->sessionCookieID;
-            $check = $GLOBALS['pdo']->prepare("SELECT * FROM `sessions` WHERE `twoFactorUnlocked` = 1 AND `id` = :session");
+            $check = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `sessions` WHERE `twoFactorUnlocked` = 1 AND `id` = :session");
             $check->bindParam(":session", $session, PDO::PARAM_INT);
             $check->execute();
-            if ($check->rowCount() > 0 || !TwoFactor::Is2FAInitialized($localuser)) {
+            if ($check->fetchColumn() > 0 || !TwoFactor::Is2FAInitialized($localuser)) {
                 return true;
             }
             return false;
