@@ -103,7 +103,6 @@ namespace Alphaland\Users {
                 } else {
                     die(print_r($soap));
                 }
-                logSoapFault($soap, "Render Player Closeup ".$userid." Job", $script);
                 return false;
             }
         }
@@ -141,7 +140,6 @@ namespace Alphaland\Users {
                     Render::Update($userid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Player ".$userid." Job", $script);
                 return false;
             }
         }

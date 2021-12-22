@@ -40,7 +40,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Hat ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -73,7 +72,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render TShirt ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -106,7 +104,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Shirt ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -139,7 +136,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Pants ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -171,7 +167,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Face ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -204,7 +199,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Head ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -236,7 +230,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Gear ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -270,7 +263,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Package ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -302,7 +294,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Model ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -334,7 +325,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap);
                     return true;
                 }
-                logSoapFault($soap, "Render Mesh ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }
@@ -366,7 +356,6 @@ namespace Alphaland\Assets {
                     Render::Update($assetid, $soap, true);
                     return true;
                 }
-                logSoapFault($soap, "Render Place ".$assetid." Job", $thumbnailScript);
                 return false;
             }
         }

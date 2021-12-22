@@ -2,6 +2,7 @@
 
 /*
     Alphaland 2021
+    This is responsible for communicating to the specified Webservice
     Nikita TODO: ALPHA-22 (Response Models for things that definitely have a known response (like specific SOAP actions))
                  https://jira.mfdlabs.local/browse/ALPHA-22
 */
@@ -9,6 +10,7 @@
 namespace Alphaland\Grid {
 
     use stdClass;
+    use PDO;
 
     class RccServiceHelper
     {
@@ -19,10 +21,23 @@ namespace Alphaland\Grid {
             $this->ServiceIp = $ServiceIp;
         }
 
+        private function LogFault($soap, $description)
+        {
+            $theFault = print_r($soap, TRUE); //soap object fault to human readable string (ghetto?)
+            $fault = $GLOBALS['pdo']->prepare("INSERT INTO soap_faults(description, fault, whenOccurred) VALUES(:jd, :f, UNIX_TIMESTAMP())");
+            $fault->bindParam(":jd", $description, PDO::PARAM_STR);
+            $fault->bindParam(":f", $theFault, PDO::PARAM_STR);
+            $fault->execute();
+        }
+
         private function SoapCallService(string $name, array $arguments = [])
         {
             $soapcl = new \SoapClient($GLOBALS['RCCwsdl'], ["location" => "http://" . $this->ServiceIp, "uri" => "http://roblox.com/", "exceptions" => false]);
-            return $soapcl->{$name}($arguments); //thanks BrentDaMage didnt know u can do this
+            $soapcl = $soapcl->{$name}($arguments); //thanks BrentDaMage didnt know u can do this
+            if (is_soap_fault($soapcl)) {
+                $this->LogFault($soapcl, $name . " Exception"); //log faults 
+            }
+            return $soapcl; 
         }
 
         private function VerifyLuaValue($value) //mostly due to booleans, but maybe something will come up in the future
