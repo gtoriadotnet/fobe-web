@@ -2380,18 +2380,6 @@ function canJoinUser($uid) //
 
 //email stuff {
 	
-function emailRegistered($email)
-{
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE email = :e"); //verify user
-	$check->bindParam(":e", $email, PDO::PARAM_STR);
-	$check->execute();
-	if ($check->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-	
 function sendMail($from, $recipient, $subject, $body, $altbody)
 {
 	$job = popen("cd C:/Webserver/nginx/Alphaland && start /B php sendEmail.php ".$from." ".$recipient." ".base64_encode($subject)." ".base64_encode($body)." ".base64_encode($altbody), "r"); 
@@ -2669,35 +2657,6 @@ function sendPasswordReset($from, $recipient, $recipientuid) //1 = success, 2 = 
 }
 	
 //email stuff end }
-
-//signup keys {
-	
-function verifySignupKey($key) 
-{
-	$n = $GLOBALS['pdo']->prepare("SELECT * FROM signup_keys WHERE signupkey = :t AND valid = 1");
-	$n->bindParam(":t", $key, PDO::PARAM_INT);
-	$n->execute();
-	
-	if ($n->rowCount() > 0)
-	{
-		$invalidate = $GLOBALS['pdo']->prepare("UPDATE signup_keys SET valid = 0 WHERE signupkey = :t");
-		$invalidate->bindParam(":t", $key, PDO::PARAM_INT);
-		$invalidate->execute();
-		return true;
-	}
-	return false;
-}
-	
-function genSignupKey() 
-{
-	$t = genSignupKeyHash(16);
-	$n = $GLOBALS['pdo']->prepare("INSERT INTO signup_keys(signupkey, whenGenerated) VALUES(:t, UNIX_TIMESTAMP())");
-	$n->bindParam(":t", $t, PDO::PARAM_INT);
-	if($n->execute()) 
-	{
-		return $t;
-	}
-}
 	
 //signup keys end }
 
@@ -2724,22 +2683,6 @@ function officialPlayerBadges($id) {
 	$check->bindParam(":i", $id, PDO::PARAM_INT);
 	$check->execute();
 	return $check;
-}
-
-function giveBadge($badgeid, $userid)
-{
-	$gbadge = $GLOBALS['pdo']->prepare("INSERT INTO user_badges(uid,bid,isOfficial,whenEarned) VALUES(:n, :d, 1, UNIX_TIMESTAMP())");
-	$gbadge->bindParam(":n", $userid, PDO::PARAM_INT);
-	$gbadge->bindParam(":d", $badgeid, PDO::PARAM_INT);
-	$gbadge->execute();
-}
-
-function removeBadge($badgeid, $userid)
-{
-	$rbadge = $GLOBALS['pdo']->prepare("DELETE FROM user_badges WHERE uid = :u AND bid = :b");
-	$rbadge->bindParam(":u", $userid, PDO::PARAM_INT);
-	$rbadge->bindParam(":b", $badgeid, PDO::PARAM_INT);
-	$rbadge->execute();
 }
 
 /////////////////
@@ -2834,16 +2777,6 @@ function rewardUserBadge($UserID, $BadgeID, $PlaceID)
 //end of badges }
 
 //backend communication and utilities for jobs {
-
-function logSoapFault($soapresult, $description, $script)
-{
-	$theFault = print_r($soapresult, TRUE);
-	$fault = $GLOBALS['pdo']->prepare("INSERT INTO soap_faults(jobdescription, script, fault, whenOccurred) VALUES(:jd, :sc, :f, UNIX_TIMESTAMP())");
-	$fault->bindParam(":jd", $description, PDO::PARAM_STR);
-	$fault->bindParam(":sc", $script, PDO::PARAM_STR);
-	$fault->bindParam(":f", $theFault, PDO::PARAM_STR);
-	$fault->execute();
-}
 
 function isThumbnailerAlive() //the main portion of this check is now a background script
 {
