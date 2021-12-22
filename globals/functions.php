@@ -4444,8 +4444,10 @@ function getNav()
 				'.$gameserverstatus.'
 			</header>
 			<script>
-				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute
+				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute;
+				$(window).on("load", function() {
 					setTimeout(function() { new Snow("alphaland-main-body");}, 800);
+				});
 			</script>
 			<br/>';
 	}
