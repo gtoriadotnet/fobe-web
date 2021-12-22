@@ -5,6 +5,7 @@
 	TODO: This needs a re-do. This is one of the first pages on this project
 */
 
+use Alphaland\Administration\SignupKey;
 use Alphaland\Moderation\Filter;
 use Alphaland\Users\Activation;
 use Alphaland\Users\ReferralProgram;
@@ -98,7 +99,7 @@ else
 				{
 					$isUserGen = true;
 				}
-				else if (verifySignupKey($signupkey)) //old invite keys from admins
+				else if (SignupKey::ValidateSignupKey($signupkey)) //invite keys from admins
 				{
 					$isAdminGen = true;
 				}

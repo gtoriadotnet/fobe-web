@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Administration\SignupKey;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -14,7 +15,7 @@ $alert = "";
 $generated_key = "";
 if(isset($_POST['Submit'])) 
 {
-	$generated_key = genSignupKey();
+	$generated_key = SignupKey::GenerateSignupKey();
 	if (!empty($generated_key))
 	{
 		$alert = "<div class='alert alert-success' role='alert'>Generated</div>";
