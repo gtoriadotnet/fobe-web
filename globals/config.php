@@ -17,7 +17,7 @@ use Alphaland\Users\TwoFactor;
 use Alphaland\Moderation\UserModerationManager;
 use Alphaland\Web\WebContextManager;
 use Alphaland\Common\System;
-use Alphaland\Users\User;
+use Alphaland\Users\Session;
 
 try 
 {
@@ -114,10 +114,14 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/UI/ImageHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Render.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/Signing.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/Email.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Ticket.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/User.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Session.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Outfit.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/Filter.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Badge.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Administration/SignupKey.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -143,7 +147,7 @@ try
 	require_once 'functions.php';
 
 	//user
-	$user = new User();
+	$user = new Session();
 	
 	//redirects
 	if (!System::IsCommandLine() && //is not executed from cmd line
