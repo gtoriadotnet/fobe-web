@@ -1,10 +1,12 @@
 <?php
 
+use Alphaland\Users\User;
+
 $alert = '';
 if(isset($_POST['Submit'])) 
 {
 	$currentpassword = cleanInput($_POST['curpassword']);
-	if ($GLOBALS['user']->ValidatePassword($user->id, $currentpassword) )
+	if (User::ValidatePassword($user->id, $currentpassword))
 	{
 		if ($_POST['npassword'] == $_POST['cnpassword'])
 		{

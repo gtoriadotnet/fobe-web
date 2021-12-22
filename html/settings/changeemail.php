@@ -1,5 +1,7 @@
 <?php
 
+use Alphaland\Users\User;
+
 $alert = '';
 
 if(isset($_POST['Submit'])) 
@@ -13,7 +15,7 @@ if(isset($_POST['Submit']))
 		else
 		{
 			$password = cleanInput($_POST['password']);
-			if ($GLOBALS['user']->ValidatePassword($user->id, $password))
+			if (User::ValidatePassword($user->id, $password))
 			{
 				$changeemail = changeEmail($_POST['email']);
 				

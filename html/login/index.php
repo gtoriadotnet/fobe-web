@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
 
 $error = "";
@@ -16,7 +17,7 @@ if(isset($_POST['lg']))
 	if(usernameExists($username)) 
 	{
 		$userID = getID($username);
-		if ($GLOBALS['user']->ValidatePassword($userID, $password))
+		if (User::ValidatePassword($userID, $password))
 		{
 			$GLOBALS['user']->CreateSession($userID);
 			
