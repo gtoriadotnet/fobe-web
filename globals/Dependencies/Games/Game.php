@@ -21,7 +21,7 @@ namespace Alphaland\Games {
                 $s = $GLOBALS['pdo']->prepare("SELECT * FROM `open_servers` WHERE `port` = :p AND `status` < 2");
                 $s->bindParam(":p", $port, PDO::PARAM_STR);
                 $s->execute();
-            } while ($s->fetchColumn() != 0);
+            } while ($s->fetchColumn() != 0 || $port == 57236);
             return $port;
         }
 
