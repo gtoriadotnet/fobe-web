@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Users\Badge;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -47,19 +48,18 @@ if(isset($_POST['rankuser']))
 				$badge = $pdo->prepare("DELETE FROM user_badges WHERE uid = :u AND (bid = 2 OR bid = 3)");
 				$badge->bindParam(":u", $userid, PDO::PARAM_INT);
 				$badge->execute();
-				if ($rank > 0)
-				{
-					$newbadge = 0;
-					if ($rank == 1)
+				if ($rank > 0) {
+					switch ($rank)
 					{
-						$newbadge = 2;
+						case 1:
+							Badge::GiveOfficialBadge(2, $userid);
+							break;
+						case 2:
+							Badge::GiveOfficialBadge(3, $userid);
+							break;
+						default:
+							break;						
 					}
-					elseif($rank == 2)
-					{
-						$newbadge = 3;
-					}
-					
-					giveBadge($newbadge, $userid);
 				}
 			}
 		}
