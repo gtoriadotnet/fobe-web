@@ -6,6 +6,7 @@
 */
 
 use Alphaland\Administration\SignupKey;
+use Alphaland\Common\Email;
 use Alphaland\Moderation\Filter;
 use Alphaland\Users\Activation;
 use Alphaland\Users\ReferralProgram;
@@ -77,7 +78,7 @@ else
 				$error = '<div class="alert alert-danger" role="alert">The email you entered is invalid</div>';
 			}
 			
-			if (emailRegistered($email))
+			if (Email::IsEmailRegistered($email))
 			{
 				$error = "Email is already registered";
 			}
