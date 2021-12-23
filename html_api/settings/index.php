@@ -7,6 +7,7 @@ Alphaland 2021
 
 //headers
 
+use Alphaland\Common\Email;
 use Alphaland\Users\ReferralProgram;
 use Alphaland\Users\TwoFactor;
 
@@ -24,7 +25,7 @@ $userquery = $userquery->fetch(PDO::FETCH_OBJ);
 
 $username = getUsername($userquery->id);
 $blurb = $userquery->blurb;
-$email = obfuscate_email($userquery->email);
+$email = Email::ObfuscateEmail($userquery->email);
 $verified = (bool)$userquery->verified;
 $joinpref = $userquery->canJoin;
 $tradepref = null;
