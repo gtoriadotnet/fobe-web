@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\User;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -37,14 +40,14 @@ $usershout = userShout($userquery->id);
 $blurb = cleanOutput($userquery->blurb);
 $joindate = date("m/d/Y", $userquery->joindate);
 $placevisits = userPlaceVisits($userquery->id); 
-$privateinventory = isUserInventoryPrivate($userquery->id);
+$privateinventory = User::IsInventoryPrivate($userquery->id);
 $playerender = getPlayerRender($userquery->id);
-$playingInfo = userPlaying($userquery->id);
+$playingInfo = User::UserPlaying($userquery->id);
 
 $userInfo = array (
 	array(
 		"userid" => $userquery->id,
-		"siteStatus" => siteStatus($userquery->id),
+		"siteStatus" => User::SiteStatus($userquery->id),
 		"gameAssetId" => $playingInfo['placeid'],
 		"gameJobId" => $playingInfo['jobid'],
 		"username" => $username,

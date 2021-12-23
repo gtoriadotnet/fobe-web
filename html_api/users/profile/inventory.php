@@ -7,6 +7,9 @@ TODO: UNGHETTO
 */
 
 //headers
+
+use Alphaland\Users\User;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
@@ -88,7 +91,7 @@ foreach($items as $item)
 }
 // ...
 
-if (!isUserInventoryPrivate($userid)) {
+if (!User::IsInventoryPrivate($userid)) {
 	die(json_encode($jsonData));
 } else {
 	die(json_encode(["message"=>"User's inventory is private"]));

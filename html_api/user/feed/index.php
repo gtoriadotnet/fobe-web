@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\User;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -84,7 +87,7 @@ foreach($shouts as $shout)
 	//{
 		$whenshout = date("m/d/Y", $timestamp);
 	//}
-	$sitestatus = siteStatus($userid);
+	$sitestatus = User::SiteStatus($user->id);
 	
 	$shoutInfo = array(
 		"userid" => $userid,

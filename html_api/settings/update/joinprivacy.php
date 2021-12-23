@@ -5,6 +5,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Users\User;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -19,5 +22,5 @@ else
 {	
 	$privacy = $data->preference;
 	header('Content-Type: application/json');
-	echo json_encode(array("success" => setCanJoinUser($privacy)));
+	echo json_encode(array("success" => User::SetCanJoinUser($user->id, $privacy)));
 }

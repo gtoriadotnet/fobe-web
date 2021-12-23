@@ -6,6 +6,9 @@ Alphaland 2021
 
 
 //headers
+
+use Alphaland\Users\User;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -70,7 +73,7 @@ foreach($users as $user)
 	$id = $user['id'];
 	$username = $user['username'];
 	$blurb = cleanOutput($user['blurb'], false); //pass false to not add html linebreaks
-	$sitestatus = siteStatus($id);
+	$sitestatus = User::SiteStatus($id);
 	$lastseen = date("m/d/Y", $user['lastseen']);
 	$thumbnail = getPlayerRender($user['id']);
 	

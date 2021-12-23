@@ -2073,40 +2073,6 @@ function playerOwnsAsset($id, $userid=NULL)
 
 //user functions
 
-function userPlaying($userid)
-{
-	$p = $GLOBALS['pdo']->prepare("SELECT *  FROM game_presence WHERE uid = :i AND (lastPing + 50) > UNIX_TIMESTAMP()");
-	$p->bindParam(":i", $userid, PDO::PARAM_INT);
-	$p->execute();
-					
-	if($p->rowCount() > 0) //if the ingame check has any results
-	{
-		if (canJoinUser($userid))
-		{
-			$playingInfo = $p->fetch(PDO::FETCH_OBJ);
-			$info = array (
-				"placeid" => $playingInfo->placeid,
-				"jobid" =>  $playingInfo->jobid
-			);
-			return $info;
-		}
-	}		
-	$info = array (
-		"placeid" => null,
-		"jobid" =>  null
-	);
-	return $info;
-}
-
-function isUserInventoryPrivate($userid)
-{
-	if(userInfo($userid)->privateInventory && !$GLOBALS['user']->IsAdmin())
-	{
-		return true;
-	}
-	return false;
-}
-
 function chatFilterInfractionLimit($userid, $limit, $seconds)
 {
 	$infractions = $GLOBALS['pdo']->prepare("SELECT * FROM chat_logs WHERE whoSent = :uid AND (whenSent + :seconds) > UNIX_TIMESTAMP() AND trippedFilter = 1");
@@ -2132,50 +2098,6 @@ function kickUserIfInGame($userid, $message)
 	}
 }
 
-function siteStatus($userid)
-{
-	$p = $GLOBALS['pdo']->prepare("SELECT *  FROM game_presence WHERE uid = :i AND (lastPing + 50) > UNIX_TIMESTAMP()");
-	$p->bindParam(":i", $userid, PDO::PARAM_INT);
-	$p->execute();
-
-	$userinfo = $GLOBALS['pdo']->prepare('SELECT * FROM `users` WHERE id = :uid');
-	$userinfo->bindParam(':uid', $userid, PDO::PARAM_INT);
-	$userinfo->execute();
-	$userinfo = $userinfo->fetch(PDO::FETCH_OBJ);
-					
-	if($p->rowCount() > 0) //if the ingame check has any results
-	{
-		$serverInfo = $p->fetch(PDO::FETCH_OBJ);
-					
-		$g = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-		$g->bindParam(":i", $serverInfo->placeid, PDO::PARAM_INT);
-		$g->execute();
-					
-		$gameInfo = $g->fetch(PDO::FETCH_OBJ);
-					
-		if (canJoinUser($userinfo->id)) //depending on the user's settings, show what game they are playing (might wanna also pass the userID variable if there are options such as everyone, friends only, etc)
-		{
-			//user viewing profile has permission to see what game they are in
-			return cleanOutput($gameInfo->Name);
-		}
-		else
-		{
-			//no perms
-			return 'In-Game';
-		}			
-	}
-	else //if no ingame result, check if the user has pinged the site in a while
-	{
-		if (($userinfo->lastseen + 120) > time()) 
-		{
-			return 'Online';
-		}
-		else
-		{
-			return 'Offline';
-		}
-	}
-}
 // ...
 
 //friend request button check
@@ -2257,23 +2179,6 @@ function placeAssetComment($aid, $comment) //1 = comment placed, 2 = cooldown, 3
 //end catalog comments stuff }
 
 //canjoin stuff {
-	
-function setCanJoinUser($status)
-{
-	$localuser = $GLOBALS['user']->id;
-	$maxcanjoinstatus = 2;
-	
-	if ($status <= $maxcanjoinstatus)
-	{
-		$setstatus = $GLOBALS['pdo']->prepare("UPDATE users SET canJoin = :c WHERE id = :u");
-		$setstatus->bindParam(":c", $status, PDO::PARAM_INT);
-		$setstatus->bindParam(":u", $localuser, PDO::PARAM_INT);
-		$setstatus->execute();
-		
-		return true;
-	}
-	return false;
-}
 	
 function canJoinUser($uid) //
 {
