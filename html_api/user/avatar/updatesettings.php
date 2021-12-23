@@ -8,6 +8,7 @@ Alphaland 2021
 //headers
 
 use Alphaland\Users\Render;
+use Alphaland\Users\User;
 
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
@@ -27,22 +28,22 @@ else
 	if (!Render::PendingRender($user->id))
 	{
 		if ($angleRight) {
-			if (setHeadshotAngleRight($user->id)) {
+			if (User::SetHeadshotAngleRight($user->id)) {
 				$alert = true;
 			}
 		} else if ($angleLeft) {
-			if (setHeadshotAngleLeft($user->id)) {
+			if (User::SetHeadshotAngleLeft($user->id)) {
 				$alert = true;
 			}
 		} else {
-			if (setHeadshotAngleCenter($user->id)) {
+			if (User::SetHeadshotAngleCenter($user->id)) {
 				$alert = true;
 			}
 		}
 
 		if ($alert) {
 			if (!Render::RenderCooldown($user->id)) {
-				rerenderutility();
+				Render::RenderPlayer($localuser);
 			} else {
 				$alert = "Slow down!";
 			}

@@ -6,6 +6,7 @@
 
 namespace Alphaland\Users {
 
+    use Alphaland\Users\User;
     use Alphaland\Users\Render;
     use Exception;
     use PDO;
@@ -93,7 +94,7 @@ namespace Alphaland\Users {
                 $rightleg = (int)$wearingcolors->rl;
 
                 //currently wearing items
-                $assets = wearingAssets($userid);
+                $assets = User::GetWearingAssetsString($userid);
 
                 //add to db
                 $outfit = $GLOBALS['pdo']->prepare("INSERT INTO user_outfits(userid, assets, name, h, t, la, ra, ll, rl, headshotAngleRight, headshotAngleLeft, ThumbHash, HeadshotThumbHash, whenCreated) VALUES (:uid, :assets, :name, :h, :t, :la, :ra, :ll, :rl, :har, :hal, :th, :hth, UNIX_TIMESTAMP())");

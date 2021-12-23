@@ -1376,72 +1376,6 @@ function configPermission($groupid)
 
 // ...
 
-//render utility functions
-
-function setHeadshotAngleRight($userid)
-{
-	$right = $GLOBALS['pdo']->prepare('UPDATE users SET headshotAngleRight = 1, headshotAngleLeft = 0 WHERE id = :uid');
-	$right->bindParam(":uid", $userid, PDO::PARAM_INT);
-	$right->execute();
-	if ($right->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-function setHeadshotAngleLeft($userid)
-{
-	$left = $GLOBALS['pdo']->prepare('UPDATE users SET headshotAngleRight = 0, headshotAngleLeft = 1 WHERE id = :uid');
-	$left->bindParam(":uid", $userid, PDO::PARAM_INT);
-	$left->execute();
-	if ($left->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-function setHeadshotAngleCenter($userid)
-{
-	$center = $GLOBALS['pdo']->prepare('UPDATE users SET headshotAngleRight = 0, headshotAngleLeft = 0 WHERE id = :uid');
-	$center->bindParam(":uid", $userid, PDO::PARAM_INT);
-	$center->execute();
-	if ($center->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
-}
-
-function wearingAssets($userid) //returns wearing asset list separated by ;
-{
-	$wearingitems = $GLOBALS['pdo']->prepare('SELECT * FROM wearing_items WHERE uid = :uid ORDER BY aid ASC'); //wearing items from lowest to highest (EZ)
-	$wearingitems->bindParam(":uid", $userid, PDO::PARAM_INT);
-	$wearingitems->execute();
-	
-	$iter = 0;
-	$wearingassets = "";
-	foreach($wearingitems as $item)
-	{
-		$iter += 1;
-		$wearingassets .= ($iter == $wearingitems->rowCount()) ? $item['aid'] : $item['aid'] . ';';
-	}
-	return $wearingassets;
-}
-
-function rerenderutility()
-{
-	$localplayer = $GLOBALS['user']->id;
-	
-	$setrenderstat = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 1, pendingHeadshotRender = 1, renderCount = renderCount+1, lastRender = UNIX_TIMESTAMP(), lastHeadshotRender = UNIX_TIMESTAMP() WHERE id = :u");
-	$setrenderstat->bindParam(":u", $localplayer, PDO::PARAM_INT);
-	$setrenderstat->execute();
-	UsersRender::RenderPlayer($localplayer);
-}
-
-//end local user render utility functions
-
 //asset functions
 
 function availableAssetId() {
@@ -3181,7 +3115,7 @@ function deequipItem($assetId)
 				$deequip->bindParam(":a", $assetId, PDO::PARAM_INT);
 				$deequip->execute();
 
-				rerenderutility();
+				UsersRender::RenderPlayer($localuser);
 			}
 			else
 			{
@@ -3243,7 +3177,7 @@ function equipItem($assetId)
 								$equip->bindParam(":a", $assetId, PDO::PARAM_INT);
 								$equip->execute();
 
-								rerenderutility();
+								UsersRender::RenderPlayer($localuser);
 							}
 						}
 						else

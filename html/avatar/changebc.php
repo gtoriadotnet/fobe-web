@@ -30,7 +30,7 @@ if(getBC($clr) != "-")
 			$upd->bindParam(":b", $clr, PDO::PARAM_INT);
 			$upd->execute();
 
-			rerenderutility();
+			Render::RenderPlayer($localuser);
 			
 			echo "s";
 		}

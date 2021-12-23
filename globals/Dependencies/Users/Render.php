@@ -64,84 +64,103 @@ namespace Alphaland\Users {
             return false;
         }
 
+        private static function SetPlayerRenderStats(int $userid)
+        {
+            $setrenderstat = $GLOBALS['pdo']->prepare("UPDATE users SET pendingRender = 1, pendingHeadshotRender = 1, renderCount = renderCount+1, lastRender = UNIX_TIMESTAMP(), lastHeadshotRender = UNIX_TIMESTAMP() WHERE id = :u");
+            $setrenderstat->bindParam(":u", $userid, PDO::PARAM_INT);
+            $setrenderstat->execute();
+            if ($setrenderstat->rowCount() > 0) {
+                return true;
+            }
+            return false;
+        }
+
         public static function RenderPlayerCloseup(int $userid, bool $fork=false)
         {
-            if ($fork)
+            if (Render::SetPlayerRenderStats($userid)) 
             {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
-                if ($job !== FALSE);
+                if ($fork)
                 {
-                    pclose($job);
-                    return true;
+                    $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
+                    if ($job !== FALSE);
+                    {
+                        pclose($job);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-            else
-            {
-                $script = file_get_contents($GLOBALS['avatarcloseupthumbnailscript']);
-                
-                $angleright = userInfo($userid)->headshotAngleRight;
-                $angleleft = userInfo($userid)->headshotAngleLeft;
-                
-                $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
-                $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Player Closeup ".$userid, $script, array(
-                        $userid,
-                        "https://www.alphaland.cc/",
-                        "https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
-                        "png",
-                        "840",
-                        "840",
-                        (bool)$angleright, //angleRight
-                        (bool)$angleleft //angleLeft
-                    ))
-                );
-        
-                if (!is_soap_fault($soap)) {
-                    Render::Update($userid, $soap, true);
-                    return true;
-                } else {
-                    die(print_r($soap));
+                else
+                {
+                    $script = file_get_contents($GLOBALS['avatarcloseupthumbnailscript']);
+                    
+                    $angleright = userInfo($userid)->headshotAngleRight;
+                    $angleleft = userInfo($userid)->headshotAngleLeft;
+                    
+                    $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
+                    $soap = $soap->BatchJobEx(
+                        $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Player Closeup ".$userid, $script, array(
+                            $userid,
+                            "https://www.alphaland.cc/",
+                            "https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
+                            "png",
+                            "840",
+                            "840",
+                            (bool)$angleright, //angleRight
+                            (bool)$angleleft //angleLeft
+                        ))
+                    );
+            
+                    if (!is_soap_fault($soap)) {
+                        Render::Update($userid, $soap, true);
+                        return true;
+                    } else {
+                        die(print_r($soap));
+                    }
+                    return false;
                 }
-                return false;
             }
+            return false;
         }
 
         public static function RenderPlayer(int $userid, bool $fork=false)
         {
-            if ($fork)
+            if (Render::SetPlayerRenderStats($userid)) 
             {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
-                if ($job !== FALSE);
+                if ($fork)
                 {
-                    pclose($job);
-                    return true;
+                    $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
+                    if ($job !== FALSE);
+                    {
+                        pclose($job);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
-            }
-            else
-            {
-                Render::RenderPlayerCloseup($userid, true); //run in the background so it will *hopefully* finish with this
-                $script = file_get_contents($GLOBALS['avatarthumbnailscript']);
-                
-                $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
-                $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Player ".$userid, $script, array(
-                        $userid,
-                        "https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
-                        "https://www.alphaland.cc/",
-                        "png",
-                        "840",
-                        "840"
-                    ))
-                );
-        
-                if (!is_soap_fault($soap)) {
-                    Render::Update($userid, $soap);
-                    return true;
+                else
+                {
+                    Render::RenderPlayerCloseup($userid, true); //run in the background so it will *hopefully* finish with this
+                    $script = file_get_contents($GLOBALS['avatarthumbnailscript']);
+                    
+                    $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
+                    $soap = $soap->BatchJobEx(
+                        $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Player ".$userid, $script, array(
+                            $userid,
+                            "https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
+                            "https://www.alphaland.cc/",
+                            "png",
+                            "840",
+                            "840"
+                        ))
+                    );
+            
+                    if (!is_soap_fault($soap)) {
+                        Render::Update($userid, $soap);
+                        return true;
+                    }
+                    return false;
                 }
-                return false;
             }
+            return false;
         }
 
         public static function Update(int $userid, $soapobject, $headshot=false)
