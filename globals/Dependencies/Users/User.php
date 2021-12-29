@@ -218,14 +218,6 @@ namespace Alphaland\Users {
             return true;
         }
 
-        public static function GroupsCount(int $userid)
-        {
-            $groups = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM groups WHERE creatorid = :creatorid");
-            $groups->bindParam(":creatorid", $userid, PDO::PARAM_INT);
-            $groups->execute();
-            return $groups->fetchColumn();
-        }
-
         public static function OwnsAsset(int $userid, $assetid)
         {
             $ownership = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `owned_assets` WHERE `aid` = :assetid AND `uid` = :userid");
@@ -233,18 +225,6 @@ namespace Alphaland\Users {
             $ownership->bindParam(":userid", $userid, PDO::PARAM_INT);
             $ownership->execute();
             if($ownership->fetchColumn() > 0) {
-                return true;
-            }
-            return false;
-        }
-
-        public static function IsInGroup(int $userid, int $groupid)
-        {
-            $member = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `group_members` WHERE `userid` = :uid AND `groupid` = :gid");
-            $member->bindParam(":uid", $userid, PDO::PARAM_INT);
-            $member->bindParam(":gid", $groupid, PDO::PARAM_INT);
-            $member->execute();
-            if ($member->fetchColumn() > 0) {
                 return true;
             }
             return false;

@@ -213,6 +213,18 @@ namespace Alphaland\Groups {
             return false;
         }
 
+        public static function IsInGroup(int $userid, int $groupid)
+        {
+            $member = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `group_members` WHERE `userid` = :uid AND `groupid` = :gid");
+            $member->bindParam(":uid", $userid, PDO::PARAM_INT);
+            $member->bindParam(":gid", $groupid, PDO::PARAM_INT);
+            $member->execute();
+            if ($member->fetchColumn() > 0) {
+                return true;
+            }
+            return false;
+        }
+
         public static function NewJoinRequest(int $groupid, int $userid)
         {
             $newrequest = $GLOBALS['pdo']->prepare("INSERT INTO `group_join_requests`(`groupid`, `userid`, `whenRequested`) VALUES (:groupid, :userid, UNIX_TIMESTAMP())");
