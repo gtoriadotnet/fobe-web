@@ -98,25 +98,6 @@ function StartServer($gid)
 			(bool)$gameInfo->isPersonalServer //ispersonalserver
 		))
 	);
-
-	if (is_soap_fault($gameSpawnResult)) {
-		//log the fault
-		$theFault = print_r($gameSpawnResult, TRUE);
-		$description = "Start Gameserver ".$gid." Job";
-		$fault = $GLOBALS['pdo']->prepare("INSERT INTO soap_faults(jobdescription, script, fault, whenOccurred) VALUES(:jd, :sc, :f, UNIX_TIMESTAMP())");
-		$fault->bindParam(":jd", $description, PDO::PARAM_STR);
-		$fault->bindParam(":sc", $script, PDO::PARAM_STR);
-		$fault->bindParam(":f", $theFault, PDO::PARAM_STR);
-		$fault->execute();
-
-		//something failed, set the server to closed (add a limit if a server fails to start for some reason?)
-		/*
-		$s = $GLOBALS['pdo']->prepare("UPDATE open_servers SET status = 2 WHERE jobid = :j AND gameID = :g");
-		$s->bindParam(":j", $jobuuid, PDO::PARAM_STR);
-		$s->bindParam(":g", $gid, PDO::PARAM_INT);
-		$s->execute();
-		*/
-	}
 	
 	return $jobuuid; //return the new job UUID
 }
