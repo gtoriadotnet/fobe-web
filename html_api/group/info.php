@@ -6,6 +6,9 @@ Alphaland 2021
 
 
 //headers
+
+use Alphaland\Groups\Group;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -14,7 +17,7 @@ header('Content-Type: application/json');
 //get params
 $groupid = (int)$_GET['id'];
 
-if (!groupExists($groupid))
+if (!Group::Exists($groupid))
 {
 	die("{}");
 }
@@ -40,23 +43,23 @@ $itemInfo = array(
 	"id" => $id,
 	"name" => $name,
 	"description" => $description,
-	"members" => groupMemberCount($groupid),
+	"members" => Group::MemberCount($groupid),
 	"creatorname" => getUsername($creatorid),
 	"creatorid" => $creatorid,
-	"manualJoinRequests" => isManualApproval($groupid),
-	"pendingJoin" => isPendingRequest($groupid),
-	"groupMember" => isGroupMember($user->id, $groupid),
-	"groupOwner" => isGroupOwner($groupid),
-	"configPermission" => configPermission($groupid),
+	"manualJoinRequests" => Group::IsManualApproval($groupid),
+	"pendingJoin" => Group::IsPendingRequest($user->id, $groupid),
+	"groupMember" => Group::IsMember($user->id, $groupid),
+	"groupOwner" => Group::IsOwner($user->id, $groupid),
+	"configPermission" => Group::ConfigPermission($user->id, $groupid),
 	//"leavePermission" =>
-	"wallViewPermission" => wallViewPermission($groupid),
-	"wallPostPermission" => wallPostPermission($groupid),
-	"wallDeletePermission" => wallDeletePermission($groupid),
-	"postShoutPermission" => postShoutPermission($groupid),
-	"manageLowerRankPermission" => manageLowerRankPermission($groupid),
-	"kickLowerRankPermission" => kickLowerRankPermission($groupid),
-	"acceptJoinRequestPermission" => acceptJoinRequestPermission($groupid),
-	"viewAuditLogPermission" => viewAuditLogPermission($groupid),
+	"wallViewPermission" => Group::WallViewPermission($user->id, $groupid),
+	"wallPostPermission" => Group::WallPostPermission($user->id, $groupid),
+	"wallDeletePermission" => Group::WallDeletePermission($user->id, $groupid),
+	"postShoutPermission" => Group::PostShoutPermission($user->id, $groupid),
+	"manageLowerRankPermission" => Group::ManageLowerRankPermission($user->id, $groupid),
+	"kickLowerRankPermission" => Group::KickLowerRankPermission($user->id, $groupid),
+	"acceptJoinRequestPermission" => Group::AcceptJoinRequestPermission($user->id, $groupid),
+	"viewAuditLogPermission" => Group::ViewAuditLogPermission($user->id, $groupid),
 	"emblem" => getAssetRender($emblem)
 	)
 );

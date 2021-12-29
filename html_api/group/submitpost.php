@@ -6,12 +6,15 @@ Alphaland 2021
 
 
 //headers
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
+use Alphaland\Groups\Group;
+
+header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
+header('Content-Type: application/json');
 
 $groupid = (int)$_GET['groupid'];
-$post = cleanInput(json_decode(file_get_contents('php://input'))->post);
+$post = json_decode(file_get_contents('php://input'))->post;
 
 if (!$groupid)
 {
@@ -19,10 +22,13 @@ if (!$groupid)
 }
 else
 {
-	$placepost = submitPost($groupid, $post);
-	if ($placepost === true) {
-		$placepost = "Post Placed";
+	$placepost = null;
+	try {
+		if (Group::CreatePost($groupid, $user->id, $post)) {
+			$placepost = "Post Placed";
+		}
+	} catch (Exception $e) {
+		$placepost = $e->getMessage();
 	}
-	header('Content-Type: application/json');
 	echo json_encode(array("alert" => $placepost));
 }

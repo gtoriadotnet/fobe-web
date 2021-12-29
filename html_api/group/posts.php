@@ -6,6 +6,9 @@ Alphaland 2021
 
 
 //headers
+
+use Alphaland\Groups\Group;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -17,7 +20,7 @@ $page = $_GET['page'];
 $limit = $_GET['limit'];
 
 //people without permission cant go snooping from the api
-if (!wallViewPermission($groupid))
+if (!Group::WallViewPermission($user->id, $groupid))
 {
 	http_response_code(400);
 }

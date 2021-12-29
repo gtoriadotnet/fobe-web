@@ -6,9 +6,12 @@ Alphaland 2021
 
 
 //headers
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
+use Alphaland\Groups\Group;
+
+header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
+header('Content-Type: application/json');
 
 $data = json_decode(file_get_contents('php://input'));
 $name = $data->name;
@@ -22,10 +25,14 @@ if (!$data)
 }
 else
 {
-	$newgroup = createGroup($name, $description, $joinapprovals, $img);
-	if ($newgroup === true) {
-		$newgroup = "Group Created";
+	$newgroup = null;
+	try {
+		if (Group::Create($name, $description, $joinapprovals, $user->id, $img)) {
+			$newgroup = "Group Created";
+		}
+	} catch (Exception $e) {
+		$newgroup = $e->getMessage();
 	}
-	header('Content-Type: application/json');
+	
 	echo json_encode(array("alert" => $newgroup));
 }

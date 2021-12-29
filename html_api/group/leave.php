@@ -6,9 +6,12 @@ Alphaland 2021
 
 
 //headers
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
+use Alphaland\Groups\Group;
+
+header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
+header('Content-Type: application/json');
 
 $groupid = $_GET['id'];
 
@@ -18,10 +21,14 @@ if (!$groupid)
 }
 else
 {
-	$leavegroup = leaveGroup($groupid);
-	if ($leavegroup === true) {
-		$leavegroup = "Left Group";
+	$leavegroup = null;
+	try {
+		if (Group::Leave($user->id, $groupid)) {
+			$leavegroup = "Left Group";
+		}
+	} catch (Exception $e) {
+		$leavegroup = $e->getMessage();
 	}
-	header('Content-Type: application/json');
+	
 	echo json_encode(array("alert" => $leavegroup));
 }

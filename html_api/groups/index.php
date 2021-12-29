@@ -6,6 +6,9 @@ Alphaland 2021
 
 
 //headers
+
+use Alphaland\Groups\Group;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -70,7 +73,7 @@ foreach($groups as $group)
 	$groupid = $group['id'];
 	$name = cleanOutput($group['name']); 
 	$desc = cleanOutput($group['description']); 
-	$members = groupMemberCount($groupid);
+	$members = Group::MemberCount($groupid);
 	$creatorid = $group['creatorid']; 
 	$emblem = $group['emblem']; 
 	

@@ -1,12 +1,14 @@
 <?php
 
+use Alphaland\Groups\Group;
+
 $groupid = (int)$_GET['id'];
 
 //stuff is wrong !!
 
 if ($groupid)
 {
-	if (!is_int($groupid) || !groupExists($groupid))
+	if (!is_int($groupid) || !Group::Exists($groupid))
 	{
 		http_response_code(404);
 	}

@@ -6,6 +6,9 @@ Alphaland 2021
 
 
 //headers
+
+use Alphaland\Groups\Group;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -43,7 +46,7 @@ foreach($roles as $role)
 	
 	$roleInfo = array(
 		"name" => $rolename,
-		"members" => rankMemberCount($groupid, $rolerank),
+		"members" => Group::RankMemberCount($groupid, $rolerank),
 		"rank" => $rolerank,
 		"wallViewPermission" => $accessgroupwall,
 		"wallPostPermission" => $postgroupwall,

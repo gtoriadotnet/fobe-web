@@ -1,10 +1,12 @@
 <?php
 
+use Alphaland\Groups\Group;
+
 $groupid = (int)$_GET['id'];
 
 if ($groupid)
 {
-	if (!is_int($groupid) || !groupExists($groupid) || !configPermission($groupid))
+	if (!is_int($groupid) || !Group::Exists($groupid) || !Group::ConfigPermission($user->id, $groupid))
 	{
 		http_response_code(404);
 	}

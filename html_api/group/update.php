@@ -6,9 +6,12 @@ Alphaland 2021
 
 
 //headers
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
+use Alphaland\Groups\Group;
+
+header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
+header('Content-Type: application/json');
 
 $groupid = (int)$_GET['id'];
 $updateinfo = (bool)$_GET['updateinfo'];
@@ -28,13 +31,20 @@ if (!$data || !$groupid)
 }
 else
 {
-	$updategroup = "";
+	$updategroup = false;
 	if ($updateinfo) //can be modified with configpermission (Should this be owner only?)(only general info)
 	{
 		$description = $data->description;
 		$joinapprovals = (bool)$data->approvals;
 		$img = $data->emblem;
-		$updategroup = updateGeneralConfig($groupid, $description, $joinapprovals, $img);
+
+		try {
+			if (Group::UpdateGeneralConfig($groupid, $description, $joinapprovals, $img)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($updaterole) //owner restricted
 	{
@@ -49,39 +59,87 @@ else
 		$kicklowerranks = $data->KickLowerRanks;
 		$acceptjoinrequests = $data->AcceptJoinRequests;
 		$auditaccess = $data->ViewAuditLog;
-		$updategroup = updateRole($groupid, $rank, $newrank, $name, $accessgroupwall, $postgroupwall, $deletegroupwallposts, $postgroupshout, $managelowerranks, $kicklowerranks, $acceptjoinrequests, $auditaccess);
+
+		try {
+			if (Group::UpdateRole($groupid, $rank, $newrank, $name, $accessgroupwall, $postgroupwall, $deletegroupwallposts, $postgroupshout, $managelowerranks, $kicklowerranks, $acceptjoinrequests, $auditaccess)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($newrole) //owner restricted
 	{
 		$name = $data->name;
 		$rank = $data->rank;
-		$updategroup = createRole($groupid, $name, $rank);
+
+		try {
+			if (Group::CreateRole($groupid, $name, $rank)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($userrank) //manageLowerRankPermission needed
 	{
 		$userid = $data->userid;
 		$rank = $data->rank;
-		$updategroup = updateUserRank($groupid, $userid, $rank);
+
+		try {
+			if (Group::UpdateUserRank($groupid, $userid, $rank)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($exileuser) //restricted to owner for now
 	{
 		$userid = $data->userid;
-		$updategroup = exileUser($groupid, $userid);
+
+		try {
+			if (Group::ExileUser($groupid, $userid)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($approverequest) //restricted to owner for now
 	{
 		$userid = $data->userid;
-		$updategroup = approveRequest($groupid, $userid);
+		try {
+			if (Group::ApproveJoinRequest($groupid, $userid)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($denyrequest) //restricted to group owner for now
 	{
 		$userid = $data->userid;
-		$updategroup = denyRequest($groupid, $userid);
+
+		try {
+			if (Group::DeleteJoinRequest($groupid, $userid)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else if ($deletepost) //requires delete permission
 	{
 		$postid = $data->postid;
-		$updategroup = deletePost($postid, $groupid);
+
+		try {
+			if (Group::DeletePost($postid, $groupid)) {
+				$updategroup = true;
+			}
+		} catch (Exception $e) {
+			$updategroup = $e->getMessage();
+		}
 	}
 	else
 	{
@@ -91,7 +149,5 @@ else
 	if ($updategroup === true) {
 		$updategroup = "Group Updated";
 	}
-	
-	header('Content-Type: application/json');
 	echo json_encode(array("alert" => $updategroup));
 }

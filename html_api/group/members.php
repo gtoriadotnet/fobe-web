@@ -6,6 +6,9 @@
 */
 
 //headers
+
+use Alphaland\Groups\Group;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -19,7 +22,7 @@ $page = $_GET['page'];
 $limit = $_GET['limit'];
 
 //initial checks
-if (!groupid || !$limit || !$page)
+if (!$groupid || !$limit || !$page)
 {
 	http_response_code(400);
 }
@@ -72,7 +75,7 @@ foreach($members as $member)
 		"username" => $username,
 		"userid" => $userid,
 		"thumbnail" => $thumbnail,
-		"rankname" => getRankName($rank, $groupid),
+		"rankname" => Group::GetRankName($rank, $groupid),
 		"rank" => $rank	
 	);
 	array_push($jsonData, $membersInfo);
