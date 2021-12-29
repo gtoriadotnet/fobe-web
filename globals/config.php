@@ -122,6 +122,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/Filter.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Badge.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Administration/SignupKey.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Economy/EconomyHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Groups/Group.php";
 
 	//authenticator 
