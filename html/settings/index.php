@@ -153,6 +153,18 @@ $body = <<<EOT
                                     </div>
                                 </div>
                                 <hr>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <b>Who can view my inventory:</b>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <select class="form-control" id="settings_inventorypref" onchange="updateInventoryPref(this.value)" autocomplete="off">
+                                            <option value="2">Everyone</option>
+                                            <option value="1">Friends</option>
+                                            <option value="0">Nobody</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="v-pills-theme" role="tabpanel" aria-labelledby="v-pills-theme-tab">
                                 <h5>Theme Settings</h5>
@@ -269,6 +281,14 @@ function successMessage(message)
 	}, 1500);
 }
 
+function updateInventoryPref(id)
+{
+    postJSONCDS("https://api.alphaland.cc/settings/update/inventoryprivacy", JSON.stringify({"preference": id}))
+	.done(function(object) {
+		successMessage("Updated");
+	});
+}
+
 function updatePrivacyJoinPref(id)
 {
 	postJSONCDS("https://api.alphaland.cc/settings/update/joinprivacy", JSON.stringify({"preference": id}))
@@ -307,6 +327,7 @@ function initializeSettings()
         $("#next_ref_regen").html("New keys available starting: <b>" + object.referralkeyrefresh + "</b>");
 		$('#settings_theme').val(object.theme);
 		$('#settings_joinpref').val(object.joinpref);
+        $('#settings_inventorypref').val(object.inventorypref);
 
 		if (object.twofactorenabled) {
 			twofactorEnabled();
@@ -353,6 +374,7 @@ function generateKey()
 		}	
 	});
 }
+
 function activeKeys()
 {
     initializeSettings();
