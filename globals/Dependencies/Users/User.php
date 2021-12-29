@@ -3,6 +3,7 @@
 namespace Alphaland\Users {
 
     use Alphaland\Assets\Asset;
+    use Exception;
     use PDO;
 
     class User
@@ -89,6 +90,24 @@ namespace Alphaland\Users {
             return $wearingassets;
         }
 
+        public static function WearingItemsCount(int $userid, int $assettype)
+        {
+            $check = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `wearing_items` WHERE `uid` = :userid AND (SELECT COUNT(*) from `assets` WHERE `id` = wearing_items.aid AND `AssetTypeId` = :assettypeid) > 0"); 
+            $check->bindParam(":userid", $userid, PDO::PARAM_INT);
+            $check->bindParam(":assettypeid", $assettype, PDO::PARAM_INT);
+            $check->execute();
+            return $check->fetchColumn();
+        }
+
+        public static function LastWornItem(int $userid, int $assettype)
+        {
+            $check = $GLOBALS['pdo']->prepare("SELECT aid FROM `wearing_items` WHERE `uid` = :userid AND (SELECT COUNT(*) from `assets` WHERE `id` = wearing_items.aid AND `AssetTypeId` = :assettypeid) > 0 ORDER BY whenWorn DESC LIMIT 1"); 
+            $check->bindParam(":userid", $userid, PDO::PARAM_INT);
+            $check->bindParam(":assettypeid", $assettype, PDO::PARAM_INT);
+            $check->execute();
+            return $check->fetchColumn();
+        }
+
         public static function SetCanJoinUser(int $userid, int $status)
         {
             if ($status <= 2) {
@@ -166,12 +185,129 @@ namespace Alphaland\Users {
             );
         }
 
-        public static function IsInventoryPrivate(int $userid)
+        public static function SetIsInventoryPrivate(int $userid, int $status)
         {
-            if (User::GetUserInfo($userid)->privateInventory && !$GLOBALS['user']->IsAdmin()) {
+            if ($status <= 2) {
+                $setstatus = $GLOBALS['pdo']->prepare("UPDATE users SET privateInventory = :c WHERE id = :u");
+                $setstatus->bindParam(":c", $status, PDO::PARAM_INT);
+                $setstatus->bindParam(":u", $userid, PDO::PARAM_INT);
+                $setstatus->execute();
+                if ($setstatus->rowCount() > 0) {
+                    return true; 
+                }
+            }
+            return false;
+        }
+
+        public static function IsInventoryPrivate(int $targetuser)
+        {
+            /*
+                0 = no one
+                1 = friends
+                2 = everyone
+            */
+
+            $inventoryView = User::GetUserInfo($targetuser)->privateInventory;
+            if ($targetuser == $GLOBALS['user']->id) {
+                return false;
+            } else if ($inventoryView == 1 && friendsWith($targetuser)) {
+                return false;
+            } else if ($inventoryView == 2) {
+                return false;
+            }
+            return true;
+        }
+
+        public static function GroupsCount(int $userid)
+        {
+            $groups = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM groups WHERE creatorid = :creatorid");
+            $groups->bindParam(":creatorid", $userid, PDO::PARAM_INT);
+            $groups->execute();
+            return $groups->fetchColumn();
+        }
+
+        public static function OwnsAsset(int $userid, $assetid)
+        {
+            $ownership = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `owned_assets` WHERE `aid` = :assetid AND `uid` = :userid");
+            $ownership->bindParam(":assetid", $assetid, PDO::PARAM_INT);
+            $ownership->bindParam(":userid", $userid, PDO::PARAM_INT);
+            $ownership->execute();
+            if($ownership->fetchColumn() > 0) {
                 return true;
             }
             return false;
+        }
+
+        public static function IsInGroup(int $userid, int $groupid)
+        {
+            $member = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `group_members` WHERE `userid` = :uid AND `groupid` = :gid");
+            $member->bindParam(":uid", $userid, PDO::PARAM_INT);
+            $member->bindParam(":gid", $groupid, PDO::PARAM_INT);
+            $member->execute();
+            if ($member->fetchColumn() > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        public static function IsWearingItem($userid, $assetid)
+        {
+            $wearing = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM wearing_items WHERE uid = :userid AND aid = :assetid");
+            $wearing->bindParam(":userid", $userid, PDO::PARAM_INT);
+            $wearing->bindParam(":assetid", $assetid, PDO::PARAM_INT);
+            $wearing->execute();
+            if ($wearing->fetchColumn() > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        public static function DeequipAsset(int $userid, int $assetid, bool $force=false)
+        {
+            if (!User::IsWearingItem($userid, $assetid) && !$force) {
+                throw new Exception('Error occurred');
+            } else if (!isThumbnailerAlive() && !$force) {
+                throw new Exception('Thumbnail Server offline');
+            } else if (Render::RenderCooldown($userid) && !$force) {
+                throw new Exception('Slow down!');
+            } else {
+                $deequip = $GLOBALS['pdo']->prepare("DELETE from wearing_items WHERE uid = :userid AND aid = :assetid"); //delete db key
+                $deequip->bindParam(":userid", $userid, PDO::PARAM_INT);
+                $deequip->bindParam(":assetid", $assetid, PDO::PARAM_INT);
+                $deequip->execute();
+                if (!$force) {
+                    Render::RenderPlayer($userid);
+                }
+                return true;
+            }
+        }
+
+        public static function EquipAsset(int $userid, int $assetid, bool $force=false)
+        {
+            $asset = Asset::GetAssetInfo($assetid);
+            if (!$asset || !User::OwnsAsset($userid, $assetid) || !isWearable($asset->AssetTypeId) && !$force) {
+                throw new Exception('Error occurred');
+            } else if (User::IsWearingItem($userid, $assetid) && !$force) {
+                throw new Exception('Already wearing this item');
+            } else if (!isThumbnailerAlive() && !$force) {
+                throw new Exception('Thumbnail Server offline');
+            } else if (Render::RenderCooldown($userid) && !$force) {
+                throw new Exception('Slow down!');
+            } else if (isAssetModerated($assetid) && !$force) {
+                throw new Exception('This item is moderated');
+            } else {
+                if (User::WearingItemsCount($userid, $asset->AssetTypeId) >= typeToMaxCosmetic($asset->AssetTypeId) && !$force) {
+                    User::DeequipAsset($userid, User::LastWornItem($userid, $asset->AssetTypeId), true);
+                }
+                $equip = $GLOBALS['pdo']->prepare("INSERT INTO wearing_items(uid,aid,whenWorn) VALUES(:userid,:assetid,UNIX_TIMESTAMP())");
+                $equip->bindParam(":userid", $userid, PDO::PARAM_INT);
+                $equip->bindParam(":assetid", $assetid, PDO::PARAM_INT);
+                $equip->execute();
+                if (!$force) {
+                    Render::RenderPlayer($userid);
+                }
+                return true;
+            }         
         }
     }
 }

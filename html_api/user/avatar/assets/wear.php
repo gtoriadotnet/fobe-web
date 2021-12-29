@@ -8,9 +8,12 @@ Alphaland 2021
 //https://api.alphaland.cc/user/avatar/equipItem?assetId=
 
 //headers
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
+use Alphaland\Users\User;
+
+header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 header("access-control-allow-credentials: true");
+header('Content-Type: application/json');
 
 $assetid = (int)$_GET['assetId'];
 
@@ -20,11 +23,12 @@ if (!$assetid)
 }
 else
 {
-	$equip = equipItem($assetid);
-	if ($equip !== true)
-	{
-		header('Content-Type: application/json');
+	$error = null;
+	try {
+		User::EquipAsset($user->id, $assetid);
+	} catch (Exception $e) {
 		http_response_code(500);
-		echo json_encode(array("error" => $equip));
+		$error = $e->getMessage();
 	}
+	echo json_encode(array("error" => $error));
 }

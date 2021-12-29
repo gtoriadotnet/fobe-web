@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
 
 $body = "";
@@ -69,7 +70,7 @@ if(isset($_GET['id']))
 		
 		$buy_button = "";
 		$confirmbuy_button = "";
-		if(playerOwnsAsset($id))
+		if (User::OwnsAsset($user->id, $id))
 		{
 			//already owns the hat
 			$buy_button = '<button class="btn btn-danger" style="width:12rem;" disabled><b>Owned</b></button>';

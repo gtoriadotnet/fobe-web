@@ -1,11 +1,13 @@
 <?php
 
+use Alphaland\Users\User;
+
 header('Content-Type: application/json');
 
 $userid = $_GET['userId'];
 $assetId = $_GET['assetId'];
 
-if (playerOwnsAsset($assetId, $userid) || isOwner($assetId, $userid))
+if (User::OwnsAsset($userid, $assetId) || isOwner($assetId, $userid))
 {
     echo(json_encode(true));
 }
