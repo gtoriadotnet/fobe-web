@@ -30,7 +30,7 @@ else
 		$name = $data->name;
 
 		try {
-			if (Outfit::UpdateOutfit($user->id, $id, $name)) {
+			if (Outfit::UpdateOutfit($user->id, $outfitid, $name)) {
 				$outfitchange = "Outfit Updated";
 			}
 		} catch (Exception $e) {
