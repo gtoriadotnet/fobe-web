@@ -10,6 +10,7 @@ use Alphaland\Assets\Render;
 use Alphaland\Games\Game;
 use Alphaland\Moderation\Filter;
 use Alphaland\Users\Render as UsersRender;
+use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
 
 //safe generation utilities
@@ -1054,22 +1055,6 @@ function typeToMaxCosmetic($itemtype) //itemtype 8 = hats, 2 = tshirts, 11 = shi
 	}
 }
 
-function playerOwnsAsset($id, $userid=NULL) 
-{
-	if ($userid === NULL) {
-		$userid = $GLOBALS['user']->id;
-	}
-
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM owned_assets WHERE aid = :a AND uid = :u");
-	$check->bindParam(":a", $id, PDO::PARAM_INT);
-	$check->bindParam(":u", $userid, PDO::PARAM_INT);
-	$check->execute();
-	if($check->rowCount() > 0) {
-		return true;
-	}
-	return false;
-}
-
 //end asset functions
 
 //user functions
@@ -2032,7 +2017,7 @@ function buyItem($id) //0 = not enough currency, 1 = already owned, 2 = bought, 
 		{
 			if ($playercurrency >= $itemprice) //if the player has greater or equal amount of currency required
 			{
-				if (playerOwnsAsset($id)) //if player owns the asset
+				if (User::OwnsAsset($localuser, $id)) //if player owns the asset
 				{
 					return 1; //already owned
 				}
