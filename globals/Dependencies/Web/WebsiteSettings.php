@@ -43,7 +43,7 @@ namespace Alphaland\Web {
                 case 'float':
                     return (string) $value;
                 case 'boolean':
-                    return $value ? 'true' : 'false';
+                    return $value === true ? 'true' : 'false';
                 case 'array':
                     return json_encode($value);
                 default:
@@ -65,7 +65,8 @@ namespace Alphaland\Web {
                 case 'float':
                     return floatval($value);
                 case 'boolean':
-                    return boolval($value);
+                    // convert the value to a lowercase value
+                    return strtolower($value) === 'true';
                 case 'array':
                     return json_decode($value, true);
                 default:
