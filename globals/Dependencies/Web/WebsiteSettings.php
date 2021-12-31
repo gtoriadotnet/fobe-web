@@ -8,10 +8,6 @@
  * Date: 25/11/2021
  * 
  * Ported from MFDLABS/corp-integral/src/lib/web/settings.fx
- * 
- * Await this copyright to be removed, this is partially owned by the copyright holder of the original code.
- * 
- * MFDLABS TwoTime (c) 2021-
  */
 
 namespace Alphaland\Web {
