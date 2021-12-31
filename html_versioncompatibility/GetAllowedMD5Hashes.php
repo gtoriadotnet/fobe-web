@@ -1,6 +1,7 @@
 <?php
 
 use Alphaland\Web\WebContextManager;
+use Alphaland\Web\WebsiteSettings;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {
@@ -11,6 +12,6 @@ header('Content-Type: application/json');
 
 echo json_encode(array(
     "data" => array(
-        $ws->md5_hash
+        WebsiteSettings::GetSetting("md5_hash"),
     )
 ), JSON_UNESCAPED_SLASHES);

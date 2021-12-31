@@ -41,7 +41,7 @@ try
 	$siteName = "Alphaland"; //site name
 	$domain = "alphaland.cc";
 	$url = "https://www.".$domain; //site URL
-	$ws = $pdo->query("SELECT * FROM websettings WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettings
+	 //websettings
 	$clientUserAgent = "Roblox/WinInet";
 	$ROBLOXAssetAPI = "https://assetdelivery.roblox.com/v1/asset/?id=";
 	$ROBLOXProductInfoAPI = "https://api.roblox.com/marketplace/productinfo?assetId=";
@@ -124,6 +124,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Administration/SignupKey.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Economy/EconomyHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Groups/Group.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebsiteSettings.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();

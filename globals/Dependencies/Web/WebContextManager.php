@@ -14,7 +14,7 @@ namespace Alphaland\Web {
         public static function IsCurrentIpAddressWhitelisted()
         {
             $currentIp = WebContextManager::GetCurrentIPAddress();
-            $ipWhitelist = explode(";", $GLOBALS['ws']->webservice_whitelist);
+            $ipWhitelist = explode(";", WebsiteSettings::GetSetting("webservice_whitelist", "127.0.0.0/8;192.168.0.0/16;10.0.0.0/8"));
 
             return in_array($currentIp, $ipWhitelist);
         }
@@ -26,13 +26,10 @@ namespace Alphaland\Web {
         
         public static function IsUnderMaintenance(bool $status = false)
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `websettings` WHERE `maintenance` = 1");
-            $query->execute();
+            $isUnderMaintenance = WebsiteSettings::GetSetting('maintenance');
 
-            if ($query->rowCount() > 0) {
-                if ($status) {
-                    return true;
-                }
+            if ($isUnderMaintenance === true) {
+                if ($status) return true;
                 return !WebContextManager::CanBypassMaintenance();
             }
             return false;
@@ -56,13 +53,8 @@ namespace Alphaland\Web {
         
             if (!empty($accesskey))
             {
-                if(WebContextManager::IsCurrentIpAddressWhitelisted())
-                {
-                    if($accesskey == $GLOBALS['ws']->webservice_key)
-                    {
-                        return true;
-                    }
-                }
+                if(WebContextManager::IsCurrentIpAddressWhitelisted()) 
+                    return $accesskey == WebsiteSettings::GetSetting('webservice_key', null);
             }
             return false;
         }

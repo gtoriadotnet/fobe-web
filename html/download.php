@@ -1,8 +1,13 @@
 <?php
 
+use Alphaland\Web\WebsiteSettings;
+
+$alphalandVersion = WebsiteSettings::GetSetting("AlphalandVersion");
+$alphalandStudioVersion = WebsiteSettings::GetSetting("AlphalandStudioVersion");
+
 if (isset($_POST['SubmitClient']))
 {
-	$loc = $GLOBALS['setupHtmlPath'].$ws->AlphalandVersion."-AlphalandLauncher.exe";
+	$loc = $GLOBALS['setupHtmlPath'].$alphalandVersion."-AlphalandLauncher.exe";
 	header("Content-type: application/octet-stream");
 	header("Content-Disposition: attachment; filename=AlphalandLauncher.exe");
 	echo file_get_contents($loc);
@@ -10,7 +15,7 @@ if (isset($_POST['SubmitClient']))
 
 if (isset($_POST['SubmitStudio']))
 {
-	$loc = $GLOBALS['setupHtmlPath'].$ws->AlphalandStudioVersion."-AlphalandStudioLauncher.exe";
+	$loc = $GLOBALS['setupHtmlPath'].$alphalandStudioVersion."-AlphalandStudioLauncher.exe";
 	header("Content-type: application/octet-stream");
 	header("Content-Disposition: attachment; filename=AlphalandStudioLauncher.exe");
 	echo file_get_contents($loc);

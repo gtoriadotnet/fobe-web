@@ -7,6 +7,7 @@ Alphaland 2021
 //vars
 
 use Alphaland\Web\WebContextManager;
+use Alphaland\Web\WebsiteSettings;
 
 $thumbalive = false;
 $gamealive = false;
@@ -19,18 +20,14 @@ function checkThumb($override)
 	{
 		if (!$GLOBALS['thumbalive'] or $override) //to prevent flooding mysql calls
 		{
-			$GLOBALS['thumbalive'] = true;
-			$set = $GLOBALS['pdo']->prepare("UPDATE websettings SET isThumbnailerAlive = 1");
-			$set->execute();
+			WebsiteSettings::UpdateSetting('isThumbnailerAlive', true);
 		}
 	}
 	else //thumb arbiter offline
 	{
 		if ($GLOBALS['thumbalive'] or $override) //to prevent flooding mysql calls
 		{
-			$GLOBALS['thumbalive'] = false;
-			$set = $GLOBALS['pdo']->prepare("UPDATE websettings SET isThumbnailerAlive = 0");
-			$set->execute();
+			WebsiteSettings::UpdateSetting('isThumbnailerAlive', false);
 		}
 	}
 }
@@ -42,18 +39,14 @@ function checkGame($override)
 	{
 		if (!$GLOBALS['gamealive'] or $override) //to prevent flooding mysql calls
 		{
-			$GLOBALS['gamealive'] = true;
-			$set = $GLOBALS['pdo']->prepare("UPDATE websettings SET IsGameServerAlive = 1");
-			$set->execute();
+			WebsiteSettings::UpdateSetting('IsGameServerAlive', true);
 		}
 	}
 	else //gameserver arbiter offline
 	{
 		if ($GLOBALS['gamealive'] or $override) //to prevent flooding mysql calls
 		{
-			$GLOBALS['gamealive'] = false;
-			$set = $GLOBALS['pdo']->prepare("UPDATE websettings SET IsGameServerAlive = 0");
-			$set->execute();
+			WebsiteSettings::UpdateSetting('IsGameServerAlive', false);
 		}
 	}
 }

@@ -1,3 +1,5 @@
 <?php
 
-echo $ws->AlphalandStudioVersion;
+use Alphaland\Web\WebsiteSettings;
+
+echo WebsiteSettings::GetSetting('AlphalandStudioVersion');

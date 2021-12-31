@@ -1,6 +1,7 @@
 <?php
 
 use Alphaland\Web\WebContextManager;
+use Alphaland\Web\WebsiteSettings;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -119,9 +120,9 @@ if ($pass) {
 	
 	$previousdeployversion = "";
 	if ($deploytype == "client") {
-		$previousdeployversion = $ws->AlphalandVersion;
+		$previousdeployversion = WebsiteSettings::GetSetting("AlphalandVersion");
 	} else if ($deploytype == "studio") {
-		$previousdeployversion = $ws->AlphalandStudioVersion;
+		$previousdeployversion = WebsiteSettings::GetSetting("AlphalandStudioVersion");
 	}
 	
 	//deploy type specific stuff
@@ -168,17 +169,13 @@ if ($pass) {
 
 	//update in db
 	if ($deploytype == "client") {
-		$updatewebsettings = $pdo->prepare("UPDATE websettings SET AlphalandVersion = :av, security_version = :sv, md5_hash = :mh, GameFileVersion = :gv");
-		$updatewebsettings->bindParam(":av", $newgameversion, PDO::PARAM_STR);
-		$updatewebsettings->bindParam(":sv", $gamesecurityversion, PDO::PARAM_STR);
-		$updatewebsettings->bindParam(":mh", $gamemd5hash, PDO::PARAM_STR);
-		$updatewebsettings->bindParam(":gv", $gamefileversion, PDO::PARAM_STR);
-		$updatewebsettings->execute();
+		WebsiteSettings::UpdateSetting("AlphalandVersion", $newgameversion);
+		WebsiteSettings::UpdateSetting("security_version", $gamesecurityversion);
+		WebsiteSettings::UpdateSetting("md5_hash", $gamemd5hash);
+		WebsiteSettings::UpdateSetting("GameFileVersion", $gamefileversion);
 	} else if ($deploytype == "studio") {
-		$updatewebsettings = $pdo->prepare("UPDATE websettings SET AlphalandStudioVersion = :asv, StudioFileVersion = :sfv");
-		$updatewebsettings->bindParam(":asv", $newgameversion, PDO::PARAM_STR);
-		$updatewebsettings->bindParam(":sfv", $gamefileversion, PDO::PARAM_STR);
-		$updatewebsettings->execute();
+		WebsiteSettings::UpdateSetting("AlphalandStudioVersion", $newgameversion);
+		WebsiteSettings::UpdateSetting("StudioFileVersion", $gamefileversion);
 	}
 
 	//output the new version
