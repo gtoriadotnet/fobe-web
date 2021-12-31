@@ -64,7 +64,10 @@ else
 	else if ($removeuser)
 	{
 		$userid = $data->userid;
-		$message = removePBSUser($assetid, $userid);
+		$message = null;
+		if (Game::RemovePersonalBuildServerRank($assetid, $userid)) {
+			$message = true;
+		}
 	}
 	else if ($whitelistuser)
 	{
