@@ -8,14 +8,14 @@ namespace Alphaland\Users {
 
     use Alphaland\Moderation\UserModerationManager;
     use Alphaland\Common\HashingUtiltity;
-    use Alphaland\Users\User;
+    use Alphaland\Groups\Group;
     use PDO;
 
     class ReferralProgram
     {
         public static function IsMember(int $userid)
         {
-            if (User::IsInGroup($userid, 22)) //id 22 is the official referral program group
+            if (Group::IsInGroup($userid, 22)) //id 22 is the official referral program group
             {
                 return true;
             }
