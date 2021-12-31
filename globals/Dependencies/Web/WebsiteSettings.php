@@ -8,7 +8,6 @@
  * Date: 25/11/2021
  * 
  * Ported from MFDLABS/corp-integral/src/lib/web/settings.fx
- * MFDLABS TwoTime (c) 2021-
  */
 
 namespace Alphaland\Web {

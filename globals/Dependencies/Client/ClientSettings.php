@@ -7,14 +7,12 @@
  * Written by: Nikita Petko, Jakob Valara (Spfffffx)
  * Date: 10/12/2021
  * 
- * https://series-x.git-stylez.mfdlabs.local/SpfffffX/RobloxWebPlatform/blob/master/Assemblies/Platform/ClientSettings/Roblox.Platform.ClientSettings/Implementation/ClientSettingsHelper.cs
- * 
  * The reason this returns the values as strings is because the client can parse them to their respective types. They can also be converted to their respective types.
  * For now they are all strings.
  * 
  * Open an issue if you want to see the values returned as their respective types and not as strings.
  * 
- * MFDLABS TwoTime (c) 2021-
+ * Licensed to Austin "Astrologies" of Alphaland, they are the owners of the code.
  */
 
 // Note: This could be shortened slightly.
