@@ -42,7 +42,7 @@ try
 	$siteName = "Alphaland"; //site name
 	$domain = "alphaland.cc";
 	$url = "https://www.".$domain; //site URL
-	$ws = $pdo->query("SELECT * FROM websettingsdeprecated WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettingsdeprecated
+	$ws = $pdo->query("SELECT * FROM websettings WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettings
 	$clientUserAgent = "Roblox/WinInet";
 	$ROBLOXAssetAPI = "https://assetdelivery.roblox.com/v1/asset/?id=";
 	$ROBLOXProductInfoAPI = "https://api.roblox.com/marketplace/productinfo?assetId=";
