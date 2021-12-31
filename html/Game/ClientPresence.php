@@ -2,6 +2,7 @@
 
 //the design choice here was to tie in clientpresence with recently played and visits and make it fully server-sided besides the client pings
 
+use Alphaland\Economy\EconomyHelper;
 use Alphaland\Games\Game;
 use Alphaland\Web\WebContextManager;
 
@@ -143,7 +144,7 @@ else if ($action == "connect")
 		$setgamevisit->bindParam(":g", $placeid, PDO::PARAM_INT);
 		$setgamevisit->execute();
 
-		giveCurrency(1, $creatorid);
+		EconomyHelper::GiveAlphabux(1, $creatorid, "Place visit reward, placeid ".$placeid);
 	}
 	// ...
 }

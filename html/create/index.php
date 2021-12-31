@@ -4,6 +4,7 @@
 Alphaland 2021
 */
 
+use Alphaland\Assets\Asset;
 use Alphaland\Web\WebContextManager;
 
 $body = '';
@@ -217,7 +218,7 @@ function uploadCosmetic()
 	$GLOBALS['pdo']->exec("UNLOCK TABLES"); 
 								
 	//give the creator the asset
-	giveItem($GLOBALS['user']->id, $autoincrement);
+	Asset::GiveAsset($autoincrement, $GLOBALS['user']->id, $GLOBALS['user']->id);
 											
 	//upload texture and edit xml template, copy to assets
 	move_uploaded_file($image, $textureUploadDirectory . $texturehash);
