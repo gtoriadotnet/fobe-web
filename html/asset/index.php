@@ -32,6 +32,10 @@ function ReturnAsset($hash, $assettypeid) //this determines which cdn to grab an
 		ReturnAssetFromHash($hash);
 	}
 }
+
+$websettings = $pdo->prepare("SELECT * FROM websettings");
+$websettings->execute();
+$websettings = $websettings->fetch(PDO::FETCH_OBJ);
 	
 if ($id)
 {

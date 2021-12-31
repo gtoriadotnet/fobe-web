@@ -1,7 +1,6 @@
 <?php
 
 use Alphaland\Web\WebContextManager;
-use Alphaland\Web\WebsiteSettings;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -16,8 +15,9 @@ if (isset($_POST['setannouncement']))
 {
 	if (empty($_POST['setannouncement']))
 	{
-		WebsiteSettings::UpdateSetting('announcement', "");
-		WebsiteSettings::UpdateSetting('announcement_color', "");
+		//clear current announcement
+		$setsecmd5 = $pdo->prepare('UPDATE websettings SET announcement = "", announcement_color = ""');
+		$setsecmd5->execute();
 	}
 	else
 	{
@@ -47,8 +47,10 @@ if (isset($_POST['setannouncement']))
 				{
 					$color = "red";
 				}
-				WebsiteSettings::UpdateSetting('announcement', $_POST['setannouncement']);
-				WebsiteSettings::UpdateSetting('announcement_color', $color);
+				$setsecmd5 = $pdo->prepare("UPDATE websettings SET announcement = :m, announcement_color = :c");
+				$setsecmd5->bindParam(":m", $_POST['setannouncement'], PDO::PARAM_STR);
+				$setsecmd5->bindParam(":c", $color, PDO::PARAM_STR);
+				$setsecmd5->execute();
 			}
 		}
 	}

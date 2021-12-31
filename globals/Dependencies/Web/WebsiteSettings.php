@@ -14,7 +14,7 @@ namespace Alphaland\Web {
 
     use PDO;
 
-    class WebsiteSettings
+    /* public static */ class WebsiteSettings
     {
         // default return if no settings are found
         // because there may be a NULL value in the database
@@ -84,7 +84,7 @@ namespace Alphaland\Web {
          */
         public static function GetSetting(string $name, $default = null)
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT `value`, `type` FROM `websettings_v2` WHERE `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT `value`, `type` FROM `websettings` WHERE `name` = :name");
             $query->bindParam(':name', $name);
 
             if (!$query->execute()) {
@@ -97,6 +97,24 @@ namespace Alphaland\Web {
             }
 
             return self::ConvertStringToValue($result['value'], $result['type']);
+        }
+
+        /**
+         * Gets or sets the value of a website setting.
+         * 
+         * @param string $name The name of the setting.
+         * @param mixed $value The value of the setting.
+         * @param string $type The type of the setting.
+         * 
+         * @return mixed The value of the setting.
+         */
+        public static function GetOrCreateSetting(string $name, $value = null, string $type = null)
+        {
+            if (!self::SettingExists($name)) {
+                self::UpdateSetting($name, $value, $type);
+            }
+
+            return self::GetSetting($name);
         }
 
         /**
@@ -133,9 +151,9 @@ namespace Alphaland\Web {
             $query = null;
 
             if ($remote === self::DOES_NOT_EXIST) {
-                $query = $GLOBALS['pdo']->prepare("INSERT INTO `websettings_v2` (`name`, `value`, `type`) VALUES (:name, :value, :type)");
+                $query = $GLOBALS['pdo']->prepare("INSERT INTO `websettings` (`name`, `value`, `type`) VALUES (:name, :value, :type)");
             } else {
-                $query = $GLOBALS['pdo']->prepare("UPDATE `websettings_v2` SET `value` = :value, `type` = :type WHERE `name` = :name");
+                $query = $GLOBALS['pdo']->prepare("UPDATE `websettings` SET `value` = :value, `type` = :type WHERE `name` = :name");
             }
 
             if (gettype($value) === 'NULL') {
@@ -161,7 +179,7 @@ namespace Alphaland\Web {
          */
         public static function DeleteSetting(string $name): bool
         {
-            $query = $GLOBALS['pdo']->prepare("DELETE FROM `websettings_v2` WHERE `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("DELETE FROM `websettings` WHERE `name` = :name");
             $query->bindParam(':name', $name);
 
             return $query->execute();
@@ -174,7 +192,7 @@ namespace Alphaland\Web {
          */
         public static function GetAllSettings(): array
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT `name`, `value`, `type` FROM `websettings_v2`");
+            $query = $GLOBALS['pdo']->prepare("SELECT `name`, `value`, `type` FROM `websettings`");
 
             if (!$query->execute()) {
                 return [];
@@ -200,7 +218,7 @@ namespace Alphaland\Web {
          */
         public static function SettingExists(string $name): bool
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT `name` FROM `websettings_v2` WHERE `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT `name` FROM `websettings` WHERE `name` = :name");
             $query->bindParam(':name', $name);
 
             if (!$query->execute()) {
@@ -219,7 +237,7 @@ namespace Alphaland\Web {
          */
         public static function DeleteAllSettings(): bool
         {
-            $query = $GLOBALS['pdo']->prepare("DELETE FROM `websettings_v2`");
+            $query = $GLOBALS['pdo']->prepare("DELETE FROM `websettings`");
 
             return $query->execute();
         }

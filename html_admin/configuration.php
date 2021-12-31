@@ -1,7 +1,6 @@
 <?php
 
 use Alphaland\Web\WebContextManager;
-use Alphaland\Web\WebsiteSettings;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -18,9 +17,15 @@ adminPanelStats();
 $devmode = false;
 
 ////db queries
-$isUnderMaitenance = WebsiteSettings::GetSetting('maintenance');
-$rccKey = WebsiteSettings::GetSetting('webservice_key');
-$ipWhitelist = WebsiteSettings::GetSetting("webservice_whitelist");
+$maintenancequery = $pdo->prepare("SELECT * FROM websettings WHERE maintenance = 1");
+$maintenancequery->execute();
+
+$status = $pdo->prepare("SELECT * FROM websettings WHERE maintenance = 1");
+$status->execute();
+
+$websettings = $pdo->prepare("SELECT * FROM websettings");
+$websettings->execute();
+$websettings = $websettings->fetch(PDO::FETCH_OBJ);
 ////end db queries
 
 ////Third party web queries
@@ -122,31 +127,43 @@ if (isset($_POST['clearcachesubmit']))
 if (isset($_POST['submitwskey']))
 {
 	$key = genHash(16);
-	WebsiteSettings::UpdateSetting("webservice_key", $key);
+	$setwskey = $pdo->prepare("UPDATE websettings SET webservice_key = :k");
+	$setwskey->bindParam(":k", $key, PDO::PARAM_STR);
+	$setwskey->execute();
 	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['setwsipwhitelist']))
 {
-	WebsiteSettings::UpdateSetting("webservice_whitelist", $_POST['setwsipwhitelist']);
+	$setwsip = $pdo->prepare("UPDATE websettings SET webservice_whitelist = :w");
+	$setwsip->bindParam(":w", $_POST['setwsipwhitelist'], PDO::PARAM_STR);
+	$setwsip->execute();
 	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['cachingon']))
 {
-	WebsiteSettings::UpdateSetting("avatarCaching", true);
+	$setapprovals = $pdo->prepare("UPDATE websettings SET avatarCaching = 1");
+	$setapprovals->execute();
 	WebContextManager::Redirect("configuration");
 }
 
 if (isset($_POST['cachingoff']))
 {
-	WebsiteSettings::UpdateSetting("avatarCaching", false);
+	$setapprovals = $pdo->prepare("UPDATE websettings SET avatarCaching = 0");
+	$setapprovals->execute();
 	WebContextManager::Redirect("configuration");
 }
 
-$maintenancestatus = '<b style="background-color:#c9c9c9;color:red;padding:2px;">OFF</b>';
-if ($isUnderMaitenance === true)
+$maintenancestatus = "";
+if ($maintenancequery->rowCount() > 0)
+{
 	$maintenancestatus = '<b style="background-color:#c9c9c9;color:green;padding:2px;">ON</b>';
+}
+else
+{
+	$maintenancestatus = '<b style="background-color:#c9c9c9;color:red;padding:2px;">OFF</b>';
+}
 
 $developmentmodestatus = "";
 if ($devmode)
@@ -219,7 +236,7 @@ $body = <<<EOT
 									<div class="col-sm">
 										<div class="input-group mb-3">
 											<form action="" method="post">
-												<input type="text" name="setwskey" class="form-control" value="{$rccKey}" autocomplete="off" disabled>
+												<input type="text" name="setwskey" class="form-control" value="{$websettings->webservice_key}" autocomplete="off" disabled>
 												<div class="input-group-append">
 													<button type="submit" name="submitwskey" class="btn btn-danger" type="button">Generate</button>
 												</div>
@@ -245,7 +262,7 @@ $body = <<<EOT
 								</div>
 							</form>
 							<div class="container text-center marg-bot-15">
-								<h6>Current Backend Whitelisted IP's: <hr><b style="background-color:#c9c9c9;color:red;padding:2px;">{$ipWhitelist}</b></h6>
+								<h6>Current Backend Whitelisted IP's: <hr><b style="background-color:#c9c9c9;color:red;padding:2px;">{$websettings->webservice_whitelist}</b></h6>
 							</div>
 							<hr>
 						</div>

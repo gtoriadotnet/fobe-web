@@ -1,11 +1,10 @@
 <?php
 
 use Alphaland\Web\WebContextManager;
-use Alphaland\Web\WebsiteSettings;
 
 WebContextManager::ForceHttpsCloudflare();
 
-if (!($user->IsOwner())) {
+if(!($user->IsOwner())) {
 	if ($user->IsAdmin()) {
 		WebContextManager::Redirect("/");
 	}
@@ -14,14 +13,11 @@ if (!($user->IsOwner())) {
 
 adminPanelStats();
 
-$securityVersion = WebsiteSettings::GetSetting('security_version');
-$md5Hash = WebsiteSettings::GetSetting('md5_hash');
-$gameFileVersion = WebsiteSettings::GetSetting('GameFileVersion');
-$studioFileVersion = WebsiteSettings::GetSetting('StudioFileVersion');
-
-
-$body = <<<EOT
+$alert = '';
+	
+	$body = <<<EOT
 	<div class="container">
+	{$alert}
 		<h5>Network Security Key Generator<h5>
 		<h6>MAKE SURE TO DEPLOY RCC WITH UPDATED KEY</h6>
 		<div class="row">
@@ -34,7 +30,7 @@ $body = <<<EOT
 								<h6>Game Security Version</h6>
 									<div class="row marg-bot-15">
 										<div class="col-sm">
-											<input style="width:100%!important;" type="text" autocomplete="off" id="newgamesecurityversion" value="{$securityVersion}" class="form-control">
+											<input style="width:100%!important;" type="text" autocomplete="off" id="newgamesecurityversion" value="{$ws->security_version}" class="form-control">
 										</div>
 									</div>
 									<h6>Generated Security Key</h6>
@@ -79,19 +75,19 @@ $body = <<<EOT
 									<h6>Game Executable Security Version</h6>
 									<div class="row marg-bot-15">
 										<div class="col-sm">
-											<input style="width:100%!important;" type="text" autocomplete="off" id="gamesecurityver" value="{$securityVersion}" class="form-control">
+											<input style="width:100%!important;" type="text" autocomplete="off" id="gamesecurityver" value="{$ws->security_version}" class="form-control">
 										</div>
 									</div>
 									<h6>Game Executable MD5 Hash</h6>
 									<div class="row marg-bot-15">
 										<div class="col-sm">
-											<input style="width:100%!important;" type="text" autocomplete="off" id="gamemd5" value="{$md5Hash}" class="form-control">
+											<input style="width:100%!important;" type="text" autocomplete="off" id="gamemd5" value="{$ws->md5_hash}" class="form-control">
 										</div>
 									</div>
 									<h6>Game Executable Version (separated by '.')</h6>
 									<div class="row marg-bot-15">
 										<div class="col-sm">
-											<input style="width:100%!important;" type="text" autocomplete="off" id="gamefilever" value="{$gameFileVersion}" class="form-control">
+											<input style="width:100%!important;" type="text" autocomplete="off" id="gamefilever" value="{$ws->GameFileVersion}" class="form-control">
 										</div>
 									</div>
 									<h6>Game Launcher File Version (separated by ',') Ex:1, 2, 3, 4</h6>
@@ -136,7 +132,7 @@ $body = <<<EOT
 									<h6>Studio Executable Version (separated by '.')</h6>
 									<div class="row marg-bot-15">
 										<div class="col-sm">
-											<input style="width:100%!important;" type="text" autocomplete="off" id="studiofilever" value="{$studioFileVersion}" class="form-control">
+											<input style="width:100%!important;" type="text" autocomplete="off" id="studiofilever" value="{$ws->StudioFileVersion}" class="form-control">
 										</div>
 									</div>
 									<h6>Studio Launcher File Version (separated by ',')</h6>
@@ -206,7 +202,7 @@ $body = <<<EOT
 EOT;
 
 pageHandler();
-$ph->pagetitle = "";
+$ph->pagetitle = ""; 
 $ph->navbar = "";
 $ph->body = $body;
 $ph->footer = "";

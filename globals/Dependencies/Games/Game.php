@@ -8,7 +8,6 @@ namespace Alphaland\Games {
 
     use Alphaland\Assets\Asset;
     use Alphaland\Grid\RccServiceHelper;
-    use Alphaland\Web\WebsiteSettings;
     use Exception;
     use PDO;
 
@@ -231,7 +230,12 @@ namespace Alphaland\Games {
 
         public static function ArbiterOnline() //the main portion of this check is now a background script
         {
-            return WebsiteSettings::GetSetting("isGameServerAlive");
+            $check = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM websettings WHERE isGameServerAlive = 1");
+            $check->execute();        
+            if ($check->fetchColumn() > 0) {
+                return true;
+            }
+            return false;
         }
 
         public static function RemovePersonalBuildServerRank(int $placeid, int $userid)
