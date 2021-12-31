@@ -5,6 +5,7 @@ Alphaland 2021
 */
 
 use Alphaland\Assets\Asset;
+use Alphaland\Economy\EconomyHelper;
 use Alphaland\Web\WebContextManager;
 
 $body = '';
@@ -172,7 +173,7 @@ function uploadCosmetic()
 	}
 	
 	//remove currency
-	if (!removeCurrency($minimumprice, "Creation of cosmetic name ".$name))
+	if (!EconomyHelper::RemoveAlphabux($minimumprice, $GLOBALS['user']->id, "Creation of cosmetic name ".$name))
 	{
 		return "You don't have enough currency";
 	}
