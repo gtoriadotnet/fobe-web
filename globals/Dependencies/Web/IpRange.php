@@ -182,6 +182,9 @@ namespace Alphaland\Web {
          */
         public static function IsIpInCidrRange(string $ip, string $cidr)
         {
+            if (strpos($cidr, '/') === false) 
+                $cidr = "$cidr/32";
+
             list($subnet, $bits) = explode('/', $cidr);
             if ($bits === null) {
                 $bits = 32;
