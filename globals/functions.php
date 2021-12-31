@@ -6,11 +6,11 @@
 	TODO: clean up a lot of legacy code
 */
 
+use Alphaland\Assets\Asset;
 use Alphaland\Assets\Render;
 use Alphaland\Games\Game;
 use Alphaland\Moderation\Filter;
 use Alphaland\Users\Render as UsersRender;
-use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
 
 //safe generation utilities
@@ -247,39 +247,6 @@ function updateBuildServerRank($placeid, $userid, $rank)
 			$delrank->execute();
 			return true;
 		}
-	}
-	return "Error occurred";
-}
-
-function getBuildServerRank($placeid, $userid)
-{
-	if ($userid == getAssetInfo($placeid)->CreatorId)
-	{
-		return 255;
-	}
-	else
-	{
-		$rank = $GLOBALS['pdo']->prepare("SELECT * FROM personal_build_ranks WHERE placeid = :pid AND userid = :uid");
-		$rank->bindParam(":pid", $placeid, PDO::PARAM_INT);
-		$rank->bindParam(":uid", $userid, PDO::PARAM_INT);
-		$rank->execute();
-		if ($rank->rowCount() > 0)
-		{
-			return $rank->fetch(PDO::FETCH_OBJ)->rank;
-		}
-	}
-	return 10; //no rank. consider them Visitor rank
-}
-
-function removePBSUser($placeid, $userid)
-{
-	$remove = $GLOBALS['pdo']->prepare("DELETE FROM personal_build_ranks WHERE placeid = :pid AND userid = :uid");
-	$remove->bindParam(":pid", $placeid, PDO::PARAM_INT);
-	$remove->bindParam(":uid", $userid, PDO::PARAM_INT);
-	$remove->execute();
-	if ($remove->rowCount() > 0)
-	{
-		return true;
 	}
 	return "Error occurred";
 }
@@ -559,7 +526,7 @@ function submitRobloxAssetWorker($requestedassetid, $assettypeid, $assetname, $a
 			$newassetid = uploadXML($xml, $assetname, $assetdescription, $price, $onsale, $assettypeid, 1);
 
 			if ($newassetid !== FALSE) {
-				giveItem(1, $newassetid); //give the user Alphaland the created asset
+				Asset::GiveAsset($newassetid, 1); //give the user Alphaland the created asset
 				$assettypeid = getAssetInfo($newassetid)->AssetTypeId;
 			
 				switch ($assettypeid) {
@@ -1880,127 +1847,6 @@ function itemSalesCount($id)
 	$check = $check->fetch(PDO::FETCH_OBJ);
 	
 	return $check->Sales;
-}
-
-function giveCurrency($amount, $userid)
-{
-	//log the transaction
-	$info = "Gave user ".$userid." ".$amount;
-	$log = $GLOBALS['pdo']->prepare("INSERT INTO transaction_logs (info, amount, userid, whenTransaction) VALUES (:info, :amount, :userid, UNIX_TIMESTAMP())");
-	$log->bindParam(":info", $info, PDO::PARAM_STR);
-	$log->bindParam(":amount", $amount, PDO::PARAM_INT);
-	$log->bindParam(":userid", $userid, PDO::PARAM_INT);
-	$log->execute();
-
-	$check = $GLOBALS['pdo']->prepare("UPDATE users SET currency = (currency + :u) WHERE id = :i");
-	$check->bindParam(":i", $userid, PDO::PARAM_INT);
-	$check->bindParam(":u", $amount, PDO::PARAM_INT);
-	$check->execute();
-}
-
-function removeCurrency($amount, $info="")
-{
-	$localuser = $GLOBALS['user']->id;
-	$playercurrency = $GLOBALS['user']->currency;
-	
-	if ($playercurrency >= $amount) //if player currency is greater than or equal to the amount to remove
-	{
-		//log the transaction
-		$log = $GLOBALS['pdo']->prepare("INSERT INTO transaction_logs (info, amount, userid, whenTransaction) VALUES (:info, :amount, :userid, UNIX_TIMESTAMP())");
-		$log->bindParam(":info", $info, PDO::PARAM_STR);
-		$log->bindParam(":amount", $amount, PDO::PARAM_INT);
-		$log->bindParam(":userid", $localuser, PDO::PARAM_INT);
-		$log->execute();
-
-		//remove amount from user
-		$check = $GLOBALS['pdo']->prepare("UPDATE users SET currency = (currency - :u) WHERE id = :i");
-		$check->bindParam(":i", $localuser, PDO::PARAM_INT);
-		$check->bindParam(":u", $amount, PDO::PARAM_INT);
-		$check->execute();
-		return true;
-	}
-	return false;
-}
-
-function giveItem($uid, $id)
-{
-	//give the user the item
-	$setitem = $GLOBALS['pdo']->prepare("INSERT INTO owned_assets (uid, aid, when_sold, givenby) VALUES (:d, :a, UNIX_TIMESTAMP(), :b)");
-	$setitem->bindParam(":d", $uid, PDO::PARAM_INT);
-	$setitem->bindParam(":a", $id, PDO::PARAM_INT);
-	$setitem->bindParam(":b", $GLOBALS['user']->id, PDO::PARAM_INT);
-	if ($setitem->execute())
-	{
-		return true;
-	}
-	// ...
-	return false;
-}
-
-function buyItem($id) //0 = not enough currency, 1 = already owned, 2 = bought, 3 = error
-{
-	$localuser = $GLOBALS['user']->id;
-	$playercurrency = $GLOBALS['user']->currency;
-	
-	$iteminfo = getAssetInfo($id);
-	$itemprice = $iteminfo->PriceInAlphabux;
-	$itemcreator = $iteminfo->CreatorId;
-	$onsale = $iteminfo->IsForSale;
-	
-	if (!isAssetModerated($id))
-	{
-		if ($onsale == 1) //if asset is onsale
-		{
-			if ($playercurrency >= $itemprice) //if the player has greater or equal amount of currency required
-			{
-				if (User::OwnsAsset($localuser, $id)) //if player owns the asset
-				{
-					return 1; //already owned
-				}
-				else //everything passed, do the do
-				{
-					$tax = 0.30; //tax percentage
-					$taxtoremove = 0;
-					if ($itemcreator != 1) //we dont want to tax the account Alphaland items
-					{
-						$taxtoremove = $tax * $itemprice;
-					}
-
-					removeCurrency($itemprice, "Purchase of asset ".$id);
-					
-					//give creator of the item the currency, remove tax depending on the item
-					$itemprice = $itemprice - $taxtoremove; //remove tax (if any)
-					
-					$check = $GLOBALS['pdo']->prepare("UPDATE users SET currency = (currency + :u) WHERE id = :i");
-					$check->bindParam(":i", $itemcreator, PDO::PARAM_INT);
-					$check->bindParam(":u", $itemprice, PDO::PARAM_INT);
-					$check->execute();
-					// ...
-					
-					//give the user the item
-					$setitem = $GLOBALS['pdo']->prepare("INSERT INTO owned_assets (uid, aid, when_sold, givenby) VALUES (:d, :a, UNIX_TIMESTAMP(), :b)");
-					$setitem->bindParam(":d", $localuser, PDO::PARAM_INT);
-					$setitem->bindParam(":a", $id, PDO::PARAM_INT);
-					$setitem->bindParam(":b", $itemcreator, PDO::PARAM_INT);
-					$setitem->execute();
-					// ...
-					
-					//sales + 1
-					$sales = $GLOBALS['pdo']->prepare("UPDATE assets SET Sales = (Sales + 1) WHERE id = :i");
-					$sales->bindParam(":i", $id, PDO::PARAM_INT);
-					$sales->execute();
-					// ...
-					
-					return 2; //bought
-				}
-			}
-			else
-			{
-				return 0; //not enough currency
-			}
-		}
-	}
-	return 3;
 }
 
 function isOwner($id, $userid=NULL)
