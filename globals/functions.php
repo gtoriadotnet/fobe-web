@@ -6,7 +6,7 @@
 	TODO: clean up a lot of legacy code
 */
 
-use Alphaland\Assets\Asset
+use Alphaland\Assets\Asset;
 use Alphaland\Assets\Render;
 use Alphaland\Games\Game;
 use Alphaland\Moderation\Filter;
