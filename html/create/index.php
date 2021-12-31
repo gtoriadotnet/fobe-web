@@ -4,6 +4,8 @@
 Alphaland 2021
 */
 
+use Alphaland\Assets\Asset;
+use Alphaland\Economy\EconomyHelper;
 use Alphaland\Web\WebContextManager;
 
 $body = '';
@@ -171,7 +173,7 @@ function uploadCosmetic()
 	}
 	
 	//remove currency
-	if (!removeCurrency($minimumprice, "Creation of cosmetic name ".$name))
+	if (!EconomyHelper::RemoveAlphabux($minimumprice, $GLOBALS['user']->id, "Creation of cosmetic name ".$name))
 	{
 		return "You don't have enough currency";
 	}
@@ -217,7 +219,7 @@ function uploadCosmetic()
 	$GLOBALS['pdo']->exec("UNLOCK TABLES"); 
 								
 	//give the creator the asset
-	giveItem($GLOBALS['user']->id, $autoincrement);
+	Asset::GiveAsset($autoincrement, $GLOBALS['user']->id, $GLOBALS['user']->id);
 											
 	//upload texture and edit xml template, copy to assets
 	move_uploaded_file($image, $textureUploadDirectory . $texturehash);

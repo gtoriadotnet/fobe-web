@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Economy\EconomyHelper;
 use Alphaland\Users\User;
 use Alphaland\Web\WebContextManager;
 
@@ -13,18 +14,12 @@ if(isset($_GET['id']))
 	//handle purchasing items
 	if(isset($_POST['buyitem'])) 
 	{
-		$result = buyItem($id);
-		if ($result == 0)
-		{
-			$alert = "<div class='alert alert-danger' role='alert'>You don't have enough Alphabux</div>";
-		}
-		elseif ($result == 1)
-		{
-			$alert = "<div class='alert alert-danger' role='alert'>You already own this item</div>";
-		}
-		elseif ($result == 2)
-		{
-			WebContextManager::Redirect("/catalog/view?id=". $id . "");
+		try {
+			if (EconomyHelper::PurchaseItem($user->id, $id)) {
+				WebContextManager::Redirect("/catalog/view?id=". $id . "");
+			}
+		} catch (Exception $e) {
+			$alert = "<div class='alert alert-danger' role='alert'>".$e->getMessage()."</div>";
 		}
 	}
 	// ...

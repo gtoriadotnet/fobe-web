@@ -234,6 +234,34 @@ namespace Alphaland\Games {
             return WebsiteSettings::GetSetting("isGameServerAlive");
         }
 
+        public static function RemovePersonalBuildServerRank(int $placeid, int $userid)
+        {
+            $remove = $GLOBALS['pdo']->prepare("DELETE FROM personal_build_ranks WHERE placeid = :pid AND userid = :uid");
+            $remove->bindParam(":pid", $placeid, PDO::PARAM_INT);
+            $remove->bindParam(":uid", $userid, PDO::PARAM_INT);
+            $remove->execute();
+            if ($remove->rowCount() > 0) {
+                return true;
+            }
+            return false;
+        }
+
+        public static function GetPersonalBuildServerRank(int $placeid, int $userid)
+        {
+            if ($userid == Asset::GetAssetInfo($placeid)->CreatorId) {
+                return 255;
+            } else {
+                $rank = $GLOBALS['pdo']->prepare("SELECT * FROM personal_build_ranks WHERE placeid = :pid AND userid = :uid");
+                $rank->bindParam(":pid", $placeid, PDO::PARAM_INT);
+                $rank->bindParam(":uid", $userid, PDO::PARAM_INT);
+                $rank->execute();
+                if ($rank->rowCount() > 0) {
+                    return $rank->fetch(PDO::FETCH_OBJ)->rank;
+                }
+            }
+            return 10; //no rank. consider them Visitor rank
+        }
+
         public static function PersonalBuildRankToName($rank) 
         {
             switch ($rank)

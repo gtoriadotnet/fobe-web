@@ -27,7 +27,8 @@ try
 	
 	//PDO
 	$pdoOptions = array(
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //bad for prod?
+		//PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 		PDO::ATTR_EMULATE_PREPARES => false,
 		PDO::ATTR_PERSISTENT => true
 	);
@@ -105,9 +106,9 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/ReferralProgram.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebContextManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/System.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Assets/Asset.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Game.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Grid/RccServiceHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Assets/Render.php";

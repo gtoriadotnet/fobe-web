@@ -29,7 +29,7 @@ namespace Alphaland\Moderation {
         
         public static function UnbanUser(int $uid)
         {
-            if($GLOBALS['user']->isStaff()) {
+            if($GLOBALS['user']->IsStaff()) {
                 if (userExists($uid)) { 
                     $unban = $GLOBALS['pdo']->prepare("DELETE FROM user_bans WHERE uid = :u");
                     $unban->bindParam(":u", $uid, PDO::PARAM_INT);
@@ -46,7 +46,7 @@ namespace Alphaland\Moderation {
         // Nikita: TODO: Convert the bantype to a an enum
         public static function BanUser(int $uid, string $reason, int $banexpiration, int $bantype)
         {
-            if($GLOBALS['user']->isStaff()) {
+            if($GLOBALS['user']->IsStaff()) {
                 if (userExists($uid)) {
                     $isstaffcheck = $GLOBALS['pdo']->prepare("SELECT * FROM `users` WHERE `id` = :i AND `rank` > 0");
                     $isstaffcheck->bindParam(":i", $uid, PDO::PARAM_INT);

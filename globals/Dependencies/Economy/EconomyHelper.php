@@ -6,11 +6,15 @@
 
 namespace Alphaland\Economy {
 
+    use Alphaland\Assets\Asset;
     use PDO;
     use Alphaland\Users\User;
+    use Exception;
 
-    class EconomyHelper
+class EconomyHelper
     {
+        const tax = 0.30;
+
         public static function LogTransaction(int $amount, int $userid, string $description)
         {
             $log = $GLOBALS['pdo']->prepare("INSERT INTO transaction_logs (info, amount, userid, whenTransaction) VALUES (:info, :amount, :userid, UNIX_TIMESTAMP())");
@@ -59,6 +63,42 @@ namespace Alphaland\Economy {
                 }
             }
             return false;
+        }
+
+        public static function PurchaseItem(int $userid, int $assetid)
+        {
+            $assetInfo = Asset::GetAssetInfo($assetid);
+            if (!$assetInfo || 
+            !$assetInfo->IsForSale || 
+            User::OwnsAsset($userid, $assetid) || 
+            Asset::IsModerated($assetid)) {
+                throw new Exception('Error occurred');
+            } else if (!EconomyHelper::HasEnoughAlphabux($assetInfo->PriceInAlphabux, $userid)) {
+                throw new Exception('You do not have enough Alphabux to purchase this item');
+            } else {
+                $creatorid = $assetInfo->CreatorId;
+                $price = $assetInfo->PriceInAlphabux;
+
+                if (!EconomyHelper::RemoveAlphabux($price, $userid, "Giving item ".$assetid)) {
+                    throw new Exception('');
+                }
+
+                //tax calc
+                if ($creatorid != 1) {
+                    $price = $price - EconomyHelper::tax * $price;
+                }
+                
+                if (!EconomyHelper::GiveAlphabux($price, $creatorid, "Giving item purchase ".$assetid." Alphabux to creatorid ".$creatorid)) {
+                    throw new Exception('');
+                } else if (!Asset::GiveAsset($assetid, $userid, $creatorid)) {
+                    throw new Exception('');
+                }
+                
+                if (Asset::AddSale($assetid)) {
+                    return true;
+                }
+                return false;
+            }
         }
     }
 }

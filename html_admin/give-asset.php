@@ -1,5 +1,6 @@
 <?php
 
+use Alphaland\Assets\Asset;
 use Alphaland\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
@@ -52,7 +53,7 @@ if(isset($_POST['submitgiveasset']))
 			}
 			else
 			{
-				if (giveItem($userid, $catalogid))
+				if (Asset::GiveAsset($catalogid, $userid, $user->id))
 				{
 					$alert = "<div class='alert alert-success' role='alert'>Successfully gave user the item</div>";
 				}

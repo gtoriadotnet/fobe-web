@@ -6,6 +6,9 @@ Alphaland 2021
 */
 
 //headers
+
+use Alphaland\Games\Game;
+
 header("Access-Control-Allow-Origin: https://www.alphaland.cc");
 
 header("access-control-allow-credentials: true");
@@ -21,7 +24,7 @@ $userid = $_GET['userId'];
 
 $userInfo = array(
 	"data" => array(
-		"Rank" => getBuildServerRank($placeid, $userid),
+		"Rank" => Game::GetPersonalBuildServerRank($placeid, $userid),
 	)
 );
 
