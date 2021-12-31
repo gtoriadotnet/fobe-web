@@ -113,7 +113,7 @@ namespace Alphaland\Client {
         public static function ApplicationExists(string $applicationName)
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `clientsettings_applications` WHERE BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `clientsettings_applications` WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -132,7 +132,7 @@ namespace Alphaland\Client {
         public static function ApplicationRequiresIpWhitelist(string $applicationName)
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT `requires_ip_whitelist` FROM `clientsettings_applications` WHERE BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT `requires_ip_whitelist` FROM `clientsettings_applications` WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -152,7 +152,7 @@ namespace Alphaland\Client {
         public static function ApplicationRequiresRccServiceAuthentication(string $applicationName)
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT `requires_rcc_service_authentication` FROM `clientsettings_applications` WHERE BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT `requires_rcc_service_authentication` FROM `clientsettings_applications` WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -171,7 +171,7 @@ namespace Alphaland\Client {
         public static function GetApplication(string $applicationName)
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `clientsettings_applications` WHERE BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `clientsettings_applications` WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -191,8 +191,7 @@ namespace Alphaland\Client {
                     $deps = array_map('trim', $deps);
                 }
             }
-            // special case here, because we want to make it return the dependencies as an array to prevent further processing down the line
-            // the null coalesce to null is to prevent undefined index errors
+            // return the application
             return array(
                 'id' => $data['id'] ?? null,
                 'name' => $data['name'] ?? null,
@@ -213,11 +212,7 @@ namespace Alphaland\Client {
          * @param bool $canBeFetchedFromClientsettingsService True if the ClientSettings Application can be fetched from the Clientsettings Service, false otherwise.
          * @param array $dependencies An array of ClientSettings Application Names that are dependencies of this ClientSettings Application.
          */
-        public static function CreateApplication(string $applicationName,
-                                                 bool $requiresIpWhitelist = false,
-                                                 bool $requiresRccServiceAuthentication = false,
-                                                 bool $canBeFetchedFromClientSettingsService = true,
-                                                 array $dependencies = [])
+        public static function CreateApplication(string $applicationName, bool $requiresIpWhitelist = false, bool $requiresRccServiceAuthentication = false, bool $canBeFetchedFromClientSettingsService = true, array $dependencies = [])
         {
             // check if the application already exists
             if (self::ApplicationExists($applicationName)) {
@@ -252,11 +247,7 @@ namespace Alphaland\Client {
          * @param bool $canBeFetchedFromClientSettingsService The canBeFetchedFromClientSettingsService flag.
          * @param array $dependencies The dependencies.
          */
-        public static function UpdateApplication(string $applicationName, 
-                                                 bool $requiresIpWhitelist = false,
-                                                 bool $requiresRccServiceAuthentication = false,
-                                                 bool $canBeFetchedFromClientSettingsService = true,
-                                                 array $dependencies = [])
+        public static function UpdateApplication(string $applicationName, bool $requiresIpWhitelist = false, bool $requiresRccServiceAuthentication = false, bool $canBeFetchedFromClientSettingsService = true, array $dependencies = [])
         {
             // check if the application exists
             if (!self::ApplicationExists($applicationName)) {
@@ -267,7 +258,7 @@ namespace Alphaland\Client {
             $dependencies = implode(',', $dependencies);
 
             // update the application
-            $query = $GLOBALS['pdo']->prepare("UPDATE `clientsettings_applications` SET `requires_ip_whitelist` = :requires_ip_whitelist, `requires_rcc_service_authentication` = :requires_rcc_service_authentication, `can_be_fetched_from_clientsettings_service` = :can_be_fetched_from_clientsettings_service, `dependencies` = :dependencies WHERE BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("UPDATE `clientsettings_applications` SET `requires_ip_whitelist` = :requires_ip_whitelist, `requires_rcc_service_authentication` = :requires_rcc_service_authentication, `can_be_fetched_from_clientsettings_service` = :can_be_fetched_from_clientsettings_service, `dependencies` = :dependencies WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
             $query->bindParam(':requires_ip_whitelist', $requiresIpWhitelist, PDO::PARAM_BOOL);
             $query->bindParam(':requires_rcc_service_authentication', $requiresRccServiceAuthentication, PDO::PARAM_BOOL);
@@ -287,11 +278,7 @@ namespace Alphaland\Client {
          * @param bool $canBeFetchedFromClientSettingsService Whether the application can be fetched from the ClientSettings Service.
          * @param array $dependencies The dependencies of the application.
          */
-        public static function CreateOrUpdateApplication(string $applicationName, 
-                                                         bool $requiresIpWhitelist = false,
-                                                         bool $requiresRccServiceAuthentication = false,
-                                                         bool $canBeFetchedFromClientSettingsService = true,
-                                                         array $dependencies = [])
+        public static function CreateOrUpdateApplication(string $applicationName, bool $requiresIpWhitelist = false, bool $requiresRccServiceAuthentication = false, bool $canBeFetchedFromClientSettingsService = true, array $dependencies = [])
         {
             // check if the application exists
             if (self::ApplicationExists($applicationName)) {
@@ -310,11 +297,7 @@ namespace Alphaland\Client {
          * @param bool $canBeFetchedFromClientSettingsService Whether the application can be fetched from the ClientSettings Service.
          * @param array $dependencies The dependencies of the application.
          */
-        public static function GetOrCreateApplication(string $applicationName,
-                                                      bool $requiresIpWhitelist = false,
-                                                      bool $requiresRccServiceAuthentication = false,
-                                                      bool $canBeFetchedFromClientSettingsService = true,
-                                                      array $dependencies = [])
+        public static function GetOrCreateApplication(string $applicationName, bool $requiresIpWhitelist = false, bool $requiresRccServiceAuthentication = false, bool $canBeFetchedFromClientSettingsService = true, array $dependencies = [])
         {
             // check if the application exists
             if (!self::ApplicationExists($applicationName)) {
@@ -335,7 +318,7 @@ namespace Alphaland\Client {
         public static function GetApplicationDependencies(string $applicationName): array
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT `dependencies` FROM `clientsettings_applications` WHERE BINARY `name` = :application");
+            $query = $GLOBALS['pdo']->prepare("SELECT `dependencies` FROM `clientsettings_applications` WHERE `name` = :application");
             $query->bindParam(':application', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -359,7 +342,7 @@ namespace Alphaland\Client {
             }
 
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT `dependencies` FROM `clientsettings_applications` WHERE BINARY `name` = :application");
+            $query = $GLOBALS['pdo']->prepare("SELECT `dependencies` FROM `clientsettings_applications` WHERE `name` = :application");
             $query->bindParam(':application', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -380,7 +363,7 @@ namespace Alphaland\Client {
         public static function ApplicationHasDependency(string $applicationName, string $dependencyName): bool
         {
             // with the dependencies containing $dependencyName, we can check if the application has the dependency
-            $query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `clientsettings_applications` WHERE BINARY `name` = :application AND `dependencies` LIKE :dependency");
+            $query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `clientsettings_applications` WHERE `name` = :application AND `dependencies` LIKE :dependency");
             $query->bindParam(':application', $applicationName, PDO::PARAM_STR);
             $query->bindParam(':dependency', '%' . $dependencyName . '%', PDO::PARAM_STR);
 
@@ -413,7 +396,7 @@ namespace Alphaland\Client {
         public static function FetchCombinedApplicationDependencies(string $applicationName, bool $recursive = true)
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT `dependencies` FROM `clientsettings_applications` WHERE BINARY `name` = :application");
+            $query = $GLOBALS['pdo']->prepare("SELECT `dependencies` FROM `clientsettings_applications` WHERE `name` = :application");
             $query->bindParam(':application', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -457,7 +440,7 @@ namespace Alphaland\Client {
         public static function DeleteApplicationAndSettings(string $applicationName)
         {
             // delete the application
-            $query = $GLOBALS['pdo']->prepare("DELETE FROM `clientsettings_applications` WHERE BINARY  `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("DELETE FROM `clientsettings_applications` WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -476,7 +459,7 @@ namespace Alphaland\Client {
         public static function ApplicationCanBeFetchedFromClientSettingsService(string $applicationName)
         {
             // get the application
-            $query = $GLOBALS['pdo']->prepare("SELECT `can_be_fetched_from_clientsettings_service` FROM `clientsettings_applications` WHERE BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT `can_be_fetched_from_clientsettings_service` FROM `clientsettings_applications` WHERE `name` = :name");
             $query->bindParam(':name', $applicationName, PDO::PARAM_STR);
 
             $query->execute();
@@ -660,7 +643,7 @@ namespace Alphaland\Client {
                 throw new Error("The application '$applicationName' does not exist.");
             }
 
-            $query = $GLOBALS['pdo']->prepare("UPDATE `clientsettings` SET `value` = :value, `kind` = :kind WHERE `application` = :application AND BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("UPDATE `clientsettings` SET `value` = :value, `kind` = :kind WHERE `application` = :application AND `name` = :name");
             $query->bindParam(':application', $applicationId, PDO::PARAM_INT);
             $query->bindParam(':name', $settingName, PDO::PARAM_STR);
             $query->bindParam(':value', $value, PDO::PARAM_STR);
@@ -739,7 +722,7 @@ namespace Alphaland\Client {
             }
 
             // get the setting
-            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `clientsettings` WHERE `application` = :application AND BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("SELECT * FROM `clientsettings` WHERE `application` = :application AND `name` = :name");
             $query->bindParam(':application', $applicationId, PDO::PARAM_INT);
             $query->bindParam(':name', $name, PDO::PARAM_STR);
 
@@ -859,7 +842,7 @@ namespace Alphaland\Client {
             }
 
             // delete the setting
-            $query = $GLOBALS['pdo']->prepare("DELETE FROM `clientsettings` WHERE `application` = :application AND BINARY `name` = :name");
+            $query = $GLOBALS['pdo']->prepare("DELETE FROM `clientsettings` WHERE `application` = :application AND `name` = :name");
             $query->bindParam(':application', $applicationId, PDO::PARAM_INT);
             $query->bindParam(':name', $name, PDO::PARAM_STR);
 
