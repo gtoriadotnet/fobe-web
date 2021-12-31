@@ -126,8 +126,6 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Economy/EconomyHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Groups/Group.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebsiteSettings.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Client/ClientSettings.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();

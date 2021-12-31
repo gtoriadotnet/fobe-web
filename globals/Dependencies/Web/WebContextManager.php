@@ -3,7 +3,6 @@
 namespace Alphaland\Web {
     
     use PDO;
-    use Alphaland\Web\IpHelper;
 
     class WebContextManager
     {
@@ -17,7 +16,7 @@ namespace Alphaland\Web {
             $currentIp = WebContextManager::GetCurrentIPAddress();
             $ipWhitelist = explode(";", $GLOBALS['ws']->webservice_whitelist);
 
-            return IpHelper::IsIpInCidrNetmaskOrRangeList($currentIp, $ipWhitelist);
+            return in_array($currentIp, $ipWhitelist);
         }
 
         public static function CanBypassMaintenance()
