@@ -12,6 +12,7 @@ use Alphaland\Games\Game;
 use Alphaland\Moderation\Filter;
 use Alphaland\Users\Render as UsersRender;
 use Alphaland\Web\WebContextManager;
+use Alphaland\Web\WebsiteSettings;
 
 //safe generation utilities
 
@@ -1495,14 +1496,7 @@ function rewardUserBadge($UserID, $BadgeID, $PlaceID)
 
 function isThumbnailerAlive() //the main portion of this check is now a background script
 {
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE isThumbnailerAlive = 1");
-	$check->execute();
-	
-	if ($check->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
+	return WebsiteSettings::GetSetting("isThumbnailerAlive");
 }
 
 function verifyLuaValue($value) //mostly due to booleans, but maybe something will come up in the future
@@ -2382,22 +2376,18 @@ function userPlaceVisits($userid)
 	
 function enableMaintenance($custom)
 {
-	if (!empty($custom)) {
-		$setmaintenance = $GLOBALS['pdo']->prepare("UPDATE websettings SET maintenance = 1, maintenance_text = :t");
-		$setmaintenance->bindParam(":t", $custom, PDO::PARAM_STR);
-		$setmaintenance->execute();
-	} else {
-		$setmaintenance = $GLOBALS['pdo']->prepare("UPDATE websettings SET maintenance = 1");
-		$setmaintenance->execute();
-	}
+	if (!empty($custom))
+		WebsiteSettings::UpdateSetting("maintenance_text", $custom);
+			
+	WebsiteSettings::UpdateSetting("maintenance", true);
 
 	soapCloseAllJobs($GLOBALS['gamesArbiter']);
 }
 
 function disableMaintenance()
 {
-	$setmaintenance = $GLOBALS['pdo']->prepare("UPDATE websettings SET maintenance = 0, maintenance_text = ''");
-	$setmaintenance->execute();
+	WebsiteSettings::UpdateSetting("maintenance", false);
+	WebsiteSettings::UpdateSetting("maintenance_text", "");
 }
 
 function setUserRank($rank, $userid)
@@ -2851,43 +2841,36 @@ function getNav()
 
 function fetchAnnouncement() 
 {
-	$announcementquery = $GLOBALS['pdo']->prepare("SELECT * FROM websettings");
-	$announcementquery->execute();
-	$announcementquery = $announcementquery->fetch(PDO::FETCH_OBJ);
-	$announcement = cleanOutput($announcementquery->announcement); //clean output
-	if (empty($announcementquery->announcement))
+	$announcement = WebsiteSettings::GetSetting("announcement");
+
+	if (empty($announcement)) return "";
+
+	$cleanAnnouncement = cleanOutput($announcement); //clean output
+
+	$announcement_color = WebsiteSettings::GetSetting("announcement_color");
+	
+	$html = "";
+
+	switch ($announcement_color) 
 	{
-		return "";
+		case "red":
+			$html = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-danger' role='alert'>{$cleanAnnouncement}</div>";
+			break;
+		case "green":
+			$html = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-success' role='alert'>{$cleanAnnouncement}</div>";
+			break;
+		case "blue":
+		default:
+			$html = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-primary' role='alert'>{$cleanAnnouncement}</div>";
+			break;
 	}
-	else
-	{
-		$html = "";
-		if ($announcementquery->announcement_color == "red")
-		{
-			$html = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-danger' role='alert'>{$announcement}</div>";
-		}
-		elseif ($announcementquery->announcement_color == "blue")
-		{
-			$html = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-primary' role='alert'>{$announcement}</div>";
-		}
-		elseif ($announcementquery->announcement_color == "green")
-		{
-			$html = "<div style='margin:0 auto;Overflow:hidden;text-align: center' class='alert alert-success' role='alert'>{$announcement}</div>";
-		}
-		return $html;
-	}
+
+	return $html;
 }
 
 function canRegister()
 {
-	$check = $GLOBALS['pdo']->prepare("SELECT * FROM websettings WHERE registration = 1");
-	$check->execute();
-	
-	if($check->rowCount() > 0)
-	{
-		return true;
-	}
-	return false;
+	return WebsiteSettings::GetSetting("registration", false);
 }
 
 function adminPanelStats() {

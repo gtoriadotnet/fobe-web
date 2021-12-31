@@ -1,25 +1,12 @@
 <?php
 
 use Alphaland\Web\WebContextManager;
+use Alphaland\Web\WebsiteSettings;
 
 if (!WebContextManager::IsUnderMaintenance())
-{
 	WebContextManager::Redirect("/");
-}
 
-$websettings = $pdo->prepare("SELECT * FROM websettings");
-$websettings->execute();
-$websettings = $websettings->fetch(PDO::FETCH_OBJ);
-
-$status = '';
-if (!empty($websettings->maintenance_text))
-{
-	$status = $websettings->maintenance_text; //use custom text
-}
-else
-{
-	$status = $websettings->default_maintenance_text; //default maintenance text
-}
+$maintenance_text = WebsiteSettings::GetSetting('maintenance_text') ?? WebsiteSettings::GetSetting("default_maintenance_text");
 
 $body = <<<EOT
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +41,7 @@ body {
 </style>
 <div class="container" style="flex-direction: column!important;justify-content: center!important;display: flex!important;">
 	<img style="max-width: 30rem;max-width: 30rem;margin-right: auto;margin-left: auto;" src="alphaland/cdn/imgs/alphaland-white-1024.png">
-	<h1 style="text-align:center; ">{$status}</h1>
+	<h1 style="text-align:center; ">{$maintenance_text}</h1>
 </div>
 EOT;
 
