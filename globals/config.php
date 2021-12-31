@@ -27,7 +27,8 @@ try
 	
 	//PDO
 	$pdoOptions = array(
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //bad for prod?
+		//PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 		PDO::ATTR_EMULATE_PREPARES => false,
 		PDO::ATTR_PERSISTENT => true
 	);
@@ -41,7 +42,7 @@ try
 	$siteName = "Alphaland"; //site name
 	$domain = "alphaland.cc";
 	$url = "https://www.".$domain; //site URL
-	$ws = $pdo->query("SELECT * FROM websettings WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettings
+	$ws = $pdo->query("SELECT * FROM websettingsdeprecated WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettingsdeprecated
 	$clientUserAgent = "Roblox/WinInet";
 	$ROBLOXAssetAPI = "https://assetdelivery.roblox.com/v1/asset/?id=";
 	$ROBLOXProductInfoAPI = "https://api.roblox.com/marketplace/productinfo?assetId=";
@@ -108,6 +109,7 @@ try
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebContextManager.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/System.php";
+	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Assets/Asset.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Game.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Grid/RccServiceHelper.php";
 	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Assets/Render.php";
