@@ -32,8 +32,8 @@ try
 		PDO::ATTR_EMULATE_PREPARES => false,
 		PDO::ATTR_PERSISTENT => true
 	);
-								//host				//db name					//db user						  //db password              //options
-	$pdo = new PDO("mysql:host=localhost;dbname=finobedatabase", "aa9205c5b776b2368833bec1e8b34e1c", "68adae776e087fb1b34baf439710cf94", $pdoOptions);
+						  //host				//db name //db user			//db password      //options
+	$pdo = new PDO("mysql:host=localhost;dbname=finobe", "service-finobe", "135zZsjV3_K2j-VC", $pdoOptions);
 
 	//general vars
 	$jsversion = "12.00"; //update this after updating JS, this will re-cache the latest js for users
@@ -90,7 +90,7 @@ try
 	$privateKeyPath = "C:/Alphaland/FinobeRawKey.txt"; //path to where the private key is stored
 
 	//machine ip's
-	$gameMachine = "167.114.96.92"; //IP address of the machine that runs gameservers
+	$gameMachine = "76.190.219.176"; //IP address of the machine that runs gameservers
 	$renderMachine = "192.168.1.234"; //IP address of the machine that renders thumbnails
 
 	//arbiter ip's
@@ -138,14 +138,14 @@ try
 	$mail->SMTPSecure = "tls";
 	$mail->Port       = 587;
 	$mail->Host       = "smtp.gmail.com";
-	$mail->Username   = "finobetemp@gmail.com"; //google for now (easy and free)
-	$mail->Password   = "117A7AE7CE40674453E00492CB699F54";
+	$mail->Username   = "no@idk16.xyz"; //google for now (easy and free)
+	$mail->Password   = "no";
 	
 	//cloudflare
 	$cloudflareheader = array(
 		"Content-Type: application/json",
-		"X-Auth-Email: superativeroblox@gmail.com",
-		"X-Auth-Key: 06ea819593bb6d038c8d49808c0f0f200124b"
+		"X-Auth-Email: no@idk16.xyz",
+		"X-Auth-Key: no"
 	);
 	
 	//more includes
