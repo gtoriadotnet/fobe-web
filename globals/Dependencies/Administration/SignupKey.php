@@ -1,8 +1,8 @@
 <?php
 
-namespace Alphaland\Administration {
+namespace Finobe\Administration {
 
-    use Alphaland\Common\HashingUtiltity;
+    use Finobe\Common\HashingUtiltity;
     use PDO;
 
     class SignupKey

@@ -34,7 +34,7 @@ $body = <<<EOT
 	<script>
 	function updateGame(id)
 	{
-		if (window.external.SaveUrl('https://www.alphaland.cc/Studio/Data/UploadData?id=' + id + '\''))
+		if (window.external.SaveUrl('https://www.idk16.xyz/Studio/Data/UploadData?id=' + id + '\''))
 		{
 			alert("Uploaded");
 			window.close();

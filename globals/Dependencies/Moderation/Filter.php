@@ -1,6 +1,6 @@
 <?php
 
-namespace Alphaland\Moderation {
+namespace Finobe\Moderation {
 
     use PDO;
 

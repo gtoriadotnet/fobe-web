@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -69,8 +69,8 @@ foreach ($files as $key=>$val) {
 	//files to deploy
 	if ($deploytype == "client") 
 	{
-		if ($filename == "AlphalandApp.zip" ||
-		$filename == "AlphalandLauncher.exe" ||
+		if ($filename == "FinobeApp.zip" ||
+		$filename == "FinobeLauncher.exe" ||
 		$filename == "content-fonts.zip" ||
 		$filename == "content-music.zip" ||
 		$filename == "content-particles.zip" ||
@@ -90,11 +90,11 @@ foreach ($files as $key=>$val) {
 	}
 	else if ($deploytype == "studio")
 	{
-		if ($filename == "AlphalandStudio.zip" ||
+		if ($filename == "FinobeStudio.zip" ||
 		$filename == "content-scripts.zip" ||
 		$filename == "BuiltInPlugins.zip" ||
 		$filename == "imageformats.zip" ||
-		$filename == "AlphalandStudioLauncher.exe" ||
+		$filename == "FinobeStudioLauncher.exe" ||
 		$filename == "content-fonts.zip" ||
 		$filename == "content-music.zip" ||
 		$filename == "content-particles.zip" ||
@@ -119,16 +119,16 @@ if ($pass) {
 	
 	$previousdeployversion = "";
 	if ($deploytype == "client") {
-		$previousdeployversion = $ws->AlphalandVersion;
+		$previousdeployversion = $ws->FinobeVersion;
 	} else if ($deploytype == "studio") {
-		$previousdeployversion = $ws->AlphalandStudioVersion;
+		$previousdeployversion = $ws->FinobeStudioVersion;
 	}
 	
 	//deploy type specific stuff
 	if ($deploytype == "client") {
-		unlink($setup_html . $previousdeployversion . "-AlphalandApp.zip");
+		unlink($setup_html . $previousdeployversion . "-FinobeApp.zip");
 	} else if ($deploytype == "studio") {
-		unlink($setup_html . $previousdeployversion . "-AlphalandStudio.zip");
+		unlink($setup_html . $previousdeployversion . "-FinobeStudio.zip");
 		unlink($setup_html . $previousdeployversion . "-content-scripts.zip");
 		unlink($setup_html . $previousdeployversion . "-BuiltInPlugins.zip");
 		unlink($setup_html . $previousdeployversion . "-imageformats.zip");
@@ -146,7 +146,7 @@ if ($pass) {
 	unlink($setup_html . $previousdeployversion . "-Libraries.zip");
 	unlink($setup_html . $previousdeployversion . "-redist.zip");
 	unlink($setup_html . $previousdeployversion . "-shaders.zip");
-	unlink($setup_html . $previousdeployversion . "-AlphalandLauncher.exe");
+	unlink($setup_html . $previousdeployversion . "-FinobeLauncher.exe");
 	unlink($setup_html . $previousdeployversion . "-BootstrapperVersion.txt");
 
 	//move all the files
@@ -168,14 +168,14 @@ if ($pass) {
 
 	//update in db
 	if ($deploytype == "client") {
-		$updatewebsettings = $pdo->prepare("UPDATE websettings SET AlphalandVersion = :av, security_version = :sv, md5_hash = :mh, GameFileVersion = :gv");
+		$updatewebsettings = $pdo->prepare("UPDATE websettings SET FinobeVersion = :av, security_version = :sv, md5_hash = :mh, GameFileVersion = :gv");
 		$updatewebsettings->bindParam(":av", $newgameversion, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":sv", $gamesecurityversion, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":mh", $gamemd5hash, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":gv", $gamefileversion, PDO::PARAM_STR);
 		$updatewebsettings->execute();
 	} else if ($deploytype == "studio") {
-		$updatewebsettings = $pdo->prepare("UPDATE websettings SET AlphalandStudioVersion = :asv, StudioFileVersion = :sfv");
+		$updatewebsettings = $pdo->prepare("UPDATE websettings SET FinobeStudioVersion = :asv, StudioFileVersion = :sfv");
 		$updatewebsettings->bindParam(":asv", $newgameversion, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":sfv", $gamefileversion, PDO::PARAM_STR);
 		$updatewebsettings->execute();

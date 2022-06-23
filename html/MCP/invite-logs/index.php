@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff())
 {
@@ -44,7 +44,7 @@ function activeKeys()
 	html += '<td>{whenAccepted}</td>';
 	html += '</tr>';
 		
-	staticPageHelper("https://www.alphaland.cc/MCP/invite-logs/inviteLogs", "", "#invite_logs", html, "", 999999999999, "", "");
+	staticPageHelper("https://www.idk16.xyz/MCP/invite-logs/inviteLogs", "", "#invite_logs", html, "", 999999999999, "", "");
 }
 activeKeys();
 </script>

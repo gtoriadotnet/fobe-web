@@ -1,12 +1,12 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	kinda shit but its meant for background render processes so not really a concern
 */
 
-use Alphaland\Assets\Render as AssetRender;
-use Alphaland\Users\Render as UserRender;
+use Finobe\Assets\Render as AssetRender;
+use Finobe\Users\Render as UserRender;
 
 $assetid = $argv[1];
 $type = $argv[2];

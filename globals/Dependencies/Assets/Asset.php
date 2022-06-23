@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Assets {
+namespace Finobe\Assets {
 
-use Alphaland\Common\HashingUtiltity;
+use Finobe\Common\HashingUtiltity;
 use PDO;
 
 class Asset

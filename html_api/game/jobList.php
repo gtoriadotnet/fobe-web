@@ -2,14 +2,14 @@
 
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
 //headers
 
-use Alphaland\Games\Game;
+use Finobe\Games\Game;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 
@@ -88,7 +88,7 @@ foreach($servers as $server)
 		$playersInfo = array(
 			"userid" => $userid,
 			"username" => $username,
-			"thumbnail" => "https://api.alphaland.cc/users/thumbnail?userId=".$userid."&headshot=true"
+			"thumbnail" => "https://api.idk16.xyz/users/thumbnail?userId=".$userid."&headshot=true"
 		);
 
 		array_push($players, $playersInfo);

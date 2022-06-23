@@ -2,16 +2,16 @@
 
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
-//https://api.alphaland.cc/user/avatar/equipItem?assetId=
+//https://api.idk16.xyz/user/avatar/equipItem?assetId=
 
 //headers
 
-use Alphaland\Users\User;
+use Finobe\Users\User;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 

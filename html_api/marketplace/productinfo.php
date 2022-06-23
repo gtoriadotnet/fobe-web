@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 header('Content-Type: application/json');
 
@@ -20,7 +20,7 @@ else
 {
 	$assetInfo = getAssetInfo($assetid);
 
-	if($assetInfo !== FALSE) //asset id exists in alphaland db
+	if($assetInfo !== FALSE) //asset id exists in finobe db
 	{
 		$productinfo = json_encode(array(
 				"TargetId" => $assetInfo->TargetId,

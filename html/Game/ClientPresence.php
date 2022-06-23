@@ -2,9 +2,9 @@
 
 //the design choice here was to tie in clientpresence with recently played and visits and make it fully server-sided besides the client pings
 
-use Alphaland\Economy\EconomyHelper;
-use Alphaland\Games\Game;
-use Alphaland\Web\WebContextManager;
+use Finobe\Economy\EconomyHelper;
+use Finobe\Games\Game;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

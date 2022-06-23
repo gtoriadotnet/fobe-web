@@ -32,7 +32,7 @@ $body = <<<EOT
     <script>
 
     /*
-        Alphaland Ghetto Toolbox 2021
+        Finobe Ghetto Toolbox 2021
         Luckily MOST of jquery works with qt 4
 
         0 = Current User Models
@@ -40,11 +40,11 @@ $body = <<<EOT
     */
 
     var category = "";
-    var api = "https://www.alphaland.cc/studio/ide/toolbox/items";
+    var api = "https://www.idk16.xyz/studio/ide/toolbox/items";
     
     function insertAsset(assetid)
     {
-        window.external.Insert("https://www.alphaland.cc/asset/?id="+assetid);
+        window.external.Insert("https://www.idk16.xyz/asset/?id="+assetid);
     }
 
     function setType(type)

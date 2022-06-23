@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Administration\SignupKey;
-use Alphaland\Web\WebContextManager;
+use Finobe\Administration\SignupKey;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

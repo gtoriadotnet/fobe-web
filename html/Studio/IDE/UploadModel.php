@@ -25,7 +25,7 @@ foreach($owned as $asset)
 
 $body = <<<EOT
 <div class="container mt-2"  id="update_model_dialog">
-	<h5>Upload Model to Alphaland:</h5>
+	<h5>Upload Model to Finobe:</h5>
 	<hr>
 	<div class="catalog-container">
 		<ul>
@@ -33,7 +33,7 @@ $body = <<<EOT
 				<div class="studio-upload-card text-center" style="cursor: pointer;" onclick="showNewModelDialog()">
 					<a>
 						<div class="studio-upload-card-img">
-							<img class="img-fluid" src="/alphaland/cdn/imgs/addmodelicon.png">
+							<img class="img-fluid" src="/finobe/cdn/imgs/addmodelicon.png">
 						</div>
 						<p class="no-overflow">Create New</p>
 					</a>
@@ -98,7 +98,7 @@ function showNewModelDialog()
 
 function updateAsset(assetid)
 {
-	window.external.WriteSelection().Upload('https://www.alphaland.cc/Studio/Data/UploadData?id=' + assetid + '\'');
+	window.external.WriteSelection().Upload('https://www.idk16.xyz/Studio/Data/UploadData?id=' + assetid + '\'');
 	alert("Updated Model");
 	window.close();
 }
@@ -115,7 +115,7 @@ function newAsset()
 
 	if (checkParameters(modelname, modeldescription))
 	{
-		window.external.WriteSelection().Upload("https://www.alphaland.cc/Studio/IDE/Publish/uploadnewasset?assetTypeName=Model&name="+modelname+"&description="+modeldescription+"&isPublic="+ispublic+"&allowComments=false");
+		window.external.WriteSelection().Upload("https://www.idk16.xyz/Studio/IDE/Publish/uploadnewasset?assetTypeName=Model&name="+modelname+"&description="+modeldescription+"&isPublic="+ispublic+"&allowComments=false");
 		alert("Created Model");
 		window.close();
 	}

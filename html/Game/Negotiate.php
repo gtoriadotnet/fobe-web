@@ -31,13 +31,13 @@ if ($currenttoken->rowCount() > 0)
 	if(($whenGenerated + (300)) > time()) //under the 3 minute interval
 	{
 		//remove previous cookies
-		setcookie("token", null, time(), "/", "alphaland.cc"); //delete non www. cookie
-		setcookie("token", null, time(), "/", "www.alphaland.cc"); //delete www. cookie
-		setcookie("token", null, time(), "/", ".alphaland.cc"); //delete (all token?) cookies
+		setcookie("token", null, time(), "/", "idk16.xyz"); //delete non www. cookie
+		setcookie("token", null, time(), "/", "www.idk16.xyz"); //delete www. cookie
+		setcookie("token", null, time(), "/", ".idk16.xyz"); //delete (all token?) cookies
 		// ...
 		
 		//set new cookie from auth ticket
-		setcookie("token", $sessiontoken, time() + (86400 * 30), "/", ".alphaland.cc"); //30 day expiration on token for (hopefully) all alphaland paths 
+		setcookie("token", $sessiontoken, time() + (86400 * 30), "/", ".idk16.xyz"); //30 day expiration on token for (hopefully) all finobe paths 
 		// ...
 		
 		//setcookie("token", $sessiontoken, time() + (86400 * 30), "/", false, true); //30 day expiration on token

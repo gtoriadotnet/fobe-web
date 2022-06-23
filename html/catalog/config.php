@@ -1,9 +1,9 @@
 <?php
 
-use Alphaland\Assets\Render;
-use Alphaland\Moderation\UserModerationManager;
-use Alphaland\Users\User;
-use Alphaland\Web\WebContextManager;
+use Finobe\Assets\Render;
+use Finobe\Moderation\UserModerationManager;
+use Finobe\Users\User;
+use Finobe\Web\WebContextManager;
 
 $body = '';
 $alert = "";
@@ -369,7 +369,7 @@ $body = <<<EOT
 							</div>
 							<div class="container input-group mb-3">
 								<div class="input-group-prepend">
-									<span class="input-group-text"><img style="width:1rem;" src="/alphaland/cdn/imgs/alphabux-grey-1024.png"></span>
+									<span class="input-group-text"><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
 								</div>
 								<input type="text" name="item_price" class="form-control" value="{$itemprice}">
 							</div>

@@ -5,9 +5,9 @@ This is used on the client (if the client has the session token set) to request 
 TODO: Clean up
 */
 
-use Alphaland\Assets\Asset;
-use Alphaland\Games\Game;
-use Alphaland\Grid\RccServiceHelper;
+use Finobe\Assets\Asset;
+use Finobe\Games\Game;
+use Finobe\Grid\RccServiceHelper;
 
 $requesttype = $_GET['request'];
 
@@ -145,7 +145,7 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 							else
 							{
 								$newticket = genToken($sInfo->jobid);
-								echo constructJson($sInfo->jobid."", 2, "https://alphaland.cc/Game/Join?ticket=" .$newticket, "", "", "");
+								echo constructJson($sInfo->jobid."", 2, "https://idk16.xyz/Game/Join?ticket=" .$newticket, "", "", "");
 							}
 						}
 						else
@@ -208,7 +208,7 @@ else if ($requesttype == "RequestFollowUser") //follow user
 					else //job isnt full, join it
 					{
 						$newticket = genToken($playersgamejobid);
-						echo constructJson($playersgamejobid."", 2, "https://alphaland.cc/Game/Join?ticket=" .$newticket, "", "", "");
+						echo constructJson($playersgamejobid."", 2, "https://idk16.xyz/Game/Join?ticket=" .$newticket, "", "", "");
 					}
 				}
 				else //user left game

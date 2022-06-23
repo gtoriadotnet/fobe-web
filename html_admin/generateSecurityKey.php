@@ -1,10 +1,10 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
-header("Access-Control-Allow-Origin: https://crackpot.alphaland.cc");
+header("Access-Control-Allow-Origin: https://crackpot.idk16.xyz");
 header("access-control-allow-credentials: true");
 
 if(!($user->IsAdmin())) {

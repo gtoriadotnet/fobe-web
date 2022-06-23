@@ -1,15 +1,15 @@
 <?php
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
 
 //headers
 
-use Alphaland\Groups\Group;
+use Finobe\Groups\Group;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
@@ -88,7 +88,7 @@ foreach($posts as $post)
 		"userid" => $userid,
 		"post" => $posts,
 		"postdate" => $postdate,
-		"thumbnail" => "https://api.alphaland.cc/users/thumbnail?userId=".$userid."&headshot=true"
+		"thumbnail" => "https://api.idk16.xyz/users/thumbnail?userId=".$userid."&headshot=true"
 	);
 	
 	array_push($jsonData, $postsInfo);

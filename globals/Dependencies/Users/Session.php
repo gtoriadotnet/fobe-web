@@ -1,17 +1,17 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	User session class
 */
 
-namespace Alphaland\Users
+namespace Finobe\Users
 {
 
-    use Alphaland\Common\HashingUtiltity;
-    use Alphaland\Moderation\UserModerationManager;
-    use Alphaland\Users\Activation;
-    use Alphaland\Web\WebContextManager;
+    use Finobe\Common\HashingUtiltity;
+    use Finobe\Moderation\UserModerationManager;
+    use Finobe\Users\Activation;
+    use Finobe\Web\WebContextManager;
     use PDO;
 
     class Session 
@@ -77,7 +77,7 @@ namespace Alphaland\Users
             $session->bindParam(":i", $ip, PDO::PARAM_STR);
             $session->bindParam(":ua", $user_agent, PDO::PARAM_STR);
             if($session->execute()) {
-                setcookie("token", $token, time() + (86400 * 30), "/", ".alphaland.cc"); //30 day expiration on token for (hopefully) all alphaland paths 
+                setcookie("token", $token, time() + (86400 * 30), "/", ".idk16.xyz"); //30 day expiration on token for (hopefully) all finobe paths 
                 $this->ValidateSession($token);
                 return true;
             } else {
@@ -151,7 +151,7 @@ namespace Alphaland\Users
                 }
             }
             //No valid session
-            setcookie("token", null, time(), "/", ".alphaland.cc"); //delete (all token?) cookies
+            setcookie("token", null, time(), "/", ".idk16.xyz"); //delete (all token?) cookies
             return false;
         }
 

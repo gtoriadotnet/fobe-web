@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Users\Badge;
-use Alphaland\Web\WebContextManager;
+use Finobe\Users\Badge;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

@@ -1,16 +1,16 @@
 <?php
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
 
 //headers
 
-use Alphaland\Moderation\UserModerationManager;
-use Alphaland\Web\WebContextManager;
+use Finobe\Moderation\UserModerationManager;
+use Finobe\Web\WebContextManager;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 
 header("access-control-allow-credentials: true");
 

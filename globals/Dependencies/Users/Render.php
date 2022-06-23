@@ -1,14 +1,14 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Users {
+namespace Finobe\Users {
 
-    use Alphaland\Common\HashingUtiltity;
-    use Alphaland\Grid\RccServiceHelper;
-    use Alphaland\UI\ImageHelper;
+    use Finobe\Common\HashingUtiltity;
+    use Finobe\Grid\RccServiceHelper;
+    use Finobe\UI\ImageHelper;
     use PDO;
 
     class Render
@@ -81,7 +81,7 @@ namespace Alphaland\Users {
             {
                 if ($fork)
                 {
-                    $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
+                    $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
                     if ($job !== FALSE);
                     {
                         pclose($job);
@@ -100,8 +100,8 @@ namespace Alphaland\Users {
                     $soap = $soap->BatchJobEx(
                         $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Player Closeup ".$userid, $script, array(
                             $userid,
-                            "https://www.alphaland.cc/",
-                            "https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
+                            "https://www.idk16.xyz/",
+                            "https://api.idk16.xyz/users/avatar-accoutrements?userId=".$userid,
                             "png",
                             "840",
                             "840",
@@ -128,7 +128,7 @@ namespace Alphaland\Users {
             {
                 if ($fork)
                 {
-                    $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
+                    $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
                     if ($job !== FALSE);
                     {
                         pclose($job);
@@ -145,8 +145,8 @@ namespace Alphaland\Users {
                     $soap = $soap->BatchJobEx(
                         $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Player ".$userid, $script, array(
                             $userid,
-                            "https://api.alphaland.cc/users/avatar-accoutrements?userId=".$userid,
-                            "https://www.alphaland.cc/",
+                            "https://api.idk16.xyz/users/avatar-accoutrements?userId=".$userid,
+                            "https://www.idk16.xyz/",
                             "png",
                             "840",
                             "840"

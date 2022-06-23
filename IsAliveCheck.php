@@ -1,12 +1,12 @@
 <?php
 
 /*
-Alphaland 2021
+Finobe 2021
 */
 
 //vars
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 $thumbalive = false;
 $gamealive = false;

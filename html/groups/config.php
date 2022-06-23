@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Groups\Group;
+use Finobe\Groups\Group;
 
 $groupid = (int)$_GET['id'];
 
@@ -261,7 +261,7 @@ $("#inputIconFile").change(function() {
 
 function createRole()
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&newrole=true", JSON.stringify({"name":$('#new_role_name').val(),"rank":parseInt($('#new_role_rank').val())}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&newrole=true", JSON.stringify({"name":$('#new_role_name').val(),"rank":parseInt($('#new_role_rank').val())}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -286,7 +286,7 @@ function createRole()
 
 function updateRole()
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&updaterole=true", JSON.stringify({
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&updaterole=true", JSON.stringify({
 	"rank":currentRolesRank,
 	"NewRank":parseInt($('#rolerank_input').val()),
 	"Name":$("#rolename_input").val(),
@@ -323,7 +323,7 @@ function updateRole()
 
 function openRole(rank="")
 {
-	getJSONCDS("https://api.alphaland.cc/group/roles?id="+groupid+"&rank="+rank)
+	getJSONCDS("https://api.idk16.xyz/group/roles?id="+groupid+"&rank="+rank)
 	.done(function(jsonData) {
 		var data = jsonData[0];
 		if (data)
@@ -370,7 +370,7 @@ function currentRoles()
 {
 	var html = '<a class="nav-link red-a-nounder mouse-hover" id="{rank}-tab" onclick="openRole({rank})">{name}</a>';
 		
-	staticPageHelper("https://api.alphaland.cc/group/roles", "https://api.alphaland.cc/logo", "#current_group_roles", html, "", 100, "", "Error occurred", "&id="+groupid);
+	staticPageHelper("https://api.idk16.xyz/group/roles", "https://api.idk16.xyz/logo", "#current_group_roles", html, "", 100, "", "Error occurred", "&id="+groupid);
 	
 	openRole();
 }
@@ -385,7 +385,7 @@ function configGroup()
 		approvals = true;
 	}
 	
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&updateinfo=true", JSON.stringify({"description": $("#group_description").val(), "approvals": approvals, "emblem":image}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&updateinfo=true", JSON.stringify({"description": $("#group_description").val(), "approvals": approvals, "emblem":image}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -410,7 +410,7 @@ function configGroup()
 
 function changeRank(userid, rank)
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&userrank=true", JSON.stringify({"userid": userid, "rank": rank}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&userrank=true", JSON.stringify({"userid": userid, "rank": rank}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -432,7 +432,7 @@ function changeRank(userid, rank)
 
 function exileUser(userid)
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&exileuser=true", JSON.stringify({"userid": userid}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&exileuser=true", JSON.stringify({"userid": userid}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -454,7 +454,7 @@ function exileUser(userid)
 
 function approveRequest(userid)
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&approverequest=true", JSON.stringify({"userid": userid}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&approverequest=true", JSON.stringify({"userid": userid}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -475,7 +475,7 @@ function approveRequest(userid)
 }
 function denyRequest(userid)
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&denyrequest=true", JSON.stringify({"userid": userid}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&denyrequest=true", JSON.stringify({"userid": userid}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -523,7 +523,7 @@ function getRequestsPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("requestsPage", [], "https://api.alphaland.cc/group/joinrequests", "https://api.alphaland.cc/logo", "#join_requests", "#join_requests_buttons", html, page, limit, "", "No join requests", "&id="+groupid);
+	multiPageHelper("requestsPage", [], "https://api.idk16.xyz/group/joinrequests", "https://api.idk16.xyz/logo", "#join_requests", "#join_requests_buttons", html, page, limit, "", "No join requests", "&id="+groupid);
 }
 
 //members page
@@ -531,7 +531,7 @@ function membersAvailableRoles(userid)
 {
 	var html = '<li class="dropdown-custom bootstrap-toggle-dropdown" onclick="changeRank('+userid+',{rank})">{name}</li>';
 		
-	staticPageHelper("https://api.alphaland.cc/group/roles?id="+groupid, "", "#member"+userid+"dropdown", html, "", 100, "", "Error occurred", "&excluderank=255");
+	staticPageHelper("https://api.idk16.xyz/group/roles?id="+groupid, "", "#member"+userid+"dropdown", html, "", 100, "", "Error occurred", "&excluderank=255");
 }
 function membersPage(page)
 {
@@ -552,13 +552,13 @@ function getMembersPage(page, limit)
 	html += '<button class="btn btn-sm btn-danger" onclick="exileUser({userid})">Exile</button>';
 	html += '</div>';
 	
-	multiPageHelper("membersPage", [], "https://api.alphaland.cc/group/members", "https://api.alphaland.cc/logo", "#members_manage_list", "#members_manage_buttons", html, page, limit, "", "No members", "&id="+groupid+"&excluderank=255");
+	multiPageHelper("membersPage", [], "https://api.idk16.xyz/group/members", "https://api.idk16.xyz/logo", "#members_manage_list", "#members_manage_buttons", html, page, limit, "", "No members", "&id="+groupid+"&excluderank=255");
 }
 
 //initialize
 function initialize()
 {
-	getJSONCDS("https://api.alphaland.cc/group/info?id=" + groupid)
+	getJSONCDS("https://api.idk16.xyz/group/info?id=" + groupid)
 	.done(function(jsonData) {
 		var data = jsonData[0];
 		$("#group_name").val(data.name);

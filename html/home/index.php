@@ -9,7 +9,7 @@ $body = <<<EOT
             <h5 id="home_username"></h5>
             <div class="card">
                 <div class="card-body">
-                    <img class="img-fluid rounded" src="https://api.alphaland.cc/users/thumbnail?headshot=true">
+                    <img class="img-fluid rounded" src="https://api.idk16.xyz/users/thumbnail?headshot=true">
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@ $body = <<<EOT
                     <div class="row">
                         <div class="col-sm text-center">
                             <a href="#" class="red-a-nounder">
-                                <img class="img-fluid rounded-circle border" width="86" src="https://api.alphaland.cc/users/thumbnail?headshot=true">
+                                <img class="img-fluid rounded-circle border" width="86" src="https://api.idk16.xyz/users/thumbnail?headshot=true">
                                 <p class="no-overflow">UsernameHerePls</p>
                             </a>
                         </div>
@@ -41,7 +41,7 @@ $body = <<<EOT
                     <div class="row">
                         <div class="col-sm text-center">
                             <a href="#" class="red-a-nounder">
-                                <img class="img-fluid rounded-circle border" width="86" src="https://api.alphaland.cc/users/thumbnail?headshot=true">
+                                <img class="img-fluid rounded-circle border" width="86" src="https://api.idk16.xyz/users/thumbnail?headshot=true">
                                 <p class="no-overflow">UsernameHerePls</p>
                             </a>
                         </div>
@@ -99,7 +99,7 @@ $body = <<<EOT
 
 function postShout()
 {
-	postJSONCDS("https://api.alphaland.cc/user/feed/post", JSON.stringify({"shout":$('#new_shout_input').val()}))
+	postJSONCDS("https://api.idk16.xyz/user/feed/post", JSON.stringify({"shout":$('#new_shout_input').val()}))
 	.done(function(object) {
 		var alert = object.alert;
 		if (alert == "Shout Posted") 
@@ -152,7 +152,7 @@ function shoutPage(num)
     </div>
     `;
 
-	multiPageHelper("shoutPage", [], "https://api.alphaland.cc/user/feed/", "https://api.alphaland.cc/logo", "#shouts-container", "#page-buttons", html, num, 10, "", "No shouts");
+	multiPageHelper("shoutPage", [], "https://api.idk16.xyz/user/feed/", "https://api.idk16.xyz/logo", "#shouts-container", "#page-buttons", html, num, 10, "", "No shouts");
 }
 
 function getRecents()
@@ -179,12 +179,12 @@ function getRecents()
 	</li>
     `;
 		
-	staticPageHelper("https://api.alphaland.cc/user/games/recents", "https://api.alphaland.cc/logo", "#recents-container", html, 1, 4, "", "No recently played games");
+	staticPageHelper("https://api.idk16.xyz/user/games/recents", "https://api.idk16.xyz/logo", "#recents-container", html, 1, 4, "", "No recently played games");
 }
 
 function setUsername()
 {
-    getJSONCDS('https://api.alphaland.cc/users/profile/info')
+    getJSONCDS('https://api.idk16.xyz/users/profile/info')
     .done(function(jsonData) 
     {
         $('#home_username').html('Hello, '+jsonData[0].username)

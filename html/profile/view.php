@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Moderation\UserModerationManager;
-use Alphaland\Web\WebContextManager;
+use Finobe\Moderation\UserModerationManager;
+use Finobe\Web\WebContextManager;
 
 $alert = "";
 
@@ -44,7 +44,7 @@ if(isset($_GET['id']))
 					<div class="card mb-2">
 						<div class="card-body text-center">
 							<div class="text-center">
-								<h5>Alphaland Badges</h5>
+								<h5>Finobe Badges</h5>
 							</div>
 							<div id = "badges_container" class="ul-container text-center">
 								
@@ -197,13 +197,13 @@ if(isset($_GET['id']))
 		<script>
 		var user = new URLSearchParams(window.location.search).get('id');
 		var assetTypeId = 8;
-		var loadingHtml = '<div class="text-center"><img src="https://api.alphaland.cc/logo" class="loading-rotate" width="250" height="250" /></div>';
+		var loadingHtml = '<div class="text-center"><img src="https://api.idk16.xyz/logo" class="loading-rotate" width="250" height="250" /></div>';
 
 		function getProfileInfo(userid)
 		{
 			$("#upper_profile").html(loadingHtml);
 
-			getJSONCDS('https://api.alphaland.cc/users/profile/info?userId=' + userid)
+			getJSONCDS('https://api.idk16.xyz/users/profile/info?userId=' + userid)
 			.done(function(jsonData) 
 			{
 				var onlineStatusHtml = "";
@@ -269,7 +269,7 @@ if(isset($_GET['id']))
 			html += '</li>';
 			html += '</ul>';
 				
-			staticPageHelper("https://api.alphaland.cc/users/profile/badges", "https://api.alphaland.cc/logo", "#badges_container", html, 1, 9, "", "User has no official Badges", "&userId="+userid+"&official=true")
+			staticPageHelper("https://api.idk16.xyz/users/profile/badges", "https://api.idk16.xyz/logo", "#badges_container", html, 1, 9, "", "User has no official Badges", "&userId="+userid+"&official=true")
 		}
 
 		function userBadgesPage(page)
@@ -289,14 +289,14 @@ if(isset($_GET['id']))
 			html += '</a>';
 			html += '</li>';
 
-			multiPageHelper("userBadgesPage", [], "https://api.alphaland.cc/users/profile/badges", "https://api.alphaland.cc/logo", "#usermade_badges_container", "#usermade_badges_page_buttons", html, page, limit, "", "User has no Badges", "&userId="+userid);
+			multiPageHelper("userBadgesPage", [], "https://api.idk16.xyz/users/profile/badges", "https://api.idk16.xyz/logo", "#usermade_badges_container", "#usermade_badges_page_buttons", html, page, limit, "", "User has no Badges", "&userId="+userid);
 		}
 
 		function getUserFriends(userid)
 		{
 			$("#friends_container").html(loadingHtml);
 
-			getJSONCDS('https://api.alphaland.cc/users/profile/friends?userId=' + userid + '&page=1&limit=6')
+			getJSONCDS('https://api.idk16.xyz/users/profile/friends?userId=' + userid + '&page=1&limit=6')
 			.done(function(jsonData) {
 				$("#friends_container").html('<a class = "red-a" href = "/friends/view?id=' + userid + '">Friends (' + jsonData.friendsCount + ')</a>');
 				
@@ -313,7 +313,7 @@ if(isset($_GET['id']))
 
 		function getUserCurWearing(userid)
 		{
-			getJSONCDS('https://api.alphaland.cc/users/profile/wearing?userId=' + userid)
+			getJSONCDS('https://api.idk16.xyz/users/profile/wearing?userId=' + userid)
 			.done(function(jsonData) {
 				$("#curWearingUsername").html(jsonData.username + '\'s Currently Wearing');
 				
@@ -334,7 +334,7 @@ if(isset($_GET['id']))
 		{
 			$("#game_slides_container").html(loadingHtml);
 
-			getJSONCDS('https://api.alphaland.cc/users/profile/games?userId=' + userid)
+			getJSONCDS('https://api.idk16.xyz/users/profile/games?userId=' + userid)
 			.done(function(jsonData) {
 				var gamesCount = jsonData.gamesCount;
 			
@@ -389,7 +389,7 @@ if(isset($_GET['id']))
 			html += '<p class="inventory-item-name">By: <a class="red-a" href="view?id={creatorId}">{creator}</a></p>';
 			html += '</li>';
 			
-			multiPageHelper("inventoryPage", [], "https://api.alphaland.cc/users/profile/inventory", "https://api.alphaland.cc/logo", "#invitems", "#invpages", html, page, limit, "", "User has no items of this type", "&userId="+userid+"&assetTypeId="+assettype);
+			multiPageHelper("inventoryPage", [], "https://api.idk16.xyz/users/profile/inventory", "https://api.idk16.xyz/logo", "#invitems", "#invpages", html, page, limit, "", "User has no items of this type", "&userId="+userid+"&assetTypeId="+assettype);
 		}
 
 		function currentlyWearing() {
@@ -418,7 +418,7 @@ if(isset($_GET['id']))
 			html +=	'</a>';
 			html +=	'</li>';
 			
-			multiPageHelper("groupsPage", [], "https://api.alphaland.cc/users/groups", "https://api.alphaland.cc/logo", "#groups_container", "#groups_page-buttons", html, page, limit, "", "User has no Groups", "&userId="+userid);
+			multiPageHelper("groupsPage", [], "https://api.idk16.xyz/users/groups", "https://api.idk16.xyz/logo", "#groups_container", "#groups_page-buttons", html, page, limit, "", "User has no Groups", "&userId="+userid);
 		}
 		
 		//slides stuff

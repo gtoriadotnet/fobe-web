@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Grid\RccServiceHelper;
-use Alphaland\Web\WebContextManager;
+use Finobe\Grid\RccServiceHelper;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

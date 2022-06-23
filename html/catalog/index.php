@@ -122,12 +122,12 @@ function getCatalogPage(assettype, page, limit, keyword) {
 	html += '</div>';
 	html += '<p class="no-overflow">{name}</p>';
 	html += '<p>By: {creatorName}</p>';
-	html += '<p><img src="/alphaland/cdn/imgs/alphabux-grey-1024.png"> {price}</p>';
+	html += '<p><img src="/finobe/cdn/imgs/alphabux-grey-1024.png"> {price}</p>';
 	html += '</a>';
 	html += '</div>';
 	html += '</li>';
             
-	multiPageHelper("catalogPage", [assetTypeId,keyword], "https://api.alphaland.cc/catalog/items", "https://api.alphaland.cc/logo", "#catalogitems", "#catalogpages", html, page, limit, keyword, "No results", "&assetTypeId="+assettype);
+	multiPageHelper("catalogPage", [assetTypeId,keyword], "https://api.idk16.xyz/catalog/items", "https://api.idk16.xyz/logo", "#catalogitems", "#catalogpages", html, page, limit, keyword, "No results", "&assetTypeId="+assettype);
 }
 
 $('#keyword_input').keypress(function(event) {

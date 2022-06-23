@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Common\Signing;
+use Finobe\Common\Signing;
 
 $user = $_GET['user'];
 
@@ -16,7 +16,7 @@ if ($user == 1)
 		"SeleniumTestMode" => false, //always false, dont need this
 		"UserId" => 2,
 		"SuperSafeChat" => false, //always false, dont need this
-		"CharacterAppearance" => "https://api.alphaland.cc/users/avatar-accoutrements?userId=2",
+		"CharacterAppearance" => "https://api.idk16.xyz/users/avatar-accoutrements?userId=2",
 		"ClientTicket" => "111",
 		"GameId" => '00000000-0000-0000-0000-000000000000', //not set rn?
 		"PlaceId" => 186,
@@ -53,7 +53,7 @@ elseif ($user == 2)
 		"SeleniumTestMode" => false, //always false, dont need this
 		"UserId" => 3,
 		"SuperSafeChat" => false, //always false, dont need this
-		"CharacterAppearance" => "https://api.alphaland.cc/users/avatar-accoutrements?userId=2",
+		"CharacterAppearance" => "https://api.idk16.xyz/users/avatar-accoutrements?userId=2",
 		"ClientTicket" => "111",
 		"GameId" => '00000000-0000-0000-0000-000000000000', //not set rn?
 		"PlaceId" => 186,
@@ -90,7 +90,7 @@ elseif ($user == 3)
 		"SeleniumTestMode" => false, //always false, dont need this
 		"UserId" => 4,
 		"SuperSafeChat" => false, //always false, dont need this
-		"CharacterAppearance" => "https://api.alphaland.cc/users/avatar-accoutrements?userId=2",
+		"CharacterAppearance" => "https://api.idk16.xyz/users/avatar-accoutrements?userId=2",
 		"ClientTicket" => "111",
 		"GameId" => '00000000-0000-0000-0000-000000000000', //not set rn?
 		"PlaceId" => 186,

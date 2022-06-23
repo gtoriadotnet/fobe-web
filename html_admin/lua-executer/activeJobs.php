@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Games\Game;
-use Alphaland\Web\WebContextManager;
+use Finobe\Games\Game;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -10,7 +10,7 @@ if(!($user->IsAdmin())) {
 }
 
 //headers
-header("Access-Control-Allow-Origin: https://crackpot.alphaland.cc");
+header("Access-Control-Allow-Origin: https://crackpot.idk16.xyz");
 header("access-control-allow-credentials: true");
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");

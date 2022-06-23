@@ -64,9 +64,9 @@ file_put_contents("finished.txt", $html);
 */
 
 /*
-include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
+include "D:/Finobe/globals/Dependencies/Users/Activation.php";
 
-$test = new Alphaland\Users\Activation();
+$test = new Finobe\Users\Activation();
 
 
 if ($test->isUserActivated(2))//

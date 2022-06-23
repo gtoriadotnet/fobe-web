@@ -2,8 +2,8 @@
 
 //stuff for staff will be handled here
 
-use Alphaland\Common\Signing;
-use Alphaland\Web\WebContextManager;
+use Finobe\Common\Signing;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

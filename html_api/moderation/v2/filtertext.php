@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Moderation\Filter;
+use Finobe\Moderation\Filter;
 
 header('Content-Type: application/json');
 
@@ -18,7 +18,7 @@ if (Filter::IsTextFiltered($text))
 
 	if (chatFilterInfractionLimit($userid, 3, 120)) //3 infraction within 2 minutes
 	{
-		die(kickUserIfInGame($userid, "'".$text."' is not appropriate on Alphaland, continued infractions will lead to a ban."));
+		die(kickUserIfInGame($userid, "'".$text."' is not appropriate on Finobe, continued infractions will lead to a ban."));
 	}
 
 	$text = Filter::FilterText($text);

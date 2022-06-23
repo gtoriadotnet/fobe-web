@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

@@ -22,7 +22,7 @@ $body = <<<EOT
 		<div class="form-group">
 			<label>Group Icon (required)</label>
 			<div class="text-center mb-3">
-				<img id="emblemPreview" src="https://api.alphaland.cc/logo" width="150" height="150" class="img-fluid">
+				<img id="emblemPreview" src="https://api.idk16.xyz/logo" width="150" height="150" class="img-fluid">
 			</div>
 			<div class="custom-file">
 				<input type="file" class="custom-file-input" name="emblemPhoto" value="" id="emblemPhoto">
@@ -88,7 +88,7 @@ function createGroup()
 		approvals = false;
 	}
 	
-	postJSONCDS("https://api.alphaland.cc/group/create", JSON.stringify({"name": groupname, "description": groupdescription, "approvals": approvals, "emblem":image}))
+	postJSONCDS("https://api.idk16.xyz/group/create", JSON.stringify({"name": groupname, "description": groupdescription, "approvals": approvals, "emblem":image}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";

@@ -1,14 +1,14 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Users {
+namespace Finobe\Users {
 
-    use Alphaland\Moderation\UserModerationManager;
-    use Alphaland\Common\HashingUtiltity;
-    use Alphaland\Groups\Group;
+    use Finobe\Moderation\UserModerationManager;
+    use Finobe\Common\HashingUtiltity;
+    use Finobe\Groups\Group;
     use PDO;
 
     class ReferralProgram

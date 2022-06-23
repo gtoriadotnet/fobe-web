@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 $body = "";
 if(isset($_GET['id'])) 

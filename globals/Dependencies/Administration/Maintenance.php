@@ -1,13 +1,13 @@
 <?php
 
-namespace Alphaland\Administration {
+namespace Finobe\Administration {
 
-    use Alphaland\Grid\RccServiceHelper;
+    use Finobe\Grid\RccServiceHelper;
     use PDO;
 
     class Maintenance
     {
-        public static function Enable($text = "Alphaland is currently under maintenance, check back later.")
+        public static function Enable($text = "Finobe is currently under maintenance, check back later.")
         {
             $setmaintenance = $GLOBALS['pdo']->prepare("UPDATE websettingsdeprecated SET maintenance = 1, maintenance_text = :t");
             $setmaintenance->bindParam(":t", $text, PDO::PARAM_STR);

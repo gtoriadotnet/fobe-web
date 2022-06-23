@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Assets\Render;
-use Alphaland\Web\WebContextManager;
+use Finobe\Assets\Render;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {
@@ -14,7 +14,7 @@ header("Expires: -1");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s T") . " GMT");
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	This is responsible for handling datamodel auto saving
 */
 
@@ -22,7 +22,7 @@ $id = (int)$_GET['assetId'];
 
 $iteminfo = getAssetInfo($id);
 
-if($iteminfo !== FALSE) //asset id exists in alphaland db
+if($iteminfo !== FALSE) //asset id exists in finobe db
 {
 	if ($iteminfo->AssetTypeId == 9) //personal server place
 	{

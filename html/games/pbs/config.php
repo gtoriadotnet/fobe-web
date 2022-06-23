@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Games\Game;
-use Alphaland\Web\WebContextManager;
+use Finobe\Games\Game;
+use Finobe\Web\WebContextManager;
 
 $body = '';
 
@@ -259,7 +259,7 @@ function updatePBSGen()
 		whitelistenabled = true;
 	}
 
-	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&updatesettings=true", JSON.stringify({
+	postJSONCDS("https://api.idk16.xyz/game/pbs/configure?id="+gameid+"&updatesettings=true", JSON.stringify({
 	"Name": $("#pbs_game_name").val(), 
 	"Description": $("#pbs_game_description").val(), 
 	"CommentsEnabled": commentsenabled, 
@@ -288,7 +288,7 @@ function updatePBSGen()
 function whitelistUser(username)
 {
 	updatePBSGen();
-	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&whitelist=true", JSON.stringify({"username": username}))
+	postJSONCDS("https://api.idk16.xyz/game/pbs/configure?id="+gameid+"&whitelist=true", JSON.stringify({"username": username}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -310,7 +310,7 @@ function whitelistUser(username)
 
 function unwhitelistUser(userid)
 {
-	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&unwhitelist=true", JSON.stringify({"userid": userid}))
+	postJSONCDS("https://api.idk16.xyz/game/pbs/configure?id="+gameid+"&unwhitelist=true", JSON.stringify({"userid": userid}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -332,7 +332,7 @@ function unwhitelistUser(userid)
 
 function removeUser(userid)
 {
-	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&remove=true", JSON.stringify({"userid": userid}))
+	postJSONCDS("https://api.idk16.xyz/game/pbs/configure?id="+gameid+"&remove=true", JSON.stringify({"userid": userid}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -359,7 +359,7 @@ function banUsername(username)
 
 function rankUsername(username, rank)
 {
-	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&rank=true", JSON.stringify({"username": username, "rank": rank}))
+	postJSONCDS("https://api.idk16.xyz/game/pbs/configure?id="+gameid+"&rank=true", JSON.stringify({"username": username, "rank": rank}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -381,7 +381,7 @@ function rankUsername(username, rank)
 
 function rankUser(userid, rank)
 {
-	postJSONCDS("https://api.alphaland.cc/game/pbs/configure?id="+gameid+"&rank=true", JSON.stringify({"userid": userid, "rank": rank}))
+	postJSONCDS("https://api.idk16.xyz/game/pbs/configure?id="+gameid+"&rank=true", JSON.stringify({"userid": userid, "rank": rank}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -419,7 +419,7 @@ function getWhitelistedUsersPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("whitelistedUsersPage", [], "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#whitelisted_users_html", "#whitelisted_users_button", html, page, limit, "", "No whitelisted users", "&id="+gameid+"&whitelist=true"); //show all ranks besides banned
+	multiPageHelper("whitelistedUsersPage", [], "https://api.idk16.xyz/game/pbs/users", "https://api.idk16.xyz/logo", "#whitelisted_users_html", "#whitelisted_users_button", html, page, limit, "", "No whitelisted users", "&id="+gameid+"&whitelist=true"); //show all ranks besides banned
 }
 
 function userRolesPage(page)
@@ -448,7 +448,7 @@ function getUserRolesPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("userRolesPage", [], "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#user_roles_html", "#user_roles_buttons", html, page, limit, "", "No users", "&id="+gameid+"&nobanned=true"); //show all ranks besides banned
+	multiPageHelper("userRolesPage", [], "https://api.idk16.xyz/game/pbs/users", "https://api.idk16.xyz/logo", "#user_roles_html", "#user_roles_buttons", html, page, limit, "", "No users", "&id="+gameid+"&nobanned=true"); //show all ranks besides banned
 }
 
 function bannedMembersPage(page)
@@ -469,13 +469,13 @@ function getBannedMembersPage(page, limit)
 	html += '</div>';
 	html += '</li>';
 	
-	multiPageHelper("bannedMembersPage", [], "https://api.alphaland.cc/game/pbs/users", "https://api.alphaland.cc/logo", "#banned_users_html", "#banned_users_buttons", html, page, limit, "", "No banned users", "&id="+gameid+"&excluderank=10"); //will show only ranks below 10
+	multiPageHelper("bannedMembersPage", [], "https://api.idk16.xyz/game/pbs/users", "https://api.idk16.xyz/logo", "#banned_users_html", "#banned_users_buttons", html, page, limit, "", "No banned users", "&id="+gameid+"&excluderank=10"); //will show only ranks below 10
 }
 
 //initialize
 function initialize()
 {
-	getJSONCDS("https://api.alphaland.cc/game/info?id=" + gameid)
+	getJSONCDS("https://api.idk16.xyz/game/info?id=" + gameid)
 	.done(function(jsonData) {
 		var data = jsonData;
 		$("#pbs_game_name").val(data.Name);

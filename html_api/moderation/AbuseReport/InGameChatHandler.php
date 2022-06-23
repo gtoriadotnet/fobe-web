@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
     Abuse reports
 */
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

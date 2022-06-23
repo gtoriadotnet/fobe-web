@@ -1,10 +1,10 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!isLoggedIn())
 {
-	WebContextManager::Redirect("../login?referral=" . "https://www.alphaland.cc/Studio/Places");
+	WebContextManager::Redirect("../login?referral=" . "https://www.idk16.xyz/Studio/Places");
 }
 
 $games_html = "";
@@ -42,7 +42,7 @@ $body = <<<EOT
 	<script>
 	function openGame(id) 
 	{
-		if (!window.external.StartGame("","","game:Load('https://www.alphaland.cc/asset/?id=" + id + "') game:SetPlaceId(" + id + ")"))
+		if (!window.external.StartGame("","","game:Load('https://www.idk16.xyz/asset/?id=" + id + "') game:SetPlaceId(" + id + ")"))
 		{
 			alert("Failed to open place, please report this");
 			window.close();

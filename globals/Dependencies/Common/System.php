@@ -1,6 +1,6 @@
 <?php
 
-namespace Alphaland\Common {
+namespace Finobe\Common {
     class System
     {
         public static function IsCommandLine()

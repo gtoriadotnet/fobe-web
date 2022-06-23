@@ -1,12 +1,12 @@
 <?php
 
 /*
-Alphaland 2021 
+Finobe 2021 
 The purpose of this is to upload SolidModels (Unions) from studio, since studio does not serialize the actual Union
 */
 
-use Alphaland\Assets\Asset;
-use Alphaland\Assets\Render;
+use Finobe\Assets\Asset;
+use Finobe\Assets\Render;
 
 $assetTypeName = $_GET['assetTypeName'];
 $name = $_GET['name'];

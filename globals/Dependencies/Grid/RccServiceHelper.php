@@ -1,13 +1,13 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
     This is responsible for communicating to the specified Webservice
     Nikita TODO: ALPHA-22 (Response Models for things that definitely have a known response (like specific SOAP actions))
                  https://jira.mfdlabs.local/browse/ALPHA-22
 */
 
-namespace Alphaland\Grid {
+namespace Finobe\Grid {
 
     use stdClass;
     use PDO;

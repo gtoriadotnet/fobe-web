@@ -2,17 +2,17 @@
 
 if (isset($_POST['SubmitClient']))
 {
-	$loc = $GLOBALS['setupHtmlPath'].$ws->AlphalandVersion."-AlphalandLauncher.exe";
+	$loc = $GLOBALS['setupHtmlPath'].$ws->FinobeVersion."-FinobeLauncher.exe";
 	header("Content-type: application/octet-stream");
-	header("Content-Disposition: attachment; filename=AlphalandLauncher.exe");
+	header("Content-Disposition: attachment; filename=FinobeLauncher.exe");
 	echo file_get_contents($loc);
 }
 
 if (isset($_POST['SubmitStudio']))
 {
-	$loc = $GLOBALS['setupHtmlPath'].$ws->AlphalandStudioVersion."-AlphalandStudioLauncher.exe";
+	$loc = $GLOBALS['setupHtmlPath'].$ws->FinobeStudioVersion."-FinobeStudioLauncher.exe";
 	header("Content-type: application/octet-stream");
-	header("Content-Disposition: attachment; filename=AlphalandStudioLauncher.exe");
+	header("Content-Disposition: attachment; filename=FinobeStudioLauncher.exe");
 	echo file_get_contents($loc);
 }
 
@@ -24,7 +24,7 @@ body, html {
 }
 
 body {
-	background-image: url("/alphaland/cdn/imgs/download-bg.png");
+	background-image: url("/finobe/cdn/imgs/download-bg.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -34,8 +34,8 @@ body {
 <div class="container">
 	<div class="jumbotron" style="background-color:rgb(200,200,200,0.8);backdrop-filter:blur(10px);">
 		<div class="text-center">
-			<h1 class="display-4">Download Alphaland</h1>
-			<img width="400" class="img-fluid" src="https://api.alphaland.cc/logo">
+			<h1 class="display-4">Download Finobe</h1>
+			<img width="400" class="img-fluid" src="https://api.idk16.xyz/logo">
 			<form action="" method="post">
 				<button type="SubmitClient" name="SubmitClient" class="btn btn-lg btn-danger" type="button">Download Client</button>
 				<button type="SubmitStudio" name="SubmitStudio" class="btn btn-lg btn-danger" type="button">Download Studio</button>

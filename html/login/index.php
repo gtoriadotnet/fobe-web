@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Users\User;
-use Alphaland\Web\WebContextManager;
+use Finobe\Users\User;
+use Finobe\Web\WebContextManager;
 
 $error = "";
 

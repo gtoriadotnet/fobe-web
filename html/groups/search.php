@@ -56,7 +56,7 @@ function groupsPage(page,keyword="")
 		window.history.replaceState(null, null, "/groups/search");
 	}
 
-	multiPageHelper("groupsPage", [keyword], "https://api.alphaland.cc/groups/", "https://api.alphaland.cc/logo", "#groups", "#groups-buttons", html, page, 5, keyword, "No results");
+	multiPageHelper("groupsPage", [keyword], "https://api.idk16.xyz/groups/", "https://api.idk16.xyz/logo", "#groups", "#groups-buttons", html, page, 5, keyword, "No results");
 }
 
 groupsPage(1,keyword);

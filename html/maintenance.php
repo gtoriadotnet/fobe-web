@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if (!WebContextManager::IsUnderMaintenance())
 {
@@ -53,7 +53,7 @@ body {
 }
 </style>
 <div class="container" style="flex-direction: column!important;justify-content: center!important;display: flex!important;">
-	<img style="max-width: 30rem;max-width: 30rem;margin-right: auto;margin-left: auto;" src="alphaland/cdn/imgs/alphaland-white-1024.png">
+	<img style="max-width: 30rem;max-width: 30rem;margin-right: auto;margin-left: auto;" src="finobe/cdn/imgs/finobe-white-1024.png">
 	<h1 style="text-align:center; ">{$status}</h1>
 </div>
 EOT;

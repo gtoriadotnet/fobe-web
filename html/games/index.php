@@ -7,7 +7,7 @@ $body = <<<EOT
 			<h5>Games</h5>
 		</div>
 		<div class="col-sm-3 mb-3">
-			<a href="/download"><button class="btn btn-danger w-100">Download Alphaland</button></a>
+			<a href="/download"><button class="btn btn-danger w-100">Download Finobe</button></a>
 		</div>
 		<div class="col-sm">
 
@@ -57,7 +57,7 @@ function gamePage(num, keyword = "")
 	html+= '</div>';
 	html+= '</li>';
 
-	multiPageHelper("gamePage", [keyword], "https://api.alphaland.cc/games/sitegames", "https://api.alphaland.cc/logo", "#games-container", "#page-buttons", html, num, 21, keyword, "No results");
+	multiPageHelper("gamePage", [keyword], "https://api.idk16.xyz/games/sitegames", "https://api.idk16.xyz/logo", "#games-container", "#page-buttons", html, num, 21, keyword, "No results");
 }
 
 $('#keyword_input').keypress(function(event) {

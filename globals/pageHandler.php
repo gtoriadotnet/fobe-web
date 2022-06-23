@@ -1,12 +1,12 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	Easy utility for pages
 */
 
 class page_handler {
-    public $siteName = "Alphaland";
+    public $siteName = "Finobe";
 	public $sheader;
 	public $pagetitle;
 	public $navbar;
@@ -26,7 +26,7 @@ class page_handler {
 		<title>%s</title>
 		%s
 	</head>
-	<body id="alphaland-main-body">
+	<body id="finobe-main-body">
 		%s
 		%s
 		%s

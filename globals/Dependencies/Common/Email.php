@@ -1,10 +1,10 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Common {
+namespace Finobe\Common {
 
     use PDO;
 

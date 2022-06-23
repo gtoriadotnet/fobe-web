@@ -1,13 +1,13 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Games {
+namespace Finobe\Games {
 
-    use Alphaland\Assets\Asset;
-    use Alphaland\Grid\RccServiceHelper;
+    use Finobe\Assets\Asset;
+    use Finobe\Grid\RccServiceHelper;
     use Exception;
     use PDO;
 

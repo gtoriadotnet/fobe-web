@@ -1,17 +1,17 @@
 <?php
 
 /*
-Alphaland 2021
+Finobe 2021
 This is for uploading data from studio, this requires the user to have access to the asset.
 */
 
-use Alphaland\Assets\Render;
+use Finobe\Assets\Render;
 
 $id = (int)$_GET['id'];
 
 $iteminfo = getAssetInfo($id);
 
-if($iteminfo !== FALSE) //asset id exists in alphaland db
+if($iteminfo !== FALSE) //asset id exists in finobe db
 {
 	if ($iteminfo->AssetTypeId == 9) //place
 	{

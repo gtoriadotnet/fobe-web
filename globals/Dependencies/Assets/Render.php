@@ -1,14 +1,14 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Assets {
+namespace Finobe\Assets {
 
-    use Alphaland\Common\HashingUtiltity;
-    use Alphaland\Grid\RccServiceHelper;
-    use Alphaland\UI\ImageHelper;
+    use Finobe\Common\HashingUtiltity;
+    use Finobe\Grid\RccServiceHelper;
+    use Finobe\UI\ImageHelper;
     use PDO;
 
     class Render
@@ -16,7 +16,7 @@ namespace Alphaland\Assets {
         public static function RenderHat(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." hat", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." hat", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -28,8 +28,8 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Hat ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/",
                         "png",
                         "750",
                         "750"
@@ -47,7 +47,7 @@ namespace Alphaland\Assets {
         public static function RenderTShirt(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." tshirt", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." tshirt", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -59,9 +59,9 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render TShirt ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/asset/?id=38",
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/",
                         "png",
                         "750",
                         "750"
@@ -79,7 +79,7 @@ namespace Alphaland\Assets {
         public static function RenderShirt(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." shirt", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." shirt", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -91,9 +91,9 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Shirt ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/asset/?id=38",
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/",
                         "png",
                         "750",
                         "750"
@@ -111,7 +111,7 @@ namespace Alphaland\Assets {
         public static function RenderPants(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." pants", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." pants", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -123,9 +123,9 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Pants ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/asset/?id=38",
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/",
                         "png",
                         "750",
                         "750"
@@ -143,7 +143,7 @@ namespace Alphaland\Assets {
         public static function RenderFace(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." face", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." face", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -155,8 +155,8 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Face ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/",
                         "png",
                         "750",
                         "750"
@@ -174,7 +174,7 @@ namespace Alphaland\Assets {
         public static function RenderHead(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." head", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." head", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -186,9 +186,9 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Head ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/asset/?id=38",
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/",
                         "png",
                         "750",
                         "750"
@@ -206,7 +206,7 @@ namespace Alphaland\Assets {
         public static function RenderGear(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." gear", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." gear", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -218,11 +218,11 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Gear ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
                         "png",
                         "750",
                         "750",
-                        "https://www.alphaland.cc/"
+                        "https://www.idk16.xyz/"
                     ))
                 );
 
@@ -237,7 +237,7 @@ namespace Alphaland\Assets {
         public static function RenderPackage(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." package", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." package", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -249,10 +249,10 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Package ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=27112025;https://www.alphaland.cc/asset/?id=27112039;https://www.alphaland.cc/asset/?id=27112052",
-                        "https://www.alphaland.cc/",
-                        "https://www.alphaland.cc/asset/?id=38",
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=27112025;https://www.idk16.xyz/asset/?id=27112039;https://www.idk16.xyz/asset/?id=27112052",
+                        "https://www.idk16.xyz/",
+                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/",
                         "png",
                         "768",
                         "432"
@@ -270,7 +270,7 @@ namespace Alphaland\Assets {
         public static function RenderModel(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." model", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." model", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -282,8 +282,8 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Model ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/",
                         "png",
                         "768",
                         "432"
@@ -301,7 +301,7 @@ namespace Alphaland\Assets {
         public static function RenderMesh(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." mesh", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." mesh", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -313,8 +313,8 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Mesh ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/",
                         "png",
                         "768",
                         "432"
@@ -332,7 +332,7 @@ namespace Alphaland\Assets {
         public static function RenderPlace(int $assetid, bool $fork=false)
         {
             if ($fork) {
-                $job = popen("cd C:/Webserver/nginx/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." place", "r"); //throwaway background process
+                $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$assetid." place", "r"); //throwaway background process
                 if ($job !== FALSE); {
                     pclose($job);
                     return true;
@@ -344,8 +344,8 @@ namespace Alphaland\Assets {
                 $soap = $soap->BatchJobEx(
                     $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Place ".$assetid, $thumbnailScript, array(
                         $assetid,
-                        "https://www.alphaland.cc/asset/?id=".$assetid,
-                        "https://www.alphaland.cc/",
+                        "https://www.idk16.xyz/asset/?id=".$assetid,
+                        "https://www.idk16.xyz/",
                         "png",
                         "768",
                         "432"

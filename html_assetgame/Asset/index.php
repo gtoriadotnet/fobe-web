@@ -2,7 +2,7 @@
 
 //we dont want duplicates of the asset fetching so we will just make this endpoint internally redirect
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 $id = (int)$_GET["id"];
 $assetversionid = (int)$_GET["assetversionid"];
@@ -18,4 +18,4 @@ else if ($version)
     $assetversion = $version;
 }
 
-WebContextManager::Redirect("https://www.alphaland.cc/asset/?id=" . $id . "&version=" . $assetversion); 
+WebContextManager::Redirect("https://www.idk16.xyz/asset/?id=" . $id . "&version=" . $assetversion); 

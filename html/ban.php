@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Moderation\UserModerationManager;
-use Alphaland\Web\WebContextManager;
+use Finobe\Moderation\UserModerationManager;
+use Finobe\Web\WebContextManager;
 
 if (UserModerationManager::IsBanned($user->id))
 {

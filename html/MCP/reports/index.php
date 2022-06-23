@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
     Active Reports
 */
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff()) {
     WebContextManager::Redirect("/");
@@ -42,7 +42,7 @@ function populateReports()
     </ul>
     </div>`;
     
-    staticPageHelper("https://www.alphaland.cc/MCP/reports/data/reports", "https://api.alphaland.cc/logo", "#reports-container", html, "", 1000, "", "No active reports");
+    staticPageHelper("https://www.idk16.xyz/MCP/reports/data/reports", "https://api.idk16.xyz/logo", "#reports-container", html, "", 1000, "", "No active reports");
 }
 populateReports();
 </script>

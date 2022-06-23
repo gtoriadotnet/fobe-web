@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Users\User;
+use Finobe\Users\User;
 
 $alert = '';
 

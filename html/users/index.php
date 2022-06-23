@@ -79,7 +79,7 @@ function userPage(num, keyword = "")
     </div>
     `;
 
-	multiPageHelper("userPage", [keyword], "https://api.alphaland.cc/users/siteusers", "https://api.alphaland.cc/logo", "#users-container", "#page-buttons", html, num, 8, keyword, "No results");
+	multiPageHelper("userPage", [keyword], "https://api.idk16.xyz/users/siteusers", "https://api.idk16.xyz/logo", "#users-container", "#page-buttons", html, num, 8, keyword, "No results");
 }
 
 $('#keyword_input').keypress(function(event) {

@@ -2,15 +2,15 @@
 
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
 //headers
 
-use Alphaland\Users\Render;
-use Alphaland\Users\User;
+use Finobe\Users\Render;
+use Finobe\Users\User;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 

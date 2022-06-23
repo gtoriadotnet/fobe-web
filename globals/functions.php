@@ -1,17 +1,17 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	A bunch of global functions used sitewide
 	TODO: clean up a lot of legacy code
 */
 
-use Alphaland\Assets\Asset;
-use Alphaland\Assets\Render;
-use Alphaland\Games\Game;
-use Alphaland\Moderation\Filter;
-use Alphaland\Users\Render as UsersRender;
-use Alphaland\Web\WebContextManager;
+use Finobe\Assets\Asset;
+use Finobe\Assets\Render;
+use Finobe\Games\Game;
+use Finobe\Moderation\Filter;
+use Finobe\Users\Render as UsersRender;
+use Finobe\Web\WebContextManager;
 
 //safe generation utilities
 
@@ -526,7 +526,7 @@ function submitRobloxAssetWorker($requestedassetid, $assettypeid, $assetname, $a
 			$newassetid = uploadXML($xml, $assetname, $assetdescription, $price, $onsale, $assettypeid, 1);
 
 			if ($newassetid !== FALSE) {
-				Asset::GiveAsset($newassetid, 1); //give the user Alphaland the created asset
+				Asset::GiveAsset($newassetid, 1); //give the user Finobe the created asset
 				$assettypeid = getAssetInfo($newassetid)->AssetTypeId;
 			
 				switch ($assettypeid) {
@@ -606,13 +606,13 @@ function getRobloxProductInfo($assetid)
 
 function ReturnAssetFromHash($hash) //asset CDN
 {
-	//alphaland assets cdn
+	//finobe assets cdn
 	WebContextManager::Redirect(constructAssetHashUrl($hash));
 }
 
 function ReturnThumbnailFromHash($hash) //thumb CDN (images)
 {
-	//alphaland thumb (images) cdn
+	//finobe thumb (images) cdn
 	WebContextManager::Redirect(constructThumbnailHashUrl($hash));
 }
 
@@ -1097,7 +1097,7 @@ function canJoinUser($uid) //
 	
 function sendMail($from, $recipient, $subject, $body, $altbody)
 {
-	$job = popen("cd C:/Webserver/nginx/Alphaland && start /B php sendEmail.php ".$from." ".$recipient." ".base64_encode($subject)." ".base64_encode($body)." ".base64_encode($altbody), "r"); 
+	$job = popen("cd D:/Finobe && start /B php sendEmail.php ".$from." ".$recipient." ".base64_encode($subject)." ".base64_encode($body)." ".base64_encode($altbody), "r"); 
     if ($job !== FALSE);
     {
         pclose($job);
@@ -1153,17 +1153,17 @@ function sendVerificationEmail($from, $recipient) //1 = success, 2 = cooldown, 3
 	$email_html = '
 	<div style="width:40rem;background-color:white;border:1px solid rgba(0,0,0,.125);border-radius:5px;padding:12px;margin:auto;">
 		<div style="text-align:center;">
-			<img src="https://alphaland.cc/alphaland/cdn/imgs/alphaland-1024.png" style="width:18rem;">
+			<img src="https://idk16.xyz/finobe/cdn/imgs/finobe-1024.png" style="width:18rem;">
 		</div>
 		<div style="text-align:center;">
 			<strong>Click the button below to verify your email!</strong>
 		</div>
 		<div style="text-align:center;margin-top:10px;">
-			<a style="text-decoration:none;" href="https://alphaland.cc/verifyemail?token='.$t.'"><span style="border:none;color:white;background-color:#c82333;border-radius:4px;padding:10px;cursor:pointer;">Verify Email</span></a>
+			<a style="text-decoration:none;" href="https://idk16.xyz/verifyemail?token='.$t.'"><span style="border:none;color:white;background-color:#c82333;border-radius:4px;padding:10px;cursor:pointer;">Verify Email</span></a>
 		</div>
 	</div>';
 	
-	$email_altbody = 'https://alphaland.cc/verifyemail?token='.$t.'';
+	$email_altbody = 'https://idk16.xyz/verifyemail?token='.$t.'';
 	
 	$checkifverified = $GLOBALS['pdo']->prepare("SELECT * FROM users WHERE id = :u AND verified = 0");
 	$checkifverified->bindParam(":u", $localuser, PDO::PARAM_INT);
@@ -1217,7 +1217,7 @@ function changeEmail($newemail) //1 = success, 2 = cooldown, 3 = fail
 {
 	$localuser = $GLOBALS['user']->id;
 	
-	$sendver = sendVerificationEmail("info@alphaland.cc", $newemail);
+	$sendver = sendVerificationEmail("info@idk16.xyz", $newemail);
 	
 	if ($sendver == 1) //all good
 	{
@@ -1237,7 +1237,7 @@ function changeEmail($newemail) //1 = success, 2 = cooldown, 3 = fail
 		$unverify->bindParam(":u", $localuser, PDO::PARAM_INT);
 		if ($unverify->execute())
 		{
-			$sendver2 = sendVerificationEmail("info@alphaland.cc", $newemail);
+			$sendver2 = sendVerificationEmail("info@idk16.xyz", $newemail);
 			
 			if ($sendver2 == 1) //all good
 			{
@@ -1318,17 +1318,17 @@ function sendPasswordReset($from, $recipient, $recipientuid) //1 = success, 2 = 
 	$email_html = '
 	<div style="width:40rem;background-color:white;border:1px solid rgba(0,0,0,.125);border-radius:5px;padding:12px;margin:auto;">
 		<div style="text-align:center;">
-			<img src="https://alphaland.cc/alphaland/cdn/imgs/alphaland-1024.png" style="width:18rem;">
+			<img src="https://idk16.xyz/finobe/cdn/imgs/finobe-1024.png" style="width:18rem;">
 		</div>
 		<div style="text-align:center;">
 			<strong>Click the button below to reset your password!</strong>
 		</div>
 		<div style="text-align:center;margin-top:10px;">
-			<a style="text-decoration:none;" href="https://alphaland.cc/settings/resetpassword?token='.$t.'"><span style="border:none;color:white;background-color:#c82333;border-radius:4px;padding:10px;cursor:pointer;">Reset Password</span></a>
+			<a style="text-decoration:none;" href="https://idk16.xyz/settings/resetpassword?token='.$t.'"><span style="border:none;color:white;background-color:#c82333;border-radius:4px;padding:10px;cursor:pointer;">Reset Password</span></a>
 		</div>
 	</div>';
 	
-	$email_altbody = 'https://alphaland.cc/settings/resetpassword?token='.$t.'';
+	$email_altbody = 'https://idk16.xyz/settings/resetpassword?token='.$t.'';
 	
 	$check = $GLOBALS['pdo']->prepare("SELECT * FROM password_reset_keys WHERE uid = :u AND valid = 1");
 	$check->bindParam(":u", $recipientuid, PDO::PARAM_INT);
@@ -2568,47 +2568,47 @@ function getCurrentTheme() //returns the theme set (integer)
 	}
 }
 
-function getCurrentThemeLogo() //grabs the alphaland logo for the users selected theme
+function getCurrentThemeLogo() //grabs the finobe logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
 
-	//return $GLOBALS['url'] . "/alphaland/cdn/imgs/alpha-christmas/alphalandchristmas.png"; //force christmas logo
+	//return $GLOBALS['url'] . "/finobe/cdn/imgs/alpha-christmas/finobechristmas.png"; //force christmas logo
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
-		return $GLOBALS['url'] . "/alphaland/cdn/imgs/alphaland-logo.svg";
+		return $GLOBALS['url'] . "/finobe/cdn/imgs/finobe-logo.svg";
 	}
 	elseif ($currenttheme == 1) //dark theme light logo
 	{
-		return $GLOBALS['url'] . "/alphaland/cdn/imgs/alphaland-white-1024.png";
+		return $GLOBALS['url'] . "/finobe/cdn/imgs/finobe-white-1024.png";
 	}
 }
 
-function getCurrentThemeAlphabuxLogo() //grabs the alphaland alphabux logo for the users selected theme
+function getCurrentThemeAlphabuxLogo() //grabs the finobe alphabux logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
-		return $GLOBALS['url'] . "/alphaland/cdn/imgs/alphabux-black-1024.png";
+		return $GLOBALS['url'] . "/finobe/cdn/imgs/alphabux-black-1024.png";
 	}
 	elseif ($currenttheme == 1) //dark theme light logo
 	{
-		return $GLOBALS['url'] . "/alphaland/cdn/imgs/alphabux-grey-1024.png";
+		return $GLOBALS['url'] . "/finobe/cdn/imgs/alphabux-grey-1024.png";
 	}
 }
 
-function getCurrentThemeAnimatedLogo() //grabs the alphaland animated logo for the users selected theme
+function getCurrentThemeAnimatedLogo() //grabs the finobe animated logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
-		return $GLOBALS['url'] . "/alphaland/cdn/imgs/loading-dark.gif";
+		return $GLOBALS['url'] . "/finobe/cdn/imgs/loading-dark.gif";
 	}
 	elseif ($currenttheme == 1) //dark theme light logo
 	{
-		return $GLOBALS['url'] . "/alphaland/cdn/imgs/loading-light.gif";
+		return $GLOBALS['url'] . "/finobe/cdn/imgs/loading-light.gif";
 	}
 }
 
@@ -2624,7 +2624,7 @@ function getCurrentThemeStyle() //grabs the style sheet for the users selected t
 		
 		if ($currenttheme == 1) //dark theme
 		{
-			return '<link rel="stylesheet" type="text/css" href="https://www.alphaland.cc/alphaland/css/stylesheet-dark.css?version='.$GLOBALS['cssversion'].'">';
+			return '<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/finobe/css/stylesheet-dark.css?version='.$GLOBALS['cssversion'].'">';
 		}
 	}
 }
@@ -2638,16 +2638,16 @@ function getCSS($studio=false)
 	}
 
 	return '
-		<link rel="stylesheet" type="text/css" href="https://www.alphaland.cc/alphaland/css/stylesheet.css?version='.$GLOBALS['cssversion'].'">
-		<link rel="stylesheet" type="text/css" href="https://www.alphaland.cc/alphaland/css/bootstrap.min.css?version='.$GLOBALS['cssversion'].'">
+		<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/finobe/css/stylesheet.css?version='.$GLOBALS['cssversion'].'">
+		<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/finobe/css/bootstrap.min.css?version='.$GLOBALS['cssversion'].'">
 		'.$theme.'
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 		<script src="https://use.fontawesome.com/releases/v5.10.0/js/all.js" data-search-pseudo-elements></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://www.alphaland.cc/alphaland/js/bootstrap.min.js?version='.$GLOBALS['jsversion'].'"></script>
-		<script type="text/javascript" src="https://www.alphaland.cc/alphaland/js/utilities.js?version='.$GLOBALS['jsversion'].'"></script>';
+		<script type="text/javascript" src="https://www.idk16.xyz/finobe/js/bootstrap.min.js?version='.$GLOBALS['jsversion'].'"></script>
+		<script type="text/javascript" src="https://www.idk16.xyz/finobe/js/utilities.js?version='.$GLOBALS['jsversion'].'"></script>';
 		
 }
 //end theme stuff
@@ -2667,7 +2667,7 @@ function getFooter()
 					<div class="container p-3">
 						<div class="row">
 							<div class="col-sm">
-								<strong>Alphaland</strong> | <a style="color:grey;">'.$year.'</a>
+								<strong>Finobe</strong> | <a style="color:grey;">'.$year.'</a>
 							</div>
 						</div>
 						<div class="row">
@@ -2677,13 +2677,13 @@ function getFooter()
 						</div>
 						<div class="row border-bottom pb-1">
 							<div class="col-sm">
-								<a>Alphaland is not affiliated with Lego, ROBLOX, MegaBloks, Bionicle, Pokemon, Nintendo, Lincoln Logs, Yu Gi Oh, K\'nex, Tinkertoys, Erector Set, or the Pirates of the Caribbean. ARrrr!</a>
+								<a>Finobe is not affiliated with Lego, ROBLOX, MegaBloks, Bionicle, Pokemon, Nintendo, Lincoln Logs, Yu Gi Oh, K\'nex, Tinkertoys, Erector Set, or the Pirates of the Caribbean. ARrrr!</a>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm">
 								<a style="font-size: 1.6rem;color:red;" href="https://www.youtube.com/channel/UC5o1iJC9wonCWPvTvtORklg"><i class="fab fa-youtube"></i></a>
-								<a style="font-size: 1.6rem;color:#1DA1F2;" href="https://twitter.com/_Alphaland"><i class="fab fa-twitter"></i></a>
+								<a style="font-size: 1.6rem;color:#1DA1F2;" href="https://twitter.com/_Finobe"><i class="fab fa-twitter"></i></a>
 							</div>
 						</div>
 					</div>
@@ -2789,7 +2789,7 @@ function getNav()
 							'.$modbutton.'
 							'.(($user->IsAdmin())? '
 							<li class="nav-item">
-								<a class="nav-link" href="https://crackpot.alphaland.cc">Admin</a>
+								<a class="nav-link" href="https://crackpot.idk16.xyz">Admin</a>
 							</li>':'').'
 						</ul>
 						<ul class="navbar-nav ml-auto">
@@ -2801,7 +2801,7 @@ function getNav()
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link mr-3" href=""><img style="width:1rem;" src="/alphaland/cdn/imgs/alphabux-grey-1024.png"> '.$user->currency.'</a>
+								<a class="nav-link mr-3" href=""><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"> '.$user->currency.'</a>
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$user->name.'</a>
@@ -2820,7 +2820,7 @@ function getNav()
 				'.$gameserverstatus.'
 			</header>
 			<script>
-				setInterval(function(){ getJSONCDS("https://api.alphaland.cc/sitepresence/ping"); }, 60000); //ping every minute;
+				setInterval(function(){ getJSONCDS("https://api.idk16.xyz/sitepresence/ping"); }, 60000); //ping every minute;
 			</script>
 			<br/>';
 	}
@@ -2828,7 +2828,7 @@ function getNav()
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-right:10%;padding-left:10%;">
 				<a class="navbar-brand" href="/">
-					<img src="/alphaland/cdn/imgs/alphaland-logo.svg" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+					<img src="/finobe/cdn/imgs/finobe-logo.svg" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>

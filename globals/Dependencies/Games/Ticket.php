@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Games {
+namespace Finobe\Games {
 
-    use Alphaland\Common\Signing;
+    use Finobe\Common\Signing;
 
     class Ticket
     {

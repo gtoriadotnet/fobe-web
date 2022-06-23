@@ -10,7 +10,7 @@
  * Ported from MFDLABS/corp-integral/src/lib/web/settings.fx
  */
 
-namespace Alphaland\Web {
+namespace Finobe\Web {
 
     use PDO;
 

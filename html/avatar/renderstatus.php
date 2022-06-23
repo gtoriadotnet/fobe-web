@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Users\Render;
+use Finobe\Users\Render;
 
 if (Render::PendingRender($user->id))
 {

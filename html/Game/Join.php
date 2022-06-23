@@ -1,13 +1,13 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	Very messy but will clean up
 */
 
-use Alphaland\Common\Signing;
-use Alphaland\Games\Game;
-use Alphaland\Games\Ticket;
+use Finobe\Common\Signing;
+use Finobe\Games\Game;
+use Finobe\Games\Ticket;
 
 header("Content-Type: text/plain");
 
@@ -26,7 +26,7 @@ if ($local)
 		"CreatorTypeEnum" => "User",
 		"ChatStyle" => "ClassicAndBubble",
 		"PlaceId" => 186,
-		"CharacterAppearance" => "https://api.alphaland.cc/users/avatar-accoutrements?userId=2",
+		"CharacterAppearance" => "https://api.idk16.xyz/users/avatar-accoutrements?userId=2",
 		//"IsRobloxPlace" => true,
 		"ClientTicket" => "111",
 		"BaseUrl" => $url . "/",
@@ -59,7 +59,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 			$placeid = $gameInfo->id;
 			$userid = $sInfo->uid;
 			$username = getUsername($userid);
-			$characterappearance = "https://api.alphaland.cc/users/avatar-accoutrements?userId=" . $userid;
+			$characterappearance = "https://api.idk16.xyz/users/avatar-accoutrements?userId=" . $userid;
 			$accountage = round((time()-userInfo($userid)->joindate)/86400);
 
 			$joinparams = json_encode(array(

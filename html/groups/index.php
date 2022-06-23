@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Groups\Group;
+use Finobe\Groups\Group;
 
 $groupid = (int)$_GET['id'];
 
@@ -137,7 +137,7 @@ function myGroups()
 	html += '</div>';
 	html += '</div>';
 		
-	staticPageHelper("https://api.alphaland.cc/users/groups", "https://api.alphaland.cc/logo", "#my_groups", html, "", 100, "", "No groups");
+	staticPageHelper("https://api.idk16.xyz/users/groups", "https://api.idk16.xyz/logo", "#my_groups", html, "", 100, "", "No groups");
 }
 	
 //posts
@@ -175,7 +175,7 @@ function getPosts(groupid, page, limit)
 	html += '</div>';
 	html += '</div>';	
 	
-	multiPageHelper("postsPage", [], "https://api.alphaland.cc/group/posts", "https://api.alphaland.cc/logo", "#group_posts", "#posts_buttons", html, page, limit, "", "No posts", "&id="+groupid);
+	multiPageHelper("postsPage", [], "https://api.idk16.xyz/group/posts", "https://api.idk16.xyz/logo", "#group_posts", "#posts_buttons", html, page, limit, "", "No posts", "&id="+groupid);
 }
 	
 //users based on role
@@ -197,13 +197,13 @@ function getRoleUsers(groupid, page, limit, rank)
 	html += '</div>';
 	html += '</div>';
 				
-	multiPageHelper("roleUsers", [], "https://api.alphaland.cc/group/members", "https://api.alphaland.cc/logo", "#members", "#member_buttons", html, page, limit, "", "No users", "&id="+groupid+"&rank="+rank);
+	multiPageHelper("roleUsers", [], "https://api.idk16.xyz/group/members", "https://api.idk16.xyz/logo", "#members", "#member_buttons", html, page, limit, "", "No users", "&id="+groupid+"&rank="+rank);
 }
 function groupRoles(groupid)
 {
 	var html = '<option value = "{rank}">{name} ({members})</option>';
 		
-	staticPageHelper("https://api.alphaland.cc/group/roles?id="+groupid, "https://api.alphaland.cc/logo", "#roles_list", html, "", 100, "", "Error occurred");
+	staticPageHelper("https://api.idk16.xyz/group/roles?id="+groupid, "https://api.idk16.xyz/logo", "#roles_list", html, "", 100, "", "Error occurred");
 }
 	
 //general group info
@@ -229,12 +229,12 @@ function groupInfo(groupid)
 	html += '<p>"{description}"</p>';
 	html += '</div>';
 		
-	staticPageHelper("https://api.alphaland.cc/group/info?id="+groupid, "https://api.alphaland.cc/logo", "#group_info", html, "", 1, "", "Error occurred");
+	staticPageHelper("https://api.idk16.xyz/group/info?id="+groupid, "https://api.idk16.xyz/logo", "#group_info", html, "", 1, "", "Error occurred");
 }
 
 function deletePost(groupid, postid)
 {
-	postJSONCDS("https://api.alphaland.cc/group/update?id="+groupid+"&deletepost=true", JSON.stringify({"postid": postid}))
+	postJSONCDS("https://api.idk16.xyz/group/update?id="+groupid+"&deletepost=true", JSON.stringify({"postid": postid}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -257,7 +257,7 @@ function deletePost(groupid, postid)
 //group join/leave
 function leaveGroup(groupid)
 {
-	getJSONCDS("https://api.alphaland.cc/group/leave?id="+groupid)
+	getJSONCDS("https://api.idk16.xyz/group/leave?id="+groupid)
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -279,7 +279,7 @@ function leaveGroup(groupid)
 
 function joinGroup(groupid)
 {
-	getJSONCDS("https://api.alphaland.cc/group/join?id="+groupid)
+	getJSONCDS("https://api.idk16.xyz/group/join?id="+groupid)
 	.done(function(object) 
 	{
 		var alert = object.alert;
@@ -332,7 +332,7 @@ function openGroup(groupid)
 		window.history.replaceState(null, null, "?id="+id);
 	}
 
-	getJSONCDS("https://api.alphaland.cc/group/info?id="+id)
+	getJSONCDS("https://api.idk16.xyz/group/info?id="+id)
 	.done(function(jsonData) 
 	{
 		var data = jsonData[0];
@@ -407,7 +407,7 @@ function openGroup(groupid)
 //submit post
 function submitPost(post) 
 {
-	postJSONCDS("https://api.alphaland.cc/group/submitpost?groupid="+id, JSON.stringify({"post": post}))
+	postJSONCDS("https://api.idk16.xyz/group/submitpost?groupid="+id, JSON.stringify({"post": post}))
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -436,7 +436,7 @@ function initialize()
 {
 	myGroups(); //show player groups
 	
-	getJSONCDS("https://api.alphaland.cc/users/groups")
+	getJSONCDS("https://api.idk16.xyz/users/groups")
 	.done(function(jsonData) 
 	{
 		var data = jsonData[0];

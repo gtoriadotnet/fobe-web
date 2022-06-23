@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 $fmt = $_GET['fmt'];
 $wd = $_GET['wd'];
@@ -40,7 +40,7 @@ $pendingid = $pendingid->fetch(PDO::FETCH_OBJ);
 $pendinghash = $pendingid->Hash;
 // ...
 
-if ($check->rowCount() > 0) //asset exists on Alphaland
+if ($check->rowCount() > 0) //asset exists on Finobe
 {
     $check = $check->fetch(PDO::FETCH_OBJ);
 
@@ -49,11 +49,11 @@ if ($check->rowCount() > 0) //asset exists on Alphaland
         //assuming its none of these asset types, redirect to ROBLOX
         if ($check->AssetTypeId == 4) //handle mesh asset, return default image for now (TODO: RENDER THESE)
 		{
-			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.idk16.xyz/" . $defaultidhash);
 		}
 		elseif ($check->AssetTypeId == 40) //handle MeshPart asset, return default image for now (TODO: RENDER THESE)
 		{
-			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.idk16.xyz/" . $defaultidhash);
 		}
 		elseif ($check->AssetTypeId == 10) //handle model asset, return default image for now (TODO: RENDER THESE)
 		{
@@ -61,13 +61,13 @@ if ($check->rowCount() > 0) //asset exists on Alphaland
 			{
 				$thumbhash = $check->ThumbHash;
 
-				WebContextManager::Redirect("https://trcdn.alphaland.cc/" . $thumbhash);
+				WebContextManager::Redirect("https://trcdn.idk16.xyz/" . $thumbhash);
 			}
-			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.idk16.xyz/" . $defaultidhash);
 		}
 		elseif ($check->AssetTypeId == 39) //handle SolidModel asset, return default image for now (TODO: RENDER THESE)
 		{
-			WebContextManager::Redirect("https://tcdn.alphaland.cc/" . $defaultidhash);
+			WebContextManager::Redirect("https://tcdn.idk16.xyz/" . $defaultidhash);
 		}
     }
 }

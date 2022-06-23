@@ -1,8 +1,8 @@
 <?php
 
-use Alphaland\Economy\EconomyHelper;
-use Alphaland\Users\User;
-use Alphaland\Web\WebContextManager;
+use Finobe\Economy\EconomyHelper;
+use Finobe\Users\User;
+use Finobe\Web\WebContextManager;
 
 $body = "";
 if(isset($_GET['id'])) 
@@ -107,9 +107,9 @@ if(isset($_GET['id']))
 				else
 				{
 					//aw, its paid
-					$buy_button = '<button type="button" data-toggle="modal" data-target="#buyitem" class="btn btn-danger w-100"><img style="max-width:20px;" src="/alphaland/cdn/imgs/alphabux-white-1024.png"> <b>'.cleanOutput($i->PriceInAlphabux).'</b></button>';
+					$buy_button = '<button type="button" data-toggle="modal" data-target="#buyitem" class="btn btn-danger w-100"><img style="max-width:20px;" src="/finobe/cdn/imgs/alphabux-white-1024.png"> <b>'.cleanOutput($i->PriceInAlphabux).'</b></button>';
 					
-					$confirmbuy_button = '<button type="submit" name="buyitem" class="btn btn-danger" style="width:12rem;"><img style="max-width:20px;" src="/alphaland/cdn/imgs/alphabux-white-1024.png"> <b>'.cleanOutput($i->PriceInAlphabux).'</b></button>';
+					$confirmbuy_button = '<button type="submit" name="buyitem" class="btn btn-danger" style="width:12rem;"><img style="max-width:20px;" src="/finobe/cdn/imgs/alphabux-white-1024.png"> <b>'.cleanOutput($i->PriceInAlphabux).'</b></button>';
 					// ...
 				}
 			}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Alphaland\UI {
+namespace Finobe\UI {
 
     use GdImage;
 

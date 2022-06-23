@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -190,7 +190,7 @@ $alert = '';
 
 	function generateSecKey() 
 	{
-		postJSONCDS("https://crackpot.alphaland.cc/generateSecurityKey", JSON.stringify({"version": $('#newgamesecurityversion').val()}))
+		postJSONCDS("https://crackpot.idk16.xyz/generateSecurityKey", JSON.stringify({"version": $('#newgamesecurityversion').val()}))
 		.done(function(object) {
 			var result = object.result;
 			if (result) {

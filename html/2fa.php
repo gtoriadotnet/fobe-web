@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Users\TwoFactor;
-use Alphaland\Web\WebContextManager;
+use Finobe\Users\TwoFactor;
+use Finobe\Web\WebContextManager;
 
 if (TwoFactor::IsSession2FAUnlocked()){
     WebContextManager::Redirect("/");

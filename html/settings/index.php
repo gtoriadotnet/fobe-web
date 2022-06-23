@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 */
 
 $body = '';
@@ -225,7 +225,7 @@ function twofactorDisabled()
 
 function disable2FA()
 {
-	getJSONCDS("https://api.alphaland.cc/settings/twofactor/disable")
+	getJSONCDS("https://api.idk16.xyz/settings/twofactor/disable")
 	.done(function(object) {
 		if (object.success) {
 			twofactorDisabled();
@@ -239,7 +239,7 @@ function disable2FA()
 
 function activate2FA(code)
 {
-	postJSONCDS("https://api.alphaland.cc/settings/twofactor/activate", JSON.stringify({"code": code}))
+	postJSONCDS("https://api.idk16.xyz/settings/twofactor/activate", JSON.stringify({"code": code}))
 	.done(function(object) {
 		if (object.success) {
 			twofactorEnabled();
@@ -252,7 +252,7 @@ function activate2FA(code)
 
 function setup2FA()
 {
-    getJSONCDS("https://api.alphaland.cc/settings/twofactor/settings")
+    getJSONCDS("https://api.idk16.xyz/settings/twofactor/settings")
 	.done(function(object) {
 		$("#settings_qrcode").attr("src",object.qr);
         $("#settings_auth_secret").html(object.secret);
@@ -283,7 +283,7 @@ function successMessage(message)
 
 function updateInventoryPref(id)
 {
-    postJSONCDS("https://api.alphaland.cc/settings/update/inventoryprivacy", JSON.stringify({"preference": id}))
+    postJSONCDS("https://api.idk16.xyz/settings/update/inventoryprivacy", JSON.stringify({"preference": id}))
 	.done(function(object) {
 		successMessage("Updated");
 	});
@@ -291,7 +291,7 @@ function updateInventoryPref(id)
 
 function updatePrivacyJoinPref(id)
 {
-	postJSONCDS("https://api.alphaland.cc/settings/update/joinprivacy", JSON.stringify({"preference": id}))
+	postJSONCDS("https://api.idk16.xyz/settings/update/joinprivacy", JSON.stringify({"preference": id}))
 	.done(function(object) {
 		successMessage("Updated");
 	});
@@ -299,7 +299,7 @@ function updatePrivacyJoinPref(id)
 
 function updateTheme(id)
 {
-	postJSONCDS("https://api.alphaland.cc/settings/update/theme", JSON.stringify({"theme": id}))
+	postJSONCDS("https://api.idk16.xyz/settings/update/theme", JSON.stringify({"theme": id}))
 	.done(function(object) {
 		if (object.success) {
 			location.reload();
@@ -309,7 +309,7 @@ function updateTheme(id)
 
 function updateBlurb(text)
 {
-	postJSONCDS("https://api.alphaland.cc/settings/update/blurb", JSON.stringify({"blurb": text}))
+	postJSONCDS("https://api.idk16.xyz/settings/update/blurb", JSON.stringify({"blurb": text}))
 	.done(function(object) {
 		if (object.success) {
 			successMessage("Updated");
@@ -319,7 +319,7 @@ function updateBlurb(text)
 
 function initializeSettings()
 {
-	getJSONCDS("https://api.alphaland.cc/settings/")
+	getJSONCDS("https://api.idk16.xyz/settings/")
 	.done(function(object) {
 		$("#settings_username").html(object.username);
 		$("#settings_email").html(object.email);
@@ -353,7 +353,7 @@ initializeSettings()
 //referral program
 function generateKey()
 {
-	getJSONCDS("https://api.alphaland.cc/referrals/generateSignupKey")
+	getJSONCDS("https://api.idk16.xyz/referrals/generateSignupKey")
 	.done(function(object) {
 		var alert = object.alert;
 		var key = object.key;
@@ -382,7 +382,7 @@ function activeKeys()
 	html += '<td>{key}</td>';
 	html += '</tr>';
 		
-	staticPageHelper("https://api.alphaland.cc/referrals/activeUserKeys", "", "#userKeys", html, "", 100, "", "");
+	staticPageHelper("https://api.idk16.xyz/referrals/activeUserKeys", "", "#userKeys", html, "", 100, "", "");
 }
 </script>
 EOT;

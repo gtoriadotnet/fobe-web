@@ -1,16 +1,16 @@
 <?php
 
 /*
-	Alphaland 2021 Registration Page
+	Finobe 2021 Registration Page
 	TODO: This needs a re-do. This is one of the first pages on this project
 */
 
-use Alphaland\Administration\SignupKey;
-use Alphaland\Common\Email;
-use Alphaland\Moderation\Filter;
-use Alphaland\Users\Activation;
-use Alphaland\Users\ReferralProgram;
-use Alphaland\Web\WebContextManager;
+use Finobe\Administration\SignupKey;
+use Finobe\Common\Email;
+use Finobe\Moderation\Filter;
+use Finobe\Users\Activation;
+use Finobe\Users\ReferralProgram;
+use Finobe\Web\WebContextManager;
 
 $body = '';
 $error = '';
@@ -21,7 +21,7 @@ if (!canRegister())
 	<center>
 			<section class="main-container">
 				<div class="main-wrapper-reg" style="margin-top:26px;">
-					<img src="alphaland/cdn/imgs/alphaland-1024.png" style="width:250px;">
+					<img src="finobe/cdn/imgs/finobe-1024.png" style="width:250px;">
 					<h2><a style="text-decoration:none;color:black;">Registration temporarily disabled</a></h2>
 					<a href="login"><button class="nav-item login-button btn btn-danger">Login</button></a> 
 				</div>
@@ -60,7 +60,7 @@ else
 				}
 				if (Filter::IsTextFiltered($uname))
 				{
-					$error = '<div class="alert alert-danger" role="alert">Username is not appropriate for Alphaland</div>';
+					$error = '<div class="alert alert-danger" role="alert">Username is not appropriate for Finobe</div>';
 				}
 			}
 			
@@ -142,7 +142,7 @@ else
 						$GLOBALS['user']->CreateSession($userID);
 
 						//send verification email
-						sendVerificationEmail("info@alphaland.cc", $email);
+						sendVerificationEmail("info@idk16.xyz", $email);
 						WebContextManager::Redirect("/");
 					} 
 					else 

@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff())
 {
@@ -58,7 +58,7 @@ $body = <<<EOT
 </div>
 <script>
 /*
-	Alphaland 2021
+	Finobe 2021
 */
 
 var usernamequery = "";
@@ -97,7 +97,7 @@ function logsPage(num)
 	html+= '</div>';
 	html+= '</div>';
 		
-	multiPageHelper("logsPage", [], "https://www.alphaland.cc/MCP/chat-logs/loggedChats", "https://api.alphaland.cc/logo", "#message-container", "#page-buttons", html, num, 40, searchquery, "No Results", "&username="+usernamequery);
+	multiPageHelper("logsPage", [], "https://www.idk16.xyz/MCP/chat-logs/loggedChats", "https://api.idk16.xyz/logo", "#message-container", "#page-buttons", html, num, 40, searchquery, "No Results", "&username="+usernamequery);
 }
 
 logsPage(1);

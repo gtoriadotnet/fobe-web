@@ -1,8 +1,8 @@
 <?php
 
-namespace Alphaland\Moderation {
+namespace Finobe\Moderation {
 
-    use Alphaland\Web\WebContextManager;
+    use Finobe\Web\WebContextManager;
     use PDO;
 
     class UserModerationManager
@@ -62,12 +62,12 @@ namespace Alphaland\Moderation {
                             $ban->bindParam(":wb", $GLOBALS['user']->id, PDO::PARAM_INT);
                             $ban->execute();
                             if ($ban->rowCount() > 0) {
-                                kickUserIfInGame($uid, "You've been banned from Alphaland, '".$reason."'");
+                                kickUserIfInGame($uid, "You've been banned from Finobe, '".$reason."'");
                                 UserModerationManager::LogAction("Banned User ".$uid);
                                 
                                 //ban user from discord with bot
                                 if($bantype == 2) { //perm ban
-                                    $discordid = $GLOBALS['pdo']->prepare("SELECT * FROM `alphaland_verification` WHERE `uid` = :id AND isactivated = 1");
+                                    $discordid = $GLOBALS['pdo']->prepare("SELECT * FROM `finobe_verification` WHERE `uid` = :id AND isactivated = 1");
                                     $discordid->bindParam(":id", $uid, PDO::PARAM_INT);
                                     $discordid->execute();
                                     if ($discordid->rowCount() > 0) {

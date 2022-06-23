@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if (isLoggedIn())
 {
@@ -21,7 +21,7 @@ if(isset($_POST['Submit']))
 	{
 		$userdetails2 = $userdetails->fetch(PDO::FETCH_OBJ);
 		$userid = (int)$userdetails2->id;
-		$resetstatus = sendPasswordReset("info@alphaland.cc", $email, $userid);
+		$resetstatus = sendPasswordReset("info@idk16.xyz", $email, $userid);
 		
 		if ($resetstatus == 1)
 		{
@@ -50,7 +50,7 @@ $body = <<<EOT
 		<div class="card m-auto" style="max-width: 40rem;">
 			<div class="card-body text-center" style="padding: 2rem;">
 				<div class="row">
-					<img class="img-fluid m-auto" src="../alphaland/cdn/imgs/forgot-password-1024.png" style="width: 20rem;">
+					<img class="img-fluid m-auto" src="../finobe/cdn/imgs/forgot-password-1024.png" style="width: 20rem;">
 				</div>
 				<div class="row mb-2">
 					<strong class="m-auto">Forgot password? use the form below for a password reset link!</strong>

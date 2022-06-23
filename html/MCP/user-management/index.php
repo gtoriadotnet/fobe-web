@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 $body = '';
 if(!($user->IsStaff())) {
@@ -120,7 +120,7 @@ function unbanUser()
 		return;
 	}
 
-	postJSONCDS("https://www.alphaland.cc/MCP/user-management/unban", JSON.stringify({
+	postJSONCDS("https://www.idk16.xyz/MCP/user-management/unban", JSON.stringify({
 		"username":unbanusername
 	}))
 	.done(function(object) {
@@ -162,7 +162,7 @@ function banUser()
 		return;
 	}
 
-	postJSONCDS("https://www.alphaland.cc/MCP/user-management/ban", JSON.stringify({
+	postJSONCDS("https://www.idk16.xyz/MCP/user-management/ban", JSON.stringify({
 		"username":banusername,
 		"reason":banreason,
 		"expiration":expiration,
@@ -188,7 +188,7 @@ function getBanlist()
 		<td>{banExpiration}</td>
 	</tr>`;
 		 
-	staticPageHelper("https://www.alphaland.cc/MCP/user-management/banlist", "", "#user_ban_list", html, "", 100, "", "");
+	staticPageHelper("https://www.idk16.xyz/MCP/user-management/banlist", "", "#user_ban_list", html, "", 100, "", "");
 }
 
 </script>

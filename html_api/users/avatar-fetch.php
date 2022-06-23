@@ -37,7 +37,7 @@ $joinparams = json_encode(array(
         "Proportion" => 0,
         "BodyType" => 0
     ),
-    "bodyColorsUrl" => "https://api.alphaland.cc/users/bodycolors?userId=".$id."&tick=" . time()
+    "bodyColorsUrl" => "https://api.idk16.xyz/users/bodycolors?userId=".$id."&tick=" . time()
 ), JSON_UNESCAPED_SLASHES);
 
 echo $joinparams;

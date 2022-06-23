@@ -1,5 +1,5 @@
 /*
-	Alphaland JS Utilities 2021
+	Finobe JS Utilities 2021
 */
 
 //utility for populating HTML with data from object OR calling a function with the objects current position and replacing the marker with returned data
@@ -222,7 +222,7 @@ class Comments {
 		this.messageDelay = messageDelay;
 		this.newObject = newObject;
 		
-		var gameInfo = "https://api.alphaland.cc/game/info?id=" + this.assetid;
+		var gameInfo = "https://api.idk16.xyz/game/info?id=" + this.assetid;
 		var self = this;
 		getJSONCDS(gameInfo)
 		.done(function(jsonData) {
@@ -250,11 +250,11 @@ class Comments {
 		html += '</div>';
 		html += '</div>';
 		
-		multiPageHelper(this.newObject + ".commentsPage", [], "https://api.alphaland.cc/comments/", "https://api.alphaland.cc/logo", this.commentscontainer, this.buttonscontainer, html, page, 10, "", "No comments", "&assetId=" + this.assetid);
+		multiPageHelper(this.newObject + ".commentsPage", [], "https://api.idk16.xyz/comments/", "https://api.idk16.xyz/logo", this.commentscontainer, this.buttonscontainer, html, page, 10, "", "No comments", "&assetId=" + this.assetid);
 	}
 	submitComment(comment) {
 		var self = this;
-		postJSONCDS("https://api.alphaland.cc/comments/newcomment?assetId=" + this.assetid, JSON.stringify({"comment": comment}))
+		postJSONCDS("https://api.idk16.xyz/comments/newcomment?assetId=" + this.assetid, JSON.stringify({"comment": comment}))
 		.done(function(object) {
 			var alert = object.alert;
 			var messageid = self.errorid;

@@ -1,11 +1,11 @@
 <?php
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
-use Alphaland\Moderation\UserModerationManager;
-use Alphaland\Web\WebContextManager;
+use Finobe\Moderation\UserModerationManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff()) {
     WebContextManager::Redirect("/");
@@ -13,7 +13,7 @@ if(!$user->IsStaff()) {
 
 //headers
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");
 
 $data = json_decode(file_get_contents('php://input'));

@@ -24,7 +24,7 @@ $body = '
 		<div class="col-sm-4">
 			<div class="card mb-2">
 				<div class="card-body text-center">
-					<img id="character" class="card-img-top" src="https://api.alphaland.cc/users/thumbnail">
+					<img id="character" class="card-img-top" src="https://api.idk16.xyz/users/thumbnail">
 					<button onclick="updateCharacter()" class="btn btn-danger" style="float:right;">Refresh</button>
 					<button onclick="getAvatarSettings()" type="button" data-toggle="modal" data-target="#avatarsettingspopup" class="btn btn-danger" style="float:left;">Settings</button>
 				</div>
@@ -298,7 +298,7 @@ $body = '
 	
 	function updateCharacter() {
 		$("#character").removeClass("loading-rotate");
-		$("#character").attr("src", "https://api.alphaland.cc/users/thumbnail?timestamp="+new Date().getTime());
+		$("#character").attr("src", "https://api.idk16.xyz/users/thumbnail?timestamp="+new Date().getTime());
 	}
 	function handleRender() {
 		$.get("/avatar/renderstatus", function(data) {
@@ -314,7 +314,7 @@ $body = '
 	function characterloading()
 	{
 		document.getElementById("character").src = "";
-		document.getElementById("character").src = "https://api.alphaland.cc/logo";
+		document.getElementById("character").src = "https://api.idk16.xyz/logo";
 		document.getElementById("character").className = "loading-rotate card-img-top";
 		//handleRender();
 	}
@@ -360,7 +360,7 @@ $body = '
 	}
 	function updateBodyColors()
 	{
-		getJSONCDS("https://api.alphaland.cc/user/avatar/bodycolors")
+		getJSONCDS("https://api.idk16.xyz/user/avatar/bodycolors")
 		.done(function(jsonData) 
 		{
 			var data = jsonData;
@@ -378,11 +378,11 @@ $body = '
 
 	function equipItem(assetId)
 	{
-		avatarChange("https://api.alphaland.cc/user/avatar/assets/wear?assetId=" + assetId);
+		avatarChange("https://api.idk16.xyz/user/avatar/assets/wear?assetId=" + assetId);
 	}
 	function deequipItem(assetId)
 	{
-		avatarChange("https://api.alphaland.cc/user/avatar/assets/remove?assetId=" + assetId)
+		avatarChange("https://api.idk16.xyz/user/avatar/assets/remove?assetId=" + assetId)
 	}
 
 	function inventoryPage(page, assettype, keyword)
@@ -407,7 +407,7 @@ $body = '
 		html += "</a>";
 		html += "</li>";
 				
-		multiPageHelper("inventoryPage", [assettype,keyword], "https://api.alphaland.cc/users/profile/inventory", "https://api.alphaland.cc/logo", "#itemsDiv", "#page-buttons", html, page, limit, keyword, "You don\'t own any items of this type", "&assetTypeId="+assettype);
+		multiPageHelper("inventoryPage", [assettype,keyword], "https://api.idk16.xyz/users/profile/inventory", "https://api.idk16.xyz/logo", "#itemsDiv", "#page-buttons", html, page, limit, keyword, "You don\'t own any items of this type", "&assetTypeId="+assettype);
 	}
 
 	$(".headshot_checkbox_check").click(function() {
@@ -416,7 +416,7 @@ $body = '
 
 	function getAvatarSettings()
 	{
-		getJSONCDS("https://api.alphaland.cc/user/avatar/settings")
+		getJSONCDS("https://api.idk16.xyz/user/avatar/settings")
 		.done(function(jsonData) 
 		{
 			var data = jsonData;
@@ -440,7 +440,7 @@ $body = '
 
 			$("#avatar_settings_updating_notify").show();
 
-			getJSONCDS("https://api.alphaland.cc/user/avatar/updatesettings"+headshotStyleGetParam)
+			getJSONCDS("https://api.idk16.xyz/user/avatar/updatesettings"+headshotStyleGetParam)
 			.done(function(jsonData) 
 			{
 				$("#avatarsettingspopup").modal("toggle");
@@ -462,7 +462,7 @@ $body = '
 	var editingOutfitId = 0;
 	function newOutfit(name)
 	{
-		postJSONCDS("https://api.alphaland.cc/user/avatar/outfits/create", JSON.stringify({"name": name}))
+		postJSONCDS("https://api.idk16.xyz/user/avatar/outfits/create", JSON.stringify({"name": name}))
 		.done(function(object) {
 			var alert = object.alert;
 			var messageid = "#error_alert";
@@ -485,7 +485,7 @@ $body = '
 	}
 	function applyOutfit(outfitid)
 	{
-		postJSONCDS("https://api.alphaland.cc/user/avatar/outfits/apply", JSON.stringify({"id": outfitid}))
+		postJSONCDS("https://api.idk16.xyz/user/avatar/outfits/apply", JSON.stringify({"id": outfitid}))
 		.done(function(object) {
 			var alert = object.alert;
 			var messageid = "#error_alert";
@@ -509,7 +509,7 @@ $body = '
 	}
 	function updateOutfit(name)
 	{
-		postJSONCDS("https://api.alphaland.cc/user/avatar/outfits/update?update=true", JSON.stringify({"id": editingOutfitId, "name": name}))
+		postJSONCDS("https://api.idk16.xyz/user/avatar/outfits/update?update=true", JSON.stringify({"id": editingOutfitId, "name": name}))
 		.done(function(object) {
 			var alert = object.alert;
 			var messageid = "#error_alert";
@@ -532,7 +532,7 @@ $body = '
 	}
 	function deleteOutfit()
 	{
-		postJSONCDS("https://api.alphaland.cc/user/avatar/outfits/update?delete=true", JSON.stringify({"id": editingOutfitId}))
+		postJSONCDS("https://api.idk16.xyz/user/avatar/outfits/update?delete=true", JSON.stringify({"id": editingOutfitId}))
 		.done(function(object) {
 			var alert = object.alert;
 			var messageid = "#error_alert";
@@ -578,7 +578,7 @@ $body = '
 		html += "</div>";
 		html += "</li>";
 				
-		multiPageHelper("outfitPage", [], "https://api.alphaland.cc/users/profile/outfits", "https://api.alphaland.cc/logo", "#itemsDiv", "#page-buttons", html, page, limit, "", "You don\'t have any outfits", "&assetTypeId=");
+		multiPageHelper("outfitPage", [], "https://api.idk16.xyz/users/profile/outfits", "https://api.idk16.xyz/logo", "#itemsDiv", "#page-buttons", html, page, limit, "", "You don\'t have any outfits", "&assetTypeId=");
 	}
 
 
@@ -591,7 +591,7 @@ $body = '
 		html += "</a>";
 		html += "</li>";
 		
-		staticPageHelper("https://api.alphaland.cc/users/profile/wearing", "https://api.alphaland.cc/logo", "#curWear", html, "", 12, "", "Not wearing any Items");
+		staticPageHelper("https://api.idk16.xyz/users/profile/wearing", "https://api.idk16.xyz/logo", "#curWear", html, "", 12, "", "Not wearing any Items");
 	}
 
 

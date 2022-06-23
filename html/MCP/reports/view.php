@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
     Report viewer
 */
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff()) {
     WebContextManager::Redirect("/");
@@ -49,12 +49,12 @@ $body = <<<EOT
 </div>
 <script>
 /*
-	Alphaland 2021
+	Finobe 2021
 */
 var getparam = new URLSearchParams(window.location.search).get("id");
 
 function populateReport() {
-    getJSONCDS("https://www.alphaland.cc/MCP/reports/data/?id="+getparam)
+    getJSONCDS("https://www.idk16.xyz/MCP/reports/data/?id="+getparam)
 	.done(function(jsonData) {
         $("#reporter-id").html("Reporter UID: "+jsonData.ReporterUid);
         $("#place-id").html("Place ID: "+jsonData.PlaceId);
@@ -84,7 +84,7 @@ function populateReport() {
 }
 
 function closeReport() {
-    getJSONCDS("https://www.alphaland.cc/MCP/reports/data/close?id="+getparam)
+    getJSONCDS("https://www.idk16.xyz/MCP/reports/data/close?id="+getparam)
 	.done(function(jsonData) {
         var alert = jsonData.alert;
         if(jsonData.alert == "Closed Report") {

@@ -1,11 +1,11 @@
 <?php
 
 /*
-	Alphaland 2021 
+	Finobe 2021 
 */
 
-use Alphaland\Games\Game;
-use Alphaland\Web\WebContextManager;
+use Finobe\Games\Game;
+use Finobe\Web\WebContextManager;
 
 $gameID = $_GET['id'];
 $gInfo = getAssetInfo($gameID);
@@ -109,11 +109,11 @@ $body = '
 var getparam = new URLSearchParams(window.location.search).get("id");
 
 function playGame(id) {
-	$.get("https://www.alphaland.cc/Game/authticket", function(data) {
-		$("#linfo").html("Starting Alphaland...");
+	$.get("https://www.idk16.xyz/Game/authticket", function(data) {
+		$("#linfo").html("Starting Finobe...");
 		$("#launching").modal("show");
 		$("#closediv").hide();
-		location.href = "alphaland-player-cc:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.alphaland.cc/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
+		location.href = "finobe-player-cc:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.idk16.xyz/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
 		setTimeout(function() {
 			$("#launching").modal("hide");
 		}, 2500);	
@@ -124,7 +124,7 @@ var jobExistCount = 0;
 function handleUIJobShutdown(id) {
 	setTimeout(function() {
 		jobExistCount ++;
-		getJSONCDS("https://api.alphaland.cc/game/jobExists?placeid="+getparam+"&jobid="+id)
+		getJSONCDS("https://api.idk16.xyz/game/jobExists?placeid="+getparam+"&jobid="+id)
 		.done(function(object) {
 			if (!object.result) {
 				$("#server-"+id).remove();
@@ -145,7 +145,7 @@ function handleUIJobShutdown(id) {
 function shutdown(id) {
 	$("#shutdown-button-jobid-"+id).prop("disabled", true);
 	$("#shutdown-button-jobid-"+id).text("Shutting down...");
-	getJSONCDS("https://api.alphaland.cc/game/management/manageJob?placeid="+getparam+"&jobid=" + id + "&shutdown=true")
+	getJSONCDS("https://api.idk16.xyz/game/management/manageJob?placeid="+getparam+"&jobid=" + id + "&shutdown=true")
 	.done(function(object) {
 		var alert = object.alert;
 		var messageid = "#error_alert";
@@ -202,11 +202,11 @@ function serversList(page) {
 	</div>
 	`;
 	
-	multiPageHelper("serversList", [], "https://api.alphaland.cc/game/jobList", "https://api.alphaland.cc/logo", "#active-server-list", "#page-buttons-here", html, page, 10, "", "No servers available.", "&placeid="+getparam);
+	multiPageHelper("serversList", [], "https://api.idk16.xyz/game/jobList", "https://api.idk16.xyz/logo", "#active-server-list", "#page-buttons-here", html, page, 10, "", "No servers available.", "&placeid="+getparam);
 }
 
 function setupPage() {
-	getJSONCDS("https://api.alphaland.cc/game/info?id="+getparam)
+	getJSONCDS("https://api.idk16.xyz/game/info?id="+getparam)
 	.done(function(jsonData) {
 		var data = jsonData;
 

@@ -1,14 +1,14 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
 */
 
-namespace Alphaland\Economy {
+namespace Finobe\Economy {
 
-    use Alphaland\Assets\Asset;
+    use Finobe\Assets\Asset;
     use PDO;
-    use Alphaland\Users\User;
+    use Finobe\Users\User;
     use Exception;
 
 class EconomyHelper

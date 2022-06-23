@@ -1,7 +1,7 @@
 <?php
 
 /*
-Alphaland 2021 
+Finobe 2021 
 This is the API used to return all site games in JSON format with a provided limit, page and optional keyword
 This is parsed with javascript on the users end, this allows the user to handle more of the processing power
 */
@@ -9,9 +9,9 @@ This is parsed with javascript on the users end, this allows the user to handle 
 
 //headers
 
-use Alphaland\Games\Game;
+use Finobe\Games\Game;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');

@@ -1,8 +1,8 @@
 <?php
 
-namespace Alphaland\Users {
+namespace Finobe\Users {
 
-    use Alphaland\Assets\Asset;
+    use Finobe\Assets\Asset;
     use Exception;
     use PDO;
 

@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff())
 {
@@ -32,7 +32,7 @@ $body = <<<EOT
 var currentPage = 1;
 function moderateAsset(id)
 {
-	getJSONCDS("https://www.alphaland.cc/MCP/moderateasset?id="+id)
+	getJSONCDS("https://www.idk16.xyz/MCP/moderateasset?id="+id)
 	.done(function(object) 
 	{
 		var alert = object.alert;
@@ -54,7 +54,7 @@ function moderateAsset(id)
 }
 function approveAsset(id)
 {
-	getJSONCDS("https://www.alphaland.cc/MCP/approveasset?id="+id)
+	getJSONCDS("https://www.idk16.xyz/MCP/approveasset?id="+id)
 	.done(function(object) 
 	{
 		var alert = object.alert;
@@ -96,7 +96,7 @@ function assetPage(num, keyword = "")
 	html +='</ul>';
 	html +='</div>';
 
-	multiPageHelper("assetPage", [], "https://www.alphaland.cc/MCP/pendingassets", "https://api.alphaland.cc/logo", "#assets-container", "#page-buttons", html, num, 10, "", "No pending assets");
+	multiPageHelper("assetPage", [], "https://www.idk16.xyz/MCP/pendingassets", "https://api.idk16.xyz/logo", "#assets-container", "#page-buttons", html, num, 10, "", "No pending assets");
 }
 assetPage(currentPage);
 </script>

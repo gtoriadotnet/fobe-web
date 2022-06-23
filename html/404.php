@@ -5,7 +5,7 @@ $body = <<<EOT
 	<div class="container">
 		<div class="card">
 			<div class="card-body text-center">
-				<img style="width: 15rem;" src="https://api.alphaland.cc/logo">
+				<img style="width: 15rem;" src="https://api.idk16.xyz/logo">
 				<h2 class="mt-3">404 | Page not found</h2>
 				<hr>
 				<a onclick="javascript:history.back()"><button class="btn btn-danger">Back</button></a><h> </h><a onclick="location.href = '/';""><button class="btn btn-danger">Home</button></a>

@@ -1,10 +1,10 @@
 <?php
 
 /*
-Alphaland 2021 
+Finobe 2021 
 */
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 if(!$user->IsStaff())
 {
@@ -12,7 +12,7 @@ if(!$user->IsStaff())
 }
 
 //headers
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');

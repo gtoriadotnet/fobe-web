@@ -1,5 +1,5 @@
 --[[
-	Alphaland 2021 Closeup
+	Finobe 2021 Closeup
 
 	OG Params:
 	local quadratic = false

@@ -120,13 +120,13 @@ if(!isLoggedIn())
 
 	<div id="overlayshadow"></div>
 	<video id="videoBG" autoplay loop playsinline muted>
-		<source src="/alphaland/cdn/vids/index-vid.m4v" type="video/mp4">
+		<source src="/finobe/cdn/vids/index-vid.m4v" type="video/mp4">
 	</video>
 
 	<div class="viewport-header">
 		<div class="index-container">
 			<div class="index-row">
-				<img class="img-fluid" style="width:50rem;padding:10px;" src="/alphaland/cdn/imgs/alphaland-long.png">
+				<img class="img-fluid" style="width:50rem;padding:10px;" src="/finobe/cdn/imgs/finobe-long.png">
 			</div>
 			<div class="index-row">
 				<div style="margin-top:20px;">
@@ -146,6 +146,6 @@ else
 pageHandler();
 $ph->navbar = "";
 $ph->footer = "";
-$ph->pageTitle("Alphaland");
+$ph->pageTitle("Finobe");
 $ph->body = $body;
 $ph->output();

@@ -29,4 +29,4 @@ else
 	$id = 0;
 }
 
-echo "https://api.alphaland.cc/users/bodycolors?userId=".$id."&tick=".time().";".$assets; //&tick to current timestamp cachebuster
+echo "https://api.idk16.xyz/users/bodycolors?userId=".$id."&tick=".time().";".$assets; //&tick to current timestamp cachebuster

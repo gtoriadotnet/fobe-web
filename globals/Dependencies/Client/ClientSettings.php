@@ -12,7 +12,7 @@
  * 
  * Open an issue if you want to see the values returned as their respective types and not as strings.
  * 
- * Licensed to Austin "Astrologies" of Alphaland, they are the owners of the code.
+ * Licensed to Austin "Astrologies" of Finobe, they are the owners of the code.
  */
 
 // Note: This could be shortened slightly.
@@ -21,9 +21,9 @@
 /*
 Usage:
 
-use Alphaland\Client\ClientSettings;
-use Alphaland\Client\ClientSettingsApplications;
-use Alphaland\Client\ClientSettingsKind;
+use Finobe\Client\ClientSettings;
+use Finobe\Client\ClientSettingsApplications;
+use Finobe\Client\ClientSettingsKind;
 
 require_once './globals/Dependencies/Client/ClientSettings.php';
 
@@ -59,7 +59,7 @@ echo "Get Application Bucket Test's settings, has dependencies '" . implode(', '
 
 */
 
-namespace Alphaland\Client {
+namespace Finobe\Client {
 
     use Error;
     use PDO;

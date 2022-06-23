@@ -1,8 +1,8 @@
 <?php
 
-use Alphaland\Games\Game;
-use Alphaland\Grid\RccServiceHelper;
-use Alphaland\Web\WebContextManager;
+use Finobe\Games\Game;
+use Finobe\Grid\RccServiceHelper;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

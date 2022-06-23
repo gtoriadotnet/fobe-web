@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Alphaland 2021 site configuration
+	Finobe 2021 site configuration
 	This is extremely sensitive.
 	TODO: not ideal to hardcode paths like this, clean up
 
@@ -12,12 +12,12 @@
 	TODO: kill nsg
 */
 
-use Alphaland\Users\Activation;
-use Alphaland\Users\TwoFactor;
-use Alphaland\Moderation\UserModerationManager;
-use Alphaland\Web\WebContextManager;
-use Alphaland\Common\System;
-use Alphaland\Users\Session;
+use Finobe\Users\Activation;
+use Finobe\Users\TwoFactor;
+use Finobe\Moderation\UserModerationManager;
+use Finobe\Web\WebContextManager;
+use Finobe\Common\System;
+use Finobe\Users\Session;
 
 try 
 {
@@ -33,14 +33,14 @@ try
 		PDO::ATTR_PERSISTENT => true
 	);
 								//host				//db name					//db user						  //db password              //options
-	$pdo = new PDO("mysql:host=localhost;dbname=alphalanddatabase", "aa9205c5b776b2368833bec1e8b34e1c", "68adae776e087fb1b34baf439710cf94", $pdoOptions);
+	$pdo = new PDO("mysql:host=localhost;dbname=finobedatabase", "aa9205c5b776b2368833bec1e8b34e1c", "68adae776e087fb1b34baf439710cf94", $pdoOptions);
 
 	//general vars
 	$jsversion = "12.00"; //update this after updating JS, this will re-cache the latest js for users
 	$cssversion = "12.00"; //update this after updating CSS, this will re-cache the latest css for users
 
-	$siteName = "Alphaland"; //site name
-	$domain = "alphaland.cc";
+	$siteName = "Finobe"; //site name
+	$domain = "idk16.xyz";
 	$url = "https://www.".$domain; //site URL
 	$ws = $pdo->query("SELECT * FROM websettings WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettings
 	$clientUserAgent = "Roblox/WinInet";
@@ -53,41 +53,41 @@ try
 	$defaultHeadshotHash = "fb5d52c08aa538483647373c5a20fd73"; //default headshot render for characters
 
 	//cdn urls
-	$renderCDN = "https://trcdn.alphaland.cc"; //endpoint for renders
-	$assetCDN = "https://acdn.alphaland.cc"; //endpoint for assets
-	$thumbnailCDN = "https://tcdn.alphaland.cc"; //endpoint for thumbnails
+	$renderCDN = "https://trcdn.idk16.xyz"; //endpoint for renders
+	$assetCDN = "https://acdn.idk16.xyz"; //endpoint for assets
+	$thumbnailCDN = "https://tcdn.idk16.xyz"; //endpoint for thumbnails
 	
 	//cdn paths
-	$renderCDNPath = "C:/Webserver/nginx/Alphaland/html_renders_cdn/"; //path to where renders are stored
-	$thumbnailCDNPath = "C:/Webserver/nginx/Alphaland/html_thumbs_cdn/"; //path to where thumbnails are stored
-	$assetCDNPath = "C:/Webserver/nginx/Alphaland/html_assets_cdn/"; //path to where assets are stored
+	$renderCDNPath = "D:/Finobe/html_renders_cdn/"; //path to where renders are stored
+	$thumbnailCDNPath = "D:/Finobe/html_thumbs_cdn/"; //path to where thumbnails are stored
+	$assetCDNPath = "D:/Finobe/html_assets_cdn/"; //path to where assets are stored
 	
 	//lua script paths
-	$avatarthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/AvatarScript.lua";
-	$facethumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/FaceScript.lua";
-	$hatthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/HatScript.lua";
-	$tshirtthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/TShirtScript.lua";
-	$shirtthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/ShirtScript.lua";
-	$pantsthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/PantsScript.lua";
-	$headthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/HeadScript.lua";
-	$placethumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/PlaceScript.lua";
-	$modelthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/ModelScript.lua";
-	$gearthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/GearScript.lua";
-	$avatarcloseupthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/AvatarCloseupScript.lua";
-	$meshthumbnailscript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/MeshScript.lua";
-	$packagescript = "C:/Webserver/nginx/Alphaland/luascripts/thumbnails/PackageScript.lua"; 
-	$gameserverscript = "C:/Webserver/nginx/Alphaland/luascripts/game/gameserver.lua"; 
+	$avatarthumbnailscript = "D:/Finobe/luascripts/thumbnails/AvatarScript.lua";
+	$facethumbnailscript = "D:/Finobe/luascripts/thumbnails/FaceScript.lua";
+	$hatthumbnailscript = "D:/Finobe/luascripts/thumbnails/HatScript.lua";
+	$tshirtthumbnailscript = "D:/Finobe/luascripts/thumbnails/TShirtScript.lua";
+	$shirtthumbnailscript = "D:/Finobe/luascripts/thumbnails/ShirtScript.lua";
+	$pantsthumbnailscript = "D:/Finobe/luascripts/thumbnails/PantsScript.lua";
+	$headthumbnailscript = "D:/Finobe/luascripts/thumbnails/HeadScript.lua";
+	$placethumbnailscript = "D:/Finobe/luascripts/thumbnails/PlaceScript.lua";
+	$modelthumbnailscript = "D:/Finobe/luascripts/thumbnails/ModelScript.lua";
+	$gearthumbnailscript = "D:/Finobe/luascripts/thumbnails/GearScript.lua";
+	$avatarcloseupthumbnailscript = "D:/Finobe/luascripts/thumbnails/AvatarCloseupScript.lua";
+	$meshthumbnailscript = "D:/Finobe/luascripts/thumbnails/MeshScript.lua";
+	$packagescript = "D:/Finobe/luascripts/thumbnails/PackageScript.lua"; 
+	$gameserverscript = "D:/Finobe/luascripts/game/gameserver.lua"; 
 
 	//soap paths
-	$RCCwsdl = "C:/Webserver/nginx/Alphaland/RCCService.wsdl"; //wsdl path for SOAP
+	$RCCwsdl = "D:/Finobe/RCCService.wsdl"; //wsdl path for SOAP
 
 	//misc paths
-	$pbsOverlayPath = "C:/Webserver/nginx/Alphaland/PersonalServerOverlay.png";
-	$setupHtmlPath = "C:/Webserver/nginx/Alphaland/html_setup/";
-	$defaultPlacesPath = "C:/Webserver/nginx/Alphaland/default_places/"; //path to where the default places are stored
-	$defaultPbsPlacesPath = "C:/Webserver/nginx/Alphaland/default_pbs_places/"; //path to where the default pbs places are stored
-	$defaultXmlsPath = "C:/Webserver/nginx/Alphaland/default_xmls/"; //path to where the default xmls stored
-	$privateKeyPath = "C:/Webserver/nginx/Alphaland/AlphalandRawKey.txt"; //path to where the private key is stored
+	$pbsOverlayPath = "D:/Finobe/PersonalServerOverlay.png";
+	$setupHtmlPath = "D:/Finobe/html_setup/";
+	$defaultPlacesPath = "D:/Finobe/default_places/"; //path to where the default places are stored
+	$defaultPbsPlacesPath = "D:/Finobe/default_pbs_places/"; //path to where the default pbs places are stored
+	$defaultXmlsPath = "D:/Finobe/default_xmls/"; //path to where the default xmls stored
+	$privateKeyPath = "D:/Finobe/FinobeRawKey.txt"; //path to where the private key is stored
 
 	//machine ip's
 	$gameMachine = "167.114.96.92"; //IP address of the machine that runs gameservers
@@ -98,35 +98,35 @@ try
 	$thumbnailArbiter = $renderMachine.":64989"; //IP address/port of the Arbiter running on the render machine
 	
 	//autoloader include
-	require 'C:\Users\Administrator\vendor\autoload.php';
+	require 'D:/Finobe/vendor/autoload.php';
 	
-	//alphaland specfic dependencies (listing manually for now due to active rewrite of stuff)
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Activation.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/TwoFactor.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/ReferralProgram.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebContextManager.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/System.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Assets/Asset.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Game.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Grid/RccServiceHelper.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Assets/Render.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/UI/ImageHelper.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Render.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/Signing.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Common/Email.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Games/Ticket.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/User.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Session.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Outfit.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Moderation/Filter.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Users/Badge.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Administration/SignupKey.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Economy/EconomyHelper.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Groups/Group.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/WebsiteSettings.php";
-	include "C:/Webserver/nginx/Alphaland/globals/Dependencies/Web/IpRange.php";
+	//finobe specfic dependencies (listing manually for now due to active rewrite of stuff)
+	include "D:/Finobe/globals/Dependencies/Users/Activation.php";
+	include "D:/Finobe/globals/Dependencies/Users/TwoFactor.php";
+	include "D:/Finobe/globals/Dependencies/Users/ReferralProgram.php";
+	include "D:/Finobe/globals/Dependencies/Moderation/UserModerationManager.php";
+	include "D:/Finobe/globals/Dependencies/Common/HashingUtiltity.php";
+	include "D:/Finobe/globals/Dependencies/Web/WebContextManager.php";
+	include "D:/Finobe/globals/Dependencies/Common/System.php";
+	include "D:/Finobe/globals/Dependencies/Assets/Asset.php";
+	include "D:/Finobe/globals/Dependencies/Games/Game.php";
+	include "D:/Finobe/globals/Dependencies/Grid/RccServiceHelper.php";
+	include "D:/Finobe/globals/Dependencies/Assets/Render.php";
+	include "D:/Finobe/globals/Dependencies/UI/ImageHelper.php";
+	include "D:/Finobe/globals/Dependencies/Users/Render.php";
+	include "D:/Finobe/globals/Dependencies/Common/Signing.php";
+	include "D:/Finobe/globals/Dependencies/Common/Email.php";
+	include "D:/Finobe/globals/Dependencies/Games/Ticket.php";
+	include "D:/Finobe/globals/Dependencies/Users/User.php";
+	include "D:/Finobe/globals/Dependencies/Users/Session.php";
+	include "D:/Finobe/globals/Dependencies/Users/Outfit.php";
+	include "D:/Finobe/globals/Dependencies/Moderation/Filter.php";
+	include "D:/Finobe/globals/Dependencies/Users/Badge.php";
+	include "D:/Finobe/globals/Dependencies/Administration/SignupKey.php";
+	include "D:/Finobe/globals/Dependencies/Economy/EconomyHelper.php";
+	include "D:/Finobe/globals/Dependencies/Groups/Group.php";
+	include "D:/Finobe/globals/Dependencies/Web/WebsiteSettings.php";
+	include "D:/Finobe/globals/Dependencies/Web/IpRange.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();
@@ -138,7 +138,7 @@ try
 	$mail->SMTPSecure = "tls";
 	$mail->Port       = 587;
 	$mail->Host       = "smtp.gmail.com";
-	$mail->Username   = "alphalandtemp@gmail.com"; //google for now (easy and free)
+	$mail->Username   = "finobetemp@gmail.com"; //google for now (easy and free)
 	$mail->Password   = "117A7AE7CE40674453E00492CB699F54";
 	
 	//cloudflare
@@ -233,5 +233,5 @@ try
 } 
 catch (Exception $e)
 {
-	die("Alphaland is currently unavailable.");
+	die("Finobe is currently unavailable.");
 }

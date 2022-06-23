@@ -1,6 +1,6 @@
 <?php
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -60,7 +60,7 @@ function executeScript()
 	var jobid = $('#jobid-input').val();
 	var script = $('#script-input').val();
 
-	postJSONCDS("https://crackpot.alphaland.cc/lua-executer/executeScript", JSON.stringify({"jobid":jobid,"script":script}))
+	postJSONCDS("https://crackpot.idk16.xyz/lua-executer/executeScript", JSON.stringify({"jobid":jobid,"script":script}))
 	.done(function(object) {
 		var result = object.result;
 		if (!jobid || !script)
@@ -87,7 +87,7 @@ function activeJobs()
 	html += '<td>{PlaceID}</td>';
 	html += '</tr>';
 		
-	staticPageHelper("https://crackpot.alphaland.cc/lua-executer/activeJobs", "", "#active-jobs", html, "", 100, "", "");
+	staticPageHelper("https://crackpot.idk16.xyz/lua-executer/activeJobs", "", "#active-jobs", html, "", 100, "", "");
 }
 </script>
 

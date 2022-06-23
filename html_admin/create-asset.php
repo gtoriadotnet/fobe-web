@@ -1,7 +1,7 @@
 <?php
 
-use Alphaland\Assets\Render;
-use Alphaland\Web\WebContextManager;
+use Finobe\Assets\Render;
+use Finobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 
@@ -127,7 +127,7 @@ $alert = '';
 				
 				$GLOBALS['pdo']->exec("UNLOCK TABLES"); //unlock since we are done with sensitive asset stuff
 					
-				//give the hat to the user Alphaland
+				//give the hat to the user Finobe
 				$c = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(1, :a, 0, UNIX_TIMESTAMP(), 1)"); //give asset 8
 				$c->bindParam(":a", $autoincrement, PDO::PARAM_INT); //catalog asset id
 				$c->execute();
@@ -244,7 +244,7 @@ $alert = '';
 				$GLOBALS['pdo']->exec("UNLOCK TABLES"); //unlock since we are done with sensitive asset stuff
 				// ...
 					
-				//give the face to the user Alphaland
+				//give the face to the user Finobe
 				$c = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(1, :a, 0, UNIX_TIMESTAMP(), 1)"); //give asset 8
 				$c->bindParam(":a", $autoincrement, PDO::PARAM_INT); //catalog asset id
 				$c->execute();
@@ -391,7 +391,7 @@ $alert = '';
 				$GLOBALS['pdo']->exec("UNLOCK TABLES"); //unlock since we are done with sensitive asset stuff
 				// ...
 					
-				//give the Head to the user Alphaland
+				//give the Head to the user Finobe
 				$c = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(1, :a, 0, UNIX_TIMESTAMP(), 1)"); //give asset
 				$c->bindParam(":a", $autoincrement, PDO::PARAM_INT); //catalog asset id
 				$c->execute();
@@ -491,7 +491,7 @@ $alert = '';
 														 </div>
 														 <div class="input-group mb-3">
 																<div class="input-group-prepend">
-																	<span class="input-group-text"><img style="width:1rem;" src="https://www.alphaland.cc/alphaland/cdn/imgs/alphabux-grey-1024.png"></span>
+																	<span class="input-group-text"><img style="width:1rem;" src="https://www.idk16.xyz/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
 																</div>
 																<input type="text" name="itemprice" class="form-control" placeholder="Price">
 															</div>
@@ -562,7 +562,7 @@ $alert = '';
 															<textarea type="text" name="itemdesc" style="width:100%!important;min-height:150px;max-height:150px;" class="form-control mb-3" placeholder="Item Description"></textarea>
 															<div class="input-group mb-3">
 																<div class="input-group-prepend">
-																	<span class="input-group-text"><img style="width:1rem;" src="https://www.alphaland.cc/alphaland/cdn/imgs/alphabux-grey-1024.png"></span>
+																	<span class="input-group-text"><img style="width:1rem;" src="https://www.idk16.xyz/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
 																</div>
 																<input type="text" name="itemprice" class="form-control" placeholder="Price">
 															</div>
@@ -610,7 +610,7 @@ $alert = '';
 																<textarea type="text" name="itemdesc" style="width:100%!important;min-height:150px;max-height:150px;" class="form-control mb-3" placeholder="Item Description"></textarea>
 																<div class="input-group mb-3">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text"><img style="width:1rem;" src="https://www.alphaland.cc/alphaland/cdn/imgs/alphabux-grey-1024.png"></span>
+																		<span class="input-group-text"><img style="width:1rem;" src="https://www.idk16.xyz/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
 																	</div>
 																	<input type="text" name="itemprice" class="form-control" placeholder="Price">
 																</div>
@@ -676,7 +676,7 @@ $alert = '';
 															<textarea type="text" name="itemdesc" style="width:100%!important;min-height:150px;max-height:150px;" class="form-control mb-3" placeholder="Item Description"></textarea>
 															<div class="input-group mb-3">
 																<div class="input-group-prepend">
-																	<span class="input-group-text"><img style="width:1rem;" src="https://www.alphaland.cc/alphaland/cdn/imgs/alphabux-grey-1024.png"></span>
+																	<span class="input-group-text"><img style="width:1rem;" src="https://www.idk16.xyz/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
 																</div>
 																<input type="text" name="itemprice" class="form-control" placeholder="Price">
 															</div>

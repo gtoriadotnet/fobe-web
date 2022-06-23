@@ -1,13 +1,13 @@
 <?php
 
 /*
-	Alphaland 2021
+	Finobe 2021
 	Report Data
 */
 
-use Alphaland\Web\WebContextManager;
+use Finobe\Web\WebContextManager;
 
-header("Access-Control-Allow-Origin: https://www.alphaland.cc");
+header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");
 header('Content-Type: application/json');
 

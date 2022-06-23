@@ -1,16 +1,16 @@
 <?php
 
 /*
-    Alphaland 2021
+    Finobe 2021
     Astro: Jesus christ this is big, probably due to a lot of whitespace as well. Perhaps reduce the size?
     Nikita: (YOUR DUMBASS COMMENT HERE)
 */
 
-namespace Alphaland\Groups {
+namespace Finobe\Groups {
 
-    use Alphaland\Economy\EconomyHelper;
-    use Alphaland\UI\ImageHelper;
-    use Alphaland\Users\User;
+    use Finobe\Economy\EconomyHelper;
+    use Finobe\UI\ImageHelper;
+    use Finobe\Users\User;
     use Exception;
     use PDO;
 

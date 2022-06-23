@@ -1,6 +1,6 @@
 <?php
 
-namespace Alphaland\Web {
+namespace Finobe\Web {
     
     use PDO;
 
