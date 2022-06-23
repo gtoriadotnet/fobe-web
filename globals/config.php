@@ -58,36 +58,36 @@ try
 	$thumbnailCDN = "https://tcdn.idk16.xyz"; //endpoint for thumbnails
 	
 	//cdn paths
-	$renderCDNPath = "D:/Finobe/html_renders_cdn/"; //path to where renders are stored
-	$thumbnailCDNPath = "D:/Finobe/html_thumbs_cdn/"; //path to where thumbnails are stored
-	$assetCDNPath = "D:/Finobe/html_assets_cdn/"; //path to where assets are stored
+	$renderCDNPath = "C:/Alphaland/html_renders_cdn/"; //path to where renders are stored
+	$thumbnailCDNPath = "C:/Alphaland/html_thumbs_cdn/"; //path to where thumbnails are stored
+	$assetCDNPath = "C:/Alphaland/html_assets_cdn/"; //path to where assets are stored
 	
 	//lua script paths
-	$avatarthumbnailscript = "D:/Finobe/luascripts/thumbnails/AvatarScript.lua";
-	$facethumbnailscript = "D:/Finobe/luascripts/thumbnails/FaceScript.lua";
-	$hatthumbnailscript = "D:/Finobe/luascripts/thumbnails/HatScript.lua";
-	$tshirtthumbnailscript = "D:/Finobe/luascripts/thumbnails/TShirtScript.lua";
-	$shirtthumbnailscript = "D:/Finobe/luascripts/thumbnails/ShirtScript.lua";
-	$pantsthumbnailscript = "D:/Finobe/luascripts/thumbnails/PantsScript.lua";
-	$headthumbnailscript = "D:/Finobe/luascripts/thumbnails/HeadScript.lua";
-	$placethumbnailscript = "D:/Finobe/luascripts/thumbnails/PlaceScript.lua";
-	$modelthumbnailscript = "D:/Finobe/luascripts/thumbnails/ModelScript.lua";
-	$gearthumbnailscript = "D:/Finobe/luascripts/thumbnails/GearScript.lua";
-	$avatarcloseupthumbnailscript = "D:/Finobe/luascripts/thumbnails/AvatarCloseupScript.lua";
-	$meshthumbnailscript = "D:/Finobe/luascripts/thumbnails/MeshScript.lua";
-	$packagescript = "D:/Finobe/luascripts/thumbnails/PackageScript.lua"; 
-	$gameserverscript = "D:/Finobe/luascripts/game/gameserver.lua"; 
+	$avatarthumbnailscript = "C:/Alphaland/luascripts/thumbnails/AvatarScript.lua";
+	$facethumbnailscript = "C:/Alphaland/luascripts/thumbnails/FaceScript.lua";
+	$hatthumbnailscript = "C:/Alphaland/luascripts/thumbnails/HatScript.lua";
+	$tshirtthumbnailscript = "C:/Alphaland/luascripts/thumbnails/TShirtScript.lua";
+	$shirtthumbnailscript = "C:/Alphaland/luascripts/thumbnails/ShirtScript.lua";
+	$pantsthumbnailscript = "C:/Alphaland/luascripts/thumbnails/PantsScript.lua";
+	$headthumbnailscript = "C:/Alphaland/luascripts/thumbnails/HeadScript.lua";
+	$placethumbnailscript = "C:/Alphaland/luascripts/thumbnails/PlaceScript.lua";
+	$modelthumbnailscript = "C:/Alphaland/luascripts/thumbnails/ModelScript.lua";
+	$gearthumbnailscript = "C:/Alphaland/luascripts/thumbnails/GearScript.lua";
+	$avatarcloseupthumbnailscript = "C:/Alphaland/luascripts/thumbnails/AvatarCloseupScript.lua";
+	$meshthumbnailscript = "C:/Alphaland/luascripts/thumbnails/MeshScript.lua";
+	$packagescript = "C:/Alphaland/luascripts/thumbnails/PackageScript.lua"; 
+	$gameserverscript = "C:/Alphaland/luascripts/game/gameserver.lua"; 
 
 	//soap paths
-	$RCCwsdl = "D:/Finobe/RCCService.wsdl"; //wsdl path for SOAP
+	$RCCwsdl = "C:/Alphaland/RCCService.wsdl"; //wsdl path for SOAP
 
 	//misc paths
-	$pbsOverlayPath = "D:/Finobe/PersonalServerOverlay.png";
-	$setupHtmlPath = "D:/Finobe/html_setup/";
-	$defaultPlacesPath = "D:/Finobe/default_places/"; //path to where the default places are stored
-	$defaultPbsPlacesPath = "D:/Finobe/default_pbs_places/"; //path to where the default pbs places are stored
-	$defaultXmlsPath = "D:/Finobe/default_xmls/"; //path to where the default xmls stored
-	$privateKeyPath = "D:/Finobe/FinobeRawKey.txt"; //path to where the private key is stored
+	$pbsOverlayPath = "C:/Alphaland/PersonalServerOverlay.png";
+	$setupHtmlPath = "C:/Alphaland/html_setup/";
+	$defaultPlacesPath = "C:/Alphaland/default_places/"; //path to where the default places are stored
+	$defaultPbsPlacesPath = "C:/Alphaland/default_pbs_places/"; //path to where the default pbs places are stored
+	$defaultXmlsPath = "C:/Alphaland/default_xmls/"; //path to where the default xmls stored
+	$privateKeyPath = "C:/Alphaland/FinobeRawKey.txt"; //path to where the private key is stored
 
 	//machine ip's
 	$gameMachine = "167.114.96.92"; //IP address of the machine that runs gameservers
@@ -98,35 +98,35 @@ try
 	$thumbnailArbiter = $renderMachine.":64989"; //IP address/port of the Arbiter running on the render machine
 	
 	//autoloader include
-	require 'D:/Finobe/vendor/autoload.php';
+	require 'C:/vendor/autoload.php';
 	
 	//finobe specfic dependencies (listing manually for now due to active rewrite of stuff)
-	include "D:/Finobe/globals/Dependencies/Users/Activation.php";
-	include "D:/Finobe/globals/Dependencies/Users/TwoFactor.php";
-	include "D:/Finobe/globals/Dependencies/Users/ReferralProgram.php";
-	include "D:/Finobe/globals/Dependencies/Moderation/UserModerationManager.php";
-	include "D:/Finobe/globals/Dependencies/Common/HashingUtiltity.php";
-	include "D:/Finobe/globals/Dependencies/Web/WebContextManager.php";
-	include "D:/Finobe/globals/Dependencies/Common/System.php";
-	include "D:/Finobe/globals/Dependencies/Assets/Asset.php";
-	include "D:/Finobe/globals/Dependencies/Games/Game.php";
-	include "D:/Finobe/globals/Dependencies/Grid/RccServiceHelper.php";
-	include "D:/Finobe/globals/Dependencies/Assets/Render.php";
-	include "D:/Finobe/globals/Dependencies/UI/ImageHelper.php";
-	include "D:/Finobe/globals/Dependencies/Users/Render.php";
-	include "D:/Finobe/globals/Dependencies/Common/Signing.php";
-	include "D:/Finobe/globals/Dependencies/Common/Email.php";
-	include "D:/Finobe/globals/Dependencies/Games/Ticket.php";
-	include "D:/Finobe/globals/Dependencies/Users/User.php";
-	include "D:/Finobe/globals/Dependencies/Users/Session.php";
-	include "D:/Finobe/globals/Dependencies/Users/Outfit.php";
-	include "D:/Finobe/globals/Dependencies/Moderation/Filter.php";
-	include "D:/Finobe/globals/Dependencies/Users/Badge.php";
-	include "D:/Finobe/globals/Dependencies/Administration/SignupKey.php";
-	include "D:/Finobe/globals/Dependencies/Economy/EconomyHelper.php";
-	include "D:/Finobe/globals/Dependencies/Groups/Group.php";
-	include "D:/Finobe/globals/Dependencies/Web/WebsiteSettings.php";
-	include "D:/Finobe/globals/Dependencies/Web/IpRange.php";
+	include "C:/Alphaland/globals/Dependencies/Users/Activation.php";
+	include "C:/Alphaland/globals/Dependencies/Users/TwoFactor.php";
+	include "C:/Alphaland/globals/Dependencies/Users/ReferralProgram.php";
+	include "C:/Alphaland/globals/Dependencies/Moderation/UserModerationManager.php";
+	include "C:/Alphaland/globals/Dependencies/Common/HashingUtiltity.php";
+	include "C:/Alphaland/globals/Dependencies/Web/WebContextManager.php";
+	include "C:/Alphaland/globals/Dependencies/Common/System.php";
+	include "C:/Alphaland/globals/Dependencies/Assets/Asset.php";
+	include "C:/Alphaland/globals/Dependencies/Games/Game.php";
+	include "C:/Alphaland/globals/Dependencies/Grid/RccServiceHelper.php";
+	include "C:/Alphaland/globals/Dependencies/Assets/Render.php";
+	include "C:/Alphaland/globals/Dependencies/UI/ImageHelper.php";
+	include "C:/Alphaland/globals/Dependencies/Users/Render.php";
+	include "C:/Alphaland/globals/Dependencies/Common/Signing.php";
+	include "C:/Alphaland/globals/Dependencies/Common/Email.php";
+	include "C:/Alphaland/globals/Dependencies/Games/Ticket.php";
+	include "C:/Alphaland/globals/Dependencies/Users/User.php";
+	include "C:/Alphaland/globals/Dependencies/Users/Session.php";
+	include "C:/Alphaland/globals/Dependencies/Users/Outfit.php";
+	include "C:/Alphaland/globals/Dependencies/Moderation/Filter.php";
+	include "C:/Alphaland/globals/Dependencies/Users/Badge.php";
+	include "C:/Alphaland/globals/Dependencies/Administration/SignupKey.php";
+	include "C:/Alphaland/globals/Dependencies/Economy/EconomyHelper.php";
+	include "C:/Alphaland/globals/Dependencies/Groups/Group.php";
+	include "C:/Alphaland/globals/Dependencies/Web/WebsiteSettings.php";
+	include "C:/Alphaland/globals/Dependencies/Web/IpRange.php";
 
 	//authenticator 
 	$authenticator = new PHPGangsta_GoogleAuthenticator();

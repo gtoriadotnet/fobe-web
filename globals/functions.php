@@ -1097,7 +1097,7 @@ function canJoinUser($uid) //
 	
 function sendMail($from, $recipient, $subject, $body, $altbody)
 {
-	$job = popen("cd D:/Finobe && start /B php sendEmail.php ".$from." ".$recipient." ".base64_encode($subject)." ".base64_encode($body)." ".base64_encode($altbody), "r"); 
+	$job = popen("cd C:/Alphaland && start /B php sendEmail.php ".$from." ".$recipient." ".base64_encode($subject)." ".base64_encode($body)." ".base64_encode($altbody), "r"); 
     if ($job !== FALSE);
     {
         pclose($job);

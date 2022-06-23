@@ -81,7 +81,7 @@ namespace Finobe\Users {
             {
                 if ($fork)
                 {
-                    $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
+                    $job = popen("cd C:/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatarcloseup", "r"); //throwaway background process
                     if ($job !== FALSE);
                     {
                         pclose($job);
@@ -128,7 +128,7 @@ namespace Finobe\Users {
             {
                 if ($fork)
                 {
-                    $job = popen("cd D:/Finobe/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
+                    $job = popen("cd C:/Alphaland/WebserviceTools/RenderTools && start /B php backgroundRenderJob.php ".$userid." avatar", "r"); //throwaway background process
                     if ($job !== FALSE);
                     {
                         pclose($job);
