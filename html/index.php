@@ -126,7 +126,7 @@ if(!isLoggedIn())
 	<div class="viewport-header">
 		<div class="index-container">
 			<div class="index-row">
-				<img class="img-fluid" style="width:50rem;padding:10px;" src="/finobe/cdn/imgs/finobe-long.png">
+				<img class="img-fluid" style="width:15rem;padding:10px;" src="/finobe/cdn/imgs/finobe-256x256.png">
 			</div>
 			<div class="index-row">
 				<div style="margin-top:20px;">

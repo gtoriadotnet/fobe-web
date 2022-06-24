@@ -91,10 +91,10 @@ try
 
 	//machine ip's
 	$gameMachine = "76.190.219.176"; //IP address of the machine that runs gameservers
-	$renderMachine = "192.168.1.234"; //IP address of the machine that renders thumbnails
+	$renderMachine = "192.168.0.24"; //IP address of the machine that renders thumbnails
 
 	//arbiter ip's
-	$gamesArbiter = "192.168.1.169:64989";	//IP address/port of the Arbiter running on the gameserver machine
+	$gamesArbiter = "192.168.0.23:64989";	//IP address/port of the Arbiter running on the gameserver machine
 	$thumbnailArbiter = $renderMachine.":64989"; //IP address/port of the Arbiter running on the render machine
 	
 	//autoloader include
@@ -167,7 +167,7 @@ try
 		}
 
 		//account status checks
-		$activated = Activation::IsUserActivated($GLOBALS['user']->id);
+		//$activated = Activation::IsUserActivated($GLOBALS['user']->id);
 		$twofactor = TwoFactor::IsSession2FAUnlocked();
 		$banned = UserModerationManager::IsBanned($GLOBALS['user']->id);
 		$maintenance = WebContextManager::IsUnderMaintenance();
@@ -181,12 +181,12 @@ try
 			$accesseddirectory != "/logout.php") {
 				WebContextManager::Redirect($url . "/ban");
 			}
-		} else if ($GLOBALS['user']->logged_in && !$activated) { //check if activated
+		}/* else if ($GLOBALS['user']->logged_in && !$activated) { //check if activated
 			if ($accesseddirectory != "/activate.php" && 
 			$accesseddirectory != "/logout.php") {
 				WebContextManager::Redirect($url . "/activate");
 			}
-		} else if ($GLOBALS['user']->logged_in && !$twofactor) { //check if 2fa is unlocked
+		}*/ else if ($GLOBALS['user']->logged_in && !$twofactor) { //check if 2fa is unlocked
 			if ($accesseddirectory != "/2fa.php") {
 				WebContextManager::Redirect($url . "/2fa");
 			}

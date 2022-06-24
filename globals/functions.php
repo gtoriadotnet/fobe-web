@@ -1802,25 +1802,25 @@ function setBlurb($newblurb)
 	
 function setDefaults($uid) //gives default shirt and pants, body colors and wears the shirt and pants
 {
-	$check = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(:u, 133, 0, UNIX_TIMESTAMP(), 1)"); //give asset 133
+	/*$check = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(:u, 133, 0, UNIX_TIMESTAMP(), 1)"); //give asset 133
 	$check->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check->execute();
 	
 	$check2 = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(:u, 135, 0, UNIX_TIMESTAMP(), 1)"); //give asset 135
 	$check2->bindParam(":u", $uid, PDO::PARAM_INT);
-	$check2->execute();
+	$check2->execute();*/
 	
 	$check3 = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(:u, 1, 0, UNIX_TIMESTAMP(), 1)"); //give asset 1
 	$check3->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check3->execute();
 	
-	$check4 = $GLOBALS['pdo']->prepare("INSERT into wearing_items (uid, aid, whenWorn) VALUES(:u, 133, UNIX_TIMESTAMP())"); //wear asset 133
+	/*$check4 = $GLOBALS['pdo']->prepare("INSERT into wearing_items (uid, aid, whenWorn) VALUES(:u, 133, UNIX_TIMESTAMP())"); //wear asset 133
 	$check4->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check4->execute();
 	
 	$check5 = $GLOBALS['pdo']->prepare("INSERT into wearing_items (uid, aid, whenWorn) VALUES(:u, 135, UNIX_TIMESTAMP())"); //wear asset 135
 	$check5->bindParam(":u", $uid, PDO::PARAM_INT);
-	$check5->execute();
+	$check5->execute();*/
 	
 	$check6 = $GLOBALS['pdo']->prepare("INSERT into wearing_items (uid, aid, whenWorn) VALUES(:u, 1, UNIX_TIMESTAMP())"); //wear asset 1
 	$check6->bindParam(":u", $uid, PDO::PARAM_INT);
@@ -2574,14 +2574,7 @@ function getCurrentThemeLogo() //grabs the finobe logo for the users selected th
 
 	//return $GLOBALS['url'] . "/finobe/cdn/imgs/alpha-christmas/finobechristmas.png"; //force christmas logo
 	
-	if ($currenttheme == 0) //light theme dark logo
-	{
-		return $GLOBALS['url'] . "/finobe/cdn/imgs/finobe-logo.svg";
-	}
-	elseif ($currenttheme == 1) //dark theme light logo
-	{
-		return $GLOBALS['url'] . "/finobe/cdn/imgs/finobe-white-1024.png";
-	}
+	return $GLOBALS['url'] . "/finobe/cdn/imgs/finobe-50x50.png";
 }
 
 function getCurrentThemeAlphabuxLogo() //grabs the finobe alphabux logo for the users selected theme
@@ -2828,7 +2821,7 @@ function getNav()
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-right:10%;padding-left:10%;">
 				<a class="navbar-brand" href="/">
-					<img src="/finobe/cdn/imgs/finobe-logo.svg" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+					<img src="/finobe/cdn/imgs/finobe-50x50.png" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
