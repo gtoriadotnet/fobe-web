@@ -5,6 +5,8 @@ if ($_SERVER['HTTP_USER_AGENT'] != $GLOBALS['clientUserAgent']) //user agent res
 	die("Invalid request");
 }
 
+header('Cache-Control: no-cache');
+
 $userid = (int)$_GET['UserID'];
 $placeid = (int)$_GET['PlaceID'];
 

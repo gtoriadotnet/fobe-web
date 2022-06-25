@@ -22,7 +22,7 @@ if (!$userid)
 }
 
 //get params
-$page = $_GET['page'];
+$page = (int)$_GET['page'];
 $limit = $_GET['limit'];
 $keyword = substr((string)$_GET['keyword'], 0, 32); //32 limit
 $keywordq = '%'.$keyword.'%'; //query

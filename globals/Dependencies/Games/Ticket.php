@@ -30,7 +30,7 @@ namespace Finobe\Games {
                 $characterappearance && 
                 $jobid) {
                     $timestamp = date("m/d/Y h:m:s A", time());
-                    $sig1 = Signing::SignData($userid . "\n" . $accountage . "\n" . $username . "\n" . $characterappearance . "\n" . $jobid . "\n" . $timestamp, false);
+                    $sig1 = Signing::SignData($userid . "\n" . $username . "\n" . $characterappearance . "\n" . $jobid . "\n" . $timestamp, false);
                     $sig2 = Signing::SignData($userid . "\n" . $jobid . "\n" . $timestamp, false);
                     $ticket = $timestamp.";".$sig1.";".$sig2;
                 }

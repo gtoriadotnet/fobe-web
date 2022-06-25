@@ -113,7 +113,7 @@ function playGame(id) {
 		$("#linfo").html("Starting Finobe...");
 		$("#launching").modal("show");
 		$("#closediv").hide();
-		location.href = "finobe-player-cc:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.idk16.xyz/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
+		location.href = "finobe-player:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.idk16.xyz/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
 		setTimeout(function() {
 			$("#launching").modal("hide");
 		}, 2500);	

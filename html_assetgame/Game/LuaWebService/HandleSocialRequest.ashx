@@ -1,5 +1,7 @@
 <?php
 
+use Finobe\Groups\Group;
+
 //so stuff doesnt cache
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");
@@ -20,21 +22,21 @@ if ($method == "IsFriendsWith") {
 	}
 } elseif ($method == "IsInGroup") {
 	header('Content-Type: text/xml');
-	if (isGroupMember($playerid, $groupid)) {
+	if (Group::IsMember($playerid, $groupid)) {
 		echo '<Value Type="boolean">true</Value>';	
 	} else {
 		echo '<Value Type="boolean">false</Value>';	
 	}
 } elseif ($method == "GetGroupRank") {
 	header('Content-Type: text/xml');
-	if (isGroupMember($playerid, $groupid)) {
-		echo '<Value Type="integer">'.getRank($playerid, $groupid).'</Value>';	
+	if (Group::IsMember($playerid, $groupid)) {
+		echo '<Value Type="integer">'.Group::GetRank($playerid, $groupid).'</Value>';	
 	} else {
 		echo '<Value Type="integer">0</Value>';	
 	}
 } elseif ($method == "GetGroupRole") {
-	if (isGroupMember($playerid, $groupid)) {
+	if (Group::IsMember($playerid, $groupid)) {
 		header('Content-Type: text/xml');
-		echo getUserRankName($playerid, $groupid);	
+		echo Group::GetUserRankName($playerid, $groupid);	
 	}
 }

@@ -24,7 +24,7 @@ namespace Finobe\Grid {
         private function LogFault($soap, $description)
         {
             $theFault = print_r($soap, TRUE); //soap object fault to human readable string (ghetto?)
-            $fault = $GLOBALS['pdo']->prepare("INSERT INTO soap_faults(description, fault, whenOccurred) VALUES(:jd, :f, UNIX_TIMESTAMP())");
+            $fault = $GLOBALS['pdo']->prepare("INSERT INTO soap_faults(jobdescription, fault, whenOccurred) VALUES(:jd, :f, UNIX_TIMESTAMP())");
             $fault->bindParam(":jd", $description, PDO::PARAM_STR);
             $fault->bindParam(":f", $theFault, PDO::PARAM_STR);
             $fault->execute();

@@ -16,25 +16,51 @@ $local = $_GET['local'];
 
 if ($local)
 {
-		$joinparams = json_encode(array(
-		"MachineAddress" => "localhost",
-		"ServerPort" => "65535",
+	$userid = 2;
+	$accountage = 1337;
+	$username = "Raymonf";
+	$characterappearance = "https://api.idk16.xyz/users/avatar-accoutrements?userId=" . $userid;
+	$jobid = "Test";
+	$joinparams = json_encode(array(
 		"ClientPort" => 0,
-		"UserName" => "Astrologies",
-		"UserId" => 2,
-		"CreatorId" => 2,
-		"CreatorTypeEnum" => "User",
-		"ChatStyle" => "ClassicAndBubble",
-		"PlaceId" => 186,
-		"CharacterAppearance" => "https://api.idk16.xyz/users/avatar-accoutrements?userId=2",
-		//"IsRobloxPlace" => true,
-		"ClientTicket" => "111",
+		"MachineAddress" => "127.0.0.1",
+		"ServerPort" => "65535",
+		"PingUrl" => "",
+		"PingInterval" => 45,
+		"UserName" => $username,
+		"SeleniumTestMode" => false, //always false, dont need this
+		"UserId" => $userid,
+		"SuperSafeChat" => false, //always false, dont need this
+		"CharacterAppearance" => $characterappearance,
+		"ClientTicket" => Ticket::ClientTicket(array(
+			$userid,
+			$accountage,
+			$username,
+			$characterappearance,
+			$jobid
+		)),
+		"GameId" => '00000000-0000-0000-0000-000000000000', //not set rn?
+		"PlaceId" => 0,
 		"BaseUrl" => $url . "/",
-		"PingUrl" => $url . "",
-		"PingInterval" => 45
+		"ChatStyle" => "ClassicAndBubble", //TODO: make an option for this
+		"VendorId" => 0, //0, dont need this rn?
+		"ScreenShotInfo" => "", //blank, dont need this rn?
+		"VideoInfo" => "", //blank, dont need this rn?
+		"CreatorId" => 2,
+		"CreatorTypeEnum" => "User", //only player places, dont need this
+		"MembershipType" => "None", //no memberships rn
+		"AccountAge" => $accountage,
+		"CookieStoreEnabled" => false, //always false, dont need this
+		"IsRobloxPlace" => false, //dont this this rn?
+		"GenerateTeleportJoin" => false, //dont need this rn?
+		"IsUnknownOrUnder13" => false, //dont need this rn?
+		"SessionId" => "", //blank, dont need this rn?
+		"DataCenterId" => 0, //0, dont need this rn?
+		"UniverseId" => 0, //0, dont need this rn?
+		"BrowserTrackerId" => "" //blank, dont need this rn?
 	), JSON_UNESCAPED_SLASHES);
 	
-	die(Signing::SignData($joinparams));
+	die(Signing::SignData("\r\n".$joinparams));
 }
 
 if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent restricted
@@ -101,7 +127,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 				"BrowserTrackerId" => "" //blank, dont need this rn?
 			), JSON_UNESCAPED_SLASHES);
 			
-			die(Signing::SignData($joinparams));
+			die(Signing::SignData("\r\n".$joinparams));
 		}
 	} 
 }

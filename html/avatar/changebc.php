@@ -23,14 +23,14 @@ if(getBC($clr) != "-")
 {
 	if (isThumbnailerAlive())
 	{
-		if (!Render::RenderCooldown($user->id))
+		if (!Render::RenderCooldown($GLOBALS['user']->id))
 		{
 			$upd = $pdo->prepare("UPDATE body_colours SET {$bcdb[$cbc]} = :b WHERE uid = :u");
-			$upd->bindParam(":u", $user->id, PDO::PARAM_INT);
+			$upd->bindParam(":u", $GLOBALS['user']->id, PDO::PARAM_INT);
 			$upd->bindParam(":b", $clr, PDO::PARAM_INT);
 			$upd->execute();
 
-			Render::RenderPlayer($localuser);
+			Render::RenderPlayer($GLOBALS['user']->id);
 			
 			echo "s";
 		}
