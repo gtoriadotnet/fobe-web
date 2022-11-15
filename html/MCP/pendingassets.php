@@ -66,7 +66,10 @@ foreach($assets as $asset)
 	$desc = cleanOutputNoFilter($asset['Description']); //description of the game
 	$creatorname = getUsername($creatorid); //creator of the game username
 	$image = "";
-	if ($assettypeid == 2|| $assettypeid == 11 || $assettypeid == 12) { //tshirts, shirts and pants
+	if ($assettypeid == 3) { //audio
+		$image = getAssetFromAsset($assetid);
+	}
+	elseif ($assettypeid == 2|| $assettypeid == 11 || $assettypeid == 12) { //tshirts, shirts and pants
 		$image = getSPTCosmeticTexture($assetid);
 	} else {
 		$image = getImageFromAsset($assetid); //anything else probably

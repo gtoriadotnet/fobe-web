@@ -50,9 +50,9 @@ if ($deploytype == "client") {
 
 $expectedfiles = 0;
 if ($deploytype == "client") {
-	$expectedfiles = 13;
+	$expectedfiles = 14;
 } else if ($deploytype == "studio") {
-	$expectedfiles = 16;
+	$expectedfiles = 17;
 }
 
 //expected files count
@@ -79,6 +79,7 @@ foreach ($files as $key=>$val) {
 		$filename == "content-terrain.zip" ||
 		$filename == "content-textures.zip" ||
 		$filename == "content-textures2.zip" ||
+		$filename == "content-textures3.zip" ||
 		$filename == "Libraries.zip" ||
 		$filename == "redist.zip" ||
 		$filename == "shaders.zip") {
@@ -103,6 +104,7 @@ foreach ($files as $key=>$val) {
 		$filename == "content-terrain.zip" ||
 		$filename == "content-textures.zip" ||
 		$filename == "content-textures2.zip" ||
+		$filename == "content-textures3.zip" ||
 		$filename == "Libraries.zip" ||
 		$filename == "redist.zip" ||
 		$filename == "shaders.zip") {
@@ -143,6 +145,7 @@ if ($pass) {
 	unlink($setup_html . $previousdeployversion . "-content-terrain.zip");
 	unlink($setup_html . $previousdeployversion . "-content-textures.zip");
 	unlink($setup_html . $previousdeployversion . "-content-textures2.zip");
+	unlink($setup_html . $previousdeployversion . "-content-textures3.zip");
 	unlink($setup_html . $previousdeployversion . "-Libraries.zip");
 	unlink($setup_html . $previousdeployversion . "-redist.zip");
 	unlink($setup_html . $previousdeployversion . "-shaders.zip");
@@ -162,20 +165,22 @@ if ($pass) {
 		$versiontextname = "-BootstrapperQTStudioVersion.txt";
 	}
 
+	file_put_contents($setup_html . $newgameversion . '-rbxManifest.txt','');
+
 	$fp = fopen($setup_html . $newgameversion . $versiontextname,"wb");
 	fwrite($fp,$launcherfileversion);
 	fclose($fp);
 
 	//update in db
 	if ($deploytype == "client") {
-		$updatewebsettings = $pdo->prepare("UPDATE websettings SET FinobeVersion = :av, security_version = :sv, md5_hash = :mh, GameFileVersion = :gv");
+		$updatewebsettings = $pdo->prepare("UPDATE websettings SET AlphalandVersion = :av, security_version = :sv, md5_hash = :mh, GameFileVersion = :gv");
 		$updatewebsettings->bindParam(":av", $newgameversion, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":sv", $gamesecurityversion, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":mh", $gamemd5hash, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":gv", $gamefileversion, PDO::PARAM_STR);
 		$updatewebsettings->execute();
 	} else if ($deploytype == "studio") {
-		$updatewebsettings = $pdo->prepare("UPDATE websettings SET FinobeStudioVersion = :asv, StudioFileVersion = :sfv");
+		$updatewebsettings = $pdo->prepare("UPDATE websettings SET AlphalandStudioVersion = :asv, StudioFileVersion = :sfv");
 		$updatewebsettings->bindParam(":asv", $newgameversion, PDO::PARAM_STR);
 		$updatewebsettings->bindParam(":sfv", $gamefileversion, PDO::PARAM_STR);
 		$updatewebsettings->execute();

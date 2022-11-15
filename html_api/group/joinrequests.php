@@ -17,7 +17,7 @@ $page = $_GET['page'];
 $limit = $_GET['limit'];
 
 //initial checks
-if (!groupid || !$limit || !$page)
+if (!$groupid || !$limit || !$page)
 {
 	http_response_code(400);
 }

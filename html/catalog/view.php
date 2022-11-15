@@ -37,6 +37,7 @@ if(isset($_GET['id']))
 		$itemrender = getAssetRender($id);
 		$ownerrender = getPlayerRender($i->CreatorId);
 		$itemtypeint = $i->AssetTypeId;
+		$approved = $i->IsApproved;
 		
 		$description = '';
 		//handle item descriptions
@@ -148,7 +149,11 @@ EOT;
 										'.$configbutton_html.'
 									</div>
 									<div class="container text-center">
-										<img class="img-fluid" style="width:22rem;'.($itemtypeint == 18 ? 'background-color: rgba(255, 255, 255, 0.15);' : '').'" src="'.$itemrender.'">
+										'.
+										($itemtypeint == 3 && $approved ?
+										'<audio controls style="width:100%;margin:15px 0 15px 0;" src="'.$itemrender.'" />' :
+										'<img class="img-fluid" style="width:22rem;'.($itemtypeint == 18 ? 'background-color: rgba(255, 255, 255, 0.15);' : '').'" src="'.$itemrender.'">')
+										.'
 									</div>
 									<h5>Item Description</h5>
 									<hr>

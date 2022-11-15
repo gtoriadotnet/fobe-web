@@ -74,6 +74,17 @@ function approveAsset(id)
 		}	
 	});
 }
+
+function assetTypeToThumb(object) {
+	var html = ``;
+	if (object.assettypeid != 3) {
+		html = `<img class="img-fluid" src="` + object.image + `" style="min-width:128px;max-width:128px;min-height:128px;max-height:128px;" />`;
+	} else {
+		html = `<audio controls="" style="min-width: 128px;max-width: 128px;" src="` + object.image + `"></audio>`;
+	}
+	return html;
+}
+
 function assetPage(num, keyword = "")
 {
 	currentPage = num;
@@ -84,7 +95,7 @@ function assetPage(num, keyword = "")
 	html +='<div class="card">';
 	html +='<a href="/catalog/view?id={assetid}">';
 	html +='<div class="card-body">';
-	html +='<img class="img-fluid" src="{image}" style="min-width:128px;max-width:128px;min-height:128px;max-height:128px;">';
+	html +='[assetTypeToThumb]';
 	html +='<a style="color:grey;text-decoration:none;" class="no-overflow mb-1">{name}</a>';
 	html +='<button onclick="approveAsset({assetid})" class="btn btn-sm btn-success w-100">Approve</button>';
 	html +='<div class="w-100 mb-1"></div>';

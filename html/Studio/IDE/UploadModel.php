@@ -30,7 +30,7 @@ $body = <<<EOT
 	<div class="catalog-container">
 		<ul>
 			<li>
-				<div class="studio-upload-card text-center" style="cursor: pointer;" onclick="showNewModelDialog()">
+				<div class="studio-upload-card text-center" style="cursor: pointer;width: 152px;height: 185px" onclick="showNewModelDialog()">
 					<a>
 						<div class="studio-upload-card-img">
 							<img class="img-fluid" src="/finobe/cdn/imgs/addmodelicon.png">

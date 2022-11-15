@@ -36,8 +36,8 @@ if(isset($_GET['id']))
 			$itemrender = getAssetRender($id);
 			//...
 			
-			//only allow shirts, pants and t shirts to be modified by the end user
-			if ($itemtypeint == 2 or $itemtypeint == 11 or $itemtypeint == 12 or $user->isOwner())
+			//only allow shirts, pants, t shirts and audios to be modified by the end user
+			if ($itemtypeint == 2 or $itemtypeint == 11 or $itemtypeint == 12 or $itemtypeint == 3 or $user->isOwner())
 			{
 				//handle onsale checkbox
 				$onsalestatus = "";
@@ -83,7 +83,7 @@ if(isset($_GET['id']))
 						$alert = "<div class='alert alert-danger' role='alert'>Item description too short, must be over 3 characters</div>";
 					}
 					*/
-					elseif(strlen($_POST['item_price']) < 1)
+					elseif(strlen($_POST['item_price']) < 1 && $itemtypeint != 3) // no audios
 					{
 						$alert = "<div class='alert alert-danger' role='alert'>Item price too short, must be at least 1 character</div>";
 					}
@@ -95,11 +95,11 @@ if(isset($_GET['id']))
 					{
 						$alert = "<div class='alert alert-danger' role='alert'>Item description too long, must be under 1k characters</div>";
 					}
-					elseif(strlen($_POST['item_price']) > 8)
+					elseif(strlen($_POST['item_price']) > 8 && $itemtypeint != 3) // no audios
 					{
 						$alert = "<div class='alert alert-danger' role='alert'>Item price too short, must be under 8 characters</div>";
 					}
-					elseif($_POST['item_price'] < $minimumprice)
+					elseif($_POST['item_price'] < $minimumprice && $itemtypeint != 3) // no audios
 					{
 						$alert = "<div class='alert alert-danger' role='alert'>{$pricealert}</div>";
 					}
@@ -124,12 +124,15 @@ if(isset($_GET['id']))
 						$c->execute();
 						// ...
 
-						//update item price
-						$c = $pdo->prepare("UPDATE assets SET PriceInAlphabux = :n, Updated = UNIX_TIMESTAMP() WHERE id = :i");
-						$c->bindParam(":n", $_POST['item_price'], PDO::PARAM_INT); //item price
-						$c->bindParam(":i", $id, PDO::PARAM_INT); //catalog id
-						$c->execute();
-						// ...
+						if($itemtypeint != 3) // Audios
+						{
+							//update item price
+							$c = $pdo->prepare("UPDATE assets SET PriceInAlphabux = :n, Updated = UNIX_TIMESTAMP() WHERE id = :i");
+							$c->bindParam(":n", $_POST['item_price'], PDO::PARAM_INT); //item price
+							$c->bindParam(":i", $id, PDO::PARAM_INT); //catalog id
+							$c->execute();
+							// ...
+						}
 							
 						if (isset($_POST['onsale_checkbox']))
 						{
@@ -164,7 +167,7 @@ if(isset($_GET['id']))
 				}
 				elseif (isset($_POST['RegenItem'])) //for admin regen stuff
 				{
-					if ($user->IsStaff())
+					if ($user->IsStaff() && $itemtypeint != 3) // Staff and not audio
 					{
 						$script = "";
 						$scripttype = "";
@@ -333,9 +336,25 @@ else
 
 $moderatebutton = '';
 $regenbutton = '';
+$itempricebutton = '';
+$itemimage = '';
+if($itemtypeint != 3) {
+	$itempricebutton = '<div class="container input-group mb-3">
+		<div class="input-group-prepend">
+			<span class="input-group-text"><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
+		</div>
+		<input type="text" name="item_price" class="form-control" value="' . $itemprice . '">
+	</div>';
+}
+
+$itemimage = '<img class="img-fluid" style="width:20rem;" src="' . ($itemtypeint != 3 ? $itemrender : getImageFromAsset(1466)) . '">';
+
 if ($user->IsStaff())
 {
-	$regenbutton = '<button type="Submit" name="RegenItem" class="btn btn-danger w-100 mb-2">Regen '.$itemtype.'</button>';
+	if($itemtypeint != 3) {
+		$regenbutton = '<button type="Submit" name="RegenItem" class="btn btn-danger w-100 mb-2">Regen '.$itemtype.'</button>';
+	}
+	
 	$moderatebutton = '<button type="Submit" name="ModerateItem" class="btn btn-danger w-100 mb-2">Moderate '.$itemtype.'</button>';
 }
 
@@ -355,7 +374,7 @@ $body = <<<EOT
 								<input class="form-control" type="text" name="item_name" value="{$itemname}">
 							</div>
 							<div class="container text-center">
-								<img class="img-fluid" style="width:20rem;" src="{$itemrender}">
+								{$itemimage}
 							</div>
 							<div class="container text-center">
 								<div class="custom-control custom-checkbox custom-control-inline">
@@ -367,12 +386,7 @@ $body = <<<EOT
 								<label style="float:left;text-align:top;">{$itemtype} Description</label>
 								<textarea style="min-height:10rem;max-height:10rem;" class="form-control" type="text" name="item_description">{$itemdescription}</textarea>
 							</div>
-							<div class="container input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text"><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
-								</div>
-								<input type="text" name="item_price" class="form-control" value="{$itemprice}">
-							</div>
+							{$itempricebutton}
 							<div class="container text-center">
 								{$moderatebutton}
 								{$regenbutton}

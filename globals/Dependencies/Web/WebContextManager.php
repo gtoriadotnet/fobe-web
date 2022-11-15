@@ -50,8 +50,12 @@ namespace Finobe\Web {
         }
 
         public static function VerifyAccessKeyHeader()
-        {   
+        {
             $headers = WebContextManager::GetRequestHeaders();
+            
+            if(!array_key_exists('Accesskey', $headers))
+                return false;
+            
             $accesskey = $headers['Accesskey'];
         
             if (!empty($accesskey))

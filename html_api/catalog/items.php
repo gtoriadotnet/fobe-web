@@ -79,7 +79,13 @@ foreach($catalog as $item)
 	
 	$assetcreatorid = $item['CreatorId'];
 	$creatorname = getUsername($assetcreatorid);
-	$render = getAssetRender($assetid);
+	$render = '';
+	
+	if($item['AssetTypeId'] != 3) {
+		$render = getAssetRender($assetid);
+	} else {
+		$render = getImageFromAsset(1466); //1466 is default audio
+	}
 	
 	$itemInfo = array(
 		"id" => $assetid,

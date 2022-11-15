@@ -69,6 +69,8 @@ if baseurl~=nil then
 	-- players service --
 	pcall(function() game:GetService("Players"):SetAbuseReportUrl(api .. "/moderation/AbuseReport/InGameChatHandler") end) --TODO: Implement
 	pcall(function() game:GetService("Players"):SetChatFilterUrl(baseurl .. "/Game/ChatFilter.ashx") end) --not even used, just enables filter (lol)
+	pcall(function() game:GetService("Players"):SetLoadDataUrl(baseurl .. "/Persistence/GetBlobUrl.ashx?placeId=" .. placeId .. "&userId=%d") end)
+	pcall(function() game:GetService("Players"):SetSaveDataUrl(baseurl .. "/Persistence/SetBlob.ashx?placeId=" .. placeId .. "&userId=%d") end)
 
 	-- scriptinformationprovider service --
 	pcall(function() game:GetService("ScriptInformationProvider"):SetAssetUrl(baseurl .. "/Asset/") end)

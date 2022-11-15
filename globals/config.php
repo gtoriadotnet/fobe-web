@@ -30,7 +30,7 @@ try
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //bad for prod?
 		//PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 		PDO::ATTR_EMULATE_PREPARES => false,
-		PDO::ATTR_PERSISTENT => true
+		//PDO::ATTR_PERSISTENT => true
 	);
 						  //host				//db name //db user			//db password      //options
 	$pdo = new PDO("mysql:host=localhost;dbname=finobe", "service-finobe", "135zZsjV3_K2j-VC", $pdoOptions);
@@ -49,8 +49,8 @@ try
 	$ROBLOXAssetThumbnailAPI = "https://thumbnails.roblox.com/v1/assets?assetIds=";
 
 	//default character hashes
-	$defaultOutfitHash = "e335382cb0ef996df9053df58adcbe95"; //default render hash for characters
-	$defaultHeadshotHash = "fb5d52c08aa538483647373c5a20fd73"; //default headshot render for characters
+	$defaultOutfitHash = "95432e22e7ebc8868415fd186096917f"; //default render hash for characters
+	$defaultHeadshotHash = "80a426e19403b3fefaa7fcf5efde22c0"; //default headshot render for characters
 
 	//cdn urls
 	$renderCDN = "https://trcdn.idk16.xyz"; //endpoint for renders
@@ -90,11 +90,11 @@ try
 	$privateKeyPath = "C:/Alphaland/FinobeRawKey.txt"; //path to where the private key is stored
 
 	//machine ip's
-	$gameMachine = "76.190.219.176"; //IP address of the machine that runs gameservers
-	$renderMachine = "192.168.0.24"; //IP address of the machine that renders thumbnails
+	$gameMachine = "76.189.132.114"; //IP address of the machine that runs gameservers
+	$renderMachine = "192.168.1.117"; //IP address of the machine that renders thumbnails
 
 	//arbiter ip's
-	$gamesArbiter = "192.168.0.23:64989";	//IP address/port of the Arbiter running on the gameserver machine
+	$gamesArbiter = "192.168.1.118:64989";	//IP address/port of the Arbiter running on the gameserver machine
 	$thumbnailArbiter = $renderMachine.":64989"; //IP address/port of the Arbiter running on the render machine
 	
 	//autoloader include

@@ -15,11 +15,12 @@ namespace Finobe\Users {
     {
         public static function IsMember(int $userid)
         {
-            if (Group::IsInGroup($userid, 22)) //id 22 is the official referral program group
-            {
-                return true;
-            }
-            return false;
+			return true;
+            //if (Group::IsInGroup($userid, 22)) //id 22 is the official referral program group
+            //{
+            //    return true;
+            //}
+            //return false;
         }
 
         public static function IsUserGeneratedKey(string $key)

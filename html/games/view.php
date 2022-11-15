@@ -110,10 +110,10 @@ var getparam = new URLSearchParams(window.location.search).get("id");
 
 function playGame(id) {
 	$.get("https://www.idk16.xyz/Game/authticket", function(data) {
-		$("#linfo").html("Starting Finobe...");
+		$("#linfo").html("Starting Finobe ong frfr");
 		$("#launching").modal("show");
 		$("#closediv").hide();
-		location.href = "finobe-player:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.idk16.xyz/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
+		location.href = "fobe-player:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.idk16.xyz/Game/PlaceLauncher?request=RequestGame&placeid=" + id;
 		setTimeout(function() {
 			$("#launching").modal("hide");
 		}, 2500);	

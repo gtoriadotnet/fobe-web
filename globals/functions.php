@@ -717,7 +717,7 @@ function approveAsset($id) //currently supports t-shirts, shirts and pants
 
 function fetchPendingAssets($extraparams="")
 {
-	$pending = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE IsApproved = 0 AND IsModerated = 0 AND (AssetTypeId = 1 AND Description = 'Place Thumbnail' OR AssetTypeId = 1 AND Description = 'Badge Image' OR AssetTypeId = 2 OR AssetTypeId = 11 OR AssetTypeId = 12 OR AssetTypeId = 22 OR AssetTypeId = 21) ".$extraparams."");
+	$pending = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE IsApproved = 0 AND IsModerated = 0 AND (AssetTypeId = 1 AND Description = 'Place Thumbnail' OR AssetTypeId = 1 AND Description = 'Badge Image' OR AssetTypeId = 2 OR AssetTypeId = 11 OR AssetTypeId = 12 OR AssetTypeId = 22 OR AssetTypeId = 21 OR AssetTypeId = 3) ".$extraparams."");
 	$pending->execute();
 	return $pending;
 }
@@ -1613,6 +1613,18 @@ function getImageFromAsset($id)
 	return constructThumbnailHashUrl($thumbhash);
 }
 
+function getAssetFromAsset($id)
+{
+	$check = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i"); 
+	$check->bindParam(":i", $id, PDO::PARAM_INT);
+	$check->execute();
+	$check = $check->fetch(PDO::FETCH_OBJ);
+	
+	$thumbhash = $check->Hash;
+	
+	return constructAssetHashUrl($thumbhash);
+}
+
 function getPlayerRender($uid, $headshot=false)
 {
 	//check if the user has a stalled render
@@ -1637,7 +1649,7 @@ function getPlayerRender($uid, $headshot=false)
 			}
 		}
 	}
-	return getImageFromAsset(229); //229 is the pending render image
+	return getImageFromAsset(262); //229 is the pending render image (changed for FOBE)
 }
 
 function getAssetRender($id)
@@ -1648,15 +1660,22 @@ function getAssetRender($id)
 	{
 		if ($assetinfo->IsModerated == true)
 		{
-			return getImageFromAsset(193); //193 is moderated asset image
+			return getImageFromAsset(263); //193 is moderated asset image (changed for FOBE)
 		}
 		elseif ($assetinfo->IsApproved == false)
 		{
-			return getImageFromAsset(194); //194 is pending asset image
+			return getImageFromAsset(262); //194 is pending asset image (changed for FOBE)
 		}
 		else
 		{
-			if ($assetinfo->AssetTypeId == 1 || $assetinfo->AssetTypeId == 22) //images and group emblems
+			if ($assetinfo->AssetTypeId == 3) //audios
+			{
+				$assethash = $assetinfo->Hash;
+				if (file_exists($GLOBALS['assetCDNPath'].$assethash))  {
+					return constructAssetHashUrl($assethash);
+				}	
+			}
+			elseif ($assetinfo->AssetTypeId == 1 || $assetinfo->AssetTypeId == 22) //images and group emblems
 			{
 				$assethash = $assetinfo->Hash;
 				if (file_exists($GLOBALS['thumbnailCDNPath'].$assethash))  {
@@ -1675,7 +1694,7 @@ function getAssetRender($id)
 			}
 		}
 	}
-	return getImageFromAsset(126); //126 is default image asset id
+	return getImageFromAsset(264); //126 is default image asset id (changed for FOBE)
 }
 
 function setPlaceUsingCustomThumbnail($id)
@@ -1754,11 +1773,11 @@ function handleGameThumb($id)
 
 	if ($iconimageassetid->IsModerated == true)
 	{
-		return getImageFromAsset(193); //193 is moderated asset image
+		return getImageFromAsset(263); //193 is moderated asset image (changed for FOBE)
 	}
 	elseif ($iconimageassetid->IsApproved == false)
 	{
-		return getImageFromAsset(194); //194 is pending asset image
+		return getImageFromAsset(262); //194 is pending asset image (changed for FOBE)
 	}
 	else
 	{
@@ -1802,6 +1821,10 @@ function setBlurb($newblurb)
 	
 function setDefaults($uid) //gives default shirt and pants, body colors and wears the shirt and pants
 {
+	$updateuser = $GLOBALS['pdo']->prepare('UPDATE users SET referralNextRenewal = (UNIX_TIMESTAMP() + 604800) WHERE id = :u');
+    $updateuser->bindParam(":u", $uid, PDO::PARAM_INT);
+    $updateuser->execute();
+	
 	/*$check = $GLOBALS['pdo']->prepare("INSERT into owned_assets (uid, aid, stock, when_sold, givenby) VALUES(:u, 133, 0, UNIX_TIMESTAMP(), 1)"); //give asset 133
 	$check->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check->execute();
@@ -1826,7 +1849,20 @@ function setDefaults($uid) //gives default shirt and pants, body colors and wear
 	$check6->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check6->execute();
 	
-	$check7 = $GLOBALS['pdo']->prepare("INSERT into body_colours (uid) VALUES(:u)"); //body colors (we just need a uid since the default is in the db)
+	$randomTorsoArray = [
+		21, // Bright red
+		23, // Deep blue
+		24, // Bright yellow
+		26, // Black
+		28, // Bright green
+		141, // Earth green
+		194, // Medium stone grey
+		199, // Dark stone grey
+		1002, // Mid grey
+	];
+	$randomTorso = $randomTorsoArray[array_rand($randomTorsoArray)];
+	$check7 = $GLOBALS['pdo']->prepare("INSERT into body_colours (uid, t) VALUES(:u, :t)"); //body colors (we just need a uid since the default is in the db)
+	$check7->bindParam(":t", $randomTorso, PDO::PARAM_INT);
 	$check7->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check7->execute();
 
@@ -1837,6 +1873,8 @@ function setDefaults($uid) //gives default shirt and pants, body colors and wear
 	$check8->bindParam(":hdh", $defaultheadshothash, PDO::PARAM_STR);
 	$check8->bindParam(":u", $uid, PDO::PARAM_INT);
 	$check8->execute();
+	
+	UsersRender::RenderPlayer($uid, true);
 }
 
 function itemSalesCount($id)
@@ -2675,8 +2713,7 @@ function getFooter()
 						</div>
 						<div class="row">
 							<div class="col-sm">
-								<a style="font-size: 1.6rem;color:red;" href="https://www.youtube.com/channel/UC5o1iJC9wonCWPvTvtORklg"><i class="fab fa-youtube"></i></a>
-								<a style="font-size: 1.6rem;color:#1DA1F2;" href="https://twitter.com/_Finobe"><i class="fab fa-twitter"></i></a>
+								<a style="font-size: 1.6rem;color:#5865f2;" href="https://discord.gg/qmV6P6XRhz"><i class="fab fa-discord"></i></a>
 							</div>
 						</div>
 					</div>
@@ -2911,7 +2948,7 @@ function adminPanelStats() {
 	<div>Server Date (EST): '.date("m/d/Y", time()).'</div>
 	<div>Server Time (EST): '.shell_exec('TIME /T').'</div>
 	<div>Server OS Version: Microsoft Windows Server 2012 R2 Standard</div>
-	<div>NGINX Version: '.$_SERVER['SERVER_SOFTWARE'].'</div>
+	<div>Server Software: '.$_SERVER['SERVER_SOFTWARE'].'</div>
 	<div>PHP Version: '.phpversion().'</div>
 	<div>MySQL Version: '.shell_exec('mysql --version').'</div>
 	<div>SOAP Faults: '.$faults.'</div>

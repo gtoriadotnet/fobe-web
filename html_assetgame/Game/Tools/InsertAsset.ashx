@@ -17,7 +17,7 @@ $userid = $_GET['userid'];
 $sid = $_GET['sid'];
 
 //idk this entire thing will probably just be used for pbs
-if ($nsets == 20 && $type == "user" && $userid == 1) //should be for pbs
+if ($nsets == 20 && $type == "user") //should be for pbs
 {
    echo '
    <List>

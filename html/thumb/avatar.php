@@ -30,6 +30,13 @@ function show_image($image, $width, $height)
 
 if ($userID | $height | $width)
 {
+	if ($height > 1920 | $width > 1920)
+	{
+		http_response_code(400);
+		header('Content-Type: text/plain');
+		exit('Invalid resolution.');
+	}
+
 	//grab the user's thumbnail hash to call it up from the CDN
 	$userhash = $pdo->prepare("SELECT * FROM users WHERE id = :i");
 	$userhash->bindParam(":i", $userID, PDO::PARAM_INT);

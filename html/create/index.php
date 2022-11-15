@@ -13,6 +13,7 @@ $alert = '';
 $cosmuploadsuccess = $_GET['cosSuccess'];
 $placesuccess = $_GET['placeSuccess'];
 $pbssuccess = $_GET['pbsSuccess'];
+$audsuccess = $_GET['audSuccess'];
 
 //dont want to be posting same data after refresh (ghetto until JS implementation)
 if ($cosmuploadsuccess)
@@ -26,6 +27,10 @@ if ($placesuccess)
 if ($pbssuccess)
 {
 	$alert = "<div class='alert alert-success' role='alert'>Created Personal Server</div>";
+}
+if ($audsuccess)
+{
+	$alert = "<div class='alert alert-success' role='alert'>Created audio</div>";
 }
 
 function uploadCosmetic()
@@ -230,6 +235,111 @@ function uploadCosmetic()
 	return true;
 }
 
+function uploadSound()
+{
+	//upload directories
+	$uploadDirectory = $GLOBALS['assetCDNPath']; //directory where the assets are stored
+	
+	//allowed image types 
+	$types = array('audio/mp3', 'audio/mpeg', 'audio/ogg');
+	
+	//generate new hashes
+	$audHash = genAssetHash(16);
+		
+	//post variables
+	$audio = $_FILES['audio_file']['tmp_name'];
+	$name = $_POST['audio_name'];
+	$description = $_POST['audio_desc'];
+
+	//variables used for checks
+	$price = 0;
+	$assettype = 3;
+	$minimumprice = 10;
+	$isapproved = false;
+	$onsale = false;
+	
+	//time for a lot of checks
+	
+	//onsale
+	if (isset($_POST['aud_onsale_checkbox']))
+	{
+		$onsale = true;
+	}
+	
+	//check if audio is posted
+	if (!file_exists($audio) || !is_uploaded_file($audio))
+	{
+		return "Please provide an audio";
+	}
+		
+	//verify that its a valid .mp3 or .ogg via mimetype
+	$type = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $audio);
+	if (!in_array($type, $types)) 
+	{
+		return "Invalid audio, must be mp3 or ogg";
+	}
+	
+	//name checks
+	if (strlen($name) > 50)
+	{
+		return "Provided name is too long";
+	}
+		
+	if (strlen($name) < 3)
+	{
+		return "Provided name is too short";
+	}
+	
+	//description check
+	if (strlen($description) > 1000)
+	{
+		return "Provided description too long";
+	}
+	
+	//remove currency
+	if (!EconomyHelper::RemoveAlphabux($minimumprice, $GLOBALS['user']->id, "Creation of audio name ".$name))
+	{
+		return "You don't have enough currency";
+	}
+	
+	//POINT OF NO RETURN, ALL CHECKS PASSED
+										
+	//setup the new asset in the DB, lock it!
+	$GLOBALS['pdo']->exec("LOCK TABLES assets WRITE"); //lock since this stuff is sensitive
+
+	$b = $GLOBALS['pdo']->prepare("SELECT * FROM assets");
+	$b->execute();
+										
+	//grab auto increment values
+	$autoincrement = $b->rowCount() + 1; //initial auto increment value
+	$autoincrement2 = $autoincrement+1; //initial auto increment value + 1
+													
+	//add XML (selected type) to assets
+	$m = $GLOBALS['pdo']->prepare("INSERT INTO `assets`(`id`, `AssetTypeId`, `Name`, `Description`, `Created`, `Updated`, `CreatorId`, `TargetId`, `PriceInAlphabux`, `Sales`, `IsNew`, `IsForSale`, `IsPublicDomain`, `IsLimited`, `IsLimitedUnique`, `IsApproved`, `Remaining`, `MinimumMembershipLevel`, `ContentRatingTypeId`, `Favorited`, `Visited`, `MaxPlayers`, `UpVotes`, `DownVotes`, `Hash`) VALUES (:aid,:atid,:aname,:adesc,UNIX_TIMESTAMP(),UNIX_TIMESTAMP(),:oid,:aid2,:price,0,0,:onsale,1,0,0,:ia,0,0,0,0,0,8,0,0,:hash)");
+	$m->bindParam(":aid", $autoincrement, PDO::PARAM_INT);
+	$m->bindParam(":atid", $assettype, PDO::PARAM_INT);
+	$m->bindParam(":aname", $name, PDO::PARAM_STR);
+	$m->bindParam(":adesc", $description, PDO::PARAM_STR);
+	$m->bindParam(":oid", $GLOBALS['user']->id, PDO::PARAM_STR);
+	$m->bindParam(":aid2", $autoincrement, PDO::PARAM_INT);
+	$m->bindParam(":ia", $isapproved, PDO::PARAM_INT);
+	$m->bindParam(":price", $price, PDO::PARAM_INT);
+	$m->bindParam(":onsale", $onsale, PDO::PARAM_INT);
+	$m->bindParam(":hash", $audHash, PDO::PARAM_STR);
+	$m->execute();
+		
+	//unlock since we are done with sensitive asset stuff				
+	$GLOBALS['pdo']->exec("UNLOCK TABLES"); 
+								
+	//give the creator the asset
+	Asset::GiveAsset($autoincrement, $GLOBALS['user']->id, $GLOBALS['user']->id);
+											
+	//upload audio to assets
+	move_uploaded_file($audio, $uploadDirectory . $audHash);
+	
+	return true;
+}
+
 function newPlace()
 {
 	//upload parameters
@@ -375,6 +485,19 @@ if (isset($_POST['SubmitAsset']))
 	}
 }
 
+if (isset($_POST['SubmitAudio']))
+{	
+	$upload = uploadSound();
+	if ($upload !== true)
+	{
+		$alert = "<div class='alert alert-danger' role='alert'>" . $upload . "</div>";
+	}
+	else
+	{
+		WebContextManager::Redirect('/create?audSuccess=true');
+	}
+}
+
 if (isset($_POST['SubmitPlace']))
 {
 	
@@ -401,6 +524,7 @@ if (isset($_POST['SubmitPlace']))
 						<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 							<a class="nav-link active red-a-nounder" id="v-pills-asset-tab" data-toggle="pill" href="#v-pills-asset" role="tab" aria-controls="v-pills-asset" aria-selected="true">Cosmetic</a>
 							<a class="nav-link red-a-nounder" id="v-pills-place-tab" data-toggle="pill" href="#v-pills-place" role="tab" aria-controls="v-pills-place">Place</a>
+							<a class="nav-link red-a-nounder" id="v-pills-audio-tab" data-toggle="pill" href="#v-pills-audio" role="tab" aria-controls="v-pills-audio" aria-selected="true">Audio</a>
 						</div>
 					</div>
 				</div>
@@ -538,6 +662,29 @@ if (isset($_POST['SubmitPlace']))
 									<div id="PBSPlaceCreateButton">
 										<button id="PBSSubmitButton" name="PBSNoSelection" class="btn btn-danger w-100 mt-2">Create</button>
 									</div>
+								</div>
+								<div class="tab-pane fade" id="v-pills-audio" role="tabpanel" aria-labelledby="v-pills-audio-tab">
+									<h5>Create Audio</h5>
+									<h>Audios cost 10 Alphabux to create, only supports .mp3 and .ogg files</h>
+									<div class="input-group mb-3">
+										<div class="custom-file">
+											<input type="file" name="audio_file" class="custom-file-input" id="inputAudioFile">
+											<label class="custom-file-label" for="inputAudioFile">Audio</label>
+										</div>
+									</div>
+									<hr />
+									<input class="form-control mb-3" name="audio_name" type="text" placeholder="Audio Name">
+									<textarea class="form-control" name="audio_desc" style="min-height:8rem;max-height:8rem;" placeholder="Audio Description"></textarea>
+									<hr />
+									<div class="container text-center marg-bot-15">
+										<div class="container text-center marg-bot-15">
+											<div class="custom-control custom-checkbox custom-control-inline">
+												<input type="checkbox" name="aud_onsale_checkbox" class="custom-control-input" id="aud_onsale">
+												<label class="custom-control-label" for="aud_onsale">On-Sale</label>
+											</div>
+										</div>
+									</div>
+									<input type="submit" name="SubmitAudio" value="Create Audio" class="btn btn-lg btn-danger w-100">
 								</div>
 							</div>
 						</div>

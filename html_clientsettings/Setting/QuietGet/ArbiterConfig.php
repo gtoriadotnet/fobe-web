@@ -7,5 +7,5 @@ header("Expires: -1");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s T") . " GMT");
 
 echo json_encode(array(
-    "ThreadPoolConfig" => "Threads2"
+    "ThreadPoolConfig" => "Threads16"
 ), JSON_UNESCAPED_SLASHES);

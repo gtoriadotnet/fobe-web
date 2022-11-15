@@ -2,18 +2,18 @@
 
 if (isset($_POST['SubmitClient']))
 {
-	$loc = $GLOBALS['setupHtmlPath'].$ws->FinobeVersion."-FinobeLauncher.exe";
+	$loc = $GLOBALS['setupHtmlPath'].$ws->AlphalandVersion."-FinobeLauncher.exe";
 	header("Content-type: application/octet-stream");
 	header("Content-Disposition: attachment; filename=FinobeLauncher.exe");
-	echo file_get_contents($loc);
+	exit(file_get_contents($loc));
 }
 
 if (isset($_POST['SubmitStudio']))
 {
-	$loc = $GLOBALS['setupHtmlPath'].$ws->FinobeStudioVersion."-FinobeStudioLauncher.exe";
+	$loc = $GLOBALS['setupHtmlPath'].$ws->AlphalandStudioVersion."-FinobeStudioLauncher.exe";
 	header("Content-type: application/octet-stream");
 	header("Content-Disposition: attachment; filename=FinobeStudioLauncher.exe");
-	echo file_get_contents($loc);
+	exit(file_get_contents($loc));
 }
 
 $body = <<<EOT

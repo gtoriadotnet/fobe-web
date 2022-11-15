@@ -1,3 +1,3 @@
 <?php
 
-echo $ws->FinobeStudioVersion;
+echo $ws->AlphalandStudioVersion;

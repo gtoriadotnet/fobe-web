@@ -122,9 +122,27 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 
 			if (Game::UserAccess($gameID, $user->id))
 			{
+				$ispbs = false;//(bool)$gInfo->isPersonalServer;
+				
 				//check for open servers
-				$servers = $pdo->prepare("SELECT * FROM open_servers WHERE gameID = :i AND (status = 0 OR status = 1) ORDER BY status DESC LIMIT 1");
+				$query = "SELECT * FROM open_servers WHERE gameID = :i AND (status = 0 OR status = 1) ORDER BY status DESC LIMIT 1";
+				if(!$ispbs) {
+					$query = "SELECT open_servers.*
+							FROM open_servers
+							LEFT OUTER JOIN game_presence
+							ON open_servers.jobid = game_presence.jobid
+							WHERE open_servers.gameID = :i
+							AND (open_servers.status = 0 or open_servers.status = 1)
+							AND (SELECT COUNT(*) FROM game_presence WHERE game_presence.jobid = open_servers.jobid AND (game_presence.lastPing + 50) > UNIX_TIMESTAMP()) < :mp
+							ORDER BY (SELECT COUNT(*) FROM game_presence WHERE game_presence.jobid = open_servers.jobid AND (game_presence.lastPing + 50) > UNIX_TIMESTAMP())
+							LIMIT 1;";
+				}
+				
+				$servers = $pdo->prepare($query);
 				$servers->bindParam(":i", $gameID, PDO::PARAM_INT);
+				if(!$ispbs) {
+					$servers->bindParam(":mp", $gInfo->MaxPlayers, PDO::PARAM_INT);
+				}
 				$servers->execute();
 				if($servers->rowCount() > 0) //server already available
 				{
@@ -156,8 +174,11 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 				}
 				else //no available servers
 				{
-					$sQ = $pdo->prepare("SELECT * FROM open_servers WHERE (status = 0 OR status = 1) AND gameID = :i");
+					$sQ = $pdo->prepare($query);
 					$sQ->bindParam(":i", $gameID, PDO::PARAM_INT);
+					if(!$ispbs) {
+						$servers->bindParam(":mp", $gInfo->MaxPlayers, PDO::PARAM_INT);
+					}
 					$sQ->execute();
 							
 					if($sQ->rowCount() == 0) //check one more time if a server spawned

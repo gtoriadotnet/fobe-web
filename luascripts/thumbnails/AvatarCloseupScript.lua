@@ -44,6 +44,18 @@ end
 --local maxDimension = 0
 local maxDimension = 2.3
 
+function FindFirstChildWhichIsA(Inst, Name)
+	local Found = nil
+	for _, Child in pairs(Inst:GetChildren()) do
+		if(Child:isA(Name)) then
+			Found = Child
+			break
+		end
+	end
+	
+	return Found
+end
+
 if player.Character then
 	-- Remove gear
 	for _, child in pairs(player.Character:GetChildren()) do
@@ -52,7 +64,7 @@ if player.Character then
 		elseif child:IsA("Accoutrement") then
             local handle = child:FindFirstChild("Handle")
 			if handle then
-				local attachment = handle:FindFirstChildWhichIsA("Attachment")
+				local attachment = FindFirstChildWhichIsA(handle, "Attachment")
                 --legacy hat does not have attachment in it and should be considered when zoom out camera
 				if not OnlyCheckHeadAccessoryInHeadShot or not attachment or headAttachments[attachment.Name] then
 					local size = handle.Size / 2 + handle.Position - player.Character.Head.Position

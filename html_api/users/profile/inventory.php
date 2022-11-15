@@ -77,8 +77,14 @@ foreach($items as $item)
 	$name = cleanOutput($itemInfo->Name);
 	$creatorid = $itemInfo->CreatorId;
 	$creator = getUsername($creatorid);
-	$render = getAssetRender($itemAssetId);
-					
+	$render = '';
+	
+	if($itemInfo->AssetTypeId != 3) {
+		$render = getAssetRender($assetid);
+	} else {
+		$render = getImageFromAsset(1466); //1466 is default audio
+	}
+	
 	$items = array(
 		"id" => $itemAssetId,
 		"name" => $name,

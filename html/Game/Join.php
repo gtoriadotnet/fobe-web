@@ -86,7 +86,7 @@ if ($_SERVER['HTTP_USER_AGENT'] == $GLOBALS['clientUserAgent']) //user agent res
 			$userid = $sInfo->uid;
 			$username = getUsername($userid);
 			$characterappearance = "https://api.idk16.xyz/users/avatar-accoutrements?userId=" . $userid;
-			$accountage = round((time()-userInfo($userid)->joindate)/86400);
+			$accountage = round((time()-userInfo($userid)->joindate)/86400) + 1;
 
 			$joinparams = json_encode(array(
 				"ClientPort" => 0,

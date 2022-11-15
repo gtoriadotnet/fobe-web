@@ -26,13 +26,13 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['hatthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Hat ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Hat ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
                         "https://www.idk16.xyz/",
                         "png",
-                        "750",
-                        "750"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -57,14 +57,14 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['tshirtthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render TShirt ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render TShirt ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
-                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/asset/?id=41",
                         "https://www.idk16.xyz/",
                         "png",
-                        "750",
-                        "750"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -89,14 +89,14 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['shirtthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Shirt ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Shirt ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
-                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/asset/?id=41",
                         "https://www.idk16.xyz/",
                         "png",
-                        "750",
-                        "750"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -121,14 +121,14 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['pantsthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Pants ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Pants ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
-                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/asset/?id=41",
                         "https://www.idk16.xyz/",
                         "png",
-                        "750",
-                        "750"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -153,13 +153,13 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['facethumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Face ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Face ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
                         "https://www.idk16.xyz/",
                         "png",
-                        "750",
-                        "750"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -184,14 +184,14 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['headthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Head ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Head ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
-                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/asset/?id=41",
                         "https://www.idk16.xyz/",
                         "png",
-                        "750",
-                        "750"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -216,12 +216,12 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['gearthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Gear ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Gear ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
                         "png",
-                        "750",
-                        "750",
+                        "1500",
+                        "1500",
                         "https://www.idk16.xyz/"
                     ))
                 );
@@ -247,15 +247,15 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['packagescript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Package ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Package ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=27112025;https://www.idk16.xyz/asset/?id=27112039;https://www.idk16.xyz/asset/?id=27112052",
                         "https://www.idk16.xyz/",
-                        "https://www.idk16.xyz/asset/?id=38",
+                        "https://www.idk16.xyz/asset/?id=41",
                         "https://www.idk16.xyz/",
                         "png",
-                        "768",
-                        "432"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -280,13 +280,13 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['modelthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Model ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Model ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
                         "https://www.idk16.xyz/",
                         "png",
-                        "768",
-                        "432"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -311,13 +311,13 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['meshthumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Mesh ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Mesh ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
                         "https://www.idk16.xyz/",
                         "png",
-                        "768",
-                        "432"
+                        "1500",
+                        "1500"
                     ))
                 );
 
@@ -342,13 +342,13 @@ namespace Finobe\Assets {
                 $thumbnailScript = file_get_contents($GLOBALS['placethumbnailscript']);
                 $soap = new RccServiceHelper($GLOBALS['thumbnailArbiter']);
                 $soap = $soap->BatchJobEx(
-                    $soap->ConstructGenericJob(gen_uuid(), 25, 0, 3, "Render Place ".$assetid, $thumbnailScript, array(
+                    $soap->ConstructGenericJob(gen_uuid(), 60, 0, 3, "Render Place ".$assetid, $thumbnailScript, array(
                         $assetid,
                         "https://www.idk16.xyz/asset/?id=".$assetid,
                         "https://www.idk16.xyz/",
                         "png",
-                        "768",
-                        "432"
+                        "1536",
+                        "864"
                     ))
                 );
 
@@ -368,45 +368,54 @@ namespace Finobe\Assets {
             if (ImageHelper::IsBase64PNGImage($render)) //PNG
             {
                 $newhash = HashingUtiltity::VerifyMD5(md5($render));
-                if (!file_get_contents($rendersPath . $newhash))
-                {
-                    if (file_put_contents($rendersPath . $newhash, $render))
-                    {
-                        if ($placerender) {
-                            if (getAssetInfo($assetid)->isPersonalServer == 1) {
-                                $render = imagecreatefrompng($rendersPath . $newhash);
-                                $overlay = imagecreatefrompng($GLOBALS['pbsOverlayPath']);
-                                ImageHelper::CopyMergeImageAlpha($render, $overlay, 0, 0, 0, 0, imagesx($render), imagesy($render), 100);
-                                if (!imagepng($render, $rendersPath . $newhash)) {
-                                    return false;
-                                }
-                            }
+				
+				if(file_get_contents($rendersPath . $newhash)) {
+					return false;
+				}
+				
+                if ($placerender) {
+					if(!ImageHelper::ResizeImageFromString(768 , 432 , $rendersPath . $newhash, $render)) { //scale down for a SLIGHT AA effect
+						return false;
+					}
+					
+                    if (getAssetInfo($assetid)->isPersonalServer == 1) {
+                        $render = imagecreatefrompng($rendersPath . $newhash);
+                        $overlay = imagecreatefrompng($GLOBALS['pbsOverlayPath']);
+                        ImageHelper::CopyMergeImageAlpha($render, $overlay, 0, 0, 0, 0, imagesx($render), imagesy($render), 100);
+                        if (!imagepng($render, $rendersPath . $newhash)) {
+                            return false;
                         }
-
-                        //delete old hash
-                        $prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
-                        $prevhash->bindParam(":i", $assetid, PDO::PARAM_INT);
-                        $prevhash->execute();
-                        $prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
-                        $oldhash = $prevhash->ThumbHash;
-                        unlink($rendersPath . $oldhash);
-
-                        if ($placerender) {
-                            //update place thumbhash n details
-                            $c = $GLOBALS['pdo']->prepare("UPDATE assets SET isPlaceRendered = 1, IconImageAssetId = 0, ThumbHash = :n WHERE id = :i");
-                            $c->bindParam(":n", $newhash, PDO::PARAM_INT); //item price
-                            $c->bindParam(":i", $assetid, PDO::PARAM_INT); //catalog id
-                            $c->execute();
-                        } else {
-                            //set new hash
-                            $newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
-                            $newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
-                            $newthumbhash->bindParam(":i", $assetid, PDO::PARAM_INT);
-                            $newthumbhash->execute();
-                        }
-                        return true;
-                    } 
+                    }
+				}
+				else
+				{
+					if(!ImageHelper::ResizeImageFromString(750 , 750 , $rendersPath . $newhash, $render)) { //scale down for a SLIGHT AA effect
+						return false;
+					}
                 }
+
+                //delete old hash
+                $prevhash = $GLOBALS['pdo']->prepare("SELECT * FROM assets WHERE id = :i");
+                $prevhash->bindParam(":i", $assetid, PDO::PARAM_INT);
+                $prevhash->execute();
+                $prevhash = $prevhash->fetch(PDO::FETCH_OBJ);
+                $oldhash = $prevhash->ThumbHash;
+                unlink($rendersPath . $oldhash);
+
+                if ($placerender) {
+                    //update place thumbhash n details
+                    $c = $GLOBALS['pdo']->prepare("UPDATE assets SET isPlaceRendered = 1, IconImageAssetId = 0, ThumbHash = :n WHERE id = :i");
+                    $c->bindParam(":n", $newhash, PDO::PARAM_INT); //item price
+                    $c->bindParam(":i", $assetid, PDO::PARAM_INT); //catalog id
+                    $c->execute();
+                } else {
+                    //set new hash
+                    $newthumbhash = $GLOBALS['pdo']->prepare("UPDATE assets SET ThumbHash = :h WHERE id = :i");
+                    $newthumbhash->bindParam(":h", $newhash, PDO::PARAM_STR);
+                    $newthumbhash->bindParam(":i", $assetid, PDO::PARAM_INT);
+                    $newthumbhash->execute();
+                }
+                return true;
             }
             return false;
         }
