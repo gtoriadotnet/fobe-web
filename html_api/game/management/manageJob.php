@@ -33,6 +33,12 @@ else
 			//doesnt have any return data, so we set message to true
 			$jobClose = new RccServiceHelper($GLOBALS['gamesArbiter']);
 			$jobClose->CloseJob($jobid);
+			
+			$q = $pdo->prepare("UPDATE open_servers SET status = 0 WHERE gameID = :pid AND jobid = :jid AND status = 1");
+			$q->bindParam(":pid", $placeid, PDO::PARAM_INT);
+			$q->bindParam(":jid", $jobid, PDO::PARAM_STR);
+			$q->execute();
+			
 			$message = true;
 		}
 

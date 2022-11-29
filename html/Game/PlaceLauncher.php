@@ -122,7 +122,7 @@ if ($requesttype == "RequestGame") //start new server or join existing one
 
 			if (Game::UserAccess($gameID, $user->id))
 			{
-				$ispbs = false;//(bool)$gInfo->isPersonalServer;
+				$ispbs = (bool)$gInfo->isPersonalServer;
 				
 				//check for open servers
 				$query = "SELECT * FROM open_servers WHERE gameID = :i AND (status = 0 OR status = 1) ORDER BY status DESC LIMIT 1";

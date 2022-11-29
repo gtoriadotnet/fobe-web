@@ -178,4 +178,10 @@ game:GetService("RunService"):Run()
 game:HttpGet(baseurl .. "/Game/RegisterServer?jobId=" .. game.JobId)
 
 -- Remove server OnClose --
-game.OnClose = function() sendKillJobSignal() end -- register game as closed when datamodel shutdowns
+game:GetService('Players').PlayerAdded:wait()
+while wait(1) do
+	if(game:GetService('Players').NumPlayers == 0) then
+		sendKillJobSignal()
+	end
+end
+--game.OnClose = function() sendKillJobSignal() end -- register game as closed when datamodel shutdowns
