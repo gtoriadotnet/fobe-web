@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Users {
+namespace Fobe\Users {
 
-    use Finobe\Common\HashingUtiltity;
+    use Fobe\Common\HashingUtiltity;
     use PDO;
 
     class Activation
@@ -37,13 +37,14 @@ namespace Finobe\Users {
         
         public static function IsUserActivated(int $userid)
         {
-            $query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `finobe_verification` WHERE `isactivated` = 1 AND `uid` = :uid");
-            $query->bindParam(":uid", $userid, PDO::PARAM_INT);
-            $query->execute();
-            if ($query->fetchColumn(0) > 0) {
-                return true;
-            }
-            return false;
+			return true;
+            //$query = $GLOBALS['pdo']->prepare("SELECT COUNT(*) FROM `finobe_verification` WHERE `isactivated` = 1 AND `uid` = :uid");
+            //$query->bindParam(":uid", $userid, PDO::PARAM_INT);
+            //$query->execute();
+            //if ($query->fetchColumn(0) > 0) {
+            //    return true;
+            //}
+            //return false;
         } 
 
         public static function SetupUserActivation(int $userid) //this should be ran when the user first signs up

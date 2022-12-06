@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Users\User;
-use Finobe\Web\WebContextManager;
+use Fobe\Users\User;
+use Fobe\Web\WebContextManager;
 
 $error = "";
 

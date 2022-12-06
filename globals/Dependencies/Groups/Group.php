@@ -1,16 +1,16 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
     Astro: Jesus christ this is big, probably due to a lot of whitespace as well. Perhaps reduce the size?
     Nikita: (YOUR DUMBASS COMMENT HERE)
 */
 
-namespace Finobe\Groups {
+namespace Fobe\Groups {
 
-    use Finobe\Economy\EconomyHelper;
-    use Finobe\UI\ImageHelper;
-    use Finobe\Users\User;
+    use Fobe\Economy\EconomyHelper;
+    use Fobe\UI\ImageHelper;
+    use Fobe\Users\User;
     use Exception;
     use PDO;
 

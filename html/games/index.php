@@ -7,7 +7,7 @@ $body = <<<EOT
 			<h5>Games</h5>
 		</div>
 		<div class="col-sm-3 mb-3">
-			<a href="/download"><button class="btn btn-danger w-100">Download Finobe</button></a>
+			<a href="/download"><button class="btn btn-danger w-100">Download Fobe</button></a>
 		</div>
 		<div class="col-sm">
 

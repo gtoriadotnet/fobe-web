@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Users\User;
+use Fobe\Users\User;
 
 $alert = '';
 if(isset($_POST['Submit'])) 

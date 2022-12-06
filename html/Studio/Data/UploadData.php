@@ -1,17 +1,17 @@
 <?php
 
 /*
-Finobe 2021
+Fobe 2021
 This is for uploading data from studio, this requires the user to have access to the asset.
 */
 
-use Finobe\Assets\Render;
+use Fobe\Assets\Render;
 
 $id = (int)$_GET['id'];
 
 $iteminfo = getAssetInfo($id);
 
-if($iteminfo !== FALSE) //asset id exists in finobe db
+if($iteminfo !== FALSE) //asset id exists in Fobe db
 {
 	if ($iteminfo->AssetTypeId == 9) //place
 	{

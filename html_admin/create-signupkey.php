@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Administration\SignupKey;
-use Finobe\Web\WebContextManager;
+use Fobe\Administration\SignupKey;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

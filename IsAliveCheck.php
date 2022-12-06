@@ -1,12 +1,12 @@
 <?php
 
 /*
-Finobe 2021
+Fobe 2021
 */
 
 //vars
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 $thumbalive = false;
 $gamealive = false;

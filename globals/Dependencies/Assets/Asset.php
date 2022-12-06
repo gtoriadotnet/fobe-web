@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Assets {
+namespace Fobe\Assets {
 
-use Finobe\Common\HashingUtiltity;
+use Fobe\Common\HashingUtiltity;
 use PDO;
 
 class Asset

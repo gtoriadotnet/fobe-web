@@ -1,5 +1,5 @@
 --[[
-  Finobe 2021 Gameserver Script
+  Fobe 2021 Gameserver Script
   Slightly modified from ROBLOX https://web.archive.org/web/20160714155618/http://roblox.com/Game/GameServer.ashx
 --]]
 

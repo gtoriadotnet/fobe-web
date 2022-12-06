@@ -2,10 +2,10 @@
 
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
-use Finobe\Users\Render;
+use Fobe\Users\Render;
 
 if (Render::PendingRender($user->id))
 {

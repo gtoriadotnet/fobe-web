@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Common\Signing;
+use Fobe\Common\Signing;
 
 $userid = $_GET['UserID'];
 $isplaysolo = $_GET['IsPlaySolo'];

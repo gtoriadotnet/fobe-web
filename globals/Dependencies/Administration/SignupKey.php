@@ -1,8 +1,8 @@
 <?php
 
-namespace Finobe\Administration {
+namespace Fobe\Administration {
 
-    use Finobe\Common\HashingUtiltity;
+    use Fobe\Common\HashingUtiltity;
     use PDO;
 
     class SignupKey

@@ -1,9 +1,9 @@
 <?php
 
-use Finobe\Assets\Render;
-use Finobe\Moderation\UserModerationManager;
-use Finobe\Users\User;
-use Finobe\Web\WebContextManager;
+use Fobe\Assets\Render;
+use Fobe\Moderation\UserModerationManager;
+use Fobe\Users\User;
+use Fobe\Web\WebContextManager;
 
 $body = '';
 $alert = "";
@@ -341,7 +341,7 @@ $itemimage = '';
 if($itemtypeint != 3) {
 	$itempricebutton = '<div class="container input-group mb-3">
 		<div class="input-group-prepend">
-			<span class="input-group-text"><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
+			<span class="input-group-text"><img style="width:1rem;" src="/fobe/cdn/imgs/alphabux-grey-1024.png"></span>
 		</div>
 		<input type="text" name="item_price" class="form-control" value="' . $itemprice . '">
 	</div>';

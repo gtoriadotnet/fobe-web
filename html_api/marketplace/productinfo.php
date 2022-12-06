@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 header('Content-Type: application/json');
 
@@ -20,7 +20,7 @@ else
 {
 	$assetInfo = getAssetInfo($assetid);
 
-	if($assetInfo !== FALSE) //asset id exists in finobe db
+	if($assetInfo !== FALSE) //asset id exists in Fobe db
 	{
 		$productinfo = json_encode(array(
 				"TargetId" => $assetInfo->TargetId,

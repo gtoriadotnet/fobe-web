@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Users\Render;
-use Finobe\Web\WebContextManager;
+use Fobe\Users\Render;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

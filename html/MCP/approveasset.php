@@ -1,14 +1,14 @@
 <?php
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
 
 //headers
 
-use Finobe\Moderation\UserModerationManager;
-use Finobe\Web\WebContextManager;
+use Fobe\Moderation\UserModerationManager;
+use Fobe\Web\WebContextManager;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 

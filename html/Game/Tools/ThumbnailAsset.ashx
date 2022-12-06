@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 $fmt = $_GET['fmt'];
 $wd = $_GET['wd'];
@@ -40,7 +40,7 @@ $pendingid = $pendingid->fetch(PDO::FETCH_OBJ);
 $pendinghash = $pendingid->Hash;
 // ...
 
-if ($check->rowCount() > 0) //asset exists on Finobe
+if ($check->rowCount() > 0) //asset exists on Fobe
 {
     $check = $check->fetch(PDO::FETCH_OBJ);
 

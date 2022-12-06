@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Finobe 2021 site configuration
+	Fobe 2021 site configuration
 	This is extremely sensitive.
 	TODO: not ideal to hardcode paths like this, clean up
 
@@ -12,12 +12,12 @@
 	TODO: kill nsg
 */
 
-use Finobe\Users\Activation;
-use Finobe\Users\TwoFactor;
-use Finobe\Moderation\UserModerationManager;
-use Finobe\Web\WebContextManager;
-use Finobe\Common\System;
-use Finobe\Users\Session;
+use Fobe\Users\Activation;
+use Fobe\Users\TwoFactor;
+use Fobe\Moderation\UserModerationManager;
+use Fobe\Web\WebContextManager;
+use Fobe\Common\System;
+use Fobe\Users\Session;
 
 try 
 {
@@ -27,11 +27,12 @@ try
 	
 	//PDO
 	$pdoOptions = array(
-		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //bad for prod?
-		//PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
+		//PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, //bad for prod?
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING,
 		PDO::ATTR_EMULATE_PREPARES => false,
-		//PDO::ATTR_PERSISTENT => true
+		PDO::ATTR_PERSISTENT => false
 	);
+	// attr_persistent was set to true, fuck you astro
 						  //host				//db name //db user			//db password      //options
 	$pdo = new PDO("mysql:host=localhost;dbname=finobe", "service-finobe", "135zZsjV3_K2j-VC", $pdoOptions);
 
@@ -39,7 +40,7 @@ try
 	$jsversion = "12.00"; //update this after updating JS, this will re-cache the latest js for users
 	$cssversion = "12.00"; //update this after updating CSS, this will re-cache the latest css for users
 
-	$siteName = "Finobe"; //site name
+	$siteName = "Fobe"; //site name
 	$domain = "idk16.xyz";
 	$url = "https://www.".$domain; //site URL
 	$ws = $pdo->query("SELECT * FROM websettings WHERE id = 1")->fetch(PDO::FETCH_OBJ); //websettings
@@ -47,6 +48,9 @@ try
 	$ROBLOXAssetAPI = "https://assetdelivery.roblox.com/v1/asset/?id=";
 	$ROBLOXProductInfoAPI = "https://api.roblox.com/marketplace/productinfo?assetId=";
 	$ROBLOXAssetThumbnailAPI = "https://thumbnails.roblox.com/v1/assets?assetIds=";
+
+	$recaptchaSecretKey = '6LfGhE8jAAAAAGYp7AYCnwJSNzJRPRT45YXNHI_s';
+	$recaptchaSiteKey = '6LfGhE8jAAAAAI3Xa7K1jyFlPvfVklWZAN4l06-j';
 
 	//default character hashes
 	$defaultOutfitHash = "95432e22e7ebc8868415fd186096917f"; //default render hash for characters
@@ -87,20 +91,20 @@ try
 	$defaultPlacesPath = "C:/Alphaland/default_places/"; //path to where the default places are stored
 	$defaultPbsPlacesPath = "C:/Alphaland/default_pbs_places/"; //path to where the default pbs places are stored
 	$defaultXmlsPath = "C:/Alphaland/default_xmls/"; //path to where the default xmls stored
-	$privateKeyPath = "C:/Alphaland/FinobeRawKey.txt"; //path to where the private key is stored
+	$privateKeyPath = "C:/Alphaland/FobeRawKey.txt"; //path to where the private key is stored
 
 	//machine ip's
 	$gameMachine = "76.189.132.114"; //IP address of the machine that runs gameservers
 	$renderMachine = "192.168.1.117"; //IP address of the machine that renders thumbnails
 
 	//arbiter ip's
-	$gamesArbiter = "192.168.1.118:64989";	//IP address/port of the Arbiter running on the gameserver machine
+	$gamesArbiter = "192.168.1.121:64989";	//IP address/port of the Arbiter running on the gameserver machine
 	$thumbnailArbiter = $renderMachine.":64989"; //IP address/port of the Arbiter running on the render machine
 	
 	//autoloader include
 	require 'C:/vendor/autoload.php';
 	
-	//finobe specfic dependencies (listing manually for now due to active rewrite of stuff)
+	//fobe specfic dependencies (listing manually for now due to active rewrite of stuff)
 	include "C:/Alphaland/globals/Dependencies/Users/Activation.php";
 	include "C:/Alphaland/globals/Dependencies/Users/TwoFactor.php";
 	include "C:/Alphaland/globals/Dependencies/Users/ReferralProgram.php";
@@ -233,5 +237,5 @@ try
 } 
 catch (Exception $e)
 {
-	die("Finobe is currently unavailable.");
+	die("Fobe is currently unavailable.");
 }

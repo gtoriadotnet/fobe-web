@@ -24,7 +24,7 @@ body, html {
 }
 
 body {
-	background-image: url("/finobe/cdn/imgs/download-bg.png");
+	background-image: url("/fobe/cdn/imgs/download-bg.png");
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -34,7 +34,7 @@ body {
 <div class="container">
 	<div class="jumbotron" style="background-color:rgb(200,200,200,0.8);backdrop-filter:blur(10px);">
 		<div class="text-center">
-			<h1 class="display-4">Download Finobe</h1>
+			<h1 class="display-4">Download Fobe</h1>
 			<img width="400" class="img-fluid" src="https://api.idk16.xyz/logo">
 			<form action="" method="post">
 				<button type="SubmitClient" name="SubmitClient" class="btn btn-lg btn-danger" type="button">Download Client</button>

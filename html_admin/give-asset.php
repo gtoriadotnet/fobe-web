@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Assets\Asset;
-use Finobe\Web\WebContextManager;
+use Fobe\Assets\Asset;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

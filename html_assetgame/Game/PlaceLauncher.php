@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 $requesttype = $_GET['request'];
 $placeid = $_GET['placeId'];

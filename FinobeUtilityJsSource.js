@@ -1,5 +1,5 @@
 /*
-	Finobe JS Utilities 2021
+	Fobe JS Utilities 2021
 */
 
 //utility for populating HTML with data from object OR calling a function with the objects current position and replacing the marker with returned data

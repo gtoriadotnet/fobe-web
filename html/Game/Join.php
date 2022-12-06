@@ -1,13 +1,13 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	Very messy but will clean up
 */
 
-use Finobe\Common\Signing;
-use Finobe\Games\Game;
-use Finobe\Games\Ticket;
+use Fobe\Common\Signing;
+use Fobe\Games\Game;
+use Fobe\Games\Ticket;
 
 header("Content-Type: text/plain");
 

@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Common\Signing;
+use Fobe\Common\Signing;
 
 $user = $_GET['user'];
 

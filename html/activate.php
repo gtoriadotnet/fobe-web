@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Users\Activation;
-use Finobe\Web\WebContextManager;
+use Fobe\Users\Activation;
+use Fobe\Web\WebContextManager;
 
 if (Activation::IsUserActivated($user->id)) {
 	WebContextManager::Redirect("/");
@@ -18,7 +18,7 @@ $body = '
 					<div class="card-body">
 						<h4>Activation Required</h4>
 						<hr>
-						<h5>To play Finobe, you must activate this account in the <a href=https://discord.gg/RDj4aVh8VS>Discord Server</a>.</h5>
+						<h5>To play Fobe, you must activate this account in the <a href="https://discord.gg/qmV6P6XRhz">Discord Server</a>.</h5>
 						<h5>After joining, send the activation code below in the activation channel and refresh this page.</h5>
 						<h5>It is required to be in the Discord Server, after activation leaving the Discord will deactivate your account.</h5>
 						<hr>

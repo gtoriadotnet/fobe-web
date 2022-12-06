@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 $url = $_SERVER['REQUEST_URI'];
 

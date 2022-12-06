@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
     Report viewer
 */
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 if(!$user->IsStaff()) {
     WebContextManager::Redirect("/");
@@ -49,7 +49,7 @@ $body = <<<EOT
 </div>
 <script>
 /*
-	Finobe 2021
+	Fobe 2021
 */
 var getparam = new URLSearchParams(window.location.search).get("id");
 

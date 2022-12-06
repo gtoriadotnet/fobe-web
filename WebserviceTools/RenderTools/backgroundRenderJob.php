@@ -1,12 +1,12 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	kinda shit but its meant for background render processes so not really a concern
 */
 
-use Finobe\Assets\Render as AssetRender;
-use Finobe\Users\Render as UserRender;
+use Fobe\Assets\Render as AssetRender;
+use Fobe\Users\Render as UserRender;
 
 $assetid = $argv[1];
 $type = $argv[2];

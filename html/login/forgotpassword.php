@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 if (isLoggedIn())
 {
@@ -50,7 +50,7 @@ $body = <<<EOT
 		<div class="card m-auto" style="max-width: 40rem;">
 			<div class="card-body text-center" style="padding: 2rem;">
 				<div class="row">
-					<img class="img-fluid m-auto" src="../finobe/cdn/imgs/forgot-password-1024.png" style="width: 20rem;">
+					<img class="img-fluid m-auto" src="../fobe/cdn/imgs/forgot-password-1024.png" style="width: 20rem;">
 				</div>
 				<div class="row mb-2">
 					<strong class="m-auto">Forgot password? use the form below for a password reset link!</strong>

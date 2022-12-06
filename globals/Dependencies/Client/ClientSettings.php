@@ -1,29 +1,13 @@
 <?php
-
-/**
- * This class is used to fetch the client settings and client application buckets.
- * It is also used to write the clietn settings and client application buckets.
- * 
- * Written by: Nikita Petko, Jakob Valara (Spfffffx)
- * Date: 10/12/2021
- * 
- * The reason this returns the values as strings is because the client can parse them to their respective types. They can also be converted to their respective types.
- * For now they are all strings.
- * 
- * Open an issue if you want to see the values returned as their respective types and not as strings.
- * 
- * Licensed to Austin "Astrologies" of Finobe, they are the owners of the code.
- */
-
 // Note: This could be shortened slightly.
 
 
 /*
 Usage:
 
-use Finobe\Client\ClientSettings;
-use Finobe\Client\ClientSettingsApplications;
-use Finobe\Client\ClientSettingsKind;
+use Fobe\Client\ClientSettings;
+use Fobe\Client\ClientSettingsApplications;
+use Fobe\Client\ClientSettingsKind;
 
 require_once './globals/Dependencies/Client/ClientSettings.php';
 
@@ -59,7 +43,7 @@ echo "Get Application Bucket Test's settings, has dependencies '" . implode(', '
 
 */
 
-namespace Finobe\Client {
+namespace Fobe\Client {
 
     use Error;
     use PDO;

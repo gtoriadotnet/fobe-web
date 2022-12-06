@@ -1,6 +1,6 @@
 <?php
 
-namespace Finobe\Web {
+namespace Fobe\Web {
     
     use PDO;
 

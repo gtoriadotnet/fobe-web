@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Games\Game;
-use Finobe\Web\WebContextManager;
+use Fobe\Games\Game;
+use Fobe\Web\WebContextManager;
 
 $gearsportion = false;
 
@@ -611,7 +611,7 @@ EOT;
 							<li>
 								<div id="PBSIDSuperflat" class="converpbsopcard" onclick="setPBSType('Superflat')">
 									<a class="text-center">
-										<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Superflat.png">
+										<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Superflat.png">
 										<span><p>Superflat</p></span>
 									</a>
 								</div>
@@ -619,7 +619,7 @@ EOT;
 							<li>
 								<div id="PBSIDRugged" class="converpbsopcard" onclick="setPBSType('Rugged')">
 									<a class="text-center">
-										<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Rugged.png">
+										<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Rugged.png">
 										<span><p>Rugged</p></span>
 									</a>
 								</div>
@@ -627,7 +627,7 @@ EOT;
 							<li>
 								<div id="PBSIDHappyHome" class="converpbsopcard" onclick="setPBSType('HappyHome')">
 									<a class="text-center">
-										<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Happy%20Home.png">
+										<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Happy%20Home.png">
 										<span><p>Happy Home</p></span>
 									</a>
 								</div>
@@ -635,7 +635,7 @@ EOT;
 							<li>
 								<div id="PBSIDBaseplate" class="converpbsopcard" onclick="setPBSType('Baseplate')">
 									<a class="text-center">
-										<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Baseplate.png">
+										<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Baseplate.png">
 										<span><p>Baseplate</p></span>
 									</a>
 								</div>

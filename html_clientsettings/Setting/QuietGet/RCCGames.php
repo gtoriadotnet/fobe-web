@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");

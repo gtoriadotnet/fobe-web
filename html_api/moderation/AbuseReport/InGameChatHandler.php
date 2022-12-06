@@ -1,11 +1,11 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
     Abuse reports
 */
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

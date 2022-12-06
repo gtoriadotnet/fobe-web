@@ -130,13 +130,13 @@ if(!isLoggedIn())
 
 	<div id="overlayshadow"></div>
 	<video id="videoBG" autoplay loop playsinline muted>
-		<source src="/finobe/cdn/vids/index-vid.m4v" type="video/mp4">
+		<source src="/fobe/cdn/vids/index-vid.m4v" type="video/mp4">
 	</video>
 
 	<div class="viewport-header">
 		<div class="index-container">
 			<div class="index-row">
-				<img class="img-fluid" style="width:15rem;padding:10px;" src="/finobe/cdn/imgs/finobe-256x256.png">
+				<img class="img-fluid" style="width:15rem;padding:10px;" src="/fobe/cdn/imgs/finobe-256x256.png">
 			</div>
 			<div class="index-row">
 				<div style="margin-top:20px;">
@@ -159,6 +159,6 @@ else
 pageHandler();
 $ph->navbar = "";
 $ph->footer = "";
-$ph->pageTitle("Finobe");
+$ph->pageTitle("Fobe");
 $ph->body = $body;
 $ph->output();

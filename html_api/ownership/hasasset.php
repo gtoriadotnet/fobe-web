@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Users\User;
+use Fobe\Users\User;
 
 header('Content-Type: application/json');
 

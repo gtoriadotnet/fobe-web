@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Users\TwoFactor;
-use Finobe\Web\WebContextManager;
+use Fobe\Users\TwoFactor;
+use Fobe\Web\WebContextManager;
 
 if (TwoFactor::IsSession2FAUnlocked()){
     WebContextManager::Redirect("/");

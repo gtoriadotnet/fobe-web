@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Groups\Group;
+use Fobe\Groups\Group;
 
 $groupid = (int)$_GET['id'];
 

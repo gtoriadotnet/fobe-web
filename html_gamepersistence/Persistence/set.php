@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/json");
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

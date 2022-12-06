@@ -1,10 +1,10 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Common {
+namespace Fobe\Common {
 
     use PDO;
 

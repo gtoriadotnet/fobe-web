@@ -122,7 +122,7 @@ function getCatalogPage(assettype, page, limit, keyword) {
 	html += '</div>';
 	html += '<p class="no-overflow">{name}</p>';
 	html += '<p>By: {creatorName}</p>';
-	html += '<p><img src="/finobe/cdn/imgs/alphabux-grey-1024.png"> {price}</p>';
+	html += '<p><img src="/fobe/cdn/imgs/alphabux-grey-1024.png"> {price}</p>';
 	html += '</a>';
 	html += '</div>';
 	html += '</li>';

@@ -1,6 +1,6 @@
 <?php
 
-namespace Finobe\UI {
+namespace Fobe\UI {
 
     use GdImage;
 

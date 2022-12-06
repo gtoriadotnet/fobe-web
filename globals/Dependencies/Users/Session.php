@@ -1,17 +1,17 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	User session class
 */
 
-namespace Finobe\Users
+namespace Fobe\Users
 {
 
-    use Finobe\Common\HashingUtiltity;
-    use Finobe\Moderation\UserModerationManager;
-    use Finobe\Users\Activation;
-    use Finobe\Web\WebContextManager;
+    use Fobe\Common\HashingUtiltity;
+    use Fobe\Moderation\UserModerationManager;
+    use Fobe\Users\Activation;
+    use Fobe\Web\WebContextManager;
     use PDO;
 
     class Session 
@@ -77,7 +77,7 @@ namespace Finobe\Users
             $session->bindParam(":i", $ip, PDO::PARAM_STR);
             $session->bindParam(":ua", $user_agent, PDO::PARAM_STR);
             if($session->execute()) {
-                setcookie("token", $token, time() + (86400 * 30), "/", ".idk16.xyz"); //30 day expiration on token for (hopefully) all finobe paths 
+                setcookie("token", $token, time() + (86400 * 30), "/", ".idk16.xyz"); //30 day expiration on token for (hopefully) all fobe paths 
                 $this->ValidateSession($token);
                 return true;
             } else {

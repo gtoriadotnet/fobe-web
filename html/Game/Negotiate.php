@@ -37,7 +37,7 @@ if ($currenttoken->rowCount() > 0)
 		// ...
 		
 		//set new cookie from auth ticket
-		setcookie("token", $sessiontoken, time() + (86400 * 30), "/", ".idk16.xyz"); //30 day expiration on token for (hopefully) all finobe paths 
+		setcookie("token", $sessiontoken, time() + (86400 * 30), "/", ".idk16.xyz"); //30 day expiration on token for (hopefully) all fobe paths 
 		// ...
 		
 		//setcookie("token", $sessiontoken, time() + (86400 * 30), "/", false, true); //30 day expiration on token

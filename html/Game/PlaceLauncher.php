@@ -5,9 +5,9 @@ This is used on the client (if the client has the session token set) to request 
 TODO: Clean up
 */
 
-use Finobe\Assets\Asset;
-use Finobe\Games\Game;
-use Finobe\Grid\RccServiceHelper;
+use Fobe\Assets\Asset;
+use Fobe\Games\Game;
+use Fobe\Grid\RccServiceHelper;
 
 $requesttype = $_GET['request'];
 

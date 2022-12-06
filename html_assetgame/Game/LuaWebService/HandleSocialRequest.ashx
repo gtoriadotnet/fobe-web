@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Groups\Group;
+use Fobe\Groups\Group;
 
 //so stuff doesnt cache
 header("Cache-Control: no-cache");

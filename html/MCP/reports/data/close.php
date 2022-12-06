@@ -1,11 +1,11 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	Closes an active report
 */
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");

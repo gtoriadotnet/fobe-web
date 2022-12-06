@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	We spawn this in a background process (only a few seconds) to prevent any blocking calls on the main php exec.
 */
 

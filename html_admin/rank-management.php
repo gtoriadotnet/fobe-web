@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Users\Badge;
-use Finobe\Web\WebContextManager;
+use Fobe\Users\Badge;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

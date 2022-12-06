@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Users\Render;
+use Fobe\Users\Render;
 
 if (Render::PendingRender($user->id))
 {

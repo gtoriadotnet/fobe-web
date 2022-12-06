@@ -2,13 +2,13 @@
 
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
 //headers
 
-use Finobe\Users\Render;
-use Finobe\Users\User;
+use Fobe\Users\Render;
+use Fobe\Users\User;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");

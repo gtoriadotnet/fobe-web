@@ -1,13 +1,13 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Users {
+namespace Fobe\Users {
 
-    use Finobe\Users\User;
-    use Finobe\Users\Render;
+    use Fobe\Users\User;
+    use Fobe\Users\Render;
     use Exception;
     use PDO;
 

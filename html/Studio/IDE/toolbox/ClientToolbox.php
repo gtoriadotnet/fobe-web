@@ -32,7 +32,7 @@ $body = <<<EOT
     <script>
 
     /*
-        Finobe Ghetto Toolbox 2021
+        Fobe Ghetto Toolbox 2021
         Luckily MOST of jquery works with qt 4
 
         0 = Current User Models

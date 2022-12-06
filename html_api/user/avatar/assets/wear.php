@@ -2,14 +2,14 @@
 
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
 //https://api.idk16.xyz/user/avatar/equipItem?assetId=
 
 //headers
 
-use Finobe\Users\User;
+use Fobe\Users\User;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");

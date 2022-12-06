@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Moderation\UserModerationManager;
-use Finobe\Web\WebContextManager;
+use Fobe\Moderation\UserModerationManager;
+use Fobe\Web\WebContextManager;
 
 $alert = "";
 
@@ -44,7 +44,7 @@ if(isset($_GET['id']))
 					<div class="card mb-2">
 						<div class="card-body text-center">
 							<div class="text-center">
-								<h5>Finobe Badges</h5>
+								<h5>Fobe Badges</h5>
 							</div>
 							<div id = "badges_container" class="ul-container text-center">
 								

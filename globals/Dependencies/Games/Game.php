@@ -1,13 +1,13 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Games {
+namespace Fobe\Games {
 
-    use Finobe\Assets\Asset;
-    use Finobe\Grid\RccServiceHelper;
+    use Fobe\Assets\Asset;
+    use Fobe\Grid\RccServiceHelper;
     use Exception;
     use PDO;
 

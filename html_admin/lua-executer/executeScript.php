@@ -1,8 +1,8 @@
 <?php
 
-use Finobe\Games\Game;
-use Finobe\Grid\RccServiceHelper;
-use Finobe\Web\WebContextManager;
+use Fobe\Games\Game;
+use Fobe\Grid\RccServiceHelper;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

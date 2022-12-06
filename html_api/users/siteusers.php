@@ -1,13 +1,13 @@
 <?php
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
 
 //headers
 
-use Finobe\Users\User;
+use Fobe\Users\User;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 

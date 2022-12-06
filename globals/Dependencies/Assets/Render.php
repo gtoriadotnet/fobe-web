@@ -1,14 +1,14 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Assets {
+namespace Fobe\Assets {
 
-    use Finobe\Common\HashingUtiltity;
-    use Finobe\Grid\RccServiceHelper;
-    use Finobe\UI\ImageHelper;
+    use Fobe\Common\HashingUtiltity;
+    use Fobe\Grid\RccServiceHelper;
+    use Fobe\UI\ImageHelper;
     use PDO;
 
     class Render

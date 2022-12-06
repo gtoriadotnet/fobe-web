@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Moderation\UserModerationManager;
+use Fobe\Moderation\UserModerationManager;
 
 header('Content-Type: application/json');
 header("Cache-Control: no-cache");

@@ -1,8 +1,8 @@
 <?php
 
-namespace Finobe\Moderation {
+namespace Fobe\Moderation {
 
-    use Finobe\Web\WebContextManager;
+    use Fobe\Web\WebContextManager;
     use PDO;
 
     class UserModerationManager
@@ -62,7 +62,7 @@ namespace Finobe\Moderation {
                             $ban->bindParam(":wb", $GLOBALS['user']->id, PDO::PARAM_INT);
                             $ban->execute();
                             if ($ban->rowCount() > 0) {
-                                kickUserIfInGame($uid, "You've been banned from Finobe, '".$reason."'");
+                                kickUserIfInGame($uid, "You've been banned from Fobe, '".$reason."'");
                                 UserModerationManager::LogAction("Banned User ".$uid);
                                 
                                 //ban user from discord with bot

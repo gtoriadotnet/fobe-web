@@ -2,9 +2,9 @@
 
 //the design choice here was to tie in clientpresence with recently played and visits and make it fully server-sided besides the client pings
 
-use Finobe\Economy\EconomyHelper;
-use Finobe\Games\Game;
-use Finobe\Web\WebContextManager;
+use Fobe\Economy\EconomyHelper;
+use Fobe\Games\Game;
+use Fobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {
@@ -144,7 +144,8 @@ else if ($action == "connect")
 		$setgamevisit->bindParam(":g", $placeid, PDO::PARAM_INT);
 		$setgamevisit->execute();
 
-		EconomyHelper::GiveAlphabux(1, $creatorid, "Place visit reward, placeid ".$placeid);
+		// XlXi: Removed to prevent farming.
+		//EconomyHelper::GiveAlphabux(1, $creatorid, "Place visit reward, placeid ".$placeid);
 	}
 	// ...
 }

@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Games\Game;
-use Finobe\Web\WebContextManager;
+use Fobe\Games\Game;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::ForceHttpsCloudflare();
 

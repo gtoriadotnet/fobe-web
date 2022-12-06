@@ -3,7 +3,7 @@
 
 //turns out this is XML format
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");
@@ -4116,7 +4116,7 @@ elseif ($sid)
 		<Table>
 			<Entry>
 				<Key>Name</Key>
-				<Value>Finobe Flag</Value>
+				<Value>Fobe Flag</Value>
 			</Entry>
 			<Entry>
 				<Key>AssetId</Key>

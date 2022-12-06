@@ -1,17 +1,17 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	A bunch of global functions used sitewide
 	TODO: clean up a lot of legacy code
 */
 
-use Finobe\Assets\Asset;
-use Finobe\Assets\Render;
-use Finobe\Games\Game;
-use Finobe\Moderation\Filter;
-use Finobe\Users\Render as UsersRender;
-use Finobe\Web\WebContextManager;
+use Fobe\Assets\Asset;
+use Fobe\Assets\Render;
+use Fobe\Games\Game;
+use Fobe\Moderation\Filter;
+use Fobe\Users\Render as UsersRender;
+use Fobe\Web\WebContextManager;
 
 //safe generation utilities
 
@@ -606,13 +606,13 @@ function getRobloxProductInfo($assetid)
 
 function ReturnAssetFromHash($hash) //asset CDN
 {
-	//finobe assets cdn
+	//fobe assets cdn
 	WebContextManager::Redirect(constructAssetHashUrl($hash));
 }
 
 function ReturnThumbnailFromHash($hash) //thumb CDN (images)
 {
-	//finobe thumb (images) cdn
+	//fobe thumb (images) cdn
 	WebContextManager::Redirect(constructThumbnailHashUrl($hash));
 }
 
@@ -735,6 +735,12 @@ function moderateAsset($id) //currently supports t-shirts, shirts and pants
 	if ($assetinfo->AssetTypeId == 22) //group emblem
 	{
 		unlink($thumbscdn . $assetinfo->Hash);
+		setAssetModerated($id);
+		return true;
+	}
+	elseif ($assetinfo->AssetTypeId == 3) //audio
+	{
+		unlink($assetscdn . $assetinfo->Hash);
 		setAssetModerated($id);
 		return true;
 	}
@@ -1153,7 +1159,7 @@ function sendVerificationEmail($from, $recipient) //1 = success, 2 = cooldown, 3
 	$email_html = '
 	<div style="width:40rem;background-color:white;border:1px solid rgba(0,0,0,.125);border-radius:5px;padding:12px;margin:auto;">
 		<div style="text-align:center;">
-			<img src="https://idk16.xyz/finobe/cdn/imgs/finobe-1024.png" style="width:18rem;">
+			<img src="https://idk16.xyz/fobe/cdn/imgs/finobe-1024.png" style="width:18rem;">
 		</div>
 		<div style="text-align:center;">
 			<strong>Click the button below to verify your email!</strong>
@@ -1318,7 +1324,7 @@ function sendPasswordReset($from, $recipient, $recipientuid) //1 = success, 2 = 
 	$email_html = '
 	<div style="width:40rem;background-color:white;border:1px solid rgba(0,0,0,.125);border-radius:5px;padding:12px;margin:auto;">
 		<div style="text-align:center;">
-			<img src="https://idk16.xyz/finobe/cdn/imgs/finobe-1024.png" style="width:18rem;">
+			<img src="https://idk16.xyz/fobe/cdn/imgs/finobe-1024.png" style="width:18rem;">
 		</div>
 		<div style="text-align:center;">
 			<strong>Click the button below to reset your password!</strong>
@@ -2606,40 +2612,40 @@ function getCurrentTheme() //returns the theme set (integer)
 	}
 }
 
-function getCurrentThemeLogo() //grabs the finobe logo for the users selected theme
+function getCurrentThemeLogo() //grabs the fobe logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
 
-	//return $GLOBALS['url'] . "/finobe/cdn/imgs/alpha-christmas/finobechristmas.png"; //force christmas logo
+	//return $GLOBALS['url'] . "/fobe/cdn/imgs/alpha-christmas/finobechristmas.png"; //force christmas logo
 	
-	return $GLOBALS['url'] . "/finobe/cdn/imgs/finobe-50x50.png";
+	return $GLOBALS['url'] . "/fobe/cdn/imgs/finobe-50x50.png";
 }
 
-function getCurrentThemeAlphabuxLogo() //grabs the finobe alphabux logo for the users selected theme
+function getCurrentThemeAlphabuxLogo() //grabs the fobe alphabux logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
-		return $GLOBALS['url'] . "/finobe/cdn/imgs/alphabux-black-1024.png";
+		return $GLOBALS['url'] . "/fobe/cdn/imgs/alphabux-black-1024.png";
 	}
 	elseif ($currenttheme == 1) //dark theme light logo
 	{
-		return $GLOBALS['url'] . "/finobe/cdn/imgs/alphabux-grey-1024.png";
+		return $GLOBALS['url'] . "/fobe/cdn/imgs/alphabux-grey-1024.png";
 	}
 }
 
-function getCurrentThemeAnimatedLogo() //grabs the finobe animated logo for the users selected theme
+function getCurrentThemeAnimatedLogo() //grabs the fobe animated logo for the users selected theme
 {
 	$currenttheme = getCurrentTheme();
 	
 	if ($currenttheme == 0) //light theme dark logo
 	{
-		return $GLOBALS['url'] . "/finobe/cdn/imgs/loading-dark.gif";
+		return $GLOBALS['url'] . "/fobe/cdn/imgs/loading-dark.gif";
 	}
 	elseif ($currenttheme == 1) //dark theme light logo
 	{
-		return $GLOBALS['url'] . "/finobe/cdn/imgs/loading-light.gif";
+		return $GLOBALS['url'] . "/fobe/cdn/imgs/loading-light.gif";
 	}
 }
 
@@ -2655,7 +2661,7 @@ function getCurrentThemeStyle() //grabs the style sheet for the users selected t
 		
 		if ($currenttheme == 1) //dark theme
 		{
-			return '<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/finobe/css/stylesheet-dark.css?version='.$GLOBALS['cssversion'].'">';
+			return '<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/fobe/css/stylesheet-dark.css?version='.$GLOBALS['cssversion'].'">';
 		}
 	}
 }
@@ -2669,16 +2675,16 @@ function getCSS($studio=false)
 	}
 
 	return '
-		<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/finobe/css/stylesheet.css?version='.$GLOBALS['cssversion'].'">
-		<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/finobe/css/bootstrap.min.css?version='.$GLOBALS['cssversion'].'">
+		<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/fobe/css/stylesheet.css?version='.$GLOBALS['cssversion'].'">
+		<link rel="stylesheet" type="text/css" href="https://www.idk16.xyz/fobe/css/bootstrap.min.css?version='.$GLOBALS['cssversion'].'">
 		'.$theme.'
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 		<script src="https://use.fontawesome.com/releases/v5.10.0/js/all.js" data-search-pseudo-elements></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-		<script type="text/javascript" src="https://www.idk16.xyz/finobe/js/bootstrap.min.js?version='.$GLOBALS['jsversion'].'"></script>
-		<script type="text/javascript" src="https://www.idk16.xyz/finobe/js/utilities.js?version='.$GLOBALS['jsversion'].'"></script>';
+		<script type="text/javascript" src="https://www.idk16.xyz/fobe/js/bootstrap.min.js?version='.$GLOBALS['jsversion'].'"></script>
+		<script type="text/javascript" src="https://www.idk16.xyz/fobe/js/utilities.js?version='.$GLOBALS['jsversion'].'"></script>';
 		
 }
 //end theme stuff
@@ -2698,7 +2704,7 @@ function getFooter()
 					<div class="container p-3">
 						<div class="row">
 							<div class="col-sm">
-								<strong>Finobe</strong> | <a style="color:grey;">'.$year.'</a>
+								<strong>Fobe</strong> | <a style="color:grey;">'.$year.'</a>
 							</div>
 						</div>
 						<div class="row">
@@ -2708,7 +2714,7 @@ function getFooter()
 						</div>
 						<div class="row border-bottom pb-1">
 							<div class="col-sm">
-								<a>Finobe is not affiliated with Lego, ROBLOX, MegaBloks, Bionicle, Pokemon, Nintendo, Lincoln Logs, Yu Gi Oh, K\'nex, Tinkertoys, Erector Set, or the Pirates of the Caribbean. ARrrr!</a>
+								<a>Fobe is not affiliated with Lego, ROBLOX, MegaBloks, Bionicle, Pokemon, Nintendo, Lincoln Logs, Yu Gi Oh, K\'nex, Tinkertoys, Erector Set, or the Pirates of the Caribbean. ARrrr!</a>
 							</div>
 						</div>
 						<div class="row">
@@ -2831,7 +2837,7 @@ function getNav()
 								</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link mr-3" href=""><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"> '.$user->currency.'</a>
+								<a class="nav-link mr-3" href=""><img style="width:1rem;" src="/fobe/cdn/imgs/alphabux-grey-1024.png"> '.$user->currency.'</a>
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$user->name.'</a>
@@ -2858,7 +2864,7 @@ function getNav()
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-right:10%;padding-left:10%;">
 				<a class="navbar-brand" href="/">
-					<img src="/finobe/cdn/imgs/finobe-50x50.png" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
+					<img src="/fobe/cdn/imgs/finobe-50x50.png" width="40" height="40" class="d-inline-block align-top" alt="" loading="lazy">
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>

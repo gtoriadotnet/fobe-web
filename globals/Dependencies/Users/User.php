@@ -1,8 +1,8 @@
 <?php
 
-namespace Finobe\Users {
+namespace Fobe\Users {
 
-    use Finobe\Assets\Asset;
+    use Fobe\Assets\Asset;
     use Exception;
     use PDO;
 

@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 if(!$user->IsStaff())
 {
@@ -58,7 +58,7 @@ $body = <<<EOT
 </div>
 <script>
 /*
-	Finobe 2021
+	Fobe 2021
 */
 
 var usernamequery = "";

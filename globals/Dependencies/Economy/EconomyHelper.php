@@ -1,14 +1,14 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Economy {
+namespace Fobe\Economy {
 
-    use Finobe\Assets\Asset;
+    use Fobe\Assets\Asset;
     use PDO;
-    use Finobe\Users\User;
+    use Fobe\Users\User;
     use Exception;
 
 class EconomyHelper

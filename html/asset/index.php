@@ -1,6 +1,6 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");
@@ -40,7 +40,7 @@ $websettings = $websettings->fetch(PDO::FETCH_OBJ);
 if ($id)
 {
 	$iteminfo = getAssetInfo($id);
-	if($iteminfo !== FALSE) //asset id exists in finobe db
+	if($iteminfo !== FALSE) //asset id exists in fobe db
 	{
 		if (isAssetApproved($id) and !isAssetModerated($id)) //if the asset is approved and not moderated
 		{

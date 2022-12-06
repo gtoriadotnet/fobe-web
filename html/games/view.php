@@ -1,11 +1,11 @@
 <?php
 
 /*
-	Finobe 2021 
+	Fobe 2021 
 */
 
-use Finobe\Games\Game;
-use Finobe\Web\WebContextManager;
+use Fobe\Games\Game;
+use Fobe\Web\WebContextManager;
 
 $gameID = $_GET['id'];
 $gInfo = getAssetInfo($gameID);
@@ -110,7 +110,7 @@ var getparam = new URLSearchParams(window.location.search).get("id");
 
 function playGame(id) {
 	$.get("https://www.idk16.xyz/Game/authticket", function(data) {
-		$("#linfo").html("Starting Finobe ong frfr");
+		$("#linfo").html("Starting Fobe ong frfr");
 		$("#launching").modal("show");
 		$("#closediv").hide();
 		location.href = "fobe-player:1+launchmode:play+gameinfo:" + data + "+placelauncherurl:https://www.idk16.xyz/Game/PlaceLauncher?request=RequestGame&placeid=" + id;

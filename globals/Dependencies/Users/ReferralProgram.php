@@ -1,21 +1,21 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Users {
+namespace Fobe\Users {
 
-    use Finobe\Moderation\UserModerationManager;
-    use Finobe\Common\HashingUtiltity;
-    use Finobe\Groups\Group;
+    use Fobe\Moderation\UserModerationManager;
+    use Fobe\Common\HashingUtiltity;
+    use Fobe\Groups\Group;
     use PDO;
 
     class ReferralProgram
     {
         public static function IsMember(int $userid)
         {
-			return true;
+			return false;
             //if (Group::IsInGroup($userid, 22)) //id 22 is the official referral program group
             //{
             //    return true;

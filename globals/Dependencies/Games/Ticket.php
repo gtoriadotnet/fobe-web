@@ -1,12 +1,12 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Games {
+namespace Fobe\Games {
 
-    use Finobe\Common\Signing;
+    use Fobe\Common\Signing;
 
     class Ticket
     {

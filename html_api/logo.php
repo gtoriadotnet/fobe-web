@@ -1,5 +1,5 @@
 <?php
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 WebContextManager::Redirect(getCurrentThemeLogo());

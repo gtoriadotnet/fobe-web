@@ -2,12 +2,12 @@
 
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
 //headers
 
-use Finobe\Grid\RccServiceHelper;
+use Fobe\Grid\RccServiceHelper;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 header("access-control-allow-credentials: true");

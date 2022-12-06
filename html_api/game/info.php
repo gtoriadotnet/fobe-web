@@ -2,12 +2,12 @@
 
 
 /*
-Finobe 2021 
+Fobe 2021 
 */
 
 //headers
 
-use Finobe\Games\Game;
+use Fobe\Games\Game;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 

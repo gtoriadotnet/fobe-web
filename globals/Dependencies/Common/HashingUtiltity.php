@@ -1,6 +1,6 @@
 <?php
 
-namespace Finobe\Common {
+namespace Fobe\Common {
     use PDO;
     class HashingUtiltity
     {

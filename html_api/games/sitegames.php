@@ -1,7 +1,7 @@
 <?php
 
 /*
-Finobe 2021 
+Fobe 2021 
 This is the API used to return all site games in JSON format with a provided limit, page and optional keyword
 This is parsed with javascript on the users end, this allows the user to handle more of the processing power
 */
@@ -9,7 +9,7 @@ This is parsed with javascript on the users end, this allows the user to handle 
 
 //headers
 
-use Finobe\Games\Game;
+use Fobe\Games\Game;
 
 header("Access-Control-Allow-Origin: https://www.idk16.xyz");
 

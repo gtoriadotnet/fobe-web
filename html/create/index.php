@@ -1,12 +1,12 @@
 <?php
 
 /*
-Finobe 2021
+Fobe 2021
 */
 
-use Finobe\Assets\Asset;
-use Finobe\Economy\EconomyHelper;
-use Finobe\Web\WebContextManager;
+use Fobe\Assets\Asset;
+use Fobe\Economy\EconomyHelper;
+use Fobe\Web\WebContextManager;
 
 $body = '';
 $alert = '';
@@ -548,7 +548,7 @@ if (isset($_POST['SubmitPlace']))
 											<button class="btn btn-danger w-100" type="button" data-toggle="collapse" data-target="#assettemp" aria-expanded="false" aria-controls="assettemp">Shirt/Pants Template</button>
 										</p>
 										<div class="collapse" id="assettemp">
-											<img class="img-fluid" src="/finobe/cdn/imgs/asset-template.png">
+											<img class="img-fluid" src="/fobe/cdn/imgs/asset-template.png">
 										</div>
 									</div>
 									<hr>
@@ -557,7 +557,7 @@ if (isset($_POST['SubmitPlace']))
 									<hr>
 									<div class="input-group mb-3">
 										<div class="input-group-prepend">
-											<span class="input-group-text"><img style="width:1rem;" src="/finobe/cdn/imgs/alphabux-grey-1024.png"></span>
+											<span class="input-group-text"><img style="width:1rem;" src="/fobe/cdn/imgs/alphabux-grey-1024.png"></span>
 										</div>
 										<input type="text" name="asset_price" class="form-control" placeholder="Price">
 									</div>
@@ -623,7 +623,7 @@ if (isset($_POST['SubmitPlace']))
 												<li>
 													<div id="PBSIDSuperflat" class="pbstempcard" style="cursor: pointer;" onclick="setPBSType('Superflat')">
 														<a class="text-center">
-															<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Superflat.png">
+															<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Superflat.png">
 															<span><p>Superflat</p></span>
 														</a>
 													</div>
@@ -631,7 +631,7 @@ if (isset($_POST['SubmitPlace']))
 												<li>
 													<div id="PBSIDRugged" class="pbstempcard" style="cursor: pointer;" onclick="setPBSType('Rugged')">
 														<a class="text-center">
-															<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Rugged.png">
+															<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Rugged.png">
 															<span><p>Rugged</p></span>
 														</a>
 													</div>
@@ -639,7 +639,7 @@ if (isset($_POST['SubmitPlace']))
 												<li>
 													<div id="PBSIDHappyHome" class="pbstempcard" style="cursor: pointer;" onclick="setPBSType('HappyHome')">
 														<a class="text-center">
-															<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Happy Home.png">
+															<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Happy Home.png">
 															<span><p>Happy Home</p></span>
 														</a>
 													</div>
@@ -647,7 +647,7 @@ if (isset($_POST['SubmitPlace']))
 												<li>
 													<div id="PBSIDBaseplate" class="pbstempcard" style="cursor: pointer;" onclick="setPBSType('Baseplate')">
 														<a class="text-center">
-															<img class="img-fluid" src="/finobe/cdn/imgs/Previews/Baseplate.png">
+															<img class="img-fluid" src="/fobe/cdn/imgs/Previews/Baseplate.png">
 															<span><p>Baseplate</p></span>
 														</a>
 													</div>

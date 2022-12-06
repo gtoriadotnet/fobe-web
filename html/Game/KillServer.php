@@ -1,5 +1,5 @@
 <?php
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 if (!WebContextManager::VerifyAccessKeyHeader())
 {

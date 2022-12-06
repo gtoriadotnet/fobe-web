@@ -1,12 +1,12 @@
 <?php
 
 /*
-	Finobe 2021
+	Fobe 2021
 	Easy utility for pages
 */
 
 class page_handler {
-    public $siteName = "Finobe";
+    public $siteName = "Fobe";
 	public $sheader;
 	public $pagetitle;
 	public $navbar;
@@ -26,7 +26,7 @@ class page_handler {
 		<title>%s</title>
 		%s
 	</head>
-	<body id="finobe-main-body">
+	<body id="fobe-main-body">
 		%s
 		%s
 		%s

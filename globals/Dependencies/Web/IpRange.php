@@ -10,7 +10,7 @@ Example:
 
 <?php
 
-use Finobe\Web\IpHelper;
+use Fobe\Web\IpHelper;
 
 require_once './globals/Dependencies/Web/IpRange.php';
 
@@ -25,7 +25,7 @@ assert(IpHelper::IsIpInNetmask($baseAddress, $netmask));
 
 */
 
-namespace Finobe\Web {
+namespace Fobe\Web {
     /**
      * A class to help in the aid of IP address identification.
      */

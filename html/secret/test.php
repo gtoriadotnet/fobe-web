@@ -66,7 +66,7 @@ file_put_contents("finished.txt", $html);
 /*
 include "C:/Alphaland/globals/Dependencies/Users/Activation.php";
 
-$test = new Finobe\Users\Activation();
+$test = new Fobe\Users\Activation();
 
 
 if ($test->isUserActivated(2))//

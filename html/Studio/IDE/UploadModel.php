@@ -25,7 +25,7 @@ foreach($owned as $asset)
 
 $body = <<<EOT
 <div class="container mt-2"  id="update_model_dialog">
-	<h5>Upload Model to Finobe:</h5>
+	<h5>Upload Model to Fobe:</h5>
 	<hr>
 	<div class="catalog-container">
 		<ul>
@@ -33,7 +33,7 @@ $body = <<<EOT
 				<div class="studio-upload-card text-center" style="cursor: pointer;width: 152px;height: 185px" onclick="showNewModelDialog()">
 					<a>
 						<div class="studio-upload-card-img">
-							<img class="img-fluid" src="/finobe/cdn/imgs/addmodelicon.png">
+							<img class="img-fluid" src="/fobe/cdn/imgs/addmodelicon.png">
 						</div>
 						<p class="no-overflow">Create New</p>
 					</a>

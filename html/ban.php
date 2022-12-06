@@ -1,7 +1,7 @@
 <?php
 
-use Finobe\Moderation\UserModerationManager;
-use Finobe\Web\WebContextManager;
+use Fobe\Moderation\UserModerationManager;
+use Fobe\Web\WebContextManager;
 
 if (UserModerationManager::IsBanned($user->id))
 {

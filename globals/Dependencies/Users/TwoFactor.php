@@ -1,10 +1,10 @@
 <?php
 
 /*
-    Finobe 2021
+    Fobe 2021
 */
 
-namespace Finobe\Users {
+namespace Fobe\Users {
 
     use PDO;
 
@@ -110,7 +110,7 @@ namespace Finobe\Users {
                 $username = getUsername($userid);
                 if ($username) {
                     $secret = TwoFactor::SafeGenerate2FASecret();
-                    $qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "Finobe");
+                    $qrcode = $GLOBALS['authenticator']->getQRCodeGoogleUrl($username, $secret, "Fobe");
                     $new2fa = $GLOBALS['pdo']->prepare("INSERT INTO `twofactor`(`userid`, `secret`, `qr`, `whenGenerated`) VALUES (:uid, :secret, :qr, UNIX_TIMESTAMP())");
                     $new2fa->bindParam(":uid", $userid, PDO::PARAM_INT);
                     $new2fa->bindParam(":secret", $secret, PDO::PARAM_STR);

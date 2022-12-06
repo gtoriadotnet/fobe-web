@@ -2,7 +2,7 @@
 
 //we dont want duplicates of the asset fetching so we will just make this endpoint internally redirect
 
-use Finobe\Web\WebContextManager;
+use Fobe\Web\WebContextManager;
 
 $id = (int)$_GET["id"];
 $assetversionid = (int)$_GET["assetversionid"];
